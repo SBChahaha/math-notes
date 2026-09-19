@@ -136,7 +136,7 @@ $$n=\sum_{i}\text{（结点度数）}+1$$
 <div class="box example">
 <b>例（广义叶子关系）.</b> 设度为 $i$ 的结点数为 $n_i$，则
 $$n_0=1+\sum_{i\ge2}(i-1)\,n_i$$
-<b>推导：</b>$n=\sum n_i$，$n-1=\sum i\,n_i$，两式相减整理即得。特例（二叉树）：$n_0=n_2+1$（下一节主角）✓。</div>
+<b>推导：</b>$n=\sum n_i$，$n-1=\sum i\,n_i$，两式相减整理即得。特例（二叉树）：$n_0=n_2+1$（下一节主角）✓。<br><b>补充（森林计数）：</b>$n$ 个顶点、$c$ 棵树的森林共有 $n-c$ 条边（每棵树各 $n_i-1$ 条，求和即得）。</div>
 </section>
 
 <section class="card" id="sec-2">
@@ -165,6 +165,7 @@ graph TD
   C --> F((F))
   C --> G((G))
 </pre>
+<div class="box tip"><b>图注：</b>这是 §3 遍历所用的模型树（Mermaid 示意图不区分左右孩子）；其中 <b>H 是 E 的右孩子</b>，左右关系以括号表示 <code>A(B(D,E(∅,H)),C(F,G))</code> 为准。</div>
 <div class="thm"><span class="label">二叉树五大性质（必背）</span>
 ① <b>叶子与双分支：</b>$n_0=n_2+1$；<br>
 ② <b>第 $i$ 层最多</b> $2^{\,i-1}$ 个结点；<br>
@@ -179,7 +180,7 @@ $$2^{h-1}\le n\le 2^h-1\ \Longrightarrow\ h-1\le\log_2 n\lt h\ \Longrightarrow\ 
 （对 $n=2^{h}-1$ 取等号也成立。）<span class="qed">∎</span></div>
 <div class="box warn"><b>完全二叉树的「度」规律（选择题常客）：</b>结点总数 $n$ 为<b>奇数</b>时没有度为 1 的结点（$n_1=0$，$n_0=(n+1)/2$）；$n$ 为<b>偶数</b>时恰有一个度为 1 的结点（$n_1=1$，$n_0=n/2$）。配合 $n_0=n_2+1$ 可秒算叶子数。</div>
 <div class="box def"><b>存储结构：</b><br>
-① <b>顺序存储：</b>按编号放入数组（空位置 0/标记）——完全二叉树最适用（无空洞）；一般二叉树最坏浪费到 $2^h$ 规模（高度 $h$ 的斜树只有 $h$ 个结点却要 $2^h$ 个位置）；<br>
+① <b>顺序存储：</b>按编号放入数组（空位置 0/标记）——完全二叉树最适用（无空洞）；一般二叉树最坏浪费到 $2^h-1$ 规模（高度 $h$ 的斜树只有 $h$ 个结点，却要 $2^h-1$ 个位置）；<br>
 ② <b>链式存储（二叉链表）：</b>
 <pre class="code">typedef struct BiTNode {
     ElemType data;
@@ -314,7 +315,7 @@ ThreadNode *NextNode(ThreadNode *p) {    // p 的中序后继
 <b>对称地：</b>中序最后结点 = 最右下；中序前驱 = 若 ltag==1 取 lchild，否则左子树的最右下结点。</div>
 <div class="box warn"><b>三种线索的「难点不对称」（常考辨析）：</b><br>
 · 中序线索：找前驱、后继都容易；<br>
-· <b>先序线索：</b>找<b>后继</b>容易（右孩子或右子树的先序首结点），找<b>前驱</b>困难（可能需要双亲信息，因为左子树根是自身前驱？——错！先序中「前驱」要分情况：若 p 是左孩子则前驱是双亲…所以先序线索找前驱需要三叉链表）；<br>
+· <b>先序线索：</b>找<b>后继</b>容易——<b>有左孩子时后继就是左孩子</b>，无左孩子才取右孩子（rtag=1 时右指针即后继线索）；找<b>前驱</b>困难：需分情况讨论（如 p 是左孩子时前驱为双亲等），依赖双亲信息 ⇒ 先序线索找前驱需要三叉链表；<br>
 · <b>后序线索：</b>找<b>前驱</b>容易、找<b>后继</b>困难。<br>
 规律记忆：<b>「先序怕前驱、后序怕后继、中序最完美」</b>。</div>
 </section>
@@ -332,20 +333,20 @@ typedef struct { PTNode nodes[MAX_TREE_SIZE]; int n; } PTree;</pre>
     struct CSNode *firstchild, *nextsibling;
 } CSNode, *CSTree;</pre>
 它已经就是二叉树形态 ⇒ 天然引出「树 → 二叉树」转换。</div>
-<div class="box method"><b>树 → 二叉树（左孩子右兄弟）：</b>对每个结点，左指针连第一个孩子、右指针连下一个兄弟。森林 → 二叉树：第一棵树根作根，第一棵树的子树森林与其余树依次连在右链上。</div>
+<div class="box method"><b>树 → 二叉树（左孩子右兄弟）：</b>对每个结点，左指针连第一个孩子、右指针连下一个兄弟。森林 → 二叉树：第一棵树转成的二叉树作根（其子树森林自然落在根的左子树中）；其余各树依次作为前一棵二叉树根结点的右孩子，挂在右链上。</div>
 <div class="box example">
 <b>例（一棵树转成二叉树）.</b> 原树（有序）：
-<pre class="flow">原树：        A           二叉树（左孩子右兄弟）：
-           / | \              A
-          B  C  D            /
-         / \    |           B
-        E   F   G            \
-                               C
-                                \
-                                 D
-                                /
-                               G
-        （B 的孩子 E、F 挂在 B 的左侧链）</pre>
+<pre class="flow">原树（有序）：       A              二叉树（左孩子右兄弟）：
+                 / | \                 A
+                B  C  D               /
+               / \    |              B
+              E   F   G            /   \
+                                  E     C
+                                   \     \
+                                    F     D
+                                         /
+                                        G
+        （E 是 B 的左孩子、F 是 E 的右孩子；C、D 依次挂在右链上）</pre>
 转换规则逐点应用：A 的左 = 第一个孩子 B，A 的右 = ∅；B 的左 = E、右 = 下一个兄弟 C；E 的右 = 下一个兄弟 F；C 的右 = D；D 的左 = G。（完整形态：A(l=B)，B(l=E, r=C)，E(r=F)，C(r=D)，D(l=G)。）</div>
 <div class="thm"><span class="label">遍历对应关系（必背，选择题原话）</span>
 <table>
@@ -471,7 +472,7 @@ void Union(int S[], int a, int b) {
 ├─ 性质计算
 │   ├─ n₀=n₂+1（二叉树/哈夫曼通用）；完全二叉树看 n 的奇偶定 n₁
 │   ├─ 层最多 2^(i−1)；高最多 2^h−1；完全树高 ⌊log₂n⌋+1
-│   └─ 编号：左 2i、右 2i+1、父 ⌊i/2⌋、叶 i>⌊n/2⌋
+│   └─ 编号：左 2i、右 2i+1、双亲 ⌊i/2⌋、叶 i>⌊n/2⌋
 ├─ 遍历
 │   ├─ 手推四序（先/中/后/层）注意子树整体性
 │   ├─ 还原：先/后/层 + 中序唯一；先+后不唯一
@@ -505,7 +506,7 @@ void Union(int S[], int a, int b) {
 <tbody>
 <tr><td>结点与边</td><td>树：$n$ 结点 $n-1$ 边、$n=\sum\text{度}+1$</td></tr>
 <tr><td>二叉树核心性质</td><td>$n_0=n_2+1$；第 $i$ 层最多 $2^{i-1}$；高 $h$ 最多 $2^h-1$；完全树高 $\lfloor\log_2n\rfloor+1$</td></tr>
-<tr><td>完全二叉树编号</td><td>左 $2i$、右 $2i+1$、父 $\lfloor i/2\rfloor$、叶子 $i>\lfloor n/2\rfloor$；$n$ 偶 ⇒ $n_1=1$</td></tr>
+<tr><td>完全二叉树编号</td><td>左 $2i$、右 $2i+1$、双亲 $\lfloor i/2\rfloor$、叶子 $i>\lfloor n/2\rfloor$；$n$ 偶 ⇒ $n_1=1$</td></tr>
 <tr><td>链式存储</td><td>二叉链表空指针 $n+1$ 个（线索来源）</td></tr>
 <tr><td>遍历序列（模型树 A(B(D,E(,H)),C(F,G))）</td><td>先 ABDEHCFG；中 DBEHAFCG；后 DHEBFGCA；层 ABCDEFGH</td></tr>
 <tr><td>还原组合</td><td>先+中、后+中、层+中 ⇒ 唯一；先+后 ⇒ 不唯一</td></tr>
@@ -527,7 +528,7 @@ void Union(int S[], int a, int b) {
 ☐ 说出先序线索「怕前驱」、后序线索「怕后继」的原因 (§5)<br>
 ☐ 画一棵三层的树，转成二叉树并写出两种遍历验证对应关系 (§6)<br>
 ☐ 手绘 {2,4,5,7} 哈夫曼树、算 WPL=35、写出编码 (§7)<br>
-☐ 并查集：轴演 Union(0,1)、Union(2,3)、Union(1,2)、Find(3) 的数组变化 (§8)
+☐ 并查集：推演 Union(0,1)、Union(2,3)、Union(1,2)、Find(3) 的数组变化 (§8)
 </div>
 </section>
 </main>

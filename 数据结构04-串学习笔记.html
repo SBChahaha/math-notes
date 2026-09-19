@@ -118,7 +118,7 @@ typedef struct {
 } SString;</pre>
 超出 MAXLEN 时「截断」——这是与顺序表一样的固有问题；<br>
 ② <b>堆分配存储：</b>起始地址 + 长度，用 <code>malloc</code> 按需分配（长串更合适）；<br>
-③ <b>块链存储：</b>每个结点存<b>多个字符</b>（结点大小可调）——存储密度高，但操作与链表一样繁琐。</div>
+③ <b>块链存储：</b>每个结点存<b>多个字符</b>（结点大小可调）——存储密度高于单字符结点链式存储（仍不及顺序存储），但操作与链表一样繁琐。</div>
 </section>
 
 <section class="card" id="sec-2">
@@ -137,8 +137,8 @@ typedef struct {
 }</pre>
 <b>回退公式解读：</b>本趟从 $i-j+1$ 开始比较，失配后从它的下一个位置 $i-j+2$ 重启——<b>主串指针往回走就是 BF 慢的根源</b>。</div>
 <div class="box example">
-<b>例（BF 的最坏情形）.</b> 主串 $S="00000000001"$（9 个 0 + 1），模式串 $T="00001"$。<br>
-① 每趟都要比较到 T 的第 5 位才失配 ⇒ 每趟 5 次比较；<br>
+<b>例（BF 的最坏情形）.</b> 主串 $S="00000000001"$（10 个 0 + 1，总长 11），模式串 $T="00001"$。<br>
+① 前 6 趟都失配在第 5 位、第 7 趟匹配成功——每趟恰好 5 次比较；<br>
 ② 需要 $(n-m+1)$ 趟 ⇒ 总比较约 $5(n-4)$ 次；<br>
 ③ 一般化：$S$ 形如 $0\cdots01$、$T$ 形如 $0\cdots01$（前面全 0）时，每趟几乎比完整个 T ⇒
 $$T_{\text{worst}}(n,m)=O(nm)$$
@@ -167,7 +167,7 @@ graph LR
 <div class="box example">
 <b>例（直观理解滑动）.</b> T = "abaabc"，在主串某处已匹配前 3 位 "aba"、第 4 位失配：<br>
 ① "aba" 的最长公共前后缀是 "a"（长 1）⇒ next[4] = 2；<br>
-② 于是直接把 T 滑到让 T 的第 2 位对齐主串当前位置——因为模式串前 3 位 "aba" 与主串匹配段相同，滑 1 位后 T[2..3]="ba" 与主串尾部 "ba" 天然对上，<b>无需回头重比</b>；<br>
+② 于是把 T 向右滑 <b>2 位</b>（滑动距离 = j − next[j] = 4 − 2）——模式串的 T[1]="a" 与已匹配段 "aba" 末尾的 "a" 重合，下一次直接比较 T[2] 与主串当前（原失配）位置，<b>无需回头重比</b>；<br>
 ③ 对照 BF：BF 会把主串指针退回、从 T[1] 重新比——这正是被省下的浪费 ✓。</div>
 </section>
 
@@ -226,12 +226,9 @@ graph LR
 <tr><td>6</td><td>4</td><td>2</td><td>a vs b ✗</td><td>j = next[2] = 1</td></tr>
 <tr><td>7</td><td>4</td><td>1</td><td>a vs a ✓</td><td>i=5, j=2, next[5]=2</td></tr>
 <tr><td>8</td><td>5</td><td>2</td><td>b vs b ✓</td><td>i=6, j=3, next[6]=3</td></tr>
-<tr><td>9</td><td>6</td><td>3</td><td>c vs a ✗</td><td>j = next[3] = 1</td></tr>
-<tr><td>10</td><td>6</td><td>1</td><td>c vs a ✗</td><td>j = next[1] = 0</td></tr>
-<tr><td>11</td><td>6</td><td>0</td><td>j==0</td><td>i=7 > 6，循环结束</td></tr>
 </tbody>
 </table>
-<b>得 next = {0,1,1,2,2,3} ✓</b>。注意第 8 步之后 next[6]=3 已经写入——<b>next[i] 是在「i 前进」时顺带记录 j</b>。</div>
+<b>得 next = {0,1,1,2,2,3} ✓</b>。第 8 步后 i=6、已不满足循环条件 <code>i &lt; T.length</code>，算法结束——<b>7 次循环恰好写完 next[2..6]，next[i] 是在「i 前进」时顺带记录的 j</b>。</div>
 </section>
 <section class="card" id="sec-5">
 <h2><span class="num">05</span>KMP 匹配过程与代码<span class="tag">主串不回溯</span></h2>
@@ -306,7 +303,7 @@ graph LR
 · j=3：a vs T[2]=a 相等 ⇒ 继承 nextval[2] = 0；<br>
 · j=4：a vs T[3]=a 相等 ⇒ 继承 = 0；<br>
 · j=5：b vs T[4]=a 不等 ⇒ 取 next = 4。<br>
-<b>结论：</b>nextval = {0, 0, 0, 0, 4}——失配时一步滑到底，避免了「aaaa」连续四次无效比较 ✓（这正是优化的价值）。</div>
+<b>结论：</b>nextval = {0, 0, 0, 0, 4}——同一主串位置上，普通 next 最多要连锁 3 次无效比较（'a' 的 4 次连锁比较），nextval 一步压到 1 次 ✓（这正是优化的价值）。</div>
 <div class="box def"><b>get_nextval 递推代码：</b>
 <pre class="code">void get_nextval(SString T, int nextval[]) {
     int i = 1, j = 0;
@@ -443,7 +440,7 @@ nextval = {0, 1, 0, 1, 0, 4}。<br>
 ☐ 构造 BF 最坏情形（0…01 vs 0…01）并说明每趟比较次数 (§2)<br>
 ☐ "abaabc" 的 next 定义法全过程（六行表）(§4)<br>
 ☐ "abaabc" 的递推法验证（四步）(§4)<br>
-☐ get_next 代码 + 11 步轨迹表 (§4)<br>
+☐ get_next 代码 + 8 步轨迹表（初始化 + 7 次循环）(§4)<br>
 ☐ "abacabaabc" × "abaabc" 的 13 步 KMP 轨迹（i 不动）(§5)<br>
 ☐ "abaabc" 与 "aaaab" 两个 nextval 手算 (§6)<br>
 ☐ "ababaa" 的 next/nextval 独立重算 (§7 例1)<br>

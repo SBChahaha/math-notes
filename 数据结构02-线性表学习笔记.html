@@ -77,7 +77,7 @@ window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$
 <a href="#sec-5">05 · 顺序表 vs 链表（必考对比）</a>
 <a href="#sec-6">06 · 典型例题</a>
 <a href="#sec-7">07 · 决策流程与易错点</a>
-<a href="#sec-8">08 · 速查表</a>
+<a href="#sec-8">08 · 公式速查表</a>
 <a href="#sec-9">09 · 能力自查</a>
 </nav>
 </aside>
@@ -136,7 +136,7 @@ typedef struct {
 /* 动态分配版本 */
 typedef struct {
     ElemType *data;             // 动态数组指针
-    int length, MaxSize;        // 长度与容量
+    int length, capacity;       // 长度与容量
 } SeqList;</pre>
 <b>关键：</b>位序 $i$ 对应数组下标 $i-1$——<b>代码里永远写 data[i-1]</b>。</div>
 <div class="thm"><span class="label">插入操作（平均移动 $n/2$）</span>在位置 $i$（$1\le i\le n+1$）插入：把第 $i$ 到 $n$ 个元素<b>从后往前</b>依次后移一位，再写入、长度 +1。<br>
@@ -159,7 +159,7 @@ $$\text{平均}=\frac1n\sum_{i=1}^{n}(n-i)=\frac1n\cdot\frac{n(n-1)}2=\frac{n-1}
 ① 合法性：插入允许到表尾之后（$i=n+1$）⇒ 上界是 $length+1$；② 循环从 $j=n$ 递减到 $i$，共移动 $n-i+1$ 个；③ 时间 $O(n)$（移动）+ $O(1)$（其余）⇒ 总 $O(n)$ ✓。
 </div>
 <div class="box example">
-<b>例（按位查找与按值查找）.</b> 按位查找：`return L.data[i-1];` ⇒ $O(1)$（随机访问的威力）；<br>
+<b>例（按位查找与按值查找）.</b> 按位查找：<code>return L.data[i-1];</code> ⇒ $O(1)$（随机访问的威力）；<br>
 按值查找：从 $a_1$ 起逐个比较，等概率假设下平均比较 $\dfrac{n+1}2$ 次 ⇒ $O(n)$。<br>
 <b>复杂度口诀：</b>顺序表「<b>查位 O(1)、查值 O(n)、插删 O(n)</b>」。
 </div>
@@ -172,19 +172,19 @@ $$\text{平均}=\frac1n\sum_{i=1}^{n}(n-i)=\frac1n\cdot\frac{n(n-1)}2=\frac{n-1}
 · <b>头结点：</b>在第一个数据结点之前附加的「虚」结点（数据域可放表长等信息）——<b>统一空表与非空表的处理、统一首位置插入删除</b>。</div>
 <pre class="mermaid">
 graph LR
-  H["头结点 L"] --> A["a₁ 数据+next"] --> B["a₂ 数据+next"] --> C["a₃ 数据+next"] --> N["NULL"]
+  L["头结点（头指针 L）"] --> A["a₁ 数据+next"] --> B["a₂ 数据+next"] --> C["a₃ 数据+next"] --> N["NULL"]
 </pre>
 <div class="box def"><b>类型定义：</b>
 <pre class="code">typedef struct LNode {      // 单链表结点
     ElemType data;          // 数据域
     struct LNode *next;     // 指针域：指向后继
 } LNode, *LinkList;         // LinkList 为指向结点的指针类型</pre>
-<b>关键习惯：</b>「结点指针 p」指 `LNode *p`；访问 p 的域写 `p->data`、`p->next`；合法指针才可解引用（空指针解引用是 408 最爱设的坑）。</div>
+<b>关键习惯：</b>「结点指针 p」指 <code>LNode *p</code>；访问 p 的域写 <code>p->data</code>、<code>p->next</code>；合法指针才可解引用（空指针解引用是 408 最爱设的坑）。</div>
 <div class="box method"><b>建立单链表——头插法（结果逆序）：</b>
 <pre class="code">LinkList List_HeadInsert(LinkList &L) {
     L = (LNode *) malloc(sizeof(LNode));  // 创建头结点
     L->next = NULL;
-    ElemType x;
+    int x;
     while (scanf("%d", &x) != EOF) {      // 逐个读入
         LNode *s = (LNode *) malloc(sizeof(LNode));
         s->data = x;
@@ -199,7 +199,7 @@ graph LR
     L = (LNode *) malloc(sizeof(LNode));
     L->next = NULL;
     LNode *r = L;                         // r 始终指向表尾
-    ElemType x;
+    int x;
     while (scanf("%d", &x) != EOF) {
         LNode *s = (LNode *) malloc(sizeof(LNode));
         s->data = x;
@@ -246,14 +246,14 @@ free(q);</pre>
 <h3>（2）循环链表</h3>
 <div class="box def">
 · <b>单循环链表：</b>表尾结点的 next 指回<b>头结点</b>——从任意结点出发都能遍历全表；<br>
-· <b>判空：</b>带头结点时 `L->next == L`；<b>判表尾：</b>`p->next == L`；<br>
+· <b>判空：</b>带头结点时 <code>L->next == L</code>；<b>判表尾：</b><code>p->next == L</code>；<br>
 · <b>双循环链表：</b>头结点的 prior 指向表尾（首尾互指）。<br>
 <b>经典操作（带尾指针 rear 的循环单链表）：</b>合并两个循环单链表 A、B：只需三步改指针——
 <pre class="code">p = A_rear->next;           // 记住 A 的头结点
 A_rear->next = B_rear->next->next;  // A 尾部接 B 的第一个数据结点
 B_rear->next = p;           // B 尾部指回 A 的头结点
 A_rear = B_rear;            // 新表尾更新</pre>
-改名要两表各扫一遍的操作被压到 $O(1)$——带尾指针的循环链表价值所在。</div>
+把原本要「两表各扫一遍」的操作压缩到 $O(1)$（前提：A、B 均非空）——带尾指针的循环链表的威力所在。</div>
 <h3>（3）静态链表（数组模拟）</h3>
 <div class="box def">
 <pre class="code">#define MaxSize 50
@@ -261,10 +261,10 @@ typedef struct {
     ElemType data;       // 数据
     int next;            // 游标：下一元素的下标（−1 表示结束）
 } SLinkList[MaxSize];</pre>
-· 用数组模拟链式结构，`next` 存数组下标而不是真实地址；<br>
+· 用数组模拟链式结构，<code>next</code> 存数组下标而不是真实地址；<br>
 · 适用于<b>不支持指针的语言</b>，或需要固定容量、便于序列化的场景；<br>
 · <b>位序与下标不再相等</b>——要沿游标跳着找（不能随机访问）；<br>
-· `next == −1` 表示链表结束；空表判 `S[0].next == −1` 级别。插入删除同样是「改游标」。</div>
+· <code>next == -1</code> 表示链表结束；约定下标 0 为头结点时，空表 ⇔ <code>S[0].next == -1</code>。插入删除同样是「改游标」。</div>
 </section>
 <section class="card" id="sec-5">
 <h2><span class="num">05</span>顺序表 vs 链表（必考对比）<span class="tag">高频</span></h2>
@@ -298,7 +298,7 @@ typedef struct {
     return true;
 }</pre>
 ① 扫描一遍找最小值与位置：$O(n)$；② 填补+缩短：$O(1)$；③ 总时间 $O(n)$、辅助空间 $O(1)$（原地）✓。<br>
-<b>易错：</b>若先 `L.length--` 再取表尾会越界；填坑用<b>表尾</b>而不是前移（前移会多 O(n)）。
+<b>易错：</b>若先 <code>L.length--</code> 再取表尾，取到的就不是原表尾元素（$n=1$ 时还会越界）；填坑用<b>表尾</b>而不是前移（前移会多 $O(n)$）。
 </div>
 <div class="box example">
 <b>例 2（单链表就地逆置：头插法）.</b>
@@ -325,7 +325,7 @@ typedef struct {
     }
     return slow;                      // 中间结点
 }</pre>
-① <b>正确性：</b>快指针速度是慢指针 2 倍，快指针到表尾时慢指针恰好走到中点；② 循环条件两个条件缺一不可（防 fast 或 fast->next 为空时解引用）；③ 时间 $O(n)$、空间 $O(1)$。长度偶数时 slow 落在<b>前半最后一个</b>（`fast->next==NULL` 退出）✓。<br>
+① <b>正确性：</b>快指针速度是慢指针 2 倍，快指针到表尾时慢指针恰好走到中点；② 循环条件两个条件缺一不可（防 fast 或 fast->next 为空时解引用）；③ 时间 $O(n)$、空间 $O(1)$。长度偶数时 slow 落在<b>前半最后一个</b>（<code>fast->next==NULL</code> 退出）；空表时返回头结点（调用方需判空）✓。<br>
 <b>同族技巧：</b>「找倒数第 k 个」用双指针拉开 k 步同步走（一次遍历 $O(n)$）。
 </div>
 <div class="box example">
