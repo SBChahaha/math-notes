@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据结构06 · 图 · 完全教程（王道体系）</title>
+<style>
+:root{--bg:#fdfaf2;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#d97706;--accent2:#fcd34d;--soft:#fffbeb}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#78350f,#d97706 55%,#fcd34d);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#fef3c7}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#b45309;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#78350f}
+.card h3{font-size:1.05rem;color:#b45309;margin:24px 0 8px;padding-left:10px;border-left:4px solid #fcd34d}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#fffbeb;border-color:#fcd34d}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #fde68a;border-left:4px solid #fbbf24;background:#fffdf6;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#b45309;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#b45309;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#fdfbf5}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+pre.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:16px 20px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.86rem;line-height:1.75;white-space:pre}
+pre.mermaid{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:12px;overflow-x:auto;text-align:center;color:#94a3b8;font-size:.85rem}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(217,119,6,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>数据结构 · 第六章 图 · 完全教程</h1>
+<p>王道体系 · 存储四件套 + 遍历全轨迹 + 四大应用算法全流程</p>
+<div class="chips"><span>图概念</span><span>四种存储</span><span>BFS/DFS</span><span>Prim/Kruskal</span><span>Dijkstra/Floyd</span><span>拓扑·关键路径</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 图的基本概念</a>
+<a href="#sec-2">02 · 图的存储结构</a>
+<a href="#sec-3">03 · 图的遍历：BFS</a>
+<a href="#sec-4">04 · 图的遍历：DFS</a>
+<a href="#sec-5">05 · 最小生成树（Prim / Kruskal）</a>
+<a href="#sec-6">06 · 最短路径（Dijkstra / Floyd）</a>
+<a href="#sec-7">07 · 拓扑排序</a>
+<a href="#sec-8">08 · 关键路径</a>
+<a href="#sec-9">09 · 典型例题</a>
+<a href="#sec-10">10 · 决策流程与易错点</a>
+<a href="#sec-11">11 · 速查表与能力自查</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章地位：</b>408 图论部分——存储结构四件套 + 遍历（BFS/DFS）+ 四大应用算法（最小生成树、最短路径、拓扑排序、关键路径）。<b>每个算法都要能口述流程、手推轨迹、答复杂度</b>，是大题的重灾区也是大题的机会区。</div>
+<pre class="flow">第六章 图
+├─ 基本概念（§1）
+│   └─ 度与边、完全图、连通/强连通、生成树
+├─ 存储结构（§2）
+│   ├─ 邻接矩阵（稠密、O(n²)、随机判边）
+│   ├─ 邻接表（稀疏、O(n+e)、出度易/入度难）
+│   ├─ 十字链表（有向图：出入边一网打尽）
+│   └─ 邻接多重表（无向图：每条边只存一个结点）
+├─ 遍历（§3–§4）
+│   ├─ BFS：队列分层（无权图最短路！）
+│   └─ DFS：栈/递归（生成森林）
+└─ 四大应用（§5–§8）
+    ├─ 最小生成树：Prim（加点 O(n²)）/ Kruskal（加边 O(e log e)）
+    ├─ 最短路径：Dijkstra（单源贪心）/ Floyd（多源 DP）
+    ├─ 拓扑排序：入度为 0 出队（AOV 网）
+    └─ 关键路径：ve/vl/e/l（AOE 网）
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>图的基本概念<span class="tag">概念</span></h2>
+<div class="box def"><b>图：</b>$G=(V,E)$——$V$ 为顶点集、$E$ 为边集。<br>
+· <b>有向图：</b>边是<b>弧</b> $\langle v,w\rangle$（$v$ 弧尾 → $w$ 弧头，有方向）；<br>
+· <b>无向图：</b>边 $(v,w)$ 无方向；<br>
+· <b>简单图：</b>不存在重复边、不存在自环（408 默认讨论简单图）；<b>多重图：</b>允许二者。<br>
+· <b>网：</b>带权图（边有权值）。</div>
+<div class="thm"><span class="label">三组核心计数（必背）</span>
+① <b>完全图：</b>任意两顶点间都有边——无向完全图边数 $\dfrac{n(n-1)}2$；有向完全图弧数 $n(n-1)$；<br>
+② <b>度的总和：</b>无向图 $\sum\deg(v)=2e$（每条边贡献两个度）；有向图 $\sum\text{入度}=\sum\text{出度}=e$（度 = 入度+出度）；<br>
+③ <b>连通的最少边：</b>连通无向图至少 $n-1$ 条边（就是树）；强连通有向图至少 $n$ 条弧（一个环）。</div>
+<div class="box def"><b>路径与回路：</b>顶点序列 $v_1,v_2,\dots,v_k$（相邻两项有边）；<b>路径长度</b> = 边的条数。<br>
+· <b>简单路径：</b>顶点不重复；<b>简单回路：</b>除首尾外不重复的回路；<br>
+· 顶点 $v$ 到自身长度为 0 的路径存在（平凡）。</div>
+<div class="box def"><b>连通性：</b><br>
+· <b>无向图：</b>任意两顶点间有路径 ⇒ <b>连通图</b>；否则分成若干<b>连通分量</b>（极大连通子图）；<br>
+· <b>有向图：</b>任意两顶点双向可达 ⇒ <b>强连通图</b>；分成若干<b>强连通分量</b>；<br>
+· <b>生成树：</b>连通图含全部 $n$ 个顶点、$n-1$ 条边的极小连通子图；非连通图得到<b>生成森林</b>（每个连通分量一棵生成树）。</div>
+<pre class="mermaid">
+graph TD
+  1 --- 2
+  1 --- 3
+  2 --- 4
+  2 --- 5
+  3 --- 6
+  3 --- 7
+  4 --- 8
+  5 --- 8
+  6 --- 8
+  7 --- 8
+</pre>
+<div class="box tip"><b>本页贯穿示例（8 顶点无向图）：</b>边集 $\{(1,2),(1,3),(2,4),(2,5),(3,6),(3,7),(4,8),(5,8),(6,8),(7,8)\}$——BFS/DFS/MST 等后续全部用它演示。<br>
+<b>两个高频补充结论：</b>① $n$ 个顶点的<b>非连通</b>图最多有 $\dfrac{(n-1)(n-2)}2$ 条边（让 1 个点孤立、其余构成完全图）；② 有向图某顶点入度 0 可能是源点（拓扑排序见 §7）。</div>
+</section>
+
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>图的存储结构<span class="tag">四件套</span></h2>
+<h3>（1）邻接矩阵（稠密图首选）</h3>
+<div class="box def">
+<pre class="code">#define MaxVertexNum 100
+typedef struct {
+    char Vex[MaxVertexNum];                 // 顶点表
+    int Edge[MaxVertexNum][MaxVertexNum];   // 邻接矩阵（1/0 或权值）
+    int vexnum, arcnum;
+} MGraph;</pre>
+· 无向图的矩阵<b>对称</b>；空间恒为 $O(n^2)$（与边数无关，稀疏图浪费）；<br>
+· 判断两点间是否有边 $O(1)$；<br>
+· <b>求度：</b>无向图某行（列）之和 = 该点度；有向图<b>行和 = 出度、列和 = 入度</b>；<br>
+· 适用：稠密图；不适合频繁增删顶点。</div>
+<h3>（2）邻接表（稀疏图首选）</h3>
+<div class="box def">
+<pre class="code">typedef struct ArcNode {          // 边结点
+    int adjvex;                   // 邻接点在顶点表中的下标
+    struct ArcNode *next;         // 下一条边
+} ArcNode;
+typedef struct VNode {            // 顶点
+    char data;
+    ArcNode *first;               // 第一条边
+} VNode, AdjList[MaxVertexNum];
+typedef struct {
+    AdjList vertices;
+    int vexnum, arcnum;
+} ALGraph;</pre>
+· 空间：无向 $O(n+2e)$、有向 $O(n+e)$；<br>
+· <b>无向图度</b> = 该顶点边链表的结点数；<b>有向图出度易求</b>（链表长度），<b>入度难求</b>（需遍历全表——除非建<b>逆邻接表</b>）；<br>
+· 邻接表<b>不唯一</b>（边结点的次序可任意）——这直接导致 BFS/DFS 序列与生成树不唯一。</div>
+<h3>（3）十字链表（有向图专供）</h3>
+<div class="box def">
+每个弧一个结点，同时挂在「起点的出边链」与「终点的入边链」上：
+<pre class="code">typedef struct ArcBox {
+    int tailvex, headvex;               // 弧尾、弧头的下标
+    struct ArcBox *hlink, *tlink;       // 弧头相同链、弧尾相同链
+} ArcBox;
+typedef struct VexNode {
+    char data;
+    ArcBox *firstin, *firstout;         // 入边、出边
+} VexNode;</pre>
+· 空间 $O(n+e)$；<b>入度、出度都易求</b>（各扫对应链）；<br>
+· 适用：有向图的频繁增删边场景。</div>
+<h3>（4）邻接多重表（无向图专供）</h3>
+<div class="box def">
+每条<b>边只存一个结点</b>（邻接表存两份，删除时要两头改）：
+<pre class="code">typedef struct EBox {
+    int ivex, jvex;                     // 边连接的两个顶点
+    struct EBox *ilink, *jlink;         // 各自下一条边
+    /* 可加标记位 mark 表示是否访问过 */
+} EBox;</pre>
+· 空间的边结点数 = $e$（邻接表为 $2e$）；<br>
+· 适用：无向图的边频繁删除/遍历标记场景。</div>
+<div class="box warn"><b>四种结构速记：</b>矩阵「稠密、随机判边、$O(n^2)$」；邻接表「稀疏、出度快、入度慢」；十字链表「有向图 + 出入度都要」；邻接多重表「无向图 + 边只存一次」。</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>图的遍历：BFS<span class="tag">队列·分层</span></h2>
+<div class="box method"><b>广度优先（BFS）：</b>从起点出发，先访问所有「距离 1」的顶点，再访问「距离 2」……用<b>队列</b>实现「先来先扩展」，用 visited 数组防重复。</div>
+<div class="box def">
+<pre class="code">bool visited[MaxVertexNum];
+void BFS(Graph G, int v) {          // 从顶点 v 出发，一次连通分量
+    visit(v);  visited[v] = true;
+    InitQueue(Q);  EnQueue(Q, v);
+    while (!QueueEmpty(Q)) {
+        DeQueue(Q, v);
+        for (int w = FirstNeighbor(G, v); w >= 0; w = NextNeighbor(G, v, w))
+            if (!visited[w]) {
+                visit(w);  visited[w] = true;
+                EnQueue(Q, w);       // 入队：留待以后扩展
+            }
+    }
+}
+/* 非连通图：外层 for 每个未访问顶点各调一次 → 生成森林 */</pre>
+<b>层数视角：</b>入队次序恰好是「距离不降」的——队列天然保证了分层。</div>
+<div class="box example">
+<b>例（对贯穿示例图从 1 出发的 BFS，邻接次序升序）.</b>
+<pre class="flow">邻接表：1:2,3  2:1,4,5  3:1,6,7  4:2,8  5:2,8  6:3,8  7:3,8  8:4,5,6,7</pre>
+<table>
+<thead><tr><th>出队</th><th>新访问的邻接点</th><th>队列（入队后）</th><th>访问序列</th></tr></thead>
+<tbody>
+<tr><td>（起点入队）</td><td>1</td><td>⟨1⟩</td><td>1</td></tr>
+<tr><td>1</td><td>2, 3</td><td>⟨2, 3⟩</td><td>1, 2, 3</td></tr>
+<tr><td>2</td><td>4, 5</td><td>⟨3, 4, 5⟩</td><td>1, 2, 3, 4, 5</td></tr>
+<tr><td>3</td><td>6, 7</td><td>⟨4, 5, 6, 7⟩</td><td>1, 2, 3, 4, 5, 6, 7</td></tr>
+<tr><td>4</td><td>8</td><td>⟨5, 6, 7, 8⟩</td><td>…, 8</td></tr>
+<tr><td>5,6,7,8</td><td>无新点</td><td>空</td><td>结束</td></tr>
+</tbody>
+</table>
+<b>BFS 序列：1, 2, 3, 4, 5, 6, 7, 8</b>；<b>BFS 生成树边</b>（首次访问时的边）：$(1,2),(1,3),(2,4),(2,5),(3,6),(3,7),(4,8)$ 共 7 条 = $n-1$ ✓。</div>
+<div class="box example">
+<b>例（BFS 求无权图单源最短路径）.</b> 在 BFS 中把「第几层」记下来，即最短距离：
+<pre class="code">d[u] = 0;  // 起点距离
+/* 发现 w 时 */ d[w] = d[u] + 1;   // 层数 +1</pre>
+对示例图从 1 出发：$d(1)=0$；$d(2)=d(3)=1$；$d(4)=d(5)=d(6)=d(7)=2$；$d(8)=3$——如 1 到 8 的最短路 1→2→4→8 或 1→3→6→8 长度均为 3 ✓。<br>
+<b>适用范围警告：</b>BFS 求最短路<b>只对无权图</b>（边权为 1 才等价于层数；带权图要用 Dijkstra，§6）。</div>
+<div class="thm"><span class="label">BFS 复杂度与性质</span>
+时间复杂度：邻接矩阵 $O(n^2)$（每顶点扫一整行）；邻接表 $O(n+e)$（每顶点出边扫一次）。空间 $O(n)$（队列 + visited）。<br>
+<b>不唯一性：</b>邻接表的次序不同 ⇒ BFS 序列与生成树可能不同——考试给定了邻接次序才谈唯一答案。</div>
+</section>
+
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>图的遍历：DFS<span class="tag">递归·深钻</span></h2>
+<div class="box method"><b>深度优先（DFS）：</b>从起点出发，沿一条路一直钻到底，走不动再回退找岔路——用<b>递归（系统栈）</b>实现。</div>
+<div class="box def">
+<pre class="code">void DFS(Graph G, int v) {
+    visit(v);  visited[v] = true;
+    for (int w = FirstNeighbor(G, v); w >= 0; w = NextNeighbor(G, v, w))
+        if (!visited[w])
+            DFS(G, w);              // 递归深入
+}</pre>
+<b>非递归版（显式栈）：</b>入栈即访问的变体——把「Push 未访问邻居」循环替代递归（注意与递归顺序的细微差别，考试以递归版为主）。</div>
+<div class="box example">
+<b>例（对贯穿示例图从 1 出发的 DFS 递归轨迹）.</b>
+<pre class="flow">DFS(1)→访问1→邻居2未访问→DFS(2)
+  DFS(2)：邻居1已访→4未访→DFS(4)
+    DFS(4)：邻居2已访→8未访→DFS(8)
+      DFS(8)：邻居4已访→5未访→DFS(5)
+        DFS(5)：邻居2、8都已访→回退
+      DFS(8)续：6未访→DFS(6)
+        DFS(6)：邻居3未访→DFS(3)
+          DFS(3)：邻居1已访→6已访→7未访→DFS(7)
+            DFS(7)：邻居3、8都已访→回退
+      （全部回退，遍历结束）</pre>
+<b>DFS 序列：1, 2, 4, 8, 5, 6, 3, 7</b>；<b>DFS 生成树边</b>：$(1,2),(2,4),(4,8),(8,5),(8,6),(6,3),(3,7)$ 共 7 条 ✓。<br>
+<b>观察：</b>与 BFS 序列（1,2,3,4,5,6,7,8）截然不同——但两种都是合法遍历，起点、邻接次序一变序列就变。</div>
+<div class="thm"><span class="label">DFS 复杂度与性质</span>
+时间：邻接矩阵 $O(n^2)$、邻接表 $O(n+e)$（与 BFS 相同）；空间：递归栈最深 $O(n)$（链状图）。<br>
+· DFS 天然适合「一条路走到黑」的问题：判连通、数连通分量、找所有路径、判环（无向图 DFS 遇已访问且非父结点 ⇒ 有环）；<br>
+· 非连通图同样靠外层循环 → <b>DFS 生成森林</b>。</div>
+<div class="box tip"><b>BFS vs DFS 一句话对答：</b>「队列 vs 栈；分层最短 vs 一条路深钻；复杂度公式相同；生成树都可能不唯一；无权图最短路找 BFS、连通性/环检测通常用 DFS」。</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>最小生成树（Prim / Kruskal）<span class="tag">贪心双雄</span></h2>
+<div class="box def"><b>最小生成树（MST）：</b>连通网中边权总和最小的生成树。两大算法都是贪心——先记结论：<b>MST 的边数 = $n-1$；等权时 MST 可能不唯一，但最小权值总和唯一。</b></div>
+<div class="box example">
+<b>贯穿示例（6 顶点带权图）.</b>
+<pre class="flow">顶点 1–6，边与权：
+(1,2)=6  (1,3)=1  (1,4)=5  (2,3)=5  (2,5)=3
+(3,4)=5  (3,5)=6  (3,6)=4  (4,6)=2  (5,6)=6</pre></div>
+<h3>（1）Prim：加点法（从任一顶点开始「向集合外生长」）</h3>
+<div class="box method"><b>流程：</b>把起点放进集合 $U$；每次从「一端在 $U$、另一端不在 $U$」的边中选<b>权最小</b>的，把新顶点拉进 $U$；重复 $n-1$ 次。</div>
+<div class="box example">
+<b>例（从 1 出发的 Prim 全过程）.</b>
+<table>
+<thead><tr><th>轮</th><th>已选集合 U</th><th>跨边中最小者</th><th>选中</th><th>累计权</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>{1}</td><td>(1,3)=1</td><td>(1,3)</td><td>1</td></tr>
+<tr><td>2</td><td>{1,3}</td><td>(3,6)=4（击败 (1,4)=5、(2,3)=5…）</td><td>(3,6)</td><td>5</td></tr>
+<tr><td>3</td><td>{1,3,6}</td><td>(6,4)=2</td><td>(4,6)</td><td>7</td></tr>
+<tr><td>4</td><td>{1,3,6,4}</td><td>(3,2)=5</td><td>(2,3)</td><td>12</td></tr>
+<tr><td>5</td><td>{1,3,6,4,2}</td><td>(2,5)=3</td><td>(2,5)</td><td><b>15</b></td></tr>
+</tbody>
+</table>
+<b>MST 边集：</b>$(1,3),(3,6),(4,6),(2,3),(2,5)$，总权 <b>15</b> ✓（6 个顶点 5 条边）。<br>
+<b>注意：</b>第 4 轮中 $(2,5)=3$ 虽最小，但两端都不在 $U$ 内——<b>不是候选</b>，这就是 Prim「跨边」的含义。</div>
+<div class="thm"><span class="label">Prim 复杂度</span>朴素实现（维护 distToU 数组）：每轮选最小 $O(n)$、松弛 $O(n)$，共 $n$ 轮 ⇒ $O(n^2)$——<b>与边数无关，适合稠密图</b>。</div>
+<h3>（2）Kruskal：加边法（按权从小到大加边，不成环就要）</h3>
+<div class="box method"><b>流程：</b>把所有边按权排序；依次取出最小边，若它的两个端点当前<b>不在同一并查集</b>（不会成环）就加入 MST 并合并集合；凑满 $n-1$ 条边为止。</div>
+<div class="box example">
+<b>例（Kruskal 全过程）.</b> 边排序：1:(1,3)；2:(4,6)；3:(2,5)；4:(3,6)；5:(1,4)；(2,3)；5:(3,4)；6:(1,2)；(3,5)；(5,6)（同权次序任意）。
+<table>
+<thead><tr><th>取边</th><th>权</th><th>判定</th><th>动作</th><th>累计</th></tr></thead>
+<tbody>
+<tr><td>(1,3)</td><td>1</td><td>两集合</td><td>✓ 加入</td><td>1</td></tr>
+<tr><td>(4,6)</td><td>2</td><td>两集合</td><td>✓ 加入</td><td>3</td></tr>
+<tr><td>(2,5)</td><td>3</td><td>两集合</td><td>✓ 加入</td><td>6</td></tr>
+<tr><td>(3,6)</td><td>4</td><td>{1,3} 与 {4,6} 两集合</td><td>✓ 加入（大集合合并）</td><td>10</td></tr>
+<tr><td>(1,4)</td><td>5</td><td>1、4 已在同集合</td><td>✗ 成环，跳过</td><td>10</td></tr>
+<tr><td>(2,3)</td><td>5</td><td>{1,3,4,6} 与 {2,5} 两集合</td><td>✓ 加入 ⇒ 已 $n-1=5$ 条</td><td><b>15</b></td></tr>
+</tbody>
+</table>
+<b>与 Prim 结果对比：</b>边集 $(1,3),(4,6),(2,5),(3,6),(2,3)$ 与 Prim 相同（权总和必同为 15）✓。</div>
+<div class="thm"><span class="label">Kruskal 复杂度</span>排序 $O(e\log e)$ + 并查集判环（近 $O(1)$）⇒ 总 $O(e\log e)$——<b>只看边数，适合稀疏图</b>。</div>
+<div class="box tip"><b>选择口诀：</b>稠密图（边多）用 Prim（$O(n^2)$ 不吃亏）；稀疏图（边少）用 Kruskal（$O(e\log e)$ 更小）。</div>
+</section>
+
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>最短路径（Dijkstra / Floyd）<span class="tag">两个必考算法</span></h2>
+<h3>（1）Dijkstra：单源最短路径（非负权）</h3>
+<div class="box method"><b>贪心思想：</b>维护 dist[]（起点到各点的当前最短估计）与 S[]（已确定的点）。每次从「未确定」中取出 dist 最小者确定，再用它<b>松弛</b>所有邻居：若 $dist[u]+w(u,w)\lt dist[w]$ 就更新。</div>
+<div class="box def">
+<pre class="code">void Dijkstra(MGraph G, int v0, int dist[], int path[]) {
+    /* 初始化：dist[w] = v0 到 w 的直接边权（无直接边为 ∞）；S[] 全 false */
+    for (int round = 1; round < G.vexnum; round++) {
+        int u = /* 未确定点中 dist 最小者 */;
+        S[u] = true;                        /* 定点：此刻已是最优 */
+        for (int w = 1; w <= G.vexnum; w++) /* 松弛 */
+            if (!S[w] && dist[u] + G.Edge[u][w] < dist[w]) {
+                dist[w] = dist[u] + G.Edge[u][w];
+                path[w] = u;                /* 记录前驱，用于还原路径 */
+            }
+    }
+}</pre>
+<b>为什么正确（非负权关键）：</b>当前 dist 最小者不可能再被绕远路缩短（任何绕路都要再加非负权）——所以可以「定死」。</div>
+<div class="box example">
+<b>例（从顶点 1 出发，对 §5 示例图跑 Dijkstra）.</b>
+<table>
+<thead><tr><th>轮</th><th>dist（1,2,3,4,5,6）</th><th>本选定点</th><th>松弛效果</th></tr></thead>
+<tbody>
+<tr><td>初值</td><td>0, 6, 1, 5, ∞, ∞</td><td>—</td><td>—</td></tr>
+<tr><td>1</td><td>0, 6, <b>1</b>, 5, 7, 5</td><td>3（dist 1）</td><td>5←7（1+6）；6←5（1+4）；2、4 不优</td></tr>
+<tr><td>2</td><td>0, 6, 1, <b>5</b>, 7, 5</td><td>4（dist 5）</td><td>6 处 5+2=7 > 5，不变</td></tr>
+<tr><td>3</td><td>0, 6, 1, 5, 7, <b>5</b></td><td>6（dist 5）</td><td>5 处 5+6=11 > 7，不变</td></tr>
+<tr><td>4</td><td>0, <b>6</b>, 1, 5, 7, 5</td><td>2（dist 6）</td><td>5 处 6+3=9 > 7，不变</td></tr>
+<tr><td>5</td><td>0, 6, 1, 5, <b>7</b>, 5</td><td>5（dist 7）</td><td>完成</td></tr>
+</tbody>
+</table>
+<b>最终：</b>$d(2)=6,\ d(3)=1,\ d(4)=5,\ d(5)=7,\ d(6)=5$ ✓。<br>
+<b>验算（1→5）：</b>候选路径 1→3→5 $=1+6=7$、1→2→5 $=6+3=9$、1→3→6→5 $=1+4+6=11$ ⇒ 最小 7，与表中结果一致 ✓。<br>
+<b>复杂度：</b>$O(n^2)$；每轮「选最小」用堆可降到 $O((n+e)\log n)$（408 手推按朴素 $O(n^2)$）。</div>
+<h3>（2）Floyd：各顶点对最短路径（DP 三循环）</h3>
+<div class="box def">
+<pre class="code">void Floyd(int A[][N], int n) {   /* A 初值：邻接矩阵（∞=无路，对角线 0） */
+    for (int k = 1; k <= n; k++)              /* 中转点 k */
+        for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= n; j++)
+                if (A[i][j] > A[i][k] + A[k][j])   /* 经 k 中转更短？ */
+                    A[i][j] = A[i][k] + A[k][j];
+}</pre>
+<b>递推含义：</b>$A^{(k)}[i][j]=\min\left(A^{(k-1)}[i][j],\ A^{(k-1)}[i][k]+A^{(k-1)}[k][j]\right)$——「只允许用前 $k$ 个点中转」的最短路。三重循环 ⇒ $O(n^3)$；允许负权，但<b>不能有负环</b>。</div>
+<div class="box example">
+<b>例（三顶点小例：1→2=6、1→3=3、3→2=2）.</b>
+<pre class="flow">初始矩阵 D⁰：         k=3 时发现更短：
+     1   2   3              d[1][2] = min(6, d[1][3]+d[3][2])
+ 1  [ 0   6   3 ]                      = min(6, 3+2) = 5  ⇒ 更新 ✓
+ 2  [ ∞   0   ∞ ]        路径：1 → 3 → 2（长度 5 < 6）
+ 3  [ ∞   2   0 ]</pre>
+<b>验算：</b>$k=1,2$ 轮无更新（无更多中转可能）；最终 $d(1,2)=5$ ✓。</div>
+<div class="box tip"><b>Dijkstra vs Floyd 对答表：</b>
+<table>
+<thead><tr><th>维度</th><th>Dijkstra</th><th>Floyd</th></tr></thead>
+<tbody>
+<tr><td>范围</td><td>单源到所有点</td><td>任意两点间</td></tr>
+<tr><td>思想</td><td>贪心 + 松弛</td><td>动态规划（三重循环）</td></tr>
+<tr><td>复杂度</td><td>$O(n^2)$</td><td>$O(n^3)$</td></tr>
+<tr><td>负权</td><td><b>不允许</b></td><td>允许边负、不允许负环</td></tr>
+<tr><td>适用</td><td>单源问题</td><td>全源 / 小规模稠密图</td></tr>
+</tbody>
+</table></div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>拓扑排序<span class="tag">AOV 网</span></h2>
+<div class="box def"><b>AOV 网：</b>用<b>顶点</b>表示活动、用<b>弧</b>表示活动之间先后关系的<b>有向无环图（DAG）</b>。<br>
+<b>拓扑排序：</b>把全部顶点排成线性序列，使图中每条弧都「从前指向后」。<b>存在拓扑序 ⇔ 图中无环。</b></div>
+<div class="box method"><b>算法流程（Kahn 法）：</b><br>
+① 统计各顶点的入度，把所有<b>入度为 0</b> 的顶点入栈（或队列）；<br>
+② 反复出栈一个顶点输出，并「删除」它的所有出边——对应邻接点的入度减 1；入度减到 0 就入栈；<br>
+③ 重复直到栈空。<b>若输出的顶点数 &lt; n ⇒ 图中有环</b>（排序失败）。</div>
+<div class="box def">
+<pre class="code">bool TopologicalSort(Graph G) {
+    InitStack(S);
+    for (int i = 0; i < G.vexnum; i++)
+        if (indegree[i] == 0) Push(S, i);      // 所有「源」入栈
+    int count = 0;
+    while (!StackEmpty(S)) {
+        Pop(S, i);  print(i);  count++;
+        for (ArcNode *p = G.vertices[i].first; p; p = p->next) {
+            int w = p->adjvex;
+            indegree[w]--;                     // 删边：邻居入度减一
+            if (indegree[w] == 0) Push(S, w);
+        }
+    }
+    return count == G.vexnum;                  // false：存在环
+}</pre>
+<b>复杂度：</b>$O(n+e)$（顶点入栈一次、每条边处理一次）。</div>
+<div class="box example">
+<b>例（DAG：1→2、1→3、2→4、3→4、4→5）.</b> 初始入度：1:0，2:1，3:1，4:2，5:1。
+<table>
+<thead><tr><th>步</th><th>出栈输出</th><th>动态</th><th>栈内</th></tr></thead>
+<tbody>
+<tr><td>初始</td><td>—</td><td>入度 0 的 1 入栈</td><td>⟨1⟩</td></tr>
+<tr><td>1</td><td>1</td><td>删 1→2、1→3：2、3 入度归 0</td><td>⟨2, 3⟩</td></tr>
+<tr><td>2</td><td>3</td><td>删 3→4：4 入度 2→1</td><td>⟨2⟩</td></tr>
+<tr><td>3</td><td>2</td><td>删 2→4：4 入度 1→0，入栈</td><td>⟨4⟩</td></tr>
+<tr><td>4</td><td>4</td><td>删 4→5：5 入度归 0，入栈</td><td>⟨5⟩</td></tr>
+<tr><td>5</td><td>5</td><td>栈空，输出 5 个 = n ⇒ 无环</td><td>空</td></tr>
+</tbody>
+</table>
+<b>拓扑序（用栈）：1, 3, 2, 4, 5</b>；若改用队列则为 1, 2, 3, 4, 5——<b>序列不唯一</b>（每一步有多个入度 0 顶点时排序自由）✓。</div>
+<div class="box tip"><b>三条高频性质：</b>① 拓扑序不唯一，但所有拓扑序中「先决关系」一致；② 逆拓扑序 = DFS 的<b>完成时间从大到小</b>（可作算法替代）；③ 若某步同时存在多个入度 0 顶点 ⇒ 该 DAG 的拓扑序必然不唯一；序列唯一 ⇔ 每一步入度 0 顶点恰一个。</div>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>关键路径<span class="tag">AOE 网</span></h2>
+<div class="box def"><b>AOE 网：</b>用<b>边</b>表示活动（带权=持续时间）、顶点表示<b>事件</b>的带权有向无环图。源点（唯一入度 0）、汇点（唯一出度 0）分别代表工程开始与结束。<br>
+<b>关键路径：</b>源点到汇点的<b>最长路径</b>——其长度就是完成整个工程所需的最短工期；路径上的活动叫<b>关键活动</b>（没有一点时间余量）。</div>
+<div class="box method"><b>四个量的计算流程：</b><br>
+① <b>事件最早发生时间 $ve$：</b>按拓扑序递推，源点 $ve(\text{源})=0$，
+$$ve(j)=\max_{\langle i,j\rangle}\left\{ve(i)+w(i,j)\right\}$$
+② <b>事件最迟发生时间 $vl$：</b>按逆拓扑序递推，汇点 $vl(\text{汇})=ve(\text{汇})$，
+$$vl(i)=\min_{\langle i,j\rangle}\left\{vl(j)-w(i,j)\right\}$$
+③ <b>活动最早/最迟开始：</b>对活动 $a=\langle i,j\rangle$：
+$$e(a)=ve(i),\qquad l(a)=vl(j)-w(i,j)$$
+④ <b>时间余量</b> $l-e$：余量为 0 的活动是<b>关键活动</b>；由关键活动连成的源→汇路径即关键路径。</div>
+<div class="box example">
+<b>例（小型 AOE：v1→v2=2，v2→v4=3，v1→v3=3，v3→v4=4）.</b><br>
+<b>① 求 ve（拓扑序 v1,v2,v3,v4）：</b>$ve(1)=0$；$ve(2)=0+2=2$；$ve(3)=0+3=3$；$ve(4)=\max(2+3,\ 3+4)=7$。<br>
+<b>② 求 vl（逆序 v4,v3,v2,v1）：</b>$vl(4)=7$；$vl(3)=7-4=3$；$vl(2)=7-3=4$；$vl(1)=\min(4-2,\ 3-3)=0$。<br>
+<b>③ 活动表：</b>
+<table>
+<thead><tr><th>活动</th><th>e = ve(起点)</th><th>l = vl(终点) − w</th><th>余量 l−e</th><th>关键？</th></tr></thead>
+<tbody>
+<tr><td>a: 1→2 (2)</td><td>0</td><td>4 − 2 = 2</td><td>2</td><td>否</td></tr>
+<tr><td>b: 2→4 (3)</td><td>2</td><td>7 − 3 = 4</td><td>2</td><td>否</td></tr>
+<tr><td>c: 1→3 (3)</td><td>0</td><td>3 − 3 = 0</td><td>0</td><td><b>是</b></td></tr>
+<tr><td>d: 3→4 (4)</td><td>3</td><td>7 − 4 = 3</td><td>0</td><td><b>是</b></td></tr>
+</tbody>
+</table>
+<b>④ 结论：</b>关键路径 v1→v3→v4，工期 7 ✓；活动 a、b 各有 2 个时间单位余量（晚开工 2 天不影响总工期）。</div>
+<div class="box warn"><b>三条必考辨析：</b><br>
+① 关键路径是<b>最长</b>路径（不是最短！）；② 关键路径<b>可能不止一条</b>（多条同为最长）；③ 缩短某个关键活动<b>不一定</b>缩短总工期——它可能把别的路径变成新的最长路径（关键路径发生转移），而原来缩短的活动反而出现余量。反之，非关键活动决不能随意延误超过它的余量。</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>典型例题<span class="tag">计算·判断·辨析</span></h2>
+<div class="box example">
+<b>例 1（度与边：经典计算）.</b> 一个无向图有 16 条边，其中 3 个顶点的度为 4、4 个顶点的度为 3，其余顶点的度均<b>小于 3</b>。问该图至少有多少个顶点？<br>
+① 由 $\sum\deg=2e$ 得总度数 $=32$；<br>
+② 已知 7 个顶点贡献 $3\times4+4\times3=24$，剩余度数 $=32-24=8$；<br>
+③ 剩余顶点度 < 3，即最多为 2——为使<b>顶点数最少</b>，让每个都是 2 度：至少 $8\div2=4$ 个；<br>
+④ <b>答案：至少 $7+4=11$ 个顶点</b> ✓。<br>
+<b>套路：</b>「至少顶点」= 让人均度数尽量大（取最大允许值）。</div>
+<div class="box example">
+<b>例 2（判断拓扑序是否合法）.</b> DAG（1→2、1→3、2→4、3→4、4→5），判断下列序列是否为拓扑序：<br>
+(a) <b>1, 2, 3, 4, 5</b>：逐弧检查 1→2 ✓、1→3 ✓、2→4 ✓、3→4 ✓、4→5 ✓ ⇒ <b>合法</b>；<br>
+(b) <b>1, 3, 2, 4, 5</b>：所有弧依旧「前指后」⇒ <b>合法</b>（拓扑序不唯一）；<br>
+(c) <b>1, 2, 4, 3, 5</b>：弧 3→4 要求 3 在 4 之前，这里 4 先于 3 ⇒ <b>非法</b> ✗。<br>
+<b>判法：</b>对每条弧检查两端位置——只要有一条弧「反了」就不是拓扑序。</div>
+<div class="box example">
+<b>例 3（关键路径辨析四连）.</b><br>
+(a) 「关键路径是网中的最长路径」⇒ <b>对</b>（工期定义如此）；<br>
+(b) 「关键活动的 l−e=0」⇒ <b>对</b>（时间余量为零）；<br>
+(c) 「一个 AOE 网的关键路径唯一」⇒ <b>错</b>（可以有多条等长最长路径）；<br>
+(d) 「缩短任一关键活动一定能缩短总工期」⇒ <b>错</b>（可能转移出新的关键路径，总工期取决于新的最长路径）。<br>
+<b>方法论：</b>关键路径题的两大陷阱就是「唯一性」与「缩短必有效」。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>决策流程与易错点</h2>
+<pre class="flow">图论题
+├─ 概念计算
+│   ├─ Σdeg=2e；有向 Σ入=Σ出=e
+│   ├─ 完全图 n(n−1)/2；非连通最多 (n−1)(n−2)/2
+│   └─ 连通最少 n−1 边；强连通有向最少 n 弧
+├─ 存储选择
+│   ├─ 稠密 / 随机判边 → 邻接矩阵 O(n²)
+│   ├─ 稀疏 → 邻接表 O(n+e)（出度易、入度难）
+│   ├─ 有向 + 出入度都要 → 十字链表
+│   └─ 无向 + 频繁删边 → 邻接多重表
+├─ 遍历
+│   ├─ BFS：队列分层；无权图最短路
+│   └─ DFS：递归深钻；连通性/判环
+├─ 四大应用
+│   ├─ MST：Prim 稠密 O(n²) / Kruskal 稀疏 O(elogе)
+│   ├─ 最短路：Dijkstra 单源非负 O(n²) / Floyd 全源 O(n³)
+│   ├─ 拓扑排序：入度 0 出栈；count&lt;n 判环
+│   └─ 关键路径：ve 正推 / vl 逆推 / 余量为 0
+└─ 收尾：邻接次序是否给定（决定序列唯一性）
+</pre>
+<h3>易错点清单</h3>
+<div class="box warn">
+<ol>
+<li><b>$\sum\deg=2e$ 只对无向图：</b>有向图拆成入度、出度两条守恒式（各等于 $e$）。</li>
+<li><b>度与「至少顶点」题：</b>剩余度数按「最大允许度数」平分（如 <3 就按 2），别按 1 算。</li>
+<li><b>有向图行/列：</b>邻接矩阵<b>行和=出度、列和=入度</b>——写反是最高频错。</li>
+<li><b>邻接表不唯一：</b>由它推出的 BFS/DFS 序列、生成树也不唯一——题目没给次序时答案可多解。</li>
+<li><b>BFS 求最短路仅限无权图：</b>带权图必须 Dijkstra（BFS 层数≠加权距离）。</li>
+<li><b>非连通图别忘外层循环：</b>一次 BFS/DFS 只走完一个连通分量；生成的是森林。</li>
+<li><b>Prim 的候选边：</b>必须「一端在集合内、一端在外」——两端都在外的更小边不是候选（例 1 的常见坑）。</li>
+<li><b>Kruskal 判环：</b>用并查集（第五章 §8），不是直觉「看一眼」。</li>
+<li><b>Dijkstra 三禁：</b>负权边、负权边、还是负权边（会破坏「选最小即定死」的依据）；Floyd 允许负权但禁负环。</li>
+<li><b>拓扑排序：</b>存在拓扑序 ⇔ 无环；输出数 < $n$ 判环；每步入度 0 顶点多于一个 ⇒ 序列不唯一。</li>
+<li><b>关键路径 = 最长路径：</b>不是最短；缩短关键活动可能转移关键路径、总工期未必变。</li>
+<li><b>复杂度成对记：</b>遍历「矩阵 O(n²) / 表 O(n+e)」；拓扑 $O(n+e)$；MST「Prim $O(n^2)$ / Kruskal $O(e\log e)$」。</li>
+</ol>
+</div>
+</section>
+
+<section class="card" id="sec-11">
+<h2><span class="num">11</span>速查表与能力自查</h2>
+<table>
+<thead><tr><th>主题</th><th>结论</th></tr></thead>
+<tbody>
+<tr><td>计数公式</td><td>$\sum\deg=2e$；完全图 $n(n-1)/2$（有向 $n(n-1)$）；连通最少 $n-1$ 边；非连通最多 $(n-1)(n-2)/2$ 边</td></tr>
+<tr><td>连通性</td><td>无向：连通图/连通分量；有向：强连通/强连通分量；生成树 $n-1$ 边；$c$ 个连通分量 ⇒ 森林 $n-c$ 边</td></tr>
+<tr><td>存储对比</td><td>矩阵 $O(n^2)$ 稠密/随机判边；邻接表 $O(n+e)$ 稀疏/出度易入度难；十字链表（有向出入双全）；邻接多重表（无向边只存一次）</td></tr>
+<tr><td>BFS / DFS</td><td>复杂度同为「矩阵 $O(n^2)$ / 表 $O(n+e)$」；BFS 无权最短路、DFS 判环连通</td></tr>
+<tr><td>MST</td><td>Prim 加点 $O(n^2)$ 稠密；Kruskal 加边 $O(e\log e)$ 稀疏；$n-1$ 条边、总和最小唯一</td></tr>
+<tr><td>最短路径</td><td>Dijkstra 单源贪心 $O(n^2)$ 非负权；Floyd DP $O(n^3)$ 全源、可负权不可负环</td></tr>
+<tr><td>拓扑排序</td><td>入度 0 出栈删边；$O(n+e)$；存在 ⇔ 无环；序列不唯一</td></tr>
+<tr><td>关键路径</td><td>$ve$ 正推 max、$vl$ 逆推 min、活动 $e=ve(i),\ l=vl(j)-w$；余量 0 ⇒ 关键；= 最长路径</td></tr>
+<tr><td>贯穿示例</td><td>BFS 序 1,2,3,4,5,6,7,8；DFS 序 1,2,4,8,5,6,3,7；MST 权 15；Dijkstra d=(0,6,1,5,7,5)</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>概念靠「度与边的两条守恒」；遍历靠「队列 vs 递归」；四大应用一句话——MST「取最小不成环」、最短路「松弛」、拓扑「入度清零」、关键路径「推最早、倒推最迟、看余量」。</div>
+<h3>能力自查</h3>
+<div class="box method">
+☐ 默写三组计数公式并解释 $\sum\deg=2e$ (§1)<br>
+☐ 画 4 顶点完全图数边数（6/12 两种）(§1)<br>
+☐ 说出四种存储的空间、度获取难度、适用场景 (§2)<br>
+☐ 对贯穿示例图：BFS 序、BFS 树、无权最短路 d(1→8)=3 (§3)<br>
+☐ 对贯穿示例图：DFS 序与 DFS 树 (§4)<br>
+☐ Prim 从 1 出发全过程（5 轮表）+ Kruskal 排序加边全过程，验证都是 15 (§5)<br>
+☐ Dijkstra 从 1 出发的逐轮表（含 tie 处理），复算 1→5 = 7 (§6)<br>
+☐ Floyd 三循环 + 三顶点小例的 k=3 更新 (§6)<br>
+☐ 拓扑排序轨迹表（栈版 1,3,2,4,5）与 count&lt;n 判环 (§7)<br>
+☐ 关键路径：ve/vl 四个值 + 活动余量表（a、b 余量 2）(§8)<br>
+☐ 判断一组序列是否拓扑序（例 2 三问）(§9)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax、图表由 Mermaid 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>数据结构（408 · 王道体系） · 第六章 图 · 内容完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var murls=[
+    "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://registry.npmmirror.com/mermaid/10.9.1/files/dist/mermaid.min.js"
+  ];
+  function mload(i){
+    if(i>=murls.length){return;}
+    var s=document.createElement("script");
+    s.src=murls[i];s.async=true;
+    s.onload=function(){try{mermaid.initialize({startOnLoad:false,theme:"neutral",securityLevel:"loose"});mermaid.run({querySelector:".mermaid"});}catch(e){}};
+    s.onerror=function(){mload(i+1);};
+    document.head.appendChild(s);
+  }
+  mload(0);
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
