@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>概率05 · 大数定律与中心极限定理 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#fff8f1;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#ea580c;--accent2:#f59e0b;--soft:#fff7ed}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#7c2d12,#ea580c 55%,#f59e0b);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#ffedd5}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#9a3412;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#7c2d12}
+.card h3{font-size:1.05rem;color:#9a3412;margin:24px 0 8px;padding-left:10px;border-left:4px solid #fdba74}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#fb923c,#f59e0b);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#fff7ed;border-color:#fdba74}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #fed7aa;border-left:4px solid #f97316;background:#fffbf5;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#9a3412;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#9a3412;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#fffbf5}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(234,88,12,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>概率论与数理统计 · 第五章 大数定律与中心极限定理 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>切比雪夫不等式</span><span>依概率收敛</span><span>三大数定律</span><span>中心极限定理</span><span>棣莫弗-拉普拉斯</span><span>正态近似</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 切比雪夫不等式</a>
+<a href="#sec-2">02 · 依概率收敛</a>
+<a href="#sec-3">03 · 大数定律</a>
+<a href="#sec-4">04 · 中心极限定理</a>
+<a href="#sec-5">05 · 典型例题</a>
+<a href="#sec-6">06 · 解题决策流程</a>
+<a href="#sec-7">07 · 易错点清单</a>
+<a href="#sec-8">08 · 公式速查表</a>
+<a href="#sec-9">09 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章回答两个「为什么」：</b>为什么大量重复试验中<b>频率稳定于概率</b>（大数定律）；为什么大量独立随机因素叠加后<b>近似正态</b>（中心极限定理）。</div>
+<pre class="flow">第五章 大数定律与中心极限定理
+├─ 大数定律（§1–§3）：「平均」的稳定性
+│   ├─ 工具：切比雪夫不等式 P{|X−μ| ≥ ε} ≤ σ²/ε²（§1，含证明）
+│   ├─ 桥梁：依概率收敛 Xₙ → ᵖ a（大偏差的概率趋于 0）（§2）
+│   └─ 三大定律（§3）
+│       切比雪夫：独立 + 方差有界 ⇒ 平均 → 期望
+│       伯努利：频率 → ᵖ 概率（历史上第一个大数定律）
+│       辛钦：独立同分布 + 期望存在（不要求方差）
+└─ 中心极限定理（§4）：「和」的正态性
+    ├─ 独立同分布 CLT：标准化 (ΣXᵢ−nμ)/(√n·σ) → N(0,1)
+    ├─ 李雅普诺夫：独立不同分布版本（条件略）
+    └─ 棣莫弗-拉普拉斯：B(n,p) 的正态近似（CLT 特例）
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>切比雪夫不等式<span class="tag">工具</span></h2>
+<div class="thm"><span class="label">切比雪夫不等式</span>设 $E(X)=\mu$，$D(X)=\sigma^2$，则对任意 $\varepsilon>0$：
+$$P\{|X-\mu|\ge\varepsilon\}\le\frac{\sigma^2}{\varepsilon^2}\qquad\text{等价形式：}\ P\{|X-\mu|<\varepsilon\}\ge1-\frac{\sigma^2}{\varepsilon^2}$$</div>
+<div class="proof"><span class="label">证明（连续型）</span>在「大偏差」区域 $|x-\mu|\ge\varepsilon$ 上恒有 $\dfrac{(x-\mu)^2}{\varepsilon^2}\ge1$，故
+$$P\{|X-\mu|\ge\varepsilon\}=\int_{|x-\mu|\ge\varepsilon}f(x)dx\le\int_{|x-\mu|\ge\varepsilon}\frac{(x-\mu)^2}{\varepsilon^2}f(x)dx\le\frac{1}{\varepsilon^2}\int_{-\infty}^{+\infty}(x-\mu)^2f(x)dx=\frac{\sigma^2}{\varepsilon^2}\ ✓$$
+（离散型把积分换成求和，完全同理。）<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（上界有多宽松）.</b> $X\sim E(1)$（$\mu=\sigma=1$），用切比雪夫不等式估计 $P\{|X-1|\ge2\}$，并与精确值比较。<br>
+① 不等式：$P\{|X-1|\ge2\}\le\dfrac{1}{2^2}=0.25$；<br>
+② 精确值：$P\{X\ge3\}+P\{X\le-1\}=e^{-3}\approx0.0498$；<br>
+③ 结论：上界成立但宽松——切比雪夫不等式的价值在于<b>普遍适用</b>（不需要知道分布），不在于精确。<br>
+<b>验算（3σ 对照）：</b>若 $X\sim N(\mu,\sigma^2)$，不等式给 $P\{|X-\mu|\ge3\sigma\}\le\frac19\approx0.111$，而正态精确值 $2(1-\Phi(3))\approx0.0027$ ✓。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>依概率收敛<span class="tag">桥梁</span></h2>
+<div class="box def"><b>定义：</b>设 $X_1,X_2,\dots$ 为一列随机变量，$a$ 为常数。若对任意 $\varepsilon>0$：
+$$\lim_{n\to\infty}P\{|X_n-a|\ge\varepsilon\}=0$$
+则称 $X_n$ <b>依概率收敛</b>于 $a$，记 $X_n\xrightarrow{P}a$。</div>
+<div class="box tip"><b>直观：</b>「$X_n$ 与 $a$ 的偏差超过任意给定界的概率趋于 0」——不排除个别样本偏差大，只要求大偏差越来越罕见。<br>
+<b>与大数定律的关系：</b>「频率稳定于概率」的严格表述就是 $\dfrac{\mu_n}{n}\xrightarrow{P}p$；而常见证明手段是把方差压向 0（切比雪夫不等式）。</div>
+</section>
+
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>大数定律<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">定理 1（切比雪夫大数定律）</span>设 $X_1,X_2,\dots$ 相互独立，$E(X_i)=\mu_i$，且方差有共同上界 $D(X_i)\le C$，则
+$$\frac1n\sum_{i=1}^nX_i\xrightarrow{P}\frac1n\sum_{i=1}^n\mu_i$$
+<b>特例</b>（独立同分布且方差有限）：$\dfrac1n\sum\limits_{i=1}^nX_i\xrightarrow{P}\mu$。</div>
+<div class="proof"><span class="label">证明</span>记 $\bar X=\dfrac1n\sum X_i$，则 $E(\bar X)=\bar\mu=\dfrac1n\sum\mu_i$，由独立性：
+$$D(\bar X)=\frac1{n^2}\sum_{i=1}^nD(X_i)\le\frac Cn$$
+对任意 $\varepsilon>0$ 用切比雪夫不等式：
+$$P\{|\bar X-\bar\mu|\ge\varepsilon\}\le\frac{D(\bar X)}{\varepsilon^2}\le\frac{C}{n\varepsilon^2}\xrightarrow{n\to\infty}0\ ✓$$<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 2（伯努利大数定律）</span>设 $\mu_n$ 是 $n$ 重伯努利试验中成功发生的次数（每次成功概率为 $p$），则频率
+$$\frac{\mu_n}{n}\xrightarrow{P}p$$
+这是历史上第一个大数定律（伯努利，1713），是「<b>频率稳定于概率</b>」的理论依据。</div>
+<div class="proof"><span class="label">证明</span>$\mu_n\sim B(n,p)$，于是 $E\!\left(\dfrac{\mu_n}{n}\right)=p$，$D\!\left(\dfrac{\mu_n}{n}\right)=\dfrac{npq}{n^2}=\dfrac{pq}{n}\le\dfrac{1}{4n}$。对任意 $\varepsilon>0$：
+$$P\left\{\left|\frac{\mu_n}{n}-p\right|\ge\varepsilon\right\}\le\frac{pq}{n\varepsilon^2}\le\frac{1}{4n\varepsilon^2}\xrightarrow{n\to\infty}0\ ✓$$<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 3（辛钦大数定律）</span>设 $X_1,X_2,\dots$ 独立同分布，$E(X_i)=\mu$ <b>存在</b>（不要求方差存在），则
+$$\frac1n\sum_{i=1}^nX_i\xrightarrow{P}\mu$$</div>
+<div class="box tip"><b>三者关系：</b>伯努利大数定律是切比雪夫大数定律的特例（0-1 变量，方差 $pq\le\frac14$ 有界）；辛钦大数定律条件更弱（不要求方差）、结论更强（证明依赖特征函数，超出本课范围，略）。<br>
+<b>应用意义：</b>辛钦定理说明「用样本均值估计期望」是可靠的——这是数理统计（第六至八章）的理论基础。</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>中心极限定理<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">定理 4（独立同分布的中心极限定理：林德伯格-列维）</span>设 $X_1,X_2,\dots$ 独立同分布，$E(X_i)=\mu$，$D(X_i)=\sigma^2>0$，则对任意实数 $x$：
+$$\lim_{n\to\infty}P\left\{\frac{\sum_{i=1}^nX_i-n\mu}{\sqrt n\,\sigma}\le x\right\}=\Phi(x)$$
+即 $n$ 充分大时：$\sum X_i$ 近似 $N(n\mu,\ n\sigma^2)$；<b>等价地</b> $\bar X$ 近似 $N\!\left(\mu,\ \dfrac{\sigma^2}{n}\right)$。</div>
+<div class="box tip"><b>意义：</b>无论单个 $X_i$ 服从什么分布，只要独立同分布、方差有限，<b>大量之和都近似正态</b>——这解释了正态分布为何无处不在：测量误差、身高体重、产品尺寸，都是大量独立小因素叠加的结果。</div>
+<div class="thm"><span class="label">定理 5（李雅普诺夫定理）</span>设 $X_1,X_2,\dots$ 相互独立（允许不同分布），$E(X_i)=\mu_i$，$D(X_i)=\sigma_i^2>0$，记 $B_n^2=\sum\limits_{i=1}^n\sigma_i^2$。若存在 $\delta>0$ 使
+$$\lim_{n\to\infty}\frac{1}{B_n^{2+\delta}}\sum_{i=1}^nE|X_i-\mu_i|^{2+\delta}=0$$
+则 $n$ 充分大时 $\dfrac{\sum X_i-\sum\mu_i}{B_n}$ 近似服从 $N(0,1)$。（条件确保没有哪个变量主导整体波动。）</div>
+<div class="thm"><span class="label">定理 6（棣莫弗-拉普拉斯定理）</span>设 $\mu_n\sim B(n,p)$，则
+$$\lim_{n\to\infty}P\left\{\frac{\mu_n-np}{\sqrt{npq}}\le x\right\}=\Phi(x)$$
+即 $n$ 充分大时 $B(n,p)\approx N(np,\ npq)$。<b>常用计算式：</b>
+$$P\{a\le\mu_n\le b\}\approx\Phi\!\left(\frac{b-np}{\sqrt{npq}}\right)-\Phi\!\left(\frac{a-np}{\sqrt{npq}}\right)$$</div>
+<div class="proof"><span class="label">说明（棣莫弗-拉普拉斯与 CLT 的关系）</span>把 $\mu_n$ 写成 $n$ 个独立 0-1 变量之和 $\mu_n=\sum X_i$，其中 $\mu=p$，$\sigma^2=pq$，则
+$$\frac{\mu_n-np}{\sqrt{npq}}=\frac{\sum X_i-n\mu}{\sqrt n\,\sigma}$$
+恰好是独立同分布 CLT 的标准化形式，故棣莫弗-拉普拉斯定理是定理 4 的直接特例 ✓。<span class="qed">∎</span></div>
+<div class="box warn"><b>使用前提：</b>$n$ 足够大。二项分布的正态近似通常要求 $np\ge5$ 且 $nq\ge5$（更稳妥用 $\ge10$）；$n$ 太小或 $p$ 极偏时近似不可靠（此时可用泊松近似，见概率02）。</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>典型例题<span class="tag">实战四型</span></h2>
+<div class="box example">
+<b>例 1（骰子求和：CLT 正向使用）.</b> 独立掷一颗均匀骰子 100 次，求总点数 $S$ 落在 $[330,380]$ 内的概率近似值。<br>
+① 单次：$\mu=3.5$，$\sigma^2=E(X^2)-\mu^2=\dfrac{91}{6}-\dfrac{49}{4}=\dfrac{35}{12}\approx2.917$；<br>
+② 100 次之和：$E(S)=350$，$D(S)=100\times\dfrac{35}{12}\approx291.7$，$\sqrt{D(S)}\approx17.08$；<br>
+③ 标准化查表：
+$$P\{330\le S\le380\}\approx\Phi\!\left(\frac{380-350}{17.08}\right)-\Phi\!\left(\frac{330-350}{17.08}\right)=\Phi(1.76)-\Phi(-1.17)\approx0.9608-0.1210\approx0.84$$
+<b>验算：</b>区间约 $-1.17\sigma$ 到 $+1.76\sigma$，结果 0.84 落在「2σ 法则」的合理范围（$2\Phi(1.17)-1\approx0.758$ 与 $2\Phi(1.76)-1\approx0.922$ 之间）✓。
+</div>
+<div class="box example">
+<b>例 2（硬币 100 次：棣莫弗-拉普拉斯）.</b> 掷均匀硬币 100 次，求正面次数 $X$ 在 $40$ 到 $60$ 之间的概率。<br>
+① $X\sim B(100,0.5)$：$np=50$，$\sqrt{npq}=\sqrt{25}=5$；<br>
+② 标准化：
+$$P\{40\le X\le60\}\approx\Phi\!\left(\frac{60-50}{5}\right)-\Phi\!\left(\frac{40-50}{5}\right)=2\Phi(2)-1=0.9544$$
+<b>验算（精确值对照）：</b>二项精确值 $P\{40\le X\le60\}=\sum_{k=40}^{60}C_{100}^k/2^{100}\approx0.9648$，近似值 0.9544 略偏低但已相当接近 ✓；若加连续性修正 $\pm0.5$：$\Phi(2.1)-\Phi(-2.1)=0.9643$，与精确值几乎一致。
+</div>
+<div class="box example">
+<b>例 3（反向问题：总机装多少条外线）.</b> 某单位有 200 台分机，每台独立使用外线的概率为 0.05。问至少装多少条外线，才能以不低于 95% 的概率保证够用？<br>
+① 设同时使用外线的台数 $X\sim B(200,0.05)$：$np=10$，$\sqrt{npq}=\sqrt{200\times0.05\times0.95}=\sqrt{9.5}\approx3.08$；<br>
+② 要求 $P\{X\le N\}\ge0.95$：
+$$P\{X\le N\}\approx\Phi\!\left(\frac{N-10}{3.08}\right)\ge0.95\ \Longrightarrow\ \frac{N-10}{3.08}\ge z_{0.95}=1.645$$
+③ $N\ge10+1.645\times3.08\approx15.07$，向上取整得 $N=16$。<br>
+<b>验算（回代）：</b>装 16 条：$\Phi\!\left(\dfrac{6}{3.08}\right)=\Phi(1.95)\approx0.974\ge0.95$ ✓；只装 15 条：$\Phi(1.62)\approx0.947<0.95$ ✗。<br>
+<b>备注（连续性修正）：</b>若计入 $\pm0.5$（$\Phi(\frac{N+0.5-10}{3.08})$），$N\ge14.57$，取 15 即可——教材一般不计修正，本课按 16 作答更稳妥。
+</div>
+<div class="box example">
+<b>例 4（大数定律：投点法估计 $\pi$）.</b> 向正方形 $[0,1]\times[0,1]$ 独立随机投 $n$ 个点，$S_n$ 为落入四分之一圆 $\{x^2+y^2\le1\}$ 的点数。说明 $\dfrac{4S_n}{n}\xrightarrow{P}\pi$。<br>
+① 单点落入概率 = 面积比 $=\dfrac{\pi/4}{1}=\dfrac{\pi}{4}$；<br>
+② $S_n\sim B\!\left(n,\dfrac{\pi}{4}\right)$，由伯努利大数定律 $\dfrac{S_n}{n}\xrightarrow{P}\dfrac{\pi}{4}$；<br>
+③ 乘以 4（连续映射保持依概率收敛）：$\dfrac{4S_n}{n}\xrightarrow{P}\pi$——蒙特卡洛方法的原理。<br>
+<b>验算（误差量级）：</b>$D\!\left(\dfrac{S_n}{n}\right)=\dfrac{p(1-p)}{n}\le\dfrac{1}{4n}$，$n=10000$ 时标准差 $\le0.005$，乘以 4 后误差量级约 $2\%$，与实验经验相符 ✓。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>解题决策流程</h2>
+<pre class="flow">拿到极限定理题
+├─ 求「概率近似值」？
+│   ├─ X ~ B(n,p) → 棣莫弗-拉普拉斯：(X−np)/√(npq) ≈ N(0,1)
+│   ├─ 独立同分布之和 / 均值 → iid CLT：(ΣX−nμ)/(√nσ) ≈ N(0,1)
+│   └─ 独立但不同分布 → 李雅普诺夫（方差叠加 B_n²）
+├─ 反向问题（求 n / 求线路数 / 求设备数）？
+│   └─ 写成 Φ(·) ≥ 1−α → 用分位点 z_{1−α} 反解 → 向上取整
+├─ 大数定律论证？
+│   └─ 频率或平均 → 依概率收敛；切比雪夫不等式压方差
+└─ 适用性检查：n 是否够大？np 与 nq ≥ 5？
+    离散变量要不要 ±0.5 连续性修正？（看题意/教材）
+</pre>
+</section>
+
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>切比雪夫是「上界」：</b>给的是估计不是精确值，而且往往很宽松（例：精确 0.0498 vs 上界 0.25）。</li>
+<li><b>标准化分母别搞混：</b>「和」的标准差是 $\sqrt n\,\sigma$；「样本均值」的标准差是 $\dfrac{\sigma}{\sqrt n}$，两者差一个 $\sqrt n$ 倍。</li>
+<li><b>二项近似分母：</b>是 $\sqrt{npq}$（含 $q=1-p$），不是 $\sqrt{np}$。</li>
+<li><b>连续性修正：</b>离散变量用正态近似时 $\pm0.5$ 可提高精度（例 2 修正后 0.9643 vs 精确 0.9648）；考试按题目/教材要求处理。</li>
+<li><b>依概率收敛 ≠ 必然收敛：</b>说的是「大偏差概率趋于 0」，不保证每个试验序列都收敛。</li>
+<li><b>三大定律条件记忆：</b>切比雪夫=独立+方差有界；辛钦=独立同分布+期望存在（<b>不要求方差</b>）；伯努利=0-1 特例。</li>
+<li><b>方向别算反：</b>$\Phi(-x)=1-\Phi(x)$；$P\{a\le X\le b\}$ 是上端减下端。</li>
+<li><b>反向问题取整方向：</b>解出 $N\ge15.07$ 要取 $16$（向上取整），取 15 会不满足概率要求。</li>
+<li><b>近似的前提：</b>$n$ 不够大或 $p$ 极端偏斜时正态近似不可靠——先查 $np,nq\ge5$，否则改用泊松近似。</li>
+<li><b>CLT 的对象是「和 / 均值」：</b>单个变量不管多大都不适用；「大量独立同分布之和」才是主角。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td>切比雪夫不等式</td><td>$P\{|X-\mu|\ge\varepsilon\}\le\dfrac{\sigma^2}{\varepsilon^2}$；$P\{|X-\mu|<\varepsilon\}\ge1-\dfrac{\sigma^2}{\varepsilon^2}$</td></tr>
+<tr><td>依概率收敛</td><td>$\lim\limits_{n\to\infty}P\{|X_n-a|\ge\varepsilon\}=0$，记 $X_n\xrightarrow{P}a$</td></tr>
+<tr><td>切比雪夫大数定律</td><td>独立 + $D(X_i)\le C$ ⇒ $\dfrac1n\sum X_i\xrightarrow{P}\dfrac1n\sum\mu_i$</td></tr>
+<tr><td>伯努利大数定律</td><td>$\dfrac{\mu_n}{n}\xrightarrow{P}p$（频率稳定于概率）</td></tr>
+<tr><td>辛钦大数定律</td><td>独立同分布 + 期望存在 ⇒ $\dfrac1n\sum X_i\xrightarrow{P}\mu$</td></tr>
+<tr><td>独立同分布 CLT</td><td>$\dfrac{\sum X_i-n\mu}{\sqrt n\sigma}\xrightarrow{d}N(0,1)$；$\bar X\approx N\!\left(\mu,\dfrac{\sigma^2}{n}\right)$</td></tr>
+<tr><td>李雅普诺夫定理</td><td>独立（可不同分布）⇒ 标准化后近似 $N(0,1)$（条件略）</td></tr>
+<tr><td>棣莫弗-拉普拉斯</td><td>$B(n,p)\approx N(np,npq)$；$P\{a\le\mu_n\le b\}\approx\Phi\!\left(\dfrac{b-np}{\sqrt{npq}}\right)-\Phi\!\left(\dfrac{a-np}{\sqrt{npq}}\right)$</td></tr>
+<tr><td>常用分位点</td><td>$z_{0.90}=1.28$，$z_{0.95}=1.645$，$z_{0.975}=1.96$，$z_{0.995}=2.58$</td></tr>
+<tr><td>常用 Φ 值</td><td>$\Phi(1)=0.8413$，$\Phi(1.645)=0.95$，$\Phi(1.96)=0.975$，$\Phi(2)=0.9772$，$\Phi(2.58)=0.995$，$\Phi(3)=0.9987$</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>大数定律说「<b>平均稳定</b>」（依概率收敛到期望）；中心极限定理说「<b>和近似正态</b>」（标准化后趋于 $N(0,1)$）——前者是统计学「用样本估计总体」的根基，后者是一切正态近似的来源。</div>
+</section>
+
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>会证切比雪夫 → 会用其证大数定律 → 会套 CLT 算概率 → 会解反向问题 → 能解释「频率稳定」与「正态无处不在」。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 证明切比雪夫不等式（区域放缩法）；<br>
+② 用切比雪夫不等式证明切比雪夫大数定律与伯努利大数定律；<br>
+③ 叙述三大数定律的条件与强弱关系（伯努利 ⊂ 切比雪夫；辛钦条件最弱）；<br>
+④ 用独立同分布 CLT 完成「和/均值」的正向近似计算；<br>
+⑤ 用棣莫弗-拉普拉斯解反向问题（求 n、取整）；<br>
+⑥ 说清大数定律与中心极限定理的「两个为什么」及其应用（统计估计、蒙特卡洛）。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>「频率稳定 / 平均稳定」的论证</td><td>大数定律（伯努利 / 辛钦）</td><td>§3、§5 例4</td></tr>
+<tr><td>独立同分布之和落在某区间</td><td>iid CLT 标准化</td><td>§4 定理4、§5 例1</td></tr>
+<tr><td>二项分布概率近似</td><td>棣莫弗-拉普拉斯</td><td>§4 定理6、§5 例2</td></tr>
+<tr><td>「至少多少」的反向问题</td><td>Φ 不等式 + 分位点 + 取整</td><td>§5 例3</td></tr>
+<tr><td>只有 μ、σ 要估计上界</td><td>切比雪夫不等式</td><td>§1 例</td></tr>
+<tr><td>模拟/投点法可行性论证</td><td>伯努利大数定律</td><td>§5 例4</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 独立写出切比雪夫不等式的证明（区域放缩）(§1)<br>
+☐ 用切比雪夫证明伯努利大数定律（关键：$D(\mu_n/n)=pq/n\le1/(4n)$）(§3)<br>
+☐ 口述三大数定律的条件与关系（谁是谁的特例）(§3)<br>
+☐ 复算例 1（≈0.84）与例 2（0.9544；修正 0.9643）(§5)<br>
+☐ 独立完成例 3 反向问题直至 $N=16$ 并回代验算 (§5)<br>
+☐ 用大数定律论证投点法估计 $\pi$（蒙特卡洛原理）(§5 例4)<br>
+☐ 解释「为什么正态分布无处不在」与「为什么频率稳定于概率」(§4、§3)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>概率论与数理统计 · 第五章 大数定律与中心极限定理 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
