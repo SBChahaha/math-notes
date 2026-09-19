@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据结构02 · 线性表 · 完全教程（王道体系）</title>
+<style>
+:root{--bg:#f4f8ff;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#2563eb;--accent2:#93c5fd;--soft:#eff6ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#93c5fd);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#dbeafe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#1d4ed8;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#1e3a8a}
+.card h3{font-size:1.05rem;color:#1d4ed8;margin:24px 0 8px;padding-left:10px;border-left:4px solid #93c5fd}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#60a5fa,#3b82f6);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#eff6ff;border-color:#93c5fd}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #bfdbfe;border-left:4px solid #60a5fa;background:#fbfdff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#1d4ed8;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#1d4ed8;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fbff}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+pre.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:16px 20px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.86rem;line-height:1.75;white-space:pre}
+pre.mermaid{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:12px;overflow-x:auto;text-align:center;color:#94a3b8;font-size:.85rem}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(37,99,235,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>数据结构 · 第二章 线性表 · 完全教程</h1>
+<p>王道体系 · 全部概念讲透 + 伪代码步骤化 + 复杂度全套</p>
+<div class="chips"><span>线性表定义</span><span>顺序表</span><span>单链表</span><span>双链表</span><span>循环链表</span><span>静态链表</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 线性表的定义与基本操作</a>
+<a href="#sec-2">02 · 顺序表</a>
+<a href="#sec-3">03 · 单链表</a>
+<a href="#sec-4">04 · 双链表、循环链表与静态链表</a>
+<a href="#sec-5">05 · 顺序表 vs 链表（必考对比）</a>
+<a href="#sec-6">06 · 典型例题</a>
+<a href="#sec-7">07 · 决策流程与易错点</a>
+<a href="#sec-8">08 · 速查表</a>
+<a href="#sec-9">09 · 能力自查</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章地位：</b>数据结构的第一种「逻辑结构」实例——线性表。它的两种主要实现（<b>顺序表</b>与<b>链表</b>）奠定了全书「同一逻辑结构、不同存储结构」的样板；<b>插入/删除的移动与改指针、平均移动次数</b>是 408 高频考点。</div>
+<pre class="flow">第二章 线性表
+├─ 定义与基本操作（§1）
+│   └─ 有限序列 + 9 种基本操作（插入/删除/查找…）
+├─ 顺序存储：顺序表（§2）
+│   ├─ 随机访问 O(1)；插入/删除要移动元素
+│   └─ 平均移动：插入 n/2、删除 (n−1)/2
+├─ 链式存储（§3–§4）
+│   ├─ 单链表：头插/尾插建表、插入删除改指针
+│   ├─ 双链表：四指针插入、两指针删除
+│   ├─ 循环链表：首尾相接（next 指向头）
+│   └─ 静态链表：数组模拟游标
+└─ 终极对比（§5，必考）
+    └─ 存取方式 / 插入删除 / 空间 / 适用场景
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>线性表的定义与基本操作<span class="tag">概念</span></h2>
+<div class="box def"><b>线性表：</b>由 $n$（$n\ge0$）个<b>相同数据类型</b>的数据元素构成的<b>有限序列</b>，记
+$$L=(a_1,\ a_2,\ \dots,\ a_n)$$
+· $n=0$ 时为空表；$a_1$ 是唯一「第一个」元素（表头），$a_n$ 是唯一「最后一个」（表尾）；<br>
+· 除首元素外每个元素有且仅有一个<b>直接前驱</b>，除尾元素外有且仅有一个<b>直接后继</b>；<br>
+· 元素的<b>位序</b>从 $1$ 开始计（$a_i$ 是第 $i$ 个元素）；<br>
+· 线性表是<b>逻辑结构</b>，其实现（顺序/链式）属于存储结构层面。</div>
+<div class="box def"><b>九个基本操作（王道命名，必记）：</b><br>
+① <code>InitList(&L)</code>——初始化，构造空表；<br>
+② <code>DestroyList(&L)</code>——销毁，释放内存；<br>
+③ <code>ListInsert(&L, i, e)</code>——在第 $i$ 个位置<b>插入</b>元素 $e$；<br>
+④ <code>ListDelete(&L, i, &e)</code>——<b>删除</b>第 $i$ 个元素，用 $e$ 返回其值；<br>
+⑤ <code>LocateElem(L, e)</code>——<b>按值查找</b>，返回第一个值等于 $e$ 的位序（找不到返回 0）；<br>
+⑥ <code>GetElem(L, i)</code>——<b>按位查找</b>，返回第 $i$ 个元素；<br>
+⑦ <code>Length(L)</code>——求表长；<br>
+⑧ <code>PrintList(L)</code>——按序输出；<br>
+⑨ <code>Empty(L)</code>——判空。</div>
+<div class="box tip"><b>三个符号约定：</b>「<code>&L</code>」表示<b>引用型</b>参数（会修改表本身，如插入删除）；「<code>&e</code>」是把结果带回给调用者；只有查找类不改变表。考试写伪代码时这些符号要规范使用。</div>
+</section>
+
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>顺序表<span class="tag">顺序存储</span></h2>
+<div class="box def"><b>定义：</b>用一组<b>地址连续</b>的存储单元依次存储线性表的元素——逻辑上相邻的元素物理上也相邻。<br>
+<b>两大特征：</b>① <b>随机访问</b>：第 $i$ 个元素地址 $=\text{LOC}(a_1)+(i-1)\times\text{sizeof}(E)$，按位查找 $O(1)$；② 插入/删除需要<b>移动元素</b>。</div>
+<div class="box def"><b>类型定义（静态分配）：</b>
+<pre class="code">#define MaxSize 50              // 最大长度
+typedef struct {
+    ElemType data[MaxSize];     // 顺序存储的元素
+    int length;                 // 当前长度
+} SqList;                       // 顺序表类型
+
+/* 动态分配版本 */
+typedef struct {
+    ElemType *data;             // 动态数组指针
+    int length, MaxSize;        // 长度与容量
+} SeqList;</pre>
+<b>关键：</b>位序 $i$ 对应数组下标 $i-1$——<b>代码里永远写 data[i-1]</b>。</div>
+<div class="thm"><span class="label">插入操作（平均移动 $n/2$）</span>在位置 $i$（$1\le i\le n+1$）插入：把第 $i$ 到 $n$ 个元素<b>从后往前</b>依次后移一位，再写入、长度 +1。<br>
+<b>平均移动次数推导：</b>插入位置有 $n+1$ 种等可能，插到第 $i$ 位需移动 $n-i+1$ 个元素：
+$$\text{平均}=\frac1{n+1}\sum_{i=1}^{n+1}(n-i+1)=\frac1{n+1}\cdot\frac{n(n+1)}2=\frac n2$$</div>
+<div class="thm"><span class="label">删除操作（平均移动 $(n-1)/2$）</span>删除位置 $i$（$1\le i\le n$）：把第 $i+1$ 到 $n$ 个元素<b>从前往后</b>依次前移一位，长度 −1。<br>
+<b>平均移动推导：</b>删除位置有 $n$ 种等可能，删第 $i$ 位需移动 $n-i$ 个：
+$$\text{平均}=\frac1n\sum_{i=1}^{n}(n-i)=\frac1n\cdot\frac{n(n-1)}2=\frac{n-1}2$$</div>
+<div class="box example">
+<b>例（插入的完整伪代码）.</b>
+<pre class="code">bool ListInsert(SqList &L, int i, ElemType e) {
+    if (i < 1 || i > L.length + 1) return false;  // 位序非法
+    if (L.length == MaxSize) return false;        // 表满
+    for (int j = L.length; j >= i; j--)           // 从后往前移
+        L.data[j] = L.data[j-1];                  // 空出第 i 位（下标 i-1）
+    L.data[i-1] = e;
+    L.length++;
+    return true;
+}</pre>
+① 合法性：插入允许到表尾之后（$i=n+1$）⇒ 上界是 $length+1$；② 循环从 $j=n$ 递减到 $i$，共移动 $n-i+1$ 个；③ 时间 $O(n)$（移动）+ $O(1)$（其余）⇒ 总 $O(n)$ ✓。
+</div>
+<div class="box example">
+<b>例（按位查找与按值查找）.</b> 按位查找：`return L.data[i-1];` ⇒ $O(1)$（随机访问的威力）；<br>
+按值查找：从 $a_1$ 起逐个比较，等概率假设下平均比较 $\dfrac{n+1}2$ 次 ⇒ $O(n)$。<br>
+<b>复杂度口诀：</b>顺序表「<b>查位 O(1)、查值 O(n)、插删 O(n)</b>」。
+</div>
+<div class="box tip"><b>顺序表特点小结：</b>① 支持随机访问；② 存储密度高（只存数据、无指针开销）；③ 需预分配连续空间（可能溢出或浪费）；④ 插入删除平均移动一半元素。</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>单链表<span class="tag">链式存储核心</span></h2>
+<div class="box def"><b>定义：</b>每个结点含「数据域 + 指针域」，指针指向下一个结点；结点在内存中<b>不必连续</b>。<br>
+· <b>头指针 L：</b>指向链表的第一个结点（有头结点时指向头结点）；<br>
+· <b>头结点：</b>在第一个数据结点之前附加的「虚」结点（数据域可放表长等信息）——<b>统一空表与非空表的处理、统一首位置插入删除</b>。</div>
+<pre class="mermaid">
+graph LR
+  H["头结点 L"] --> A["a₁ 数据+next"] --> B["a₂ 数据+next"] --> C["a₃ 数据+next"] --> N["NULL"]
+</pre>
+<div class="box def"><b>类型定义：</b>
+<pre class="code">typedef struct LNode {      // 单链表结点
+    ElemType data;          // 数据域
+    struct LNode *next;     // 指针域：指向后继
+} LNode, *LinkList;         // LinkList 为指向结点的指针类型</pre>
+<b>关键习惯：</b>「结点指针 p」指 `LNode *p`；访问 p 的域写 `p->data`、`p->next`；合法指针才可解引用（空指针解引用是 408 最爱设的坑）。</div>
+<div class="box method"><b>建立单链表——头插法（结果逆序）：</b>
+<pre class="code">LinkList List_HeadInsert(LinkList &L) {
+    L = (LNode *) malloc(sizeof(LNode));  // 创建头结点
+    L->next = NULL;
+    ElemType x;
+    while (scanf("%d", &x) != EOF) {      // 逐个读入
+        LNode *s = (LNode *) malloc(sizeof(LNode));
+        s->data = x;
+        s->next = L->next;                // 新结点接在头结点之后
+        L->next = s;
+    }
+    return L;
+}</pre>
+① 每个结点插入均为 $O(1)$；总时间 $O(n)$；② <b>数据顺序与输入相反</b>——「输入 1,2,3，得到 3,2,1」是惯性考点 ✓。</div>
+<div class="box method"><b>建立单链表——尾插法（结果同序）：</b>
+<pre class="code">LinkList List_TailInsert(LinkList &L) {
+    L = (LNode *) malloc(sizeof(LNode));
+    L->next = NULL;
+    LNode *r = L;                         // r 始终指向表尾
+    ElemType x;
+    while (scanf("%d", &x) != EOF) {
+        LNode *s = (LNode *) malloc(sizeof(LNode));
+        s->data = x;
+        s->next = NULL;
+        r->next = s;  r = s;              // 链接并更新尾指针
+    }
+    return L;
+}</pre>
+<b>对照记忆：</b>头插不用尾指针但逆序；尾插需要尾指针 r 但保序——两种都是 $O(n)$ 总时间。</div>
+<div class="box def"><b>插入（在结点 p 之后插入 s）：</b>
+<pre class="code">s->next = p->next;    // ① 先让新结点接住后继
+p->next = s;          // ② 再断开、指到新结点
+/* 顺序颠倒（先 p->next=s 再 s->next=…）会丢失原后继！ */</pre>
+<b>前插技巧（在 p 之前插入 s，但只给了 p）：</b>把 s 插到 p 之后，再<b>交换 p 与 s 的数据域</b>——仍是 $O(1)$（经典脑筋题）。<br>
+<b>删除（删除 p 的后继 q）：</b>
+<pre class="code">q = p->next;          // q 为待删结点
+p->next = q->next;    // 摘链
+free(q);              // 必须释放！</pre></div>
+<div class="box def"><b>查找（均 $O(n)$）：</b>按位查找：从头结点出发走 $i$ 步（<b>不是随机访问</b>）；按值查找：逐个比较数据域。附带结论：<b>求表长</b>也要走一遍 ⇒ $O(n)$（这是与顺序表 $O(1)$ 的区别之一，但若头结点数据域存了长度则可 $O(1)$——考查对头结点用途的理解）。</div>
+</section>
+
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>双链表、循环链表与静态链表<span class="tag">三种变体</span></h2>
+<h3>（1）双链表（prior + next）</h3>
+<div class="box def">
+<pre class="code">typedef struct DNode {
+    ElemType data;
+    struct DNode *prior, *next;   // 前驱 + 后继
+} DNode, *DLinkList;</pre>
+<b>插入（在 p 之后插入 s，四条指针，注意顺序）：</b>
+<pre class="code">s->next = p->next;              // ① s 接后
+if (p->next != NULL)
+    p->next->prior = s;         // ② 后结点的前驱指向 s
+s->prior = p;                   // ③ s 的前驱指向 p
+p->next = s;                    // ④ p 的后继指向 s</pre>
+<b>删除（删除 p 的后继 q）：</b>
+<pre class="code">q = p->next;
+if (q == NULL) return false;
+p->next = q->next;              // p 跳过 q
+if (q->next != NULL)
+    q->next->prior = p;         // 补上后结点的前驱
+free(q);</pre>
+<b>要点：</b>改指针时先保住「邻居」，别先断链；判断边界（表头/表尾）防空指针。</div>
+<h3>（2）循环链表</h3>
+<div class="box def">
+· <b>单循环链表：</b>表尾结点的 next 指回<b>头结点</b>——从任意结点出发都能遍历全表；<br>
+· <b>判空：</b>带头结点时 `L->next == L`；<b>判表尾：</b>`p->next == L`；<br>
+· <b>双循环链表：</b>头结点的 prior 指向表尾（首尾互指）。<br>
+<b>经典操作（带尾指针 rear 的循环单链表）：</b>合并两个循环单链表 A、B：只需三步改指针——
+<pre class="code">p = A_rear->next;           // 记住 A 的头结点
+A_rear->next = B_rear->next->next;  // A 尾部接 B 的第一个数据结点
+B_rear->next = p;           // B 尾部指回 A 的头结点
+A_rear = B_rear;            // 新表尾更新</pre>
+改名要两表各扫一遍的操作被压到 $O(1)$——带尾指针的循环链表价值所在。</div>
+<h3>（3）静态链表（数组模拟）</h3>
+<div class="box def">
+<pre class="code">#define MaxSize 50
+typedef struct {
+    ElemType data;       // 数据
+    int next;            // 游标：下一元素的下标（−1 表示结束）
+} SLinkList[MaxSize];</pre>
+· 用数组模拟链式结构，`next` 存数组下标而不是真实地址；<br>
+· 适用于<b>不支持指针的语言</b>，或需要固定容量、便于序列化的场景；<br>
+· <b>位序与下标不再相等</b>——要沿游标跳着找（不能随机访问）；<br>
+· `next == −1` 表示链表结束；空表判 `S[0].next == −1` 级别。插入删除同样是「改游标」。</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>顺序表 vs 链表（必考对比）<span class="tag">高频</span></h2>
+<table>
+<thead><tr><th>维度</th><th>顺序表</th><th>链表</th></tr></thead>
+<tbody>
+<tr><td>存取方式</td><td><b>随机访问</b>：按位查找 $O(1)$</td><td><b>顺序访问</b>：按位查找 $O(n)$</td></tr>
+<tr><td>逻辑与物理</td><td>逻辑相邻 ⇒ 物理相邻</td><td>物理位置任意（指针链）</td></tr>
+<tr><td>插入/删除</td><td>平均移动一半元素 ⇒ $O(n)$</td><td>已定位后改指针 ⇒ $O(1)$</td></tr>
+<tr><td>按值查找</td><td>$O(n)$（平均 $\frac{n+1}2$ 次比较）</td><td>$O(n)$</td></tr>
+<tr><td>空间分配</td><td>预分配连续空间：可能溢出或闲置</td><td>按需分配：无溢出问题，但指针占额外空间</td></tr>
+<tr><td>存储密度</td><td>高（≈1）</td><td>小于 1（含指针域）</td></tr>
+<tr><td>适用场景</td><td>表长稳定、频繁按位查找、少插删</td><td>频繁插删、表长动态变化大</td></tr>
+</tbody>
+</table>
+<div class="box warn"><b>判断题高频辨析：</b>① 「链表按位查找 O(1)」错（那是顺序表）；② 「顺序表插入总需移动元素」——插到<b>表尾</b>时移动 0 个，但最坏/平均仍是 $O(n)$；③ 「链表能随机访问」错；④ 「顺序表存储密度一定为 1」——若是记录结构，两者都含数据项，比较的是「是否额外带指针」；一般题面按「存储密度高」记顺序表优势；⑤ 「链表插入一定 O(1)」——<b>只有已经拿到插入位置指针时</b>才 O(1)，若需先按位查找则总体 $O(n)$。</div>
+<div class="box tip"><b>一句话判别：</b>题目要「频繁按位查找/求第 k 个」⇒ 倾向<b>顺序表</b>；题目要「频繁插入删除/长度难预估」⇒ 倾向<b>链表</b>。</div>
+</section>
+
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>典型例题<span class="tag">四道经典操作</span></h2>
+<div class="box example">
+<b>例 1（顺序表：删除最小值元素，空位用表尾元素填补）.</b>
+<pre class="code">bool Del_Min(SqList &L, ElemType &value) {
+    if (L.length == 0) return false;        // 空表
+    value = L.data[0];  int pos = 0;        // 记最小值与位置
+    for (int i = 1; i < L.length; i++)      // 找最小值
+        if (L.data[i] < value) { value = L.data[i]; pos = i; }
+    L.data[pos] = L.data[L.length - 1];     // 表尾元素填坑
+    L.length--;                             // 长度减一
+    return true;
+}</pre>
+① 扫描一遍找最小值与位置：$O(n)$；② 填补+缩短：$O(1)$；③ 总时间 $O(n)$、辅助空间 $O(1)$（原地）✓。<br>
+<b>易错：</b>若先 `L.length--` 再取表尾会越界；填坑用<b>表尾</b>而不是前移（前移会多 O(n)）。
+</div>
+<div class="box example">
+<b>例 2（单链表就地逆置：头插法）.</b>
+<pre class="code">void Reverse(LinkList &L) {
+    LNode *p = L->next, *q;         // p 从第一个数据结点开始
+    L->next = NULL;                 // 头结点与链表断开（当作新空表）
+    while (p != NULL) {
+        q = p->next;                // ① 暂存后继，防丢链
+        p->next = L->next;          // ② 头插到新表
+        L->next = p;
+        p = q;                      // ③ 继续处理原表
+    }
+}</pre>
+① 每个结点做 $O(1)$ 次指针操作，共 $n$ 个 ⇒ 时间 $O(n)$；② 只用 p、q 两个辅助指针 ⇒ 空间 $O(1)$（原地逆置）✓。<br>
+<b>原理：</b>头插法天然产生逆序——把原表结点逐个「头插」到新表即可；<b>第一步必须暂存 q</b>。
+</div>
+<div class="box example">
+<b>例 3（快慢指针：求中间结点）.</b>
+<pre class="code">LNode *Find_Mid(LinkList L) {
+    LNode *slow = L, *fast = L;
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;            // 慢：一步
+        fast = fast->next->next;      // 快：两步
+    }
+    return slow;                      // 中间结点
+}</pre>
+① <b>正确性：</b>快指针速度是慢指针 2 倍，快指针到表尾时慢指针恰好走到中点；② 循环条件两个条件缺一不可（防 fast 或 fast->next 为空时解引用）；③ 时间 $O(n)$、空间 $O(1)$。长度偶数时 slow 落在<b>前半最后一个</b>（`fast->next==NULL` 退出）✓。<br>
+<b>同族技巧：</b>「找倒数第 k 个」用双指针拉开 k 步同步走（一次遍历 $O(n)$）。
+</div>
+<div class="box example">
+<b>例 4（合并两个有序链表，尾插保序）.</b>
+<pre class="code">void MergeList(LinkList &A, LinkList &B) {
+    LNode *pa = A->next, *pb = B->next, *r = A;   // r 为新表尾
+    A->next = NULL;
+    while (pa && pb) {                            // 谁小接谁
+        if (pa->data <= pb->data) { r->next = pa; pa = pa->next; }
+        else                      { r->next = pb; pb = pb->next; }
+        r = r->next;
+    }
+    r->next = (pa != NULL) ? pa : pb;             // 接上剩余段
+    free(B);                                      // 释放 B 的头结点
+}</pre>
+① 每个结点至多被「接」一次 ⇒ 时间 $O(n+m)$（$n,m$ 为两表长）；② 直接复用原结点、只改指针 ⇒ 空间 $O(1)$ ✓；③ 结束时剩余段整体挂上即可（有序性保证）——<b>408 大题常考的归并骨架</b>。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>决策流程与易错点</h2>
+<pre class="flow">线性表操作题
+├─ 顺序表
+│   ├─ 插入 i∈[1, n+1]：从后往前移（for j=n downto i）
+│   ├─ 删除 i∈[1, n]：从前往后移（for j=i to n−1）
+│   ├─ 按位 O(1)、按值 O(n)
+│   └─ 平均移动：插入 n/2、删除 (n−1)/2
+├─ 单链表
+│   ├─ 插入：先接后断（s->next=p->next; p->next=s）
+│   ├─ 删除：暂存后继 → 摘链 → free
+│   ├─ 建表：头插逆序 / 尾插保序（尾指针 r）
+│   └─ 查找与求长：O(n) 顺序访问
+├─ 双链表：插入四指针（先连新的、再改旧的）；删除补邻居 prior
+├─ 循环链表：next==头 判空/表尾；带尾指针合并 O(1)
+├─ 静态链表：沿游标跳转（下标 ≠ 位序）
+└─ 收尾检查：空表/边界 → 内存释放 → 复杂度与是否原地
+</pre>
+<h3>易错点清单</h3>
+<div class="box warn">
+<ol>
+<li><b>位序从 1 开始：</b>代码里第 $i$ 个元素是 <code>data[i-1]</code>——「第几位」与「下标」差 1。</li>
+<li><b>插入范围 $1\sim n+1$、删除范围 $1\sim n$：</b>插入可以插到表尾之后；边界检查要在移动之前。</li>
+<li><b>顺序表移动方向：</b>插入<b>从后往前</b>（防覆盖）、删除<b>从前往后</b>——方向反了数据就被冲掉。</li>
+<li><b>链表插入「先接后断」：</b>必须先让 s 接住原后继，再改 p 的指针；否则后继丢失。</li>
+<li><b>头指针 vs 头结点：</b>头指针是「指向第一个结点的指针」（永远存在），头结点是「附加的虚结点」（可无）；有头结点时空表是 <code>L->next==NULL</code>。</li>
+<li><b>快慢指针循环条件：</b><code>fast != NULL && fast->next != NULL</code> 两个都不能少（缺一个就可能解引用空指针）。</li>
+<li><b>删除时先暂存再 free：</b><code>q=p->next</code> 之后才可操作；<b>free 之后不能再用 q->next</b>——顺序错了程序崩塌。</li>
+<li><b>双链表插入的顺序：</b>典型的四步要先接好新结点的两条链，再让邻居认它；任一步都别裸断链。</li>
+<li><b>「链表插入 O(1)」有前提：</b>已经拿到插入位置的指针；若需要先按位查找，总体仍 $O(n)$。</li>
+<li><b>循环链表的终止条件：</b>不是 NULL 而是「回到头」（<code>p==L</code> 或 <code>p->next==L</code>）——沿用 NULL 判断会死循环。</li>
+</ol>
+</div>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>公式速查表</h2>
+<table>
+<thead><tr><th>操作</th><th>顺序表</th><th>链表</th></tr></thead>
+<tbody>
+<tr><td>按位查找</td><td>$O(1)$（随机访问）</td><td>$O(n)$</td></tr>
+<tr><td>按值查找</td><td>$O(n)$（平均 $\frac{n+1}2$ 次）</td><td>$O(n)$</td></tr>
+<tr><td>插入</td><td>$O(n)$，平均移动 $\frac n2$</td><td>已定位 $O(1)$；含查找 $O(n)$</td></tr>
+<tr><td>删除</td><td>$O(n)$，平均移动 $\frac{n-1}2$</td><td>已定位 $O(1)$；含查找 $O(n)$</td></tr>
+<tr><td>求表长</td><td>$O(1)$（length 域）</td><td>$O(n)$（遍历；头结点存长度可 $O(1)$）</td></tr>
+<tr><td>建表</td><td>逐个填入 $O(n)$</td><td>头插 $O(n)$（逆序）；尾插 $O(n)$（保序）</td></tr>
+</tbody>
+</table>
+<div class="box def"><b>链表三板斧（默写级）：</b>
+<pre class="code">/* 插入：p 之后插 s */        /* 删除：删 p 的后继 */        /* 双链表：p 之后插 s */
+s->next = p->next;           q = p->next;                   s->next = p->next;
+p->next = s;                 p->next = q->next;             if (p->next) p->next->prior = s;
+                             free(q);                       s->prior = p;  p->next = s;</pre></div>
+<div class="box tip"><b>一句话总纲：</b>顺序表「<b>存得紧凑、查位飞快，插删全在搬家</b>」；链表「<b>查得慢、插删快，全靠指针链</b>」。所有操作题先问三件事：<b>定位了吗？改了几条指针？释放了吗？</b></div>
+</section>
+
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>能力自查</h2>
+<div class="box tip"><b>学习闭环：</b>线性表概念与操作 → 顺序表（移动与平均）→ 单链表（指针三板斧）→ 变体（双/循环/静态）→ 对比选型。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 列出九个基本操作并说明参数符号（<code>&L</code>、<code>&e</code>）的含义；<br>
+② 独立推导顺序表插入 $\frac n2$、删除 $\frac{n-1}2$ 的平均移动次数；<br>
+③ 默写顺序表插入/删除代码（含边界与移动方向）；<br>
+④ 默写头插法/尾插法建表、单链表插入/删除，并解释每条指针语句的必要性；<br>
+⑤ 完成双链表插入四步与删除的边界处理；循环链表判空/判尾与 $O(1)$ 合并；<br>
+⑥ 说清静态链表的游标机制与适用场景；<br>
+⑦ 完整复述顺序表 vs 链表的对比表与选型依据。
+</div>
+<h3>闭卷操作清单</h3>
+<div class="box method">
+☐ 推导两式：插入平均 $\frac n2$、删除平均 $\frac{n-1}2$（写出求和）(§2)<br>
+☐ 顺序表插入代码：边界（$1\le i\le n+1$、表满）+ 后移 + 写入 (§2)<br>
+☐ 头插/尾插建表代码，并说出「逆序/保序」差异 (§3)<br>
+☐ 单链表插入两条语句的顺序理由；「前插换数据」技巧 (§3)<br>
+☐ 双链表插入四指针（含边界）与删除（含补 prior）(§4)<br>
+☐ 循环链表：判空/判尾条件 + 带尾指针合并三步 (§4)<br>
+☐ §6 四例（删最小、逆置、找中间、归并）全部独立手写并算复杂度 (§6)<br>
+☐ 默写对比表（七行）(§5)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax、图表由 Mermaid 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>数据结构（408 · 王道体系） · 第二章 线性表 · 内容完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var murls=[
+    "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://registry.npmmirror.com/mermaid/10.9.1/files/dist/mermaid.min.js"
+  ];
+  function mload(i){
+    if(i>=murls.length){return;}
+    var s=document.createElement("script");
+    s.src=murls[i];s.async=true;
+    s.onload=function(){try{mermaid.initialize({startOnLoad:false,theme:"neutral",securityLevel:"loose"});mermaid.run({querySelector:".mermaid"});}catch(e){}};
+    s.onerror=function(){mload(i+1);};
+    document.head.appendChild(s);
+  }
+  mload(0);
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
