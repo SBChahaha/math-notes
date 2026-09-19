@@ -126,7 +126,7 @@ $$\hat a=\bar X-\sqrt{3B_2},\qquad \hat b=\bar X+\sqrt{3B_2}$$
 <div class="box example">
 <b>例 3（正态：注意方差用 $B_2$）.</b> $X\sim N(\mu,\sigma^2)$，则
 $$\hat\mu=\bar X,\qquad \hat\sigma^2=B_2=\frac1n\sum_{i=1}^n(X_i-\bar X)^2$$
-<b>提示：</b>矩估计的 $\hat\sigma^2$ 分母是 $n$（对应 $B_2$），<b>不是</b>无偏的 $S^2$。由第六章 $B_2=\dfrac{n-1}{n}S^2$ 得 $E(B_2)=\dfrac{n-1}{n}\sigma^2$——矩估计可以有偏 ✓（评优见 §3）。
+<b>提示：</b>矩估计的 $\hat\sigma^2$ 分母是 $n$（对应 $B_2$），<b>不是</b>无偏的 $S^2$。由定义 $B_2=\dfrac{n-1}{n}S^2$ 及第六章 $E(S^2)=\sigma^2$ 得 $E(B_2)=\dfrac{n-1}{n}\sigma^2$——矩估计可以有偏 ✓（评优见 §3）。
 </div>
 </section>
 <section class="card" id="sec-2">
@@ -146,8 +146,8 @@ $$\frac{d\ln L}{dp}=\frac{\sum x_i}{p}-\frac{n-\sum x_i}{1-p}=0\ \Longrightarrow
 </div>
 <div class="box example">
 <b>例 2（泊松分布）.</b> $X\sim P(\lambda)$，求 $\lambda$ 的 MLE。<br>
-① $L(\lambda)=\prod\dfrac{\lambda^{x_i}e^{-\lambda}}{x_i!}=\dfrac{\lambda^{\sum x_i}e^{-n\lambda}}{\prod x_i!}$；<br>
-② $\ln L=\left(\sum x_i\right)\ln\lambda-n\lambda-\ln\prod x_i!$；<br>
+① $L(\lambda)=\prod\dfrac{\lambda^{x_i}e^{-\lambda}}{x_i!}=\dfrac{\lambda^{\sum x_i}e^{-n\lambda}}{\prod_{i=1}^n x_i!}$；<br>
+② $\ln L=\left(\sum x_i\right)\ln\lambda-n\lambda-\ln\prod_{i=1}^n x_i!$；<br>
 ③ $\dfrac{d\ln L}{d\lambda}=\dfrac{\sum x_i}{\lambda}-n=0$ ⇒ $\hat\lambda=\bar X$；<br>
 ④ 二阶导 $-\dfrac{\sum x_i}{\lambda^2}<0$，确为最大值 ✓。<br>
 <b>数据验算：</b>样本 $1,2,0,1,3$：$\hat\lambda=7/5=1.4$，与矩估计一致（该分布两法同解）。
@@ -182,7 +182,7 @@ $$\hat\theta=\max(X_1,\dots,X_n)$$
 ① $E(\bar X)=\mu$ ⇒ $\bar X$ 是 $\mu$ 的无偏估计；<br>
 ② $E(S^2)=\sigma^2$（第六章定理）⇒ $S^2$ 是 $\sigma^2$ 的无偏估计；<br>
 ③ $E(B_2)=\dfrac{n-1}{n}\sigma^2\ne\sigma^2$ ⇒ 矩估计 $B_2$ <b>有偏</b>。<br>
-<b>验算（n=2 特例）：</b>$B_2=\dfrac{(X_1-X_2)^2}{4}$；又 $E[(X_1-X_2)^2]=D(X_1-X_2)=2\sigma^2$，故 $E(B_2)=\dfrac{2\sigma^2}{4}=\dfrac{\sigma^2}{2}=\dfrac{n-1}{n}\sigma^2_{(n=2)}$ ✓。
+<b>验算（n=2 特例）：</b>$B_2=\dfrac{(X_1-X_2)^2}{4}$；又 $E[(X_1-X_2)^2]=D(X_1-X_2)=2\sigma^2$，故 $E(B_2)=\dfrac{2\sigma^2}{4}=\dfrac{\sigma^2}{2}=\dfrac{n-1}{n}\sigma^2\big|_{n=2}$ ✓。
 </div>
 <h3>标准二：有效性</h3>
 <div class="box def"><b>定义：</b>两个无偏估计中，方差更小者<b>更有效</b>（更集中、更可靠）。</div>
@@ -217,8 +217,8 @@ $$P\{\hat\theta_L<\theta<\hat\theta_U\}=1-\alpha$$
 <div class="box example">
 <b>例（流程演示：σ 已知时 μ 的区间）.</b> $X\sim N(\mu,1)$，抽得 $n=16$、$\bar x=10$，求 $\mu$ 的 95% 置信区间。<br>
 ① 枢轴量：$G=\dfrac{\bar X-\mu}{\sigma/\sqrt n}=4(\bar X-\mu)\sim N(0,1)$；<br>
-② $P\{-1.96<G<1.96\}=0.95$，即 $P\{4(10-\mu)\in(-1.96,1.96)\}=0.95$；<br>
-③ 反解：$-1.96<40-4\mu<1.96$ ⇒ $10-0.49<\mu<10+0.49$，区间为 $(9.51,\ 10.49)$。<br>
+② $P\{-1.96<G<1.96\}=0.95$，即 $P\{-1.96<4(\bar X-\mu)<1.96\}=0.95$；<br>
+③ 代入 $\bar x=10$ 反解：$-1.96<40-4\mu<1.96$ ⇒ $10-0.49<\mu<10+0.49$，区间为 $(9.51,\ 10.49)$。<br>
 <b>验算（长度自检）：</b>半宽 $=z_{0.025}\dfrac{\sigma}{\sqrt n}=1.96\times0.25=0.49$ ✓；若 $n$ 增到 64，半宽减半为 0.245 ✓。
 </div>
 </section>
@@ -228,7 +228,7 @@ $$P\{\hat\theta_L<\theta<\hat\theta_U\}=1-\alpha$$
 <h3>（1）μ 的置信区间：σ² 已知</h3>
 <div class="thm"><span class="label">公式</span>
 $$\bar X\pm z_{\alpha/2}\cdot\frac{\sigma}{\sqrt n}$$
-（枢轴量 $G=\dfrac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1)$。）</div>
+（枢轴量 $G=\dfrac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1)$，第六章定理 A。）</div>
 <div class="proof"><span class="label">推导</span>由 $P\{-z_{\alpha/2}<G<z_{\alpha/2}\}=1-\alpha$ 反解：
 $$-z_{\alpha/2}<\frac{\bar X-\mu}{\sigma/\sqrt n}<z_{\alpha/2}\ \Longleftrightarrow\ \bar X-z_{\alpha/2}\frac{\sigma}{\sqrt n}<\mu<\bar X+z_{\alpha/2}\frac{\sigma}{\sqrt n}\ ✓$$<span class="qed">∎</span></div>
 <h3>（2）μ 的置信区间：σ² 未知（最常用）</h3>
@@ -239,7 +239,7 @@ $$\bar X\pm t_{\alpha/2}(n-1)\cdot\frac{S}{\sqrt n}$$
 <h3>（3）σ² 的置信区间：μ 未知</h3>
 <div class="thm"><span class="label">公式</span>
 $$\left(\frac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)},\ \frac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)}\right)$$</div>
-<div class="proof"><span class="label">推导</span>枢轴量 $\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$。取两侧各 $\alpha/2$：
+<div class="proof"><span class="label">推导</span>枢轴量 $\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$（第六章定理 B）。取两侧各 $\alpha/2$：
 $$P\left\{\chi^2_{1-\alpha/2}(n-1)<\frac{(n-1)S^2}{\sigma^2}<\chi^2_{\alpha/2}(n-1)\right\}=1-\alpha$$
 从中间解出 $\sigma^2$（正数取倒数要<b>翻转</b>不等号）：
 $$\frac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)}<\sigma^2<\frac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)}\ ✓$$
@@ -259,7 +259,7 @@ $$(\bar X-\bar Y)\pm t_{\alpha/2}(n_1+n_2-2)\cdot S_w\sqrt{\frac{1}{n_1}+\frac{1
 <div class="thm"><span class="label">公式</span>
 $$\left(\frac{S_1^2}{S_2^2}\cdot\frac{1}{F_{\alpha/2}(n_1-1,n_2-1)},\ \frac{S_1^2}{S_2^2}\cdot\frac{1}{F_{1-\alpha/2}(n_1-1,n_2-1)}\right)$$
 （由倒数公式，右端点也可写作 $\dfrac{S_1^2}{S_2^2}\cdot F_{\alpha/2}(n_2-1,\ n_1-1)$，这样只查上侧表。）</div>
-<div class="proof"><span class="label">推导</span>枢轴量 $F_{piv}=\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(n_1-1,\ n_2-1)$。由
+<div class="proof"><span class="label">推导</span>枢轴量 $F_{piv}=\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(n_1-1,\ n_2-1)$（第六章定理 E）。由
 $$P\left\{F_{1-\alpha/2}<F_{piv}<F_{\alpha/2}\right\}=1-\alpha$$
 反解出 $\dfrac{\sigma_1^2}{\sigma_2^2}$（在分子，取倒数得区间）：
 $$\frac{S_1^2/S_2^2}{F_{\alpha/2}(n_1-1,n_2-1)}<\frac{\sigma_1^2}{\sigma_2^2}<\frac{S_1^2/S_2^2}{F_{1-\alpha/2}(n_1-1,n_2-1)}\ ✓$$<span class="qed">∎</span></div>
@@ -285,7 +285,7 @@ $$\bar x\pm t_{\alpha/2}\frac{s}{\sqrt n}=10.0\pm2.131\times0.1=(9.787,\ 10.213)
 $$\left(\frac{2.4}{27.488},\ \frac{2.4}{6.262}\right)=(0.087,\ 0.383)$$
 ④ $\sigma$ 的 95% 区间：开方得 $(\sqrt{0.087},\ \sqrt{0.383})=(0.295,\ 0.619)$；<br>
 ⑤ $\mu$ 的 95% 单侧上限：$t_{0.05}(15)=1.753$：$\mu<10.0+1.753\times0.1=10.175$。<br>
-<b>验算：</b>①半宽 $2.131\times0.1=0.213$ ✓；②的区间包含①（置信度更高更宽）✓；③中 $s^2=0.16$ 确在区间内 ✓；⑤单侧上限 10.175 低于①的右端 10.213（单侧更"省"）✓。
+<b>验算：</b>①半宽 $2.131\times0.1=0.213$ ✓；②的区间包含①（置信度更高更宽）✓；③中 $s^2=0.16$ 确在区间内 ✓；⑤单侧上限 10.175 低于①的右端 10.213（单侧更「省」）✓。
 </div>
 <div class="box example">
 <b>例 2（两样本均值差）.</b> 两台机床加工同种零件，各抽 $n_1=n_2=10$：$\bar x-\bar y=0.8$，$s_1^2=0.20$，$s_2^2=0.10$（设方差相等）。求 $\mu_1-\mu_2$ 的 95% 置信区间。<br>
@@ -313,7 +313,7 @@ $$\left(\frac{2}{4.03},\ 2\times4.03\right)=(0.50,\ 8.06)$$
 ├─ 评价估计量？
 │   ├─ 无偏：E(θ̂) = θ ？（S² 对 σ² 无偏；B₂ 有偏）
 │   ├─ 有效：无偏者中方差更小者更有效（X̄ 为最优线性无偏）
-│   └─ 相合：n → ∞ 时 θ̂ → ᵖ θ
+│   └─ 相合：n → ∞ 时 θ̂ 依概率收敛于 θ
 ├─ 区间估计？
 │   ├─ 定参数：μ？σ²？μ₁−μ₂？σ₁²/σ₂²？
 │   ├─ 定条件：σ² 已知（z）还是未知（t）？方差相等吗？
@@ -335,8 +335,8 @@ $$\left(\frac{2}{4.03},\ 2\times4.03\right)=(0.50,\ 8.06)$$
 <li><b>单侧用 α：</b>单侧置信区间用 $z_\alpha,t_\alpha,\chi^2_\alpha$，不是 $\alpha/2$。</li>
 <li><b>两样本 t 的前提：</b>正态、独立、方差相等——缺一不可（方差不等需其他近似）。</li>
 <li><b>宽度三因素：</b>$n\uparrow$ 变窄；置信度 $\uparrow$ 变宽；σ 大则宽；t 分位点比 z 大（σ 未知更宽）。</li>
-<li><b>无偏不是唯一标准：</b>$X_1$ 无偏但极差（不相合）；还要看方差与相合性。</li>
-<li><b>数字规范：</b>分位点查表保留 3 位；区间端点保留位数与原始数据一致，避免过度精确。</li>
+<li><b>无偏不是唯一标准：</b>$X_1$ 无偏但精度很差（不相合）；还要看方差与相合性。</li>
+<li><b>数字规范：</b>分位点查表一般保留 3 位（例题中允许采用更精确表值）；区间端点保留位数与原始数据一致，避免过度精确。</li>
 </ol>
 </div>
 </section>
@@ -357,7 +357,7 @@ $$\left(\frac{2}{4.03},\ 2\times4.03\right)=(0.50,\ 8.06)$$
 <tr><td>σ₁²/σ₂² 区间</td><td>$\left(\dfrac{S_1^2/S_2^2}{F_{\alpha/2}(n_1-1,n_2-1)},\ \dfrac{S_1^2}{S_2^2}F_{\alpha/2}(n_2-1,n_1-1)\right)$</td></tr>
 <tr><td>单侧 μ 上限</td><td>$\mu<\bar X+t_\alpha(n-1)\dfrac{S}{\sqrt n}$（下限用 $-$）</td></tr>
 <tr><td>单侧 σ² 上限</td><td>$\sigma^2<\dfrac{(n-1)S^2}{\chi^2_{1-\alpha}(n-1)}$（下限分母用 $\chi^2_\alpha$）</td></tr>
-<tr><td>常用表值</td><td>$z_{0.025}=1.96$，$z_{0.05}=1.645$；$t_{0.025}(15)=2.131$，$t_{0.005}(15)=2.947$，$t_{0.05}(15)=1.753$，$t_{0.025}(18)=2.101$；$\chi^2_{0.025}(15)=27.49$，$\chi^2_{0.975}(15)=6.26$，$\chi^2_{0.95}(15)=7.26$；$F_{0.025}(9,9)=4.03$</td></tr>
+<tr><td>常用表值</td><td>$z_{0.025}=1.96$，$z_{0.05}=1.645$；$t_{0.025}(15)=2.131$，$t_{0.005}(15)=2.947$，$t_{0.05}(15)=1.753$，$t_{0.025}(18)=2.101$；$\chi^2_{0.025}(15)=27.49$，$\chi^2_{0.975}(15)=6.26$，$\chi^2_{0.95}(15)=7.26$，$\chi^2_{0.05}(15)=25.00$；$F_{0.025}(9,9)=4.03$</td></tr>
 </tbody>
 </table>
 <div class="box tip"><b>一句话总纲：</b>点估计解决「估哪个数」——矩法看方程、似然法看最可能；区间估计解决「估得多准」——一切从<b>枢轴量</b>出发：$\mu$ 找 $z/t$、$\sigma^2$ 找 $\chi^2$、两样本找 $t/F$，<b>反解不等式</b>就得到区间。</div>
@@ -390,7 +390,7 @@ $$\left(\frac{2}{4.03},\ 2\times4.03\right)=(0.50,\ 8.06)$$
 </table>
 <h3>闭卷自查</h3>
 <div class="box method">
-☐ $U(0,\theta)$ 两种估计对照：矩估计 $2\bar X$ 与 MLE $\max X_i$（含数据验算）(§1 例2、§2 例4)<br>
+☐ $U(0,\theta)$ 两种估计对照：矩估计 $2\bar X$ 与 MLE $\max X_i$（含数据验算）(§2 例4；$2\bar X$ 即 §1 例2 取 $a=0$ 的特例)<br>
 ☐ 独立推导 0-1 分布 $p$ 的 MLE（写 L → 求导 → 解）(§2 例1)<br>
 ☐ 证明 $\bar X$ 最优线性无偏（配方 $\sum c_i^2\ge1/n$）(§3 例2)<br>
 ☐ 默写 $\mu$、$\sigma^2$ 四类区间的枢轴量与反解过程 (§5)<br>
