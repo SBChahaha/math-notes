@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高数05 · 定积分 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#fff7f0;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#ea580c;--accent2:#fdba74;--soft:#fff7ed}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#7c2d12,#ea580c 55%,#fdba74);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#ffedd5}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#9a3412;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#7c2d12}
+.card h3{font-size:1.05rem;color:#9a3412;margin:24px 0 8px;padding-left:10px;border-left:4px solid #fdba74}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#fb923c,#f97316);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#fff7ed;border-color:#fdba74}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #fed7aa;border-left:4px solid #fb923c;background:#fffdfa;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#9a3412;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#9a3412;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#fffbF7}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(234,88,12,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>高等数学 · 第五章 定积分 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>黎曼和</span><span>可积条件</span><span>积分性质</span><span>牛顿-莱布尼茨</span><span>换元与分部</span><span>反常积分</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 定积分的概念</a>
+<a href="#sec-2">02 · 可积条件</a>
+<a href="#sec-3">03 · 定积分的性质</a>
+<a href="#sec-4">04 · 微积分基本公式</a>
+<a href="#sec-5">05 · 换元法与分部积分</a>
+<a href="#sec-6">06 · 反常积分</a>
+<a href="#sec-7">07 · 典型例题</a>
+<a href="#sec-8">08 · 解题决策流程与易错点</a>
+<a href="#sec-9">09 · 公式速查表</a>
+<a href="#sec-10">10 · 能力自查</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章地位：</b>积分学的另一半——把「无限细分再求和」的思想精确化。核心公式<b>牛顿-莱布尼茨公式</b>把定积分（极限）与不定积分（原函数）打通，从此积分计算全部转化为求原函数。</div>
+<pre class="flow">第五章 定积分
+├─ 概念（§1）
+│   ├─ 黎曼和：分割 → 近似 → 求和 → 取极限
+│   ├─ 几何意义：代数面积（区分正负）
+│   └─ 定积分是「数」，与积分变量字母无关
+├─ 可积条件（§2）
+│   └─ 充分条件：连续 / 有界且有限个间断点 / 单调
+├─ 性质（§3）
+│   ├─ 线性、区间可加、保号、估值
+│   └─ 积分中值定理：∫ = f(ξ)(b−a)（含证明）
+├─ 核心公式（§4）
+│   ├─ 变上限积分 Φ(x) = ∫ₐˣ f：Φ′ = f（原函数存在定理）
+│   └─ 牛顿-莱布尼茨：∫ₐᵇ f = F(b) − F(a)
+├─ 计算（§5）
+│   └─ 换元法（换元必换限！）、分部积分、对称性技巧
+└─ 反常积分（§6）
+    └─ 无穷限 / 瑕积分；p 积分判别
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>定积分的概念<span class="tag">黎曼和</span></h2>
+<div class="box def">
+<b>定义（四步法）：</b>求曲边梯形面积：<br>
+① <b>分割：</b>$a=x_0<x_1<\cdots<x_n=b$，$\Delta x_i=x_i-x_{i-1}$；<br>
+② <b>近似：</b>每小块用矩形近似，$\Delta S_i\approx f(\xi_i)\Delta x_i$；<br>
+③ <b>求和：</b>$S_n=\sum\limits_{i=1}^nf(\xi_i)\Delta x_i$；<br>
+④ <b>取极限：</b>记 $\lambda=\max\Delta x_i$，若 $\lim\limits_{\lambda\to0}\sum f(\xi_i)\Delta x_i=I$ 存在（与分法、$\xi_i$ 取法无关），称 $f$ 在 $[a,b]$ 上<b>可积</b>，$I$ 为定积分：
+$$\int_a^bf(x)\,dx=\lim_{\lambda\to0}\sum_{i=1}^nf(\xi_i)\Delta x_i$$
+（$a$、$b$ 为积分下限、上限；$f$ 为被积函数。）</div>
+<div class="box example">
+<b>例（用定义算 $\int_0^1x\,dx$）.</b><br>
+① 等分：$\Delta x_i=\dfrac1n$，取 $\xi_i=\dfrac in$；<br>
+② 黎曼和：
+$$S_n=\sum_{i=1}^n\frac in\cdot\frac1n=\frac1{n^2}\cdot\frac{n(n+1)}2=\frac{n+1}{2n}$$
+③ 取极限：$\lim\limits_{n\to\infty}\dfrac{n+1}{2n}=\dfrac12$ ⇒ $\displaystyle\int_0^1x\,dx=\dfrac12$ ✓。<br>
+<b>验算（几何）：</b>三角形面积 $\dfrac12\times1\times1=\dfrac12$ ✓（把曲边梯形退化为直边三角形）。
+</div>
+<div class="box def">
+<b>几何意义：</b>$f\ge0$ 时是曲边梯形面积；$f$ 变号时是<b>代数面积</b>（x 轴上方为正、下方为负）。<br>
+<b>规定：</b>$\int_a^af=0$；$\int_b^af=-\int_a^bf$（上下限交换变号）。<br>
+<b>重要观察：</b>定积分是一个<b>数</b>（由 $f,a,b$ 决定），与积分变量用什么字母无关：$\int_a^bf(x)dx=\int_a^bf(t)dt$。</div>
+<div class="box warn"><b>可积的必要条件：</b>可积 ⇒ 有界。（无界函数不可能有有限的黎曼和极限；但<b>有界不一定可积</b>，如狄利克雷函数。）</div>
+</section>
+
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>可积条件<span class="tag">判定</span></h2>
+<div class="thm"><span class="label">可积的充要条件（了解形式）</span>有界函数 $f$ 在 $[a,b]$ 上可积 $\iff$ 分割的「振幅和」趋于 0：
+$$\lim_{\lambda\to0}\sum_{i=1}^n\omega_i\Delta x_i=0,\qquad \omega_i=\sup_{[x_{i-1},x_i]}f-\inf_{[x_{i-1},x_i]}f$$
+（直观：每小块内函数值的「波动幅度」乘宽度、总和趋于 0。）</div>
+<div class="thm"><span class="label">可积的充分条件（三族常用）</span>
+① $f$ 在 $[a,b]$ 上<b>连续</b> ⇒ 可积；<br>
+② $f$ 在 $[a,b]$ 上<b>有界且只有有限个间断点</b> ⇒ 可积；<br>
+③ $f$ 在 $[a,b]$ 上<b>单调有界</b> ⇒ 可积。</div>
+<div class="box tip"><b>说明：</b>①的严格证明用「连续 ⇒ 一致连续 ⇒ 振幅和可任意小」（第一章康托尔定理）；②把间断点挖掉后每段连续、间断点贡献的宽度可任意小；③单调时振幅和 ≤ |f(b)−f(a)|·Δx·n 的精细估计。三族条件覆盖了全部初等函数与常见分段函数，<b>日常遇到的被积函数几乎都可积</b>。</div>
+<div class="box example">
+<b>例（可积性速判）.</b><br>
+① $\sqrt{1+x^2}$ 在 $[-1,1]$：连续 ⇒ 可积 ✓；<br>
+② $\dfrac{\sin x}x$ 在 $[-1,1]$ 补充定义 $f(0)=1$ 后：有界且只有（最多）一个间断点 ⇒ 可积 ✓；<br>
+③ 符号函数 $\operatorname{sgn}x$ 在 $[-1,1]$：有界、仅 1 个跳跃间断点 ⇒ 可积（且 $\int_{-1}^1\operatorname{sgn}x\,dx=0$，正负面积抵消 ✓）；<br>
+④ 狄利克雷函数（有理点取 1、无理点取 0）：有界但处处不连续，振幅和恒为 $b-a$ ⇒ <b>不可积</b>（范例记住即可）。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>定积分的性质<span class="tag">运算与估计</span></h2>
+<div class="thm"><span class="label">性质（设相关积分都存在）</span>
+① <b>线性：</b>$\displaystyle\int_a^b[\alpha f+\beta g]dx=\alpha\int_a^bf\,dx+\beta\int_a^bg\,dx$；<br>
+② <b>区间可加：</b>$\displaystyle\int_a^bf=\int_a^cf+\int_c^bf$（$c$ 在区间内外均可，按变号规定理解）；<br>
+③ <b>保号性：</b>$f\ge0$ ⇒ $\displaystyle\int_a^bf\ge0$（$a<b$）；<br>
+④ <b>保序性：</b>$f\le g$ ⇒ $\displaystyle\int_a^bf\le\int_a^bg$；<br>
+⑤ <b>绝对值不等式：</b>$\left|\displaystyle\int_a^bf\right|\le\int_a^b|f|$。</div>
+<div class="proof"><span class="label">证明（③）</span>黎曼和每一项 $f(\xi_i)\Delta x_i\ge0$ ⇒ 和的极限 ≥0 ✓（④ 由 $g-f\ge0$ 用③；⑤ 由 $-|f|\le f\le|f|$ 用④）。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">估值定理</span>设 $m\le f(x)\le M$（$x\in[a,b]$），则
+$$m(b-a)\le\int_a^bf(x)dx\le M(b-a)$$</div>
+<div class="proof"><span class="label">证明</span>对常数函数用保序性：$\int_a^b m\,dx\le\int_a^b f\,dx\le\int_a^b M\,dx$，而 $\int_a^b m\,dx=m(b-a)$（矩形面积）✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">积分中值定理</span>若 $f$ 在 $[a,b]$ 上连续，则 $\exists\xi\in[a,b]$：
+$$\int_a^bf(x)dx=f(\xi)(b-a)\qquad\text{即}\quad f(\xi)=\frac1{b-a}\int_a^bf(x)dx\ (\text{平均值})$$</div>
+<div class="proof"><span class="label">证明</span>由最值定理，$f$ 在 $[a,b]$ 取到最小值 $m$ 与最大值 $M$，由估值定理：
+$$m\le\frac1{b-a}\int_a^bf(x)dx\le M$$
+右边这个数介于 $m$ 与 $M$ 之间，由<b>介值定理</b>（第一章）存在 $\xi\in[a,b]$ 使 $f(\xi)$ 等于它 ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（估计积分值）.</b> 估计 $\displaystyle\int_0^1e^{-x^2}dx$ 的范围。<br>
+① 在 $[0,1]$ 上 $e^{-x^2}$ 单调减：$m=e^{-1}$（右端）、$M=e^0=1$（左端）；<br>
+② 估值定理：
+$$e^{-1}(1-0)\le\int_0^1e^{-x^2}dx\le1\cdot(1-0)\ \Longrightarrow\ 0.368\le I\le1$$
+<b>验算（数值）：</b>实际值 $\approx0.747$，落在区间内 ✓（区间较宽，因被积函数变化大）。
+</div>
+</section>
+
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>微积分基本公式<span class="tag">核心定理</span></h2>
+<div class="box def"><b>变上限积分：</b>设 $f$ 在 $[a,b]$ 上可积，定义
+$$\Phi(x)=\int_a^xf(t)\,dt\qquad(x\in[a,b])$$
+它是 $x$ 的函数（「累积面积」）。</div>
+<div class="thm"><span class="label">定理（变上限积分求导）</span>若 $f$ 在 $[a,b]$ 上连续，则 $\Phi$ 在 $[a,b]$ 上可导，且
+$$\Phi'(x)=f(x)$$</div>
+<div class="proof"><span class="label">证明</span>取增量（设 $x+\Delta x\in[a,b]$，$\Delta x>0$）：
+$$\Delta\Phi=\Phi(x+\Delta x)-\Phi(x)=\int_a^{x+\Delta x}f-\int_a^xf=\int_x^{x+\Delta x}f(t)\,dt$$
+由积分中值定理，$\exists\xi\in[x,x+\Delta x]$：
+$$\frac{\Delta\Phi}{\Delta x}=f(\xi)$$
+当 $\Delta x\to0$ 时 $\xi\to x$，由 $f$ 连续：$f(\xi)\to f(x)$，故 $\Phi'(x)=f(x)$ ✓（$\Delta x<0$ 同理）。<span class="qed">∎</span></div>
+<div class="box tip"><b>原函数存在定理（重述）：</b>连续函数 $f$ 必有原函数——$\Phi(x)=\int_a^xf$ 就是一个。这补齐了第四章「连续必有原函数」的证明。<br>
+<b>推广（链式法则版）：</b>$\dfrac{d}{dx}\displaystyle\int_{a}^{\varphi(x)}f(t)dt=f[\varphi(x)]\varphi'(x)$；$\dfrac{d}{dx}\int_{\psi(x)}^{\varphi(x)}f=f[\varphi]\varphi'-f[\psi]\psi'$。</div>
+<div class="thm"><span class="label">牛顿-莱布尼茨公式</span>若 $f$ 在 $[a,b]$ 上连续，$F$ 是 $f$ 的任一原函数，则
+$$\int_a^bf(x)\,dx=F(b)-F(a)\ \Big(=F(x)\Big|_a^b\Big)$$</div>
+<div class="proof"><span class="label">证明</span>由上面的定理，$\Phi'(x)=f(x)$，故 $\Phi$ 也是 $f$ 的原函数；又 $F$ 是任一原函数 ⇒ $\Phi(x)=F(x)+C$。代入 $x=a$：$0=\Phi(a)=F(a)+C$ ⇒ $C=-F(a)$，即 $\Phi(x)=F(x)-F(a)$。再代入 $x=b$：
+$$\int_a^bf(x)dx=\Phi(b)=F(b)-F(a)\ ✓$$<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（N-L 直接算）.</b><br>
+① $\displaystyle\int_0^1x^2dx=\frac{x^3}3\Big|_0^1=\frac13$（验证 §1 的定义法结论方向）；<br>
+② $\displaystyle\int_1^e\frac{dx}x=\ln x\Big|_1^e=1-0=1$；<br>
+③ $\displaystyle\int_0^\pi\sin x\,dx=(-\cos x)\Big|_0^\pi=-(-1)-(-1)=2$（半个拱面积 =2 ✓）。<br>
+<b>验算（③的正负检验）：</b>$\int_0^{2\pi}\sin x\,dx=0$（正负抵消）✓；而 $\int_0^{2\pi}|\sin x|dx=4$（恒正）✓。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>换元法与分部积分<span class="tag">计算两翼</span></h2>
+<div class="thm"><span class="label">定积分换元公式</span>设 $f$ 连续、$x=\varphi(t)$ 有连续导数，且 $\varphi(\alpha)=a$、$\varphi(\beta)=b$，则
+$$\int_a^bf(x)\,dx=\int_\alpha^\beta f[\varphi(t)]\,\varphi'(t)\,dt$$</div>
+<div class="proof"><span class="label">证明</span>设 $F$ 是 $f$ 的原函数：$F'=f$。对复合函数用链式法则：
+$$\frac{d}{dt}F[\varphi(t)]=f[\varphi(t)]\varphi'(t)$$
+对 $t$ 从 $\alpha$ 到 $\beta$ 用 N-L 公式：
+$$\int_\alpha^\beta f[\varphi(t)]\varphi'(t)dt=F[\varphi(\beta)]-F[\varphi(\alpha)]=F(b)-F(a)=\int_a^bf(x)dx\ ✓$$<span class="qed">∎</span></div>
+<div class="box warn"><b>与不定积分的两大区别：</b>① <b>换元必换限</b>（把 $x$ 的上下限换成 $t$ 的上下限）；② <b>不需要回代</b>原变量（直接在 $t$ 下用 N-L）。</div>
+<div class="box example">
+<b>例 1（四分之一圆面积）.</b> 计算 $\displaystyle\int_0^a\sqrt{a^2-x^2}\,dx$（$a>0$）。<br>
+① 令 $x=a\sin t$：当 $x=0$ 时 $t=0$；$x=a$ 时 $t=\dfrac\pi2$；$dx=a\cos t\,dt$；<br>
+② 代入（$\sqrt{a^2-x^2}=a\cos t$）：
+$$\int_0^a\sqrt{a^2-x^2}dx=\int_0^{\pi/2}a^2\cos^2t\,dt=\frac{a^2}2\int_0^{\pi/2}(1+\cos2t)dt=\frac{a^2}2\left[t+\frac{\sin2t}2\right]_0^{\pi/2}=\frac{\pi a^2}4$$
+<b>验算（几何）：</b>半径 $a$ 的<b>四分之一</b>圆面积 $=\dfrac{\pi a^2}4$ ✓ 完美吻合。
+</div>
+<div class="thm"><span class="label">对称性技巧（重要）</span>设 $f$ 在 $[-a,a]$ 上连续／可积：<br>
+① $f$ 为<b>奇函数</b>：$\displaystyle\int_{-a}^af(x)dx=0$；<br>
+② $f$ 为<b>偶函数</b>：$\displaystyle\int_{-a}^af(x)dx=2\int_0^af(x)dx$。</div>
+<div class="proof"><span class="label">证明</span>对 $\int_{-a}^0f(x)dx$ 作代换 $x=-t$：$dx=-dt$，
+$$\int_{-a}^0f(x)dx=\int_a^0f(-t)(-dt)=\int_0^af(-t)dt$$
+奇函数时 $=\displaystyle-\int_0^af(t)dt$，与 $\int_0^af$ 相加为 0；偶函数时两半相等 ⇒ 2 倍 ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 2（对称性秒杀）.</b><br>
+① $\displaystyle\int_{-1}^1x^3\cos x\,dx=0$（奇 × 偶 = 奇）；<br>
+② $\displaystyle\int_{-2}^2\sqrt{4-x^2}\,dx=2\int_0^2\sqrt{4-x^2}dx=2\cdot\frac{\pi\cdot2^2}4=2\pi$（半圆面积：$\frac12\pi\cdot2^2=2\pi$ ✓）。
+</div>
+<div class="thm"><span class="label">分部积分公式</span>
+$$\int_a^bu\,dv=\Big[uv\Big]_a^b-\int_a^bv\,du$$</div>
+<div class="box example">
+<b>例 3（分部标准流程）.</b> 计算 $\displaystyle\int_0^{\pi/2}x\sin x\,dx$。<br>
+① 取 $u=x$、$dv=\sin x\,dx$ ⇒ $v=-\cos x$：
+$$\int_0^{\pi/2}x\sin x\,dx=\Big[-x\cos x\Big]_0^{\pi/2}+\int_0^{\pi/2}\cos x\,dx$$
+② 边值项 $=\left(0-0\right)=0$（$x=\frac\pi2$ 时 $\cos=0$；$x=0$ 时 $x\cos x=0$）；<br>
+③ 第二项 $=\sin x\Big|_0^{\pi/2}=1$ ⇒ 原式 $=1$ ✓。<br>
+<b>验算（几何/量级）：</b>被积函数在 $[0,\frac\pi2]$ 上从 0 升到 $\frac\pi2$，积分值 1 合理 ✓。
+</div>
+</section>
+
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>反常积分<span class="tag">拓广积分</span></h2>
+<div class="box def"><b>无穷限反常积分：</b>
+$$\int_a^{+\infty}f(x)dx=\lim_{b\to+\infty}\int_a^bf(x)dx$$
+若极限存在（有限）称<b>收敛</b>，否则称发散；$\int_{-\infty}^b$、$\int_{-\infty}^{+\infty}$（拆成两段都收敛才行）类似。</div>
+<div class="box example">
+<b>例 1（收敛算例）.</b> $\displaystyle\int_1^{+\infty}\frac{dx}{x^2}=\lim_{b\to\infty}\left[-\frac1x\right]_1^b=\lim_{b\to\infty}\left(1-\frac1b\right)=1$ ✓（无穷区域却有<b>有限</b>面积——收敛）。而 $\displaystyle\int_1^{+\infty}\frac{dx}x=\lim_{b\to\infty}\ln b=+\infty$（发散）。
+</div>
+<div class="thm"><span class="label">p 积分判别（无穷限）</span>
+$$\int_1^{+\infty}\frac{dx}{x^p}\ \begin{cases}\text{收敛}\ (p>1),\ \text{值为}\ \dfrac1{p-1}\\[4pt]\text{发散}\ (p\le1)\end{cases}$$</div>
+<div class="proof"><span class="label">证明</span>$p\ne1$ 时 $\displaystyle\int_1^b\frac{dx}{x^p}=\left[\frac{x^{1-p}}{1-p}\right]_1^b=\frac{1}{p-1}\left(1-b^{1-p}\right)$：当 $p>1$ 时 $b^{1-p}\to0$ ⇒ 收敛于 $\dfrac1{p-1}$；当 $p<1$ 时 $b^{1-p}\to\infty$ ⇒ 发散；$p=1$ 时 $\ln b\to\infty$ 发散 ✓。<span class="qed">∎</span></div>
+<div class="box def"><b>无界函数（瑕积分）：</b>若 $f$ 在 $a$ 附近无界（$a$ 为<b>瑕点</b>）：
+$$\int_a^bf(x)dx=\lim_{\varepsilon\to0^+}\int_{a+\varepsilon}^bf(x)dx$$
+同样按极限是否存在判定收敛/发散（瑕点在内部时拆段）。</div>
+<div class="box example">
+<b>例 2（瑕积分收敛算例）.</b> $\displaystyle\int_0^1\frac{dx}{\sqrt x}=\lim_{\varepsilon\to0^+}\left[2\sqrt x\right]_\varepsilon^1=\lim_{\varepsilon\to0^+}\left(2-2\sqrt\varepsilon\right)=2$ ✓（函数在 0 处无界，但积分收敛）。<br>
+<b>对照：</b>$\displaystyle\int_0^1\frac{dx}x=\lim_{\varepsilon\to0^+}(-\ln\varepsilon)=+\infty$（发散）——$\frac1{\sqrt x}$ 与 $\frac1x$ 在 0 附近的「无界速度」决定命运（$p<1$ 收敛、$p\ge1$ 发散）。
+</div>
+<div class="box tip"><b>比较判别法（速记）：</b>若 $0\le f(x)\le g(x)$（$x$ 充分大或瑕点附近）：$g$ 的积分收敛 ⇒ $f$ 收敛；$f$ 发散 ⇒ $g$ 发散。（用已知的 p 积分当「尺子」。）</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>典型例题<span class="tag">实战</span></h2>
+<div class="box example">
+<b>例 1（定义法：$\int_0^1x^2dx$）.</b><br>
+① 等分取 $\xi_i=\dfrac in$：
+$$S_n=\sum_{i=1}^n\left(\frac in\right)^2\frac1n=\frac1{n^3}\cdot\frac{n(n+1)(2n+1)}6=\frac{(n+1)(2n+1)}{6n^2}$$
+② 取极限：$\lim\limits_{n\to\infty}\dfrac{2n^2+3n+1}{6n^2}=\dfrac13$ ✓（用 $\sum i^2$ 公式是定义法的标准套路）。<br>
+<b>验算（N-L）：</b>$\dfrac{x^3}3\Big|_0^1=\dfrac13$ ✓ 两法一致。
+</div>
+<div class="box example">
+<b>例 2（换元综合：根式代换）.</b> 计算 $\displaystyle\int_0^4\frac{dx}{1+\sqrt x}$。<br>
+① 令 $t=\sqrt x$（$x=t^2$，$dx=2t\,dt$）：$x=0\to t=0$，$x=4\to t=2$；<br>
+② 代入：
+$$\int_0^2\frac{2t}{1+t}dt=2\int_0^2\left(1-\frac1{1+t}\right)dt=2\Big[t-\ln(1+t)\Big]_0^2$$
+③ 用 N-L：$=2(2-\ln3)=4-2\ln3\approx1.803$ ✓。<br>
+<b>验算（估值）：</b>用梯形粗略估计：$\dfrac{1+\frac13}2\times4\approx2.67$，因曲线位于弦下方，梯形<b>偏大</b>——精确值 1.803 合理 ✓。
+</div>
+<div class="box example">
+<b>例 3（对称性拆解）.</b> 计算 $\displaystyle\int_{-2}^2\left(x^5+\sqrt{4-x^2}\right)dx$。<br>
+① 拆两项：$x^5$ 是奇函数 ⇒ 积分为 0；<br>
+② $\sqrt{4-x^2}$ 是偶函数 ⇒ $2\displaystyle\int_0^2\sqrt{4-x^2}dx=2\cdot\dfrac{\pi\cdot2^2}4=2\pi$（四分之一圆 ×2 = 半圆面积）；<br>
+③ 合计 $=2\pi$ ✓。
+</div>
+<div class="box example">
+<b>例 4（无穷限：分部 + 极限）.</b> 计算 $\displaystyle\int_0^{+\infty}xe^{-x}dx$。<br>
+① 分部：$\displaystyle\int_0^bxe^{-x}dx=\Big[-xe^{-x}\Big]_0^b+\int_0^be^{-x}dx=-be^{-b}+\left(1-e^{-b}\right)$；<br>
+② 取极限（$be^{-b}\to0$，指数压过多项式）：
+$$\int_0^{+\infty}xe^{-x}dx=\lim_{b\to\infty}\left(1-be^{-b}-e^{-b}\right)=1$$
+<b>验算（概率论呼应）：</b>$e^{-x}$（$x\ge0$）是 $E(1)$ 的密度，积分值 1 恰为「指数分布期望 $1/\lambda=1$」✓（概率论第四章）。
+</div>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>解题决策流程与易错点</h2>
+<pre class="flow">定积分题
+├─ 第一步：看对称性（奇偶）→ 能否直接归零 / 折半
+├─ 第二步：能否用 N-L（找到原函数）？
+│   ├─ 直接查表 / 恒等变形
+│   ├─ 换元：换元必换限，不必回代
+│   ├─ 分部：[uv]ₐᵇ − ∫v du
+│   └─ 凑微分、拆项、降幂技巧
+├─ 分段函数 → 分段积分再相加
+├─ 含绝对值 → 找零点、分区间去绝对值
+├─ 反常积分
+│   ├─ 先找无穷限与瑕点（含内部的！）
+│   ├─ 定义成极限计算
+│   └─ 判敛：p 积分尺子 + 比较判别
+└─ 验证手段：估值定理 / 几何面积 / 数值粗算
+</pre>
+<h3>易错点清单</h3>
+<div class="box warn">
+<ol>
+<li><b>换元必换限：</b>换成 $t$ 后上下限要跟着换——不定积分没有这个步骤，最易混淆。</li>
+<li><b>定积分是数：</b>结果不加 $+C$；「不定积分是函数族、定积分是数」。</li>
+<li><b>奇偶判断：</b>奇×偶 = 奇（如 $x^3\cos x$）；奇×奇 = 偶——先判断再动手。</li>
+<li><b>含绝对值先分段：</b>$\int_{-1}^2|x-1|dx$ 要在 1 处断开去绝对值。</li>
+<li><b>分部边值项：</b>$[uv]_a^b$ 别漏算；遇到 $0\cdot\infty$ 用洛必达/指数压制。</li>
+<li><b>瑕点要全找：</b>包括区间<b>内部</b>的无界点（拆段分别判敛）。</li>
+<li><b>p 积分方向：</b>无穷限处 $p>1$ 收敛；$0$（瑕点）处 $p<1$ 收敛——两个方向相反，别背混。</li>
+<li><b>比较法方向：</b>「大的收敛 ⇒ 小的收敛」「小的发散 ⇒ 大的发散」，其余不成立。</li>
+<li><b>N-L 前提：</b>要求 $f$ 连续（或分段可积且原函数连续）——在间断点处乱用会出错。</li>
+<li><b>估值定理取端点：</b>被积函数单调时最值在端点；非单调要找临界点。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td>定义</td><td>$\int_a^bf=\lim\limits_{\lambda\to0}\sum f(\xi_i)\Delta x_i$（分割、近似、求和、取极限）</td></tr>
+<tr><td>可积充分条件</td><td>连续 / 有界且有限个间断点 / 单调有界</td></tr>
+<tr><td>线性与可加</td><td>$\int(\alpha f+\beta g)=\alpha\int f+\beta\int g$；$\int_a^b=\int_a^c+\int_c^b$</td></tr>
+<tr><td>保号与保序</td><td>$f\ge0\Rightarrow\int\ge0$；$f\le g\Rightarrow\int f\le\int g$；$|\int f|\le\int|f|$</td></tr>
+<tr><td>估值定理</td><td>$m(b-a)\le\int_a^bf\le M(b-a)$</td></tr>
+<tr><td>积分中值定理</td><td>$f$ 连续 ⇒ $\int_a^bf=f(\xi)(b-a)$</td></tr>
+<tr><td>变上限求导</td><td>$\Phi(x)=\int_a^xf\Rightarrow\Phi'=f$；链式版 $\frac{d}{dx}\int_a^{\varphi}f=f(\varphi)\varphi'$</td></tr>
+<tr><td>牛顿-莱布尼茨</td><td>$\int_a^bf=F(b)-F(a)=F(x)\big|_a^b$</td></tr>
+<tr><td>换元</td><td>$x=\varphi(t)$：$\int_a^bf(x)dx=\int_\alpha^\beta f[\varphi(t)]\varphi'(t)dt$（换元必换限）</td></tr>
+<tr><td>分部</td><td>$\int_a^budv=[uv]_a^b-\int_a^bvdu$</td></tr>
+<tr><td>对称性</td><td>奇函数 $\int_{-a}^a=0$；偶函数 $\int_{-a}^a=2\int_0^a$</td></tr>
+<tr><td>p 积分（无穷限）</td><td>$\int_1^{+\infty}\frac{dx}{x^p}$：$p>1$ 收敛（值 $\frac1{p-1}$）；$p\le1$ 发散</td></tr>
+<tr><td>p 积分（瑕点 0）</td><td>$\int_0^1\frac{dx}{x^p}$：$p<1$ 收敛；$p\ge1$ 发散</td></tr>
+<tr><td>常用值</td><td>$\int_0^a\sqrt{a^2-x^2}dx=\frac{\pi a^2}4$；$\int_0^{\pi/2}x\sin x\,dx=1$；$\int_0^{\infty}xe^{-x}dx=1$</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>定积分 $=$ 「和式的极限」（定义是根）＋「原函数增量」（计算是路）；对称性先看、换元换限、分部带边值、反常找瑕点。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>能力自查</h2>
+<div class="box tip"><b>学习闭环：</b>会定义法 → 会证 N-L → 会换元/分部 → 会判反常收敛 → 会用对称性与估值验证。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 用四步法定义复述定积分，独立完成 $\int_0^1x\,dx$ 与 $\int_0^1x^2dx$ 的定义法计算；<br>
+② 证明积分中值定理（估值 + 介值）与变上限积分求导定理（增量 + 中值）；<br>
+③ 完整推导牛顿-莱布尼茨公式；<br>
+④ 换元法「换元必换限」；对称性技巧（奇偶）；分部积分的边值处理；<br>
+⑤ 反常积分两类（无穷限、瑕点）的判定与计算；p 积分结论；<br>
+⑥ 用估值、几何面积、数值粗算自检积分结果。
+</div>
+<h3>闭卷操作清单</h3>
+<div class="box method">
+☐ 定义法算 $\int_0^1x\,dx$（$S_n=\frac{n+1}{2n}$）(§1)<br>
+☐ 三种可积充分条件各举一例 (§2)<br>
+☐ 证明积分中值定理（两步：估值 + 介值）(§3)<br>
+☐ 证明 $\Phi'=f$（增量 = 积分中值）(§4)<br>
+☐ N-L 公式证明（$\Phi$ 与 $F$ 差常数）(§4)<br>
+☐ 推导 $\int_0^a\sqrt{a^2-x^2}dx=\frac{\pi a^2}4$（$x=a\sin t$）(§5)<br>
+☐ 对称性证明（$x=-t$ 代换两半相加）(§5)<br>
+☐ $\int_0^{\pi/2}x\sin x\,dx=1$ 分部全流程 (§5)<br>
+☐ p 积分两类的完整证明（$\frac1{p-1}(1-b^{1-p})$）(§6)<br>
+☐ 反常例：$\int_0^{\infty}xe^{-x}dx=1$（分部 + 极限）(§7)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>高等数学 · 第五章 定积分 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
