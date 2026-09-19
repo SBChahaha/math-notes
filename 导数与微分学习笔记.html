@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高数02 · 导数与微分 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#f6f5ff;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#7c3aed;--accent2:#a78bfa;--soft:#f5f3ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#4c1d95,#7c3aed 55%,#a78bfa);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#ede9fe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#6d28d9;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#4c1d95}
+.card h3{font-size:1.05rem;color:#6d28d9;margin:24px 0 8px;padding-left:10px;border-left:4px solid #c4b5fd}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#a78bfa,#8b5cf6);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#f5f3ff;border-color:#c4b5fd}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #ddd6fe;border-left:4px solid #a78bfa;background:#fcfbff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#6d28d9;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#6d28d9;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#faf9ff}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(124,58,237,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>高等数学 · 第二章 导数与微分 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>导数定义</span><span>求导法则</span><span>高阶导数</span><span>隐函数·参数方程</span><span>相关变化率</span><span>微分</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 导数概念</a>
+<a href="#sec-2">02 · 求导法则</a>
+<a href="#sec-3">03 · 高阶导数</a>
+<a href="#sec-4">04 · 隐函数、参数方程与相关变化率</a>
+<a href="#sec-5">05 · 微分</a>
+<a href="#sec-6">06 · 典型例题</a>
+<a href="#sec-7">07 · 解题决策流程与易错点</a>
+<a href="#sec-8">08 · 公式速查表</a>
+<a href="#sec-9">09 · 能力自查</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章地位：</b>微积分的第一核心概念——<b>导数</b>刻画「变化快慢」（瞬时变化率），<b>微分</b>刻画「局部线性近似」。第二章是第三章（中值定理）与以后一切应用的基础。</div>
+<pre class="flow">第二章 导数与微分
+├─ 导数概念（§1）
+│   ├─ 定义：差商极限 f′(x₀) = lim Δy/Δx
+│   ├─ 几何意义（切线斜率）/ 物理意义（瞬时速度）
+│   └─ 可导 ⇒ 连续（反之不然：|x| 在 0）
+├─ 求导法则（§2–§3）
+│   ├─ 四则运算（乘积法则含证明）
+│   ├─ 反函数求导、复合函数链式法则
+│   ├─ 基本导数表（必背）
+│   └─ 高阶导数 + 莱布尼茨公式（§3）
+├─ 特殊求导（§4）
+│   ├─ 隐函数求导 / 对数求导（幂指函数）
+│   ├─ 参数方程求导（一阶、二阶）
+│   └─ 相关变化率（对 t 求导）
+└─ 微分（§5）
+    ├─ 定义 Δy = AΔx + o(Δx)；可微 ⇔ 可导
+    ├─ 几何意义：切线的纵坐标增量
+    └─ 近似计算：f(x₀+Δx) ≈ f(x₀) + f′(x₀)Δx
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>导数概念<span class="tag">核心定义</span></h2>
+<div class="box def"><b>定义：</b>设 $y=f(x)$ 在 $x_0$ 的某邻域内有定义，若极限
+$$\lim_{\Delta x\to0}\frac{\Delta y}{\Delta x}=\lim_{\Delta x\to0}\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}$$
+存在，称 $f$ 在 $x_0$ 处<b>可导</b>，该极限为 $f$ 在 $x_0$ 的<b>导数</b>，记 $f'(x_0)$ 或 $\left.\dfrac{dy}{dx}\right|_{x=x_0}$。<br>
+<b>单侧导数：</b>左导数 $f'_-(x_0)$、右导数 $f'_+(x_0)$（把极限换成 $x\to x_0^-$、$x\to x_0^+$）；<b>可导 $\iff$ 左右导数存在且相等</b>。</div>
+<div class="box example">
+<b>例 1（定义法：$f(x)=x^2$）.</b> 求 $f'(x)$。<br>
+① 差商：
+$$\frac{f(x+\Delta x)-f(x)}{\Delta x}=\frac{(x+\Delta x)^2-x^2}{\Delta x}=\frac{2x\Delta x+(\Delta x)^2}{\Delta x}=2x+\Delta x$$
+② 取极限：$f'(x)=\lim\limits_{\Delta x\to0}(2x+\Delta x)=2x$ ✓。<br>
+<b>验算：</b>$f'(1)=2$（曲线 $y=x^2$ 在 $x=1$ 处切线斜率 2）；$f'(0)=0$（顶点处切线水平）——与图像直觉一致 ✓。
+</div>
+<div class="box example">
+<b>例 2（定义法：$f(x)=\dfrac1x$）.</b><br>
+① 差商：
+$$\frac{\dfrac1{x+\Delta x}-\dfrac1x}{\Delta x}=\frac{x-(x+\Delta x)}{x(x+\Delta x)\Delta x}=\frac{-1}{x(x+\Delta x)}$$
+② 取极限：$f'(x)=\lim\limits_{\Delta x\to0}\dfrac{-1}{x(x+\Delta x)}=-\dfrac1{x^2}$ ✓（与公式 $(x^{-1})'=-x^{-2}$ 一致）。
+</div>
+<div class="thm"><span class="label">几何意义：切线斜率</span>$f'(x_0)$ 是曲线 $y=f(x)$ 在点 $(x_0,f(x_0))$ 处切线的斜率，切线方程：
+$$y-f(x_0)=f'(x_0)(x-x_0)$$
+<b>物理意义：</b>$s(t)$ 的导数是瞬时速度 $v(t)=s'(t)$；$v(t)$ 的导数是加速度。</div>
+<div class="thm"><span class="label">定理（可导 ⇒ 连续）</span>若 $f$ 在 $x_0$ 可导，则 $f$ 在 $x_0$ 连续。<b>反之不成立。</b></div>
+<div class="proof"><span class="label">证明</span>把增量分解：
+$$\Delta y=\frac{\Delta y}{\Delta x}\cdot\Delta x\ \xrightarrow[\Delta x\to0]{}\ f'(x_0)\cdot0=0$$
+（第一个因子趋于 $f'(x_0)$、第二个趋于 0，乘积趋于 0。）故 $\lim\limits_{\Delta x\to0}\Delta y=0$，即 $f$ 在 $x_0$ 连续 ✓。<br>
+<b>反例（连续不可导）：</b>$f(x)=|x|$ 在 $x=0$ 连续，但左右导数
+$$f'_-(0)=\lim_{x\to0^-}\frac{|x|-0}{x}=-1,\qquad f'_+(0)=\lim_{x\to0^+}\frac{|x|}x=1$$
+不相等 ⇒ 不可导（几何上是「尖点」，切线不唯一）✓。<span class="qed">∎</span></div>
+<div class="box tip"><b>导函数：</b>若 $f$ 在区间内每点可导，得到导函数 $f'(x)=\lim\limits_{\Delta x\to0}\dfrac{f(x+\Delta x)-f(x)}{\Delta x}$（是一个函数，不是数）；$f'(x_0)$ 才是数。<br>
+<b>统一点可导判定的方法：</b>分界点处用<b>定义</b>分别算左右导数比较；区间内部用求导公式。</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>求导法则<span class="tag">计算引擎</span></h2>
+<div class="thm"><span class="label">四则运算</span>设 $u=u(x)$、$v=v(x)$ 可导：
+① $(u\pm v)'=u'\pm v'$；② $(uv)'=u'v+uv'$；③ $\left(\dfrac uv\right)'=\dfrac{u'v-uv'}{v^2}$（$v\ne0$）。</div>
+<div class="proof"><span class="label">证明（②乘积法则）</span>配凑增量：
+$$\Delta(uv)=u(x+\Delta x)v(x+\Delta x)-u(x)v(x)=\underbrace{[u(x+\Delta x)-u(x)]}_{\Delta u}v(x+\Delta x)+u(x)\underbrace{[v(x+\Delta x)-v(x)]}_{\Delta v}$$
+两边除以 $\Delta x$：
+$$\frac{\Delta(uv)}{\Delta x}=\frac{\Delta u}{\Delta x}\,v(x+\Delta x)+u(x)\,\frac{\Delta v}{\Delta x}\ \xrightarrow[\Delta x\to0]{}\ u'v+uv'$$
+（关键：$v$ 可导 ⇒ 连续 ⇒ $v(x+\Delta x)\to v(x)$）✓<br>
+<b>③ 的推导：</b>先算 $\left(\dfrac1v\right)'=\lim\dfrac{\frac1{v+\Delta v}-\frac1v}{\Delta x}=\lim\dfrac{-\Delta v}{v(v+\Delta v)\Delta x}=-\dfrac{v'}{v^2}$，再用乘积法则展开 $\left(u\cdot\dfrac1v\right)'$ 即得 ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">反函数求导</span>设 $y=f(x)$ 单调可导且 $f'(x)\ne0$，则反函数 $x=f^{-1}(y)$ 可导，且
+$$\left[f^{-1}(y)\right]'=\frac{1}{f'(x)}\qquad\text{即}\quad \frac{dx}{dy}=\frac{1}{\ dy/dx\ }$$
+（直观：$\dfrac{\Delta x}{\Delta y}$ 就是 $\dfrac{\Delta y}{\Delta x}$ 的倒数。）</div>
+<div class="thm"><span class="label">复合函数：链式法则</span>设 $y=f(u)$ 在 $u$ 可导，$u=g(x)$ 在 $x$ 可导，则复合函数 $y=f[g(x)]$ 可导：
+$$\frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dx}=f'(u)\,g'(x)$$</div>
+<div class="proof"><span class="label">证明（要点）</span>由 $y=f(u)$ 可导可写
+$$\Delta y=f'(u)\Delta u+\varepsilon(\Delta u)\Delta u,\qquad \varepsilon(\Delta u)\to0\ (\Delta u\to0)$$
+（$\varepsilon$ 是「误差项与 $\Delta u$ 之比」，趋于 0；补充定义 $\Delta u=0$ 时 $\varepsilon=0$。）两边除以 $\Delta x$：
+$$\frac{\Delta y}{\Delta x}=f'(u)\frac{\Delta u}{\Delta x}+\varepsilon(\Delta u)\frac{\Delta u}{\Delta x}\ \xrightarrow[\Delta x\to0]{}\ f'(u)g'(x)+0\cdot g'(x)$$
+（$g$ 可导 ⇒ 连续 ⇒ $\Delta u\to0$ ⇒ $\varepsilon\to0$）✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（链式法则三连）.</b><br>
+① $y=\sin(x^2)$：$y'=\cos(x^2)\cdot2x=2x\cos(x^2)$；<br>
+② $y=\ln(\cos x)$：$y'=\dfrac1{\cos x}\cdot(-\sin x)=-\tan x$；<br>
+③ $y=e^{\sin 3x}$：$y'=e^{\sin3x}\cdot\cos3x\cdot3=3\cos3x\,e^{\sin3x}$。<br>
+<b>验算（②用另一法）：</b>$y=\ln\cos x$，$y''=-\tan x$ 求导得 $y''=-\sec^2x$——与直接对 $-\tan x$ 判断一致 ✓（第三章将用）。
+</div>
+</section>
+
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>高阶导数<span class="tag">多次求导</span></h2>
+<div class="box def"><b>定义：</b>$y'=f'(x)$ 仍是函数，若它可导，其导数称为<b>二阶导数</b> $y''=f''(x)=(y')'$；依此类推得 $n$ 阶导数 $y^{(n)}=\left(y^{(n-1)}\right)'$。<br>
+记号：$y''=\dfrac{d^2y}{dx^2}$，$y^{(n)}=\dfrac{d^ny}{dx^n}$。</div>
+<div class="box example">
+<b>例 1（$\sin x$ 的 n 阶导数：归纳法示范）.</b> 求 $(\sin x)^{(n)}$。<br>
+① 列举找规律：
+$$(\sin x)'=\cos x=\sin\!\left(x+\frac\pi2\right),\quad (\sin x)''=-\sin x=\sin(x+\pi),\quad (\sin x)'''=-\cos x=\sin\!\left(x+\frac{3\pi}2\right)$$
+② 猜测 $(\sin x)^{(n)}=\sin\!\left(x+\dfrac{n\pi}2\right)$，归纳验证：若 $n$ 成立，则
+$$(\sin x)^{(n+1)}=\left[\sin\!\left(x+\frac{n\pi}2\right)\right]'=\cos\!\left(x+\frac{n\pi}2\right)=\sin\!\left(x+\frac{(n+1)\pi}2\right)\ ✓$$
+③ 故结论对一切 $n$ 成立 ✓；同理 $(\cos x)^{(n)}=\cos\!\left(x+\dfrac{n\pi}2\right)$。
+</div>
+<div class="box example">
+<b>例 2（$\ln x$ 的 n 阶导数）.</b> 先求低阶找系数规律：
+$$(\ln x)'=\frac1x,\quad (\ln x)''=-\frac1{x^2},\quad (\ln x)'''=\frac{2}{x^3},\quad (\ln x)^{(4)}=-\frac{6}{x^4}$$
+归纳得（记 $0!=1$）：
+$$(\ln x)^{(n)}=\frac{(-1)^{n-1}(n-1)!}{x^n}$$
+<b>验算（n=3）：</b>$\dfrac{(-1)^2\cdot2!}{x^3}=\dfrac2{x^3}$ ✓ 与列举一致。
+</div>
+<div class="thm"><span class="label">莱布尼茨公式</span>设 $u,v$ 都有 $n$ 阶导数，则
+$$(uv)^{(n)}=\sum_{k=0}^{n}C_n^k\,u^{(k)}\,v^{(n-k)}$$
+（形式与二项式定理完全同构——证明：对 $n$ 归纳，并用 $C_n^{k}+C_n^{k-1}=C_{n+1}^{k}$。）</div>
+<div class="box example">
+<b>例 3（莱布尼茨公式应用）.</b> 求 $y=x^2e^x$ 的 $n$ 阶导数。<br>
+① 取 $u=e^x$（任意阶导数 $u^{(k)}=e^x$）、$v=x^2$（只有 $k\le2$ 的非零导数：$v'=2x$，$v''=2$，之后为 0）；<br>
+② 莱布尼茨公式只剩三项：
+$$y^{(n)}=e^x\cdot x^2+C_n^1e^x\cdot2x+C_n^2e^x\cdot2=e^x\left[x^2+2nx+n(n-1)\right]$$
+<b>验算（n=2）：</b>公式给 $e^x(x^2+4x+2)$；直接求导：$y'=e^x(x^2+2x)$，$y''=e^x(x^2+4x+2)$ ✓。
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>隐函数、参数方程与相关变化率<span class="tag">特殊求导</span></h2>
+<h3>（1）隐函数求导</h3>
+<div class="box method"><b>方法：</b>把 $y$ 视为 $x$ 的函数 $y(x)$，方程 $F(x,y)=0$ 两边对 $x$ 求导（含 $y$ 的项用链式法则），再解出 $y'$ 的表达式（允许同时含 $x$ 与 $y$）。</div>
+<div class="box example">
+<b>例 1（圆）.</b> 由 $x^2+y^2=25$ 求 $y'$。<br>
+① 两边对 $x$ 求导：$2x+2y\,y'=0$；<br>
+② 解出：$y'=-\dfrac xy$；<br>
+<b>验算（几何）：</b>在点 $(3,4)$：$y'=-\dfrac34$；圆心到点的半径斜率 $\dfrac43$，切线与之垂直（乘积 $-\dfrac34\times\dfrac43=-1$）✓。
+</div>
+<div class="box example">
+<b>例 2（含指数）.</b> 由 $e^y+xy=e$ 求 $y'|_{(0,1)}$。<br>
+① 两边对 $x$ 求导：$e^y\,y'+y+x\,y'=0$；<br>
+② 解出：$y'=-\dfrac{y}{e^y+x}$；<br>
+③ 代入 $(x,y)=(0,1)$：$y'=-\dfrac1{e+0}=-\dfrac1e$。<br>
+<b>验算：</b>方程在 $(0,1)$ 成立（$e^1+0=e$）✓；切线斜率 $-1/e\approx-0.368$ 合理。
+</div>
+<h3>（2）对数求导法（幂指函数）</h3>
+<div class="box example">
+<b>例 3（$y=x^x$）.</b><br>
+① 两边取对数（$x>0$）：$\ln y=x\ln x$；<br>
+② 两边对 $x$ 求导（左侧链式）：$\dfrac{y'}{y}=\ln x+1$；<br>
+③ 回代：$y'=x^x(\ln x+1)$。<br>
+<b>验算（另一种写法）：</b>$y=e^{x\ln x}$ ⇒ $y'=e^{x\ln x}(x\ln x)'=x^x(\ln x+1)$ ✓。<br>
+<b>适用场景：</b>幂指函数 $u(x)^{v(x)}$、多个因子连乘除的函数。
+</div>
+<h3>（3）参数方程求导</h3>
+<div class="thm"><span class="label">公式</span>设 $x=\varphi(t)$、$y=\psi(t)$ 可导且 $\varphi'(t)\ne0$，则
+$$\frac{dy}{dx}=\frac{\psi'(t)}{\varphi'(t)},\qquad \frac{d^2y}{dx^2}=\frac{\dfrac{d}{dt}\left(\dfrac{dy}{dx}\right)}{\varphi'(t)}$$
+（二阶导是「一阶导再对 t 求导后除以 $x'(t)$」——<b>不是</b>直接对 $t$ 再导一次。）</div>
+<div class="box example">
+<b>例 4（椭圆）.</b> $x=a\cos t$，$y=b\sin t$（$0<t<\pi$）。<br>
+① 一阶：$\dfrac{dy}{dx}=\dfrac{(b\sin t)'}{(a\cos t)'}=\dfrac{b\cos t}{-a\sin t}=-\dfrac ba\cot t$；<br>
+② 二阶：
+$$\frac{d^2y}{dx^2}=\frac{\dfrac{d}{dt}\left(-\dfrac ba\cot t\right)}{-a\sin t}=\frac{\dfrac ba\csc^2t}{-a\sin t}=-\frac b{a^2\sin^3t}$$
+<b>验算（参数点 $t=\frac\pi2$）：</b>一阶导 0（顶点处切线水平 ✓）；二阶导 $-\dfrac b{a^2}<0$（顶部向下弯曲 ✓）。
+</div>
+<h3>（4）相关变化率</h3>
+<div class="box example">
+<b>例 5（气球充气）.</b> 球形气球体积 $V=\dfrac43\pi r^3$；已知半径以 $2$ cm/s 增大，求 $r=5$ cm 时体积增长速度。<br>
+① 对时间 $t$ 求导（链式）：
+$$\frac{dV}{dt}=4\pi r^2\cdot\frac{dr}{dt}$$
+② 代入 $r=5$、$\dfrac{dr}{dt}=2$：
+$$\frac{dV}{dt}=4\pi\times25\times2=200\pi\approx628\ (\text{cm}^3/\text{s})$$
+<b>验算（量级）：</b>体积约 $\frac43\pi\cdot125\approx524$ cm³，每秒增加 $200\pi\approx628$ cm³——增长快于当前体积是合理的（表面积大）✓。
+</div>
+</section>
+
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>微分<span class="tag">局部线性化</span></h2>
+<div class="box def"><b>定义：</b>若 $\Delta y=A\Delta x+o(\Delta x)$（$A$ 与 $\Delta x$ 无关），称 $f$ 在 $x_0$ 处<b>可微</b>，主线性部分 $A\Delta x$ 称为<b>微分</b>，记 $dy=A\Delta x$，并取 $dx=\Delta x$。</div>
+<div class="thm"><span class="label">定理（可微 ⇔ 可导）</span>$f$ 在 $x_0$ 可微 $\iff$ $f$ 在 $x_0$ 可导，且此时
+$$dy=f'(x_0)\,dx$$</div>
+<div class="proof"><span class="label">证明</span>
+<b>可导 ⇒ 可微：</b>由 $\lim\dfrac{\Delta y}{\Delta x}=f'(x_0)$ 得 $\dfrac{\Delta y}{\Delta x}=f'(x_0)+\alpha$（$\alpha\to0$），即
+$$\Delta y=f'(x_0)\Delta x+\underbrace{\alpha\Delta x}_{o(\Delta x)}\ ✓$$
+<b>可微 ⇒ 可导：</b>由 $\Delta y=A\Delta x+o(\Delta x)$，两边除以 $\Delta x$：
+$$\frac{\Delta y}{\Delta x}=A+\frac{o(\Delta x)}{\Delta x}\to A\ \Longrightarrow\ f'(x_0)=A\ ✓$$<span class="qed">∎</span></div>
+<div class="box tip"><b>几何意义：</b>$dy$ 是切线在 $\Delta x$ 上的纵坐标增量，$\Delta y$ 是曲线的真实增量；「可微」$=$「曲线在局部几乎就是切线」。
+$$f(x_0+\Delta x)\approx f(x_0)+f'(x_0)\Delta x\qquad(\Delta x\ \text{很小时})$$
+<b>微分形式不变性：</b>$dy=f'(u)\,du$ 对 $u$ 是自变量还是中间变量都成立（链式法则 $dy=f'(u)u'(x)dx=f'(u)du$）——这使积分换元（第四章）本质合法。</div>
+<div class="box">
+<b>微分公式（与导数公式一一对应）：</b>四则：
+$$d(u\pm v)=du\pm dv,\qquad d(uv)=v\,du+u\,dv,\qquad d\!\left(\frac uv\right)=\frac{v\,du-u\,dv}{v^2}$$
+基本：$d(x^\mu)=\mu x^{\mu-1}dx$，$d(\sin x)=\cos x\,dx$，$d(e^x)=e^xdx$，$d(\ln x)=\dfrac{dx}x$ 等（详见 §8）。
+</div>
+<div class="box example">
+<b>例（近似计算）.</b> 估算 $\sqrt{1.02}$。<br>
+① 取 $f(x)=\sqrt x$、$x_0=1$、$\Delta x=0.02$：$f'(x)=\dfrac1{2\sqrt x}$，$f'(1)=\dfrac12$；<br>
+② 线性近似：$\sqrt{1.02}\approx f(1)+f'(1)\Delta x=1+\dfrac12\times0.02=1.01$；<br>
+<b>验算（真实值）：</b>$\sqrt{1.02}=1.009950\dots$，近似值 1.01 的相对误差约 $5\times10^{-5}$——一阶近似已相当精确 ✓。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>典型例题<span class="tag">实战</span></h2>
+<div class="box example">
+<b>例 1（分段点可导性：经典反例函数）.</b> 设 $f(x)=\begin{cases}x^2\sin\dfrac1x,&x\ne0\\0,&x=0\end{cases}$，判断 $f'(0)$ 是否存在，并对 $x\ne0$ 求 $f'(x)$。<br>
+① 分界点用定义：
+$$f'(0)=\lim_{x\to0}\frac{x^2\sin\frac1x-0}{x}=\lim_{x\to0}x\sin\frac1x=0$$
+（有界函数 × 无穷小 ⇒ 0），故 $f'(0)=0$ 存在；<br>
+② 区间内用公式：$f'(x)=2x\sin\dfrac1x+x^2\cos\dfrac1x\cdot\left(-\dfrac1{x^2}\right)=2x\sin\dfrac1x-\cos\dfrac1x$；<br>
+③ <b>重要现象：</b>$x\to0$ 时 $f'(x)$ 极限不存在（$\cos\frac1x$ 振荡），但 $f'(0)=0$——<b>导函数可以不连续</b>！<br>
+<b>验算：</b>另取 $f(x)=|x|$：$f'(0)$ 左右导数 $-1\ne1$ ⇒ 不存在——两例对照记住「可导性必须用定义查分界点」✓。
+</div>
+<div class="box example">
+<b>例 2（切线方程与平行切线）.</b> 曲线 $y=x^3-3x+1$。<br>
+① 在 $x=2$ 处的切线：$y'=3x^2-3$，$y'(2)=9$，点 $(2,3)$（$8-6+1=3$）⇒ 切线 $y-3=9(x-2)$，即 $y=9x-15$；<br>
+② 求哪一点的切线与直线 $y=9x+1$ 平行：令 $3x^2-3=9\Rightarrow x^2=4\Rightarrow x=\pm2$ ⇒ 点为 $(2,3)$ 与 $(-2,-1)$；<br>
+<b>验算：</b>$x=-2$ 时 $y=-8+6+1=-1$ ✓；两点切线均斜率为 9 ✓。
+</div>
+<div class="box example">
+<b>例 3（对数求导：幂指函数进阶）.</b> 求 $y=\left(1+\dfrac1x\right)^x$（$x>0$）的导数。<br>
+① 取对数：$\ln y=x\ln\!\left(1+\dfrac1x\right)$；<br>
+② 两边求导：$\dfrac{y'}{y}=\ln\!\left(1+\dfrac1x\right)+x\cdot\dfrac{1}{1+\frac1x}\cdot\left(-\dfrac1{x^2}\right)=\ln\!\left(1+\dfrac1x\right)-\dfrac1{x+1}$；<br>
+③ 回代：
+$$y'=\left(1+\frac1x\right)^x\left[\ln\!\left(1+\frac1x\right)-\frac1{x+1}\right]$$
+<b>验算（数值）：</b>$x=1$ 时 $y'=2\ln2-1\approx0.386$；差商验证：$y(1.001)=\left(1+\dfrac1{1.001}\right)^{1.001}=(1.999001)^{1.001}\approx2.000386$，斜率 $\approx\dfrac{2.000386-2}{0.001}\approx0.386$ ✓ 与解析值一致。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>解题决策流程与易错点</h2>
+<pre class="flow">求导与微分题
+├─ 第一步：识别函数类型
+│   ├─ 初等显函数 → 四则 + 链式法则（由外向内层层剥）
+│   ├─ 幂指函数 u^v → 对数求导（或改写 e^{v ln u}）
+│   ├─ 隐函数 F(x,y)=0 → 两边对 x 求导 → 解出 y′
+│   ├─ 参数方程 → dy/dx = ψ′(t)/φ′(t)；二阶导再除以 φ′(t)
+│   └─ 分段 / 含绝对值 → 分界点用定义查左右导数
+├─ 求「在某点」的导数 / 切线
+│   ├─ 先求导函数再代入；分界点必须用定义
+│   └─ 切线：y − y₀ = f′(x₀)(x − x₀)
+├─ 相关变化率 → 建立变量关系式 → 对 t 求导 → 代入瞬时值
+└─ 微分 → dy = f′(x)dx；近似 f(x₀+Δx) ≈ f(x₀) + f′(x₀)Δx
+</pre>
+<h3>易错点清单</h3>
+<div class="box warn">
+<ol>
+<li><b>乘积法则不是分开导：</b>$(uv)'\ne u'v'$，而是 $u'v+uv'$；商法则分母是 $v^2$。</li>
+<li><b>链式法则层层剥：</b>$\ln(\sin 2x)$ 的导数是 $\dfrac{2\cos 2x}{\sin 2x}$——最难的内层系数（2）别漏。</li>
+<li><b>分界点用定义：</b>$|x|$、$x^2\sin\frac1x$ 等必须在分界点算左右导数，不能直接代导函数。</li>
+<li><b>导函数可以不连续：</b>$f'(x_0)$ 存在不代表 $\lim\limits_{x\to x_0}f'(x)$ 存在（$x^2\sin\frac1x$ 是范例）。</li>
+<li><b>隐函数求导别忘记：</b>$y$ 是 $x$ 的函数，含 $y$ 的项用链式法则（如 $(y^2)'=2yy'$）。</li>
+<li><b>参数方程二阶导：</b>是「一阶导再对 $t$ 求导 $\div x'(t)$」，不能直接再导一次完事。</li>
+<li><b>对数求导注意定义域：</b>用 $\ln|y|$ 或声明 $y>0$；最后把 $y$ 的表达式完整回代。</li>
+<li><b>三者的逻辑链：</b>可微 $\iff$ 可导 $\Rightarrow$ 连续（连续 ⇏ 可导）；别把方向搞反。</li>
+<li><b>$\Delta y$ 与 $dy$：</b>$\Delta y=dy+o(\Delta x)$ 是精确分解，$\Delta y\approx dy$ 才是近似。</li>
+<li><b>相关变化率符号：</b>「增大」为正、「减小」为负；单位别丢。</li>
+</ol>
+</div>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td>导数定义</td><td>$f'(x_0)=\lim\limits_{\Delta x\to0}\dfrac{f(x_0+\Delta x)-f(x_0)}{\Delta x}$；可导 ⇔ 左右导数存在相等</td></tr>
+<tr><td>几何意义</td><td>切线斜率；切线 $y-y_0=f'(x_0)(x-x_0)$</td></tr>
+<tr><td>关系链</td><td>可微 $\iff$ 可导 $\Rightarrow$ 连续</td></tr>
+<tr><td>四则</td><td>$(u\pm v)'=u'\pm v'$；$(uv)'=u'v+uv'$；$\left(\dfrac uv\right)'=\dfrac{u'v-uv'}{v^2}$</td></tr>
+<tr><td>复合链式</td><td>$\dfrac{dy}{dx}=\dfrac{dy}{du}\cdot\dfrac{du}{dx}$</td></tr>
+<tr><td>反函数</td><td>$(f^{-1})'(y)=\dfrac1{f'(x)}$</td></tr>
+<tr><td>基本导数表</td><td>$(x^\mu)'=\mu x^{\mu-1}$，$(\sin x)'=\cos x$，$(\cos x)'=-\sin x$，$(\tan x)'=\sec^2x$，$(e^x)'=e^x$，$(a^x)'=a^x\ln a$，$(\ln x)'=\dfrac1x$，$(\arcsin x)'=\dfrac1{\sqrt{1-x^2}}$，$(\arctan x)'=\dfrac1{1+x^2}$</td></tr>
+<tr><td>高阶导数</td><td>$(\sin x)^{(n)}=\sin\!\left(x+\dfrac{n\pi}2\right)$；$(\ln x)^{(n)}=\dfrac{(-1)^{n-1}(n-1)!}{x^n}$</td></tr>
+<tr><td>莱布尼茨</td><td>$(uv)^{(n)}=\sum\limits_{k=0}^nC_n^ku^{(k)}v^{(n-k)}$</td></tr>
+<tr><td>隐函数</td><td>两边对 $x$ 求导，解 $y'$（用链式处理 $y$）</td></tr>
+<tr><td>参数方程</td><td>$\dfrac{dy}{dx}=\dfrac{\psi'}{\varphi'}$；$\dfrac{d^2y}{dx^2}=\dfrac{d}{dt}\!\left(\dfrac{dy}{dx}\right)\Big/\varphi'$</td></tr>
+<tr><td>微分</td><td>$dy=f'(x)dx$；$d(uv)=v\,du+u\,dv$；形式不变性：$dy=f'(u)du$</td></tr>
+<tr><td>近似</td><td>$f(x_0+\Delta x)\approx f(x_0)+f'(x_0)\Delta x$（如 $\sqrt{1.02}\approx1.01$）</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>导数 $=$ 差商极限（定义是根），一切公式从定义推出；计算靠「四则 + 链式 + 对数求导」三板斧；分界点永远回到定义。</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>能力自查</h2>
+<div class="box tip"><b>学习闭环：</b>用定义算导数 → 默写基本导数表 → 熟练四则/链式/对数求导 → 会隐函数与参数方程 → 理解微分与近似。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 用定义求导数（含 $1/x$、分段函数分界点、$x^2\sin\frac1x$）；<br>
+② 证明乘积法则、链式法则与「可导 ⇒ 连续」，并举出不可导的连续函数（$|x|$）；<br>
+③ 默写基本导数表并处理复合结构（由外向内层层剥）；<br>
+④ 归纳法求 $n$ 阶导数（$\sin x$、$\ln x$），用莱布尼茨公式处理乘积（$x^2e^x$）；<br>
+⑤ 隐函数求导、对数求导（$x^x$）、参数方程一阶与二阶导；<br>
+⑥ 可微 ⇔ 可导的双向证明；微分近似计算（$\sqrt{1.02}$）。</div>
+<h3>典型操作清单（闭卷）</h3>
+<div class="box method">
+☐ 用定义证明 $(x^2)'=2x$、$(1/x)'=-1/x^2$（§1）<br>
+☐ 独立写出乘积法则证明（配凑 $\Delta u$、$\Delta v$）(§2)<br>
+☐ 链式法则证明中的 $\varepsilon(\Delta u)$ 技巧复述 (§2)<br>
+☐ $(\sin x)^{(n)}$ 归纳三步走（列举、猜测、归纳验证）(§3)<br>
+☐ $x^2e^x$ 的莱布尼茨计算（只剩三项）(§3)<br>
+☐ 圆 $x^2+y^2=25$ 的 $y'$ 与 $y''$（$y''=-25/y^3$）(§4、§6)<br>
+☐ 椭圆参数方程的二阶导 $-\dfrac b{a^2\sin^3t}$（§4）<br>
+☐ 气球相关变化率 $dV/dt=4\pi r^2\dot r$（§4）<br>
+☐ 可微 ⇔ 可导证明的两个方向 (§5)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>高等数学 · 第二章 导数与微分 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
