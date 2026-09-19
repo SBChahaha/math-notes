@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高数06 · 定积分的应用 · 完全教程（含全部推导）</title>
+<style>
+:root{--bg:#f0f9ff;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#0284c7;--accent2:#7dd3fc;--soft:#f0f9ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#075985,#0284c7 55%,#7dd3fc);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#e0f2fe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#0369a1;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#075985}
+.card h3{font-size:1.05rem;color:#0369a1;margin:24px 0 8px;padding-left:10px;border-left:4px solid #7dd3fc}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#f0f9ff;border-color:#7dd3fc}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #bae6fd;border-left:4px solid #38bdf8;background:#fbfeff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#0369a1;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#0369a1;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f5fbff}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(2,132,199,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>高等数学 · 第六章 定积分的应用 · 完全教程</h1>
+<p>全部内容 + 全部公式推导 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>元素法</span><span>面积</span><span>体积</span><span>弧长</span><span>水压力</span><span>做功</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 元素法（微元法）</a>
+<a href="#sec-2">02 · 平面图形的面积</a>
+<a href="#sec-3">03 · 体积</a>
+<a href="#sec-4">04 · 平面曲线的弧长</a>
+<a href="#sec-5">05 · 物理应用</a>
+<a href="#sec-6">06 · 典型例题</a>
+<a href="#sec-7">07 · 解题决策流程与易错点</a>
+<a href="#sec-8">08 · 公式速查表</a>
+<a href="#sec-9">09 · 能力自查</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章地位：</b>定积分的「落地应用」——只要一个量对区间<b>可加</b>，就能用元素法写成积分。核心是学会「写微元」：面积、体积、弧长、功、水压力都是同一套流程。</div>
+<pre class="flow">第六章 定积分的应用
+├─ 元素法（§1）：万能流程
+│   └─ 取微元 [x, x+dx] → 写出 dU = f(x)dx → U = ∫ₐᵇ f dx
+├─ 几何应用（§2–§4）
+│   ├─ 面积：直角坐标 A = ∫(上 − 下)dx；极坐标 A = ½∫ρ²dθ
+│   ├─ 体积（旋转体）：圆盘/垫圈 π∫f²dx；柱壳 2π∫x·f dx
+│   └─ 弧长：ds = √(1+y′²)dx（直角 / 参数 / 极坐标三版本）
+└─ 物理应用（§5）
+    ├─ 变力做功 W = ∫F dx（弹簧、抽水）
+    ├─ 水压力 P = ∫ρg·深度·宽度 dx
+    └─ 平均值 ȳ = ∫f/(b−a)、均方根（交流电）
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>元素法（微元法）<span class="tag">方法论</span></h2>
+<div class="box method"><b>元素法（微元法）三步：</b><br>
+① 选取积分变量 $x$ 与区间 $[a,b]$；<br>
+② 在小区间 $[x,x+dx]$ 上，用「<b>以不变代变、以直代曲</b>」写出所求量 $U$ 的<b>微元</b>：
+$$dU=f(x)\,dx\qquad(\text{即}\ \Delta U\approx f(x)\Delta x\ \text{且误差是}\ o(\Delta x))$$
+③ 从 $a$ 到 $b$ 积分：
+$$U=\int_a^bf(x)\,dx$$</div>
+<div class="box def"><b>前提条件：</b>量 $U$ 对区间具有<b>可加性</b>（整段的值 = 各小段之和），且微元近似在 $\Delta x\to0$ 时误差是高阶无穷小。<br>
+<b>要点：</b>写微元时，「变」的量在该小段内当作「不变」——如小曲边梯形当矩形、小曲边扇形当直边扇形、薄片当圆柱。</div>
+<div class="box example">
+<b>例（微元法重看面积）.</b> 求曲边梯形 $0\le y\le f(x)$，$x\in[a,b]$ 的面积。<br>
+① 变量 $x$；② 微元：小矩形 $dA=f(x)dx$；③ $A=\displaystyle\int_a^bf(x)dx$ ✓——与第五章定义完全一致，说明元素法是定义的具体化。
+</div>
+</section>
+
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>平面图形的面积<span class="tag">直角与极坐标</span></h2>
+<div class="box def"><b>直角坐标：</b><br>
+① 上、下曲线：$A=\displaystyle\int_a^b\left[\text{上}(x)-\text{下}(x)\right]dx$（交点定 $a,b$）；<br>
+② 右、左曲线（横条不便时改 $y$ 型）：$A=\displaystyle\int_c^d\left[\text{右}(y)-\text{左}(y)\right]dy$；<br>
+③ 一般：$A=\displaystyle\int_a^b\left|f(x)-g(x)\right|dx$（分区间去绝对值）。</div>
+<div class="box example">
+<b>例 1（抛物线与直线）.</b> 求 $y=x^2$ 与 $y=x$ 围成的面积。<br>
+① 交点：$x^2=x$ ⇒ $x=0,1$；<br>
+② 上减下（$0<x<1$ 时 $x>x^2$）：
+$$A=\int_0^1(x-x^2)dx=\left[\frac{x^2}2-\frac{x^3}3\right]_0^1=\frac12-\frac13=\frac16$$
+<b>验算（粗估）：</b>区域夹在 $0.1$ 宽的「平均高度约 0.167」的范围内：$\frac16\approx0.167$ ✓。
+</div>
+<div class="thm"><span class="label">极坐标面积公式</span>
+$$A=\frac12\int_\alpha^\beta\rho^2(\theta)\,d\theta$$</div>
+<div class="proof"><span class="label">推导（元素法）</span>在角微元 $[\theta,\theta+d\theta]$ 内，曲边扇形近似为半径 $\rho(\theta)$ 的直边扇形：
+$$dA=\frac12\rho^2(\theta)\,d\theta\ \Longrightarrow\ A=\frac12\int_\alpha^\beta\rho^2d\theta\ ✓$$<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 2（心形线）.</b> 求 $\rho=a(1+\cos\theta)$（$a>0$）围成的面积。<br>
+① 角范围 $[0,2\pi]$（关于极轴对称，也可 $2\int_0^\pi$ 验证）；
+$$A=\frac{a^2}2\int_0^{2\pi}(1+\cos\theta)^2d\theta=\frac{a^2}2\int_0^{2\pi}\left(1+2\cos\theta+\cos^2\theta\right)d\theta$$
+② 逐项：$\int_0^{2\pi}1\,d\theta=2\pi$，$\int_0^{2\pi}2\cos\theta\,d\theta=0$，$\int_0^{2\pi}\cos^2\theta\,d\theta=\pi$；<br>
+③ $A=\dfrac{a^2}2(2\pi+0+\pi)=\dfrac32\pi a^2$ ✓。<br>
+<b>验算（对称性）：</b>上下两半对称，$2\times\frac34\pi a^2=\frac32\pi a^2$ 自洽 ✓。
+</div>
+<div class="box example">
+<b>例 3（圆的极坐标）.</b> $\rho=2a\cos\theta$（$a>0$）是圆（半径 $a$）：$A=\frac12\int_{-\pi/2}^{\pi/2}4a^2\cos^2\theta\,d\theta=2a^2\cdot\frac\pi2=\pi a^2$ ✓（恰好是圆面积——验证公式）。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>体积<span class="tag">旋转体</span></h2>
+<div class="thm"><span class="label">圆盘法（绕 x 轴）</span>曲边梯形 $0\le y=f(x)$、$x\in[a,b]$ 绕 $x$ 轴旋转：
+$$V=\pi\int_a^bf^2(x)\,dx$$</div>
+<div class="proof"><span class="label">推导</span>在 $[x,x+dx]$ 上薄片近似为半径 $f(x)$ 的圆盘：
+$$dV=\pi f^2(x)dx\ \Longrightarrow\ V=\pi\int_a^bf^2dx\ ✓$$<span class="qed">∎</span></div>
+<div class="thm"><span class="label">垫圈法（两曲线之间）</span>区域 $0\le g\le f$ 绕 $x$ 轴：
+$$V=\pi\int_a^b\left[f^2(x)-g^2(x)\right]dx$$</div>
+<div class="thm"><span class="label">柱壳法（绕 y 轴）</span>
+$$V=2\pi\int_a^bx\,f(x)\,dx\qquad(0\le a\le x\le b,\ f\ge0)$$</div>
+<div class="proof"><span class="label">推导</span>在 $[x,x+dx]$ 处竖条绕 $y$ 轴扫出薄圆柱壳：周长 $2\pi x$、高 $f(x)$、厚 $dx$：
+$$dV=2\pi x\,f(x)\,dx\ ✓$$<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（圆锥体积公式的证明）.</b> 直线 $y=\dfrac rhx$（$0\le x\le h$）绕 $x$ 轴旋转：
+$$V=\pi\int_0^h\left(\frac r{h}x\right)^2dx=\frac{\pi r^2}{h^2}\cdot\frac{h^3}3=\frac13\pi r^2h$$
+<b>验算：</b>这正是中学背的圆锥体积公式——微积分把它「证明」了 ✓。
+</div>
+<div class="box example">
+<b>例 2（球体积公式的证明）.</b> 上半圆 $y=\sqrt{R^2-x^2}$（$-R\le x\le R$）绕 $x$ 轴：
+$$V=\pi\int_{-R}^{R}(R^2-x^2)dx=\pi\left[R^2x-\frac{x^3}3\right]_{-R}^R=\pi\left(\frac{2R^3}3+\frac{2R^3}3\right)=\frac43\pi R^3$$
+<b>验算：</b>$\frac43\pi R^3$ 为球体积公式 ✓（对称区间积分 $=2\int_0^R$ 亦可）。
+</div>
+<div class="box example">
+<b>例 3（柱壳法）.</b> $y=x^2$（$0\le x\le1$）绕 $y$ 轴：
+$$V=2\pi\int_0^1x\cdot x^2dx=2\pi\cdot\frac14=\frac\pi2$$
+<b>对照（垫圈法难度）：</b>若用 $y$ 型圆盘要做反函数 $x=\sqrt y$，再减内柱，明显更繁——<b>换方法省力</b> ✓。
+</div>
+</section>
+
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>平面曲线的弧长<span class="tag">三种形式</span></h2>
+<div class="thm"><span class="label">弧长公式三版本</span>
+① 直角坐标 $y=f(x)$，$x\in[a,b]$：
+$$s=\int_a^b\sqrt{1+y'^2}\,dx$$
+② 参数方程 $x=x(t)$、$y=y(t)$，$t\in[\alpha,\beta]$：
+$$s=\int_\alpha^\beta\sqrt{x'^2(t)+y'^2(t)}\,dt$$
+③ 极坐标 $\rho=\rho(\theta)$，$\theta\in[\alpha,\beta]$：
+$$s=\int_\alpha^\beta\sqrt{\rho^2+\rho'^2}\,d\theta$$</div>
+<div class="proof"><span class="label">推导（②与③）</span>①即第三章的弧微分 $ds=\sqrt{1+y'^2}dx$。<br>
+②把 $x,y$ 都看成 $t$ 的函数：$ds=\sqrt{(dx)^2+(dy)^2}=\sqrt{x'^2+y'^2}\,dt$ ✓；<br>
+③代 $x=\rho\cos\theta$、$y=\rho\sin\theta$ 求导：
+$$x'=\rho'\cos\theta-\rho\sin\theta,\qquad y'=\rho'\sin\theta+\rho\cos\theta$$
+$$x'^2+y'^2=\rho'^2+\rho^2\ \Longrightarrow\ ds=\sqrt{\rho^2+\rho'^2}\,d\theta\ ✓$$<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（悬链线段）.</b> 求 $y=\operatorname{ch}x$ 在 $[0,1]$ 上的弧长。<br>
+① $y'=\operatorname{sh}x$，$1+y'^2=1+\operatorname{sh}^2x=\operatorname{ch}^2x$；<br>
+② $s=\displaystyle\int_0^1\operatorname{ch}x\,dx=\operatorname{sh}x\Big|_0^1=\operatorname{sh}1=\frac{e-e^{-1}}2\approx1.175$。<br>
+<b>验算（量级）：</b>弦长 $\sqrt{1^2+(\operatorname{ch}1-1)^2}=\sqrt{1+0.543^2}\approx1.138<1.175$（弧长 ≥ 弦长 ✓）。
+</div>
+<div class="box example">
+<b>例 2（摆线一拱）.</b> 摆线 $x=a(t-\sin t)$、$y=a(1-\cos t)$（$0\le t\le2\pi$）：<br>
+① $x'=a(1-\cos t)$、$y'=a\sin t$；
+$$x'^2+y'^2=a^2\left(1-2\cos t+\cos^2t+\sin^2t\right)=2a^2(1-\cos t)=4a^2\sin^2\frac t2$$
+② 开方取正（$t\in[0,2\pi]$ 时 $\sin\frac t2\ge0$）：
+$$s=\int_0^{2\pi}2a\sin\frac t2\,dt=2a\left[-2\cos\frac t2\right]_0^{2\pi}=2a(2+2)=8a$$
+<b>结论：</b>摆线一拱的弧长恰为 $8a$（与圆周长无关的漂亮数字）；一拱面积 $3\pi a^2$ 见 §6 例题 ✓。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>物理应用<span class="tag">做功·压力·均值</span></h2>
+<div class="thm"><span class="label">变力做功</span>
+$$W=\int_a^bF(x)\,dx$$
+（$F$ 沿 $x$ 方向作用于做直线运动的物体。）</div>
+<div class="box example">
+<b>例 1（弹簧）.</b> 由胡克定律 $F=kx$（$x$ 为伸长量）：把弹簧从自然长度拉伸 $s$ 做的功：
+$$W=\int_0^skx\,dx=\frac12ks^2$$
+<b>验算（量纲）：</b>$[k]=\mathrm{N/m}$，$ks^2$ 是 $\mathrm{N\cdot m}$（焦耳）✓。
+</div>
+<div class="box example">
+<b>例 2（抽水做功）.</b> 半径 $R$、深 $H$ 的圆柱形水池装满水，把水全部抽到池口：<br>
+① 取深度变量 $x$（从池口向下）：薄层水量 $\pi R^2dx$，提升高度 $x$；<br>
+② $dW=\rho g\,\pi R^2\,x\,dx$；
+$$W=\int_0^H\rho g\pi R^2x\,dx=\frac12\rho g\pi R^2H^2$$
+<b>数值（$R=1$ m、$H=2$ m、水密度 $1000$）：</b>$W=\frac12\times1000\times9.8\times\pi\times1\times4=19600\pi\approx6.16\times10^4$ J ✓。
+</div>
+<div class="thm"><span class="label">水压力</span>深度 $x$ 处压强 $\rho gx$，若该深度处闸门宽度为 $w(x)$：
+$$P=\int_0^h\rho g\,x\,w(x)\,dx$$</div>
+<div class="box example">
+<b>例 3（矩形闸门，上沿与水面齐平）.</b> 宽 $b$、高 $h$：
+$$P=\int_0^h\rho g\,x\,b\,dx=\frac12\rho gbh^2$$
+<b>数值（$b=2$ m、$h=3$ m）：</b>$P=\frac12\times9800\times2\times9=8.82\times10^4$ N（即 9000 kg 重物的重力压在上面）✓。
+</div>
+<div class="box def"><b>函数的平均值与均方根：</b>
+$$\bar y=\frac1{b-a}\int_a^bf(x)dx\qquad\text{（平均值，第五章中值定理的解读）}$$
+$$y_{\text{RMS}}=\sqrt{\frac1{b-a}\int_a^bf^2(x)dx}\qquad\text{（均方根）}$$</div>
+<div class="box example">
+<b>例 4（正弦交流电的有效值）.</b> $u(t)=U_0\sin\omega t$，周期 $T=\dfrac{2\pi}\omega$：<br>
+① 平均值：$\frac1T\int_0^TU_0\sin\omega t\,dt=0$（正负半周抵消）；<br>
+② 均方根（有效值）：
+$$U=\sqrt{\frac1T\int_0^TU_0^2\sin^2\omega t\,dt}=\sqrt{\frac{U_0^2}2}=\frac{U_0}{\sqrt2}\approx0.707U_0$$
+<b>意义：</b>家用「220 V」正是有效值 $\frac{U_0}{\sqrt2}$，对应峰值 $U_0\approx311$ V ✓——中学物理的「$\sqrt2$」由来在此。
+</div>
+</section>
+
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>典型例题<span class="tag">实战</span></h2>
+<div class="box example">
+<b>例 1（摆线一拱的面积）.</b> 摆线 $x=a(t-\sin t)$、$y=a(1-\cos t)$（$0\le t\le2\pi$）与 $x$ 轴围成面积：<br>
+① 以 $t$ 为变量（$dx=a(1-\cos t)dt$）：
+$$A=\int_0^{2\pi}y\,dx=\int_0^{2\pi}a(1-\cos t)\cdot a(1-\cos t)\,dt=a^2\int_0^{2\pi}(1-\cos t)^2dt$$
+② 展开：$a^2\int_0^{2\pi}(1-2\cos t+\cos^2t)dt=a^2(2\pi-0+\pi)=3\pi a^2$；<br>
+<b>结论：</b>一拱面积 $3\pi a^2$（恰为滚动圆面积 $\pi a^2$ 的 3 倍，与弧长 $8a$ 并称摆线两大漂亮结果）✓。
+</div>
+<div class="box example">
+<b>例 2（横条积分：$y^2=x$ 与 $y=x-2$）.</b><br>
+① 交点：$y^2=y+2$ ⇒ $y=-1,2$；<br>
+② 取 $y$ 型（右减左）：右曲线 $x=y+2$、左曲线 $x=y^2$：
+$$A=\int_{-1}^{2}\left[(y+2)-y^2\right]dy=\left[\frac{y^2}2+2y-\frac{y^3}3\right]_{-1}^{2}$$
+③ 上限值 $2+4-\frac83=\frac{10}3$；下限值 $\frac12-2+\frac13=-\frac76$：
+$$A=\frac{10}3+\frac76=\frac{27}6=\frac92$$
+<b>验算（换 x 型对照）：</b>x 型要拆成 $\int_0^1\sqrt x dx+\int_1^4(\sqrt x-(x-2))dx$，结果同为 $\frac92$——复杂但可自检 ✓。
+</div>
+<div class="box example">
+<b>例 3（旋转体 + 对称区间）.</b> $y=\sin x$ 在 $[0,\pi]$ 绕 $x$ 轴：
+$$V=\pi\int_0^{\pi}\sin^2x\,dx=\pi\cdot\frac{\pi}2=\frac{\pi^2}2$$
+<b>验算（降幂）：</b>$\sin^2x=\dfrac{1-\cos2x}2$，$\int_0^\pi=\dfrac12\left[x-\dfrac{\sin2x}2\right]_0^\pi=\dfrac\pi2$ ✓。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>解题决策流程与易错点</h2>
+<pre class="flow">定积分应用题
+├─ 第一步：识别量（面积 / 体积 / 弧长 / 功 / 水压力 / 平均值）
+├─ 第二步：选变量（x、y、θ、t）与范围（交点 / 端点 / 周期）
+│   └─ 若 x 型需拆段且 y 型简单 → 改用 y 型
+├─ 第三步：写微元（以不变代变）
+│   ├─ 面积：（上−下）dx；（右−左）dy；½ρ²dθ
+│   ├─ 体积：绕 x 轴 πf²dx（垫圈 π(f²−g²)dx）；绕 y 轴 2πx·f dx
+│   ├─ 弧长：√(1+y′²)dx；√(x′²+y′²)dt；√(ρ²+ρ′²)dθ
+│   ├─ 功：F(x)dx；水压力：ρg·x·w(x)dx
+│   └─ 平均：f dx / (b−a)
+├─ 第四步：定限积分 + 对称性化简
+└─ 第五步：自检（量纲 / 几何意义 / 特殊值 / 对称性）
+</pre>
+<h3>易错点清单</h3>
+<div class="box warn">
+<ol>
+<li><b>面积写「上减下」：</b>先求交点分段；曲线上下关系反转时不加绝对值会得负值。</li>
+<li><b>元法中的「不变代变」放对位置：</b>微元小段内的变量当常数，但该常数随积分变量变化（如 $dV=\pi f^2(x)dx$ 中的 $f(x)$ 不能当数字）。</li>
+<li><b>极坐标角度范围：</b>注意对称性（可 2 倍化简）与曲线闭合的完整范围（心形线是 $2\pi$ 不是 $\pi$）。</li>
+<li><b>旋转轴辨认：</b>绕 $x$ 轴用 $\pi\int f^2$；绕 $y$ 轴优先柱壳 $2\pi\int xf$——两法不可混写。</li>
+<li><b>垫圈内外半径：</b>先画图确定哪条是外缘；$g$ 贴着轴时退化为圆盘。</li>
+<li><b>弧长三版本别混：</b>参数方程用 $\sqrt{x'^2+y'^2}$（对 $t$ 积分），极坐标用 $\sqrt{\rho^2+\rho'^2}$。</li>
+<li><b>水压力深度从水面量：</b>$x$ 是「深度」不是「高度」，方向别反。</li>
+<li><b>抽水做功的提升高度：</b>每一层的提升距离不同（从该层到池口），不是常数 $H$。</li>
+<li><b>均方根不是平均值：</b>RMS 先平方、再平均、后开方；交流电有效值 $\frac{U_0}{\sqrt2}$ 来自它。</li>
+<li><b>自检习惯：</b>体积用「已知公式对照」（球 $\frac43\pi R^3$、圆锥 $\frac13\pi r^2h$）；面积算正；弧长 ≥ 弦长。</li>
+</ol>
+</div>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式</th></tr></thead>
+<tbody>
+<tr><td>元素法</td><td>$dU=f(x)dx\Rightarrow U=\int_a^bfdx$（以不变代变）</td></tr>
+<tr><td>面积（直角）</td><td>$A=\int_a^b(\text{上}-\text{下})dx$；$A=\int_c^d(\text{右}-\text{左})dy$</td></tr>
+<tr><td>面积（极坐标）</td><td>$A=\frac12\int_\alpha^\beta\rho^2d\theta$</td></tr>
+<tr><td>体积（绕 x 轴）</td><td>$V=\pi\int_a^bf^2dx$；垫圈 $V=\pi\int(f^2-g^2)dx$</td></tr>
+<tr><td>体积（绕 y 轴）</td><td>柱壳 $V=2\pi\int_a^bx f(x)dx$</td></tr>
+<tr><td>弧长</td><td>$\int\sqrt{1+y'^2}dx$；$\int\sqrt{x'^2+y'^2}dt$；$\int\sqrt{\rho^2+\rho'^2}d\theta$</td></tr>
+<tr><td>变力做功</td><td>$W=\int_a^bF(x)dx$；弹簧 $\frac12ks^2$</td></tr>
+<tr><td>抽水做功</td><td>$W=\int\rho g\,A(x)\,x\,dx$（$x$：提升高度）</td></tr>
+<tr><td>水压力</td><td>$P=\int_0^h\rho g\,x\,w(x)dx$；矩形闸门 $\frac12\rho gbh^2$</td></tr>
+<tr><td>平均值</td><td>$\bar y=\frac1{b-a}\int_a^bf$；均方根 $\sqrt{\frac1{b-a}\int f^2}$</td></tr>
+<tr><td>经典结果</td><td>球 $\frac43\pi R^3$；圆锥 $\frac13\pi r^2h$；摆线：弧长 $8a$、面积 $3\pi a^2$；心形线面积 $\frac32\pi a^2$；交流有效值 $\frac{U_0}{\sqrt2}$</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>所有应用都是「元素法」的三个动作——<b>写微元（乘法）→ 定范围（交点/边界）→ 做积分</b>；几何量无负、物理量看单位。</div>
+</section>
+
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>能力自查</h2>
+<div class="box tip"><b>学习闭环：</b>会元素法 → 会三坐标面积 → 会旋转体两法 → 会弧长三版本 → 会做功与水压力。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 复述元素法的条件与三步，解释「以不变代变」；<br>
+② 直角坐标与极坐标求面积（含交点分段、对称性）；<br>
+③ 旋转体体积：圆盘、垫圈、柱壳三种套路，能证明圆锥与球体积公式；<br>
+④ 弧长三公式与推导（极坐标版本的 $x'^2+y'^2=\rho^2+\rho'^2$）；<br>
+⑤ 变力做功、抽水做功、水压力、平均值/均方根；<br>
+⑥ 用「已知公式对照 + 几何意义 + 量纲」自检结果。
+</div>
+<h3>闭卷操作清单</h3>
+<div class="box method">
+☐ $y=x^2$ 与 $y=x$ 面积 $\frac16$（步骤 + 粗估）(§2 例1)<br>
+☐ 心形线面积 $\frac32\pi a^2$（含 $\int\cos^2=\pi$ 的细节）(§2 例2)<br>
+☐ 圆锥体积证明：$\frac{\pi r^2}{h^2}\cdot\frac{h^3}3$ (§3 例1)<br>
+☐ 球体积证明：对称区间与 $\frac{2R^3}3$ 的由来 (§3 例2)<br>
+☐ 柱壳法 $y=x^2$ 绕 y 轴 $\frac\pi2$ (§3 例3)<br>
+☐ 悬链线弧长 $\operatorname{sh}1$（用 $\operatorname{ch}^2-\operatorname{sh}^2=1$）(§4 例1)<br>
+☐ 摆线：弧长 $8a$（半角公式化简）、面积 $3\pi a^2$（例子中）(§4、§6)<br>
+☐ $y^2=x$ 与 $y=x-2$ 面积 $\frac92$（y 型积分）(§6 例2)<br>
+☐ 交流电有效值 $\frac{U_0}{\sqrt2}$ 的推导 (§5 例4)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>高等数学 · 第六章 定积分的应用 · 内容与推导完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
