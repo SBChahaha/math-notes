@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据结构07 · 查找 · 完全教程（王道体系）</title>
+<style>
+:root{--bg:#fff8f1;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#ea580c;--accent2:#fdba74;--soft:#fff7ed}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#7c2d12,#ea580c 55%,#fdba74);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#ffedd5}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#9a3412;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#7c2d12}
+.card h3{font-size:1.05rem;color:#9a3412;margin:24px 0 8px;padding-left:10px;border-left:4px solid #fdba74}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#fb923c,#f97316);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#fff7ed;border-color:#fdba74}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #fed7aa;border-left:4px solid #fb923c;background:#fffdfa;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#9a3412;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#9a3412;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#fffbf7}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+pre.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:16px 20px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.86rem;line-height:1.75;white-space:pre}
+pre.mermaid{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:12px;overflow-x:auto;text-align:center;color:#94a3b8;font-size:.85rem}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(234,88,12,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>数据结构 · 第七章 查找 · 完全教程</h1>
+<p>王道体系 · ASL 全套计算 + 判定树 + BST/AVL + B 树 + 散列表</p>
+<div class="chips"><span>ASL</span><span>顺序·折半·分块</span><span>BST</span><span>AVL 旋转</span><span>B 树/B+</span><span>散列表</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 基本概念与 ASL</a>
+<a href="#sec-2">02 · 顺序查找</a>
+<a href="#sec-3">03 · 折半查找</a>
+<a href="#sec-4">04 · 分块查找</a>
+<a href="#sec-5">05 · 二叉排序树</a>
+<a href="#sec-6">06 · 平衡二叉树 AVL</a>
+<a href="#sec-7">07 · 红黑树（简述）</a>
+<a href="#sec-8">08 · B 树与 B+ 树</a>
+<a href="#sec-9">09 · 散列表</a>
+<a href="#sec-10">10 · 典型例题</a>
+<a href="#sec-11">11 · 决策流程与易错点</a>
+<a href="#sec-12">12 · 速查表与能力自查</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章地位：</b>查找是 408 的「计算题富矿」——<b>ASL（平均查找长度）</b>贯穿全章：顺序查找、折半判定树、BST/AVL、B 树、散列表全都围绕它出题；AVL 四种旋转与散列冲突处理则是画图/填表题的主角。</div>
+<pre class="flow">第七章 查找
+├─ 基本概念（§1）
+│   └─ 查找表、关键字、ASL = Σ PᵢCᵢ（成功/失败分开算）
+├─ 线性表的查找（§2–§4）
+│   ├─ 顺序查找：成功 (n+1)/2、失败 n
+│   ├─ 折半查找：判定树（=平衡 BST），成功 ≈ log₂(n+1)−1
+│   └─ 分块查找：索引 + 块内，最优块长 √n
+├─ 树型查找（§5–§7）
+│   ├─ BST：中序有序、插入建树、删除三类情况
+│   ├─ AVL：平衡因子 ±1、四种旋转 LL/RR/LR/RL
+│   └─ 红黑树：五条性质、高度 ≤ 2log₂(n+1)
+├─ B 树与 B+ 树（§8）
+│   └─ m 阶定义、分裂、B+ 与 B 的区别
+└─ 散列表（§9）
+    └─ 哈希函数 + 冲突处理（开放定址/拉链）+ ASL 计算
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>基本概念与 ASL<span class="tag">全章度量</span></h2>
+<div class="box def"><b>查找：</b>在数据集合中寻找满足条件的数据元素。<br>
+<b>关键字：</b>能唯一标识一个数据元素的数据项（值）。<br>
+<b>查找表：</b><b>静态</b>查找表（只查不改：顺序、折半、散列）与<b>动态</b>查找表（查询 + 插入删除：BST、AVL、B 树、散列也可）。</div>
+<div class="box def"><b>平均查找长度（ASL）：</b>查找过程中关键字比较次数的期望值——衡量查找算法优劣的核心指标：
+$$\text{ASL}=\sum_{i=1}^{n}P_i\,C_i$$
+$P_i$ 是查第 $i$ 个元素的概率；$C_i$ 是找到它所需的比较次数。考试默认<b>等概率</b>（$P_i=1/n$）。<br>
+<b>必须分开算两个数：</b>$\text{ASL}_{\text{成功}}$（查到表中元素）与 $\text{ASL}_{\text{失败}}$（确认不在表中）——只写一个数的答案是残缺的。</div>
+<div class="box tip"><b>本源例子（三个数的直观）：</b>表 $\{10,20,30\}$ 顺序查找：查 10 比 1 次、20 比 2 次、30 比 3 次 ⇒ $\text{ASL}_{\text{成功}}=\dfrac{1+2+3}3=2=\dfrac{n+1}2$。失败时（如查 25）需把 3 个元素都比完 ⇒ 3 次。</div>
+</section>
+
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>顺序查找<span class="tag">最朴素</span></h2>
+<div class="box def"><b>思想：</b>从表的一端开始逐个比较——<b>对无序/有序表都适用，链表也能用</b>（这是它相比折半的独特优势）。</div>
+<div class="box def"><b>带哨兵的实现（从后往前扫）：</b>
+<pre class="code">typedef struct { ElemType *elem; int TableLen; } SSTable;
+int Search_Seq(SSTable ST, ElemType key) {
+    ST.elem[0] = key;                  // 0 号放哨兵
+    int i;
+    for (i = ST.TableLen; ST.elem[i] != key; i--)   // 从后往前
+        ;                              // 循环内无需判越界（哨兵必命中）
+    return i;                          // 返回 0 表示失败
+}</pre>
+<b>哨兵的作用：</b>把「边界判断」省掉一次——不必在循环里写 <code>i >= 1</code> 的条件（0 号哨兵必定让循环停下），这是经典的「以空间/设计换速度」。</div>
+<div class="box example">
+<b>例（ASL 完整推导）.</b><br>
+<b>成功：</b>等概率下，第 $i$ 个元素被查到时比较 $n-i+1$ 次（从表尾数）或 $i$ 次（从表头数，无哨兵）——两种计法平均相同：
+$$\text{ASL}_{\text{成功}}=\frac1n\sum_{i=1}^{n}i=\frac{n+1}2=O(n)$$
+<b>失败：</b>从表头扫（无哨兵）要比较 $n$ 次才能确认失败 ⇒ $\text{ASL}_{\text{失败}}=n$；从表尾带哨兵则要 $n+1$ 次（含哨兵）——<b>以题目实现为准</b>，最常考答案 $\dfrac{n+1}2$ 与 $n$。<br>
+<b>有序表的福利：</b>表中元素有序时，失败可以「提前刹车」（遇到比 key 大的元素即停）：
+$$\text{ASL}_{\text{失败}}^{\text{有序}}=\frac n2+\frac n{n+1}$$
+（推导：$n+1$ 个失败区间中，第 $k$ 个区间需比较 $k$ 次左右，$k=1..n$ 与一个 $n$ 次 ⇒ 总和 $\frac{n(n+1)}2+n$，除以 $n+1$。）</div>
+<div class="box tip"><b>一句话评价：</b>顺序查找的优点是「零要求」（无序、链表均可）；缺点是 $O(n)$——正好与折半的「有序 + 顺序存储换 $O(\log n)$」形成对照。</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>折半查找<span class="tag">判定树必画</span></h2>
+<div class="box def"><b>两个硬前提：</b>① 表<b>有序</b>；② <b>顺序存储</b>（必须能 $O(1)$ 取到中间元素——链表做不了折半！）。</div>
+<div class="box def">
+<pre class="code">int Binary_Search(SSTable L, ElemType key) {
+    int low = 1, high = L.TableLen, mid;
+    while (low <= high) {
+        mid = (low + high) / 2;               // 向下取整
+        if (L.elem[mid] == key) return mid;       // 命中
+        else if (L.elem[mid] > key) high = mid - 1; // 去左半区
+        else low = mid + 1;                        // 去右半区
+    }
+    return 0;                                  // 失败
+}</pre>
+时间复杂度 $O(\log_2 n)$——每比较一次候选区间减半。</div>
+<div class="box method"><b>折半查找判定树：</b>把每次 mid 作为结点画出来，就得到一棵<b>平衡二叉排序树</b>：<br>
+· 每个内部结点 = 一次成功命中；每个空指针处 = 一个失败区间 ⇒ <b>失败结点共 $n+1$ 个</b>（外部）；<br>
+· 树高 $h=\lceil\log_2(n+1)\rceil$ ⇒ 比较次数不超过 $h$；<br>
+· <b>ASL 的算法：</b>$\text{ASL}_{\text{成功}}=\dfrac1n\sum(\text{结点所在层数})$；失败比较次数 = 对应外部结点的<b>父结点层数</b>。</div>
+<div class="box example">
+<b>例（n = 11 的完整判定树与两个 ASL）.</b> 表 $[1..11]$，mid 向下取整：<br>
+① 第一层：mid=6；第二层：mid=3、9；第三层：mid=1、4、7、10；第四层：mid=2、5、8、11？<br>
+让我按区间严格推：$[1,11]$ mid=6；$[1,5]$ mid=3；$[7,11]$ mid=9；$[1,2]$ mid=1；$[4,5]$ mid=4；$[7,8]$ mid=7；$[10,11]$ mid=10；$[2,2]$ mid=2；$[5,5]$ mid=5；$[8,8]$ mid=8；$[11,11]$ mid=11。<br>
+层数统计：<b>第 1 层 1 个、第 2 层 2 个、第 3 层 4 个、第 4 层 4 个</b>（1+2+4+4=11 ✓）。
+<pre class="flow">                6
+            /       \
+          3           9
+        /   \       /   \
+       1     4     7     10
+        \     \     \     \
+         2     5     8     11</pre>
+② <b>ASL 成功：</b>
+$$\text{ASL}_{\text{成功}}=\frac{1\times1+2\times2+3\times4+4\times4}{11}=\frac{33}{11}=3$$
+③ <b>ASL 失败：</b>失败结点（外部）12 个中，挂在第 3 层结点下的有 4 个（比较 3 次）、挂第 4 层下的 8 个（比较 4 次）：
+$$\text{ASL}_{\text{失败}}=\frac{4\times3+8\times4}{12}=\frac{44}{12}\approx3.67$$</div>
+<div class="box tip"><b>秒算口诀：</b>判定树高度 $h=\lceil\log_2(n+1)\rceil$（n=11 ⇒ ⌈log₂12⌉=4）；成功 ASL 一定介于 $\log_2(n+1)-1$ 与 $h$ 之间——<b>满树时取到最小</b> $=\frac{n+1}n\log_2(n+1)-1$。</div>
+</section>
+
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>分块查找<span class="tag">索引顺序</span></h2>
+<div class="box def"><b>思想：</b>把表分成若干<b>块</b>——<b>块间有序</b>（第 $k$ 块所有元素都大于第 $k-1$ 块最大者）、<b>块内无序</b>（随意）；再建一张<b>索引表</b>（每块「最大关键字 + 起始地址」）。<br>
+<b>查找两步：</b>① 在索引表定块（顺序或折半）；② 在块内顺序查找。</div>
+<div class="box example">
+<b>例（分块结构示意）.</b>
+<pre class="flow">表：  22  12  13 | 8   9  20 | 33  42  44 | 38  24  48
+索引表：  [13 → 块1]  [20 → 块2]  [44 → 块3]  [48 → 块4]
+（每块内：乱序；块与块之间：整体递增）</pre>
+查 38：先扫索引表找第一块满足「最大关键字 ≥ 38」⇒ 第 3 块（44）；再在块内逐个比较 ✓。</div>
+<div class="box example">
+<b>例（ASL 推导与最优块长）.</b> 设 $n$ 个元素均分成 $b$ 块、每块 $s=n/b$ 个：<br>
+① 索引表顺序查找：平均 $\dfrac{b+1}2$ 次；② 块内顺序查找：平均 $\dfrac{s+1}2$ 次；③ 合计：
+$$\text{ASL}=\frac{b+1}2+\frac{s+1}2=\frac{\dfrac nb+s}2+1\ \ge\ \sqrt n+1$$
+（由均值不等式 $\dfrac nb+s\ge2\sqrt n$，等号在 $s=\sqrt n$ 时取到）——<b>当每块长 $s=\sqrt n$、块数 $b=\sqrt n$ 时 ASL 最小，约 $\sqrt n+1$</b>。<br>
+<b>数值：</b>$n=10000$ ⇒ 最优 $s=100$、$b=100$，$\text{ASL}_{\min}=50.5+50.5=101=\sqrt n+1$ ✓（比顺序查找的 5000 强、比折半的约 13 弱——但分块支持动态变化，这是它的价值）。</div>
+<div class="box tip"><b>三种线性表查找对比：</b>
+<table>
+<thead><tr><th>算法</th><th>ASL成功</th><th>ASL失败</th><th>前提</th><th>适用</th></tr></thead>
+<tbody>
+<tr><td>顺序查找</td><td>$\frac{n+1}2$</td><td>$n$</td><td>无</td><td>无序/链表</td></tr>
+<tr><td>折半查找</td><td>≈$\log_2(n+1)-1$</td><td>≈$\log_2(n+1)$</td><td>有序 + 顺序存储</td><td>静态、频繁查找</td></tr>
+<tr><td>分块查找</td><td>$\frac{b+1}2+\frac{s+1}2$，最优 $\sqrt n+1$</td><td>类似</td><td>块间有序</td><td>动态变化、折中</td></tr>
+</tbody>
+</table></div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>二叉排序树（BST）<span class="tag">动态查找</span></h2>
+<div class="box def"><b>定义（递归）：</b>或为空树；或满足——左子树上所有结点 < 根 < 右子树上所有结点，且左右子树也分别是 BST。<br>
+<b>核心性质（必背）：</b><b>中序遍历得到递增有序序列</b>——这是判断一棵树是不是 BST 的最快方法。</div>
+<div class="box def"><b>查找（循环版）：</b>
+<pre class="code">BiTNode *BST_Search(BiTree T, ElemType key) {
+    while (T != NULL && key != T->data)
+        T = (key &lt; T->data) ? T->lchild : T->rchild;  // 小往左、大往右
+    return T;                        // NULL 表示失败
+}</pre>
+<b>插入：</b>从根开始比较，一路走到底——<b>第一处空位就是插入点</b>（重复关键字则插入失败）：
+<pre class="code">int BST_Insert(BiTree &T, ElemType k) {
+    if (T == NULL) {                 // 找到空位，挂上
+        T = (BiTNode *) malloc(sizeof(BiTNode));
+        T->data = k;  T->lchild = T->rchild = NULL;
+        return 1;
+    }
+    else if (k == T->data) return 0;             // 已存在
+    else if (k &lt; T->data) return BST_Insert(T->lchild, k);
+    else return BST_Insert(T->rchild, k);
+}</pre></div>
+<div class="box method"><b>删除的三种情况（高频考点）：</b><br>
+① 删除<b>叶子</b>：直接删；<br>
+② 删除<b>只有一棵子树</b>的结点：子树整体顶替；<br>
+③ 删除<b>有两棵子树</b>的结点：用它的<b>中序直接前驱</b>（左子树最大）或<b>直接后继</b>（右子树最小）<b>替换数据</b>，再递归删除那个前驱/后继（最终落回情况 ① 或 ②）。</div>
+<div class="box example">
+<b>例（建树与 ASL）.</b> 依次插入 $\{45,\ 24,\ 53,\ 12,\ 37,\ 93\}$：
+<pre class="flow">          45
+        /    \
+      24      53
+     /  \       \
+   12    37      93</pre>
+各结点层数：45(1)、24/53(2)、12/37/93(3) ⇒
+$$\text{ASL}_{\text{成功}}=\frac{1+2+2+3+3+3}{6}=\frac{14}6\approx2.33$$
+<b>观察：</b>同一组关键字，<b>插入顺序不同会得到不同形态的 BST</b>——ASL 也随之不同（这是 BST 的软肋，引出 AVL）。</div>
+<div class="box warn"><b>两种极端：</b>插入序列本身有序（如 1,2,3,…,n）⇒ BST 退化成单链，查找 $O(n)$（最坏）；形态接近完全二叉树时 $O(\log n)$（最好）。<b>BST 查找的时间取决于树形而不是结点数。</b></div>
+</section>
+
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>平衡二叉树 AVL<span class="tag">四种旋转</span></h2>
+<div class="box def"><b>平衡因子：</b>$\text{BF}(v)=h(\text{左子树})-h(\text{右子树})$。AVL 树要求所有结点 $|\text{BF}|\le1$——即「每个结点左右子树高度差不超过 1」的高度平衡 BST。<br>
+<b>目标：</b>把 BST 的树高压在 $O(\log n)$，代价是插入/删除时要<b>旋转</b>恢复平衡。</div>
+<div class="box method"><b>四种失衡情形与旋转（从插入点向上找第一个失衡结点，看插入落在它的哪边）：</b>
+<table>
+<thead><tr><th>情形</th><th>插入位置（相对失衡点）</th><th>恢复操作</th><th>最小例（依次插入）</th></tr></thead>
+<tbody>
+<tr><td><b>LL</b></td><td>左孩子的<b>左</b>子树</td><td>一次<b>右单旋</b></td><td>3, 2, 1 ⇒ 2(1,3)</td></tr>
+<tr><td><b>RR</b></td><td>右孩子的<b>右</b>子树</td><td>一次<b>左单旋</b></td><td>1, 2, 3 ⇒ 2(1,3)</td></tr>
+<tr><td><b>LR</b></td><td>左孩子的<b>右</b>子树</td><td>先左旋、再右旋</td><td>3, 1, 2 ⇒ 2(1,3)</td></tr>
+<tr><td><b>RL</b></td><td>右孩子的<b>左</b>子树</td><td>先右旋、再左旋</td><td>1, 3, 2 ⇒ 2(1,3)</td></tr>
+</tbody>
+</table>
+<b>命名记忆：</b>两个字母 = 「失衡点到插入点的前两步方向」：LL 左左、RR 右右、LR 左右、RL 右左。</div>
+<div class="box example">
+<b>例（完整建树：依次插入 50, 30, 60, 20, 40, 35）.</b><br>
+① 插 50、30（左）、60（右）、20（30 的左）、40（30 的右）——此时无失衡；<br>
+② 插 35（40 的左）：自底向上检查——40 平衡（BF=1）、30 平衡（BF=−1）、<b>50 失衡</b>（左子树高 3、右子树高 1，BF=2）；<br>
+③ 插入位置是 <b>50 的左孩子(30) 的右子树</b> ⇒ <b>LR 型</b>：<br>
+&nbsp;&nbsp;· 第一步：对 30 做<b>左旋</b> ⇒ 40 顶上来（30 与 35 成为它的左子树部分）；<br>
+&nbsp;&nbsp;· 第二步：对 50 做<b>右旋</b> ⇒ 40 成为整棵树根；
+<pre class="flow">最终：          40
+             /      \
+           30        50
+          /  \         \
+        20    35        60</pre>
+④ <b>验算：</b>各结点 BF —— 20、35、60 为叶（0）；30：$1-1=0$；50：$0-1=-1$；40：$2-2=0$ ✓ 全部 $|\text{BF}|\le1$，恢复平衡且中序仍有序 ✓。</div>
+<div class="box tip"><b>高度 h 的 AVL 最少结点数（选择题常客）：</b>要让高度为 $h$ 的 AVL 结点尽量少，根的两棵子树高度只能是 $h-1$ 与 $h-2$：
+$$N(h)=N(h-1)+N(h-2)+1,\quad N(1)=1,\ N(2)=2$$
+<table>
+<thead><tr><th>$h$</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead>
+<tbody><tr><td>最少结点 $N(h)$</td><td>1</td><td>2</td><td>4</td><td>7</td><td>12</td><td>20</td><td>33</td></tr></tbody>
+</table>
+反过来记结论：<b>AVL 的高度一定在 $O(\log n)$ 量级、查找最坏 $O(\log n)$</b>。</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>红黑树（简述）<span class="tag">考纲新增</span></h2>
+<div class="box def"><b>红黑树：</b>满足以下五条性质的二叉排序树（每个结点带红/黑颜色）：<br>
+① 每个结点<b>非红即黑</b>；<br>
+② <b>根结点是黑色</b>；<br>
+③ <b>叶结点（外部 NIL）都是黑色</b>；<br>
+④ <b>不存在两个连续的红结点</b>（红结点的孩子必为黑）；<br>
+⑤ 从任一结点出发到其所有叶结点的路径上，<b>黑结点数目相同</b>（黑高相同）。</div>
+<div class="box tip"><b>核心结论（为什么用它）：</b>从性质 ④⑤ 可推出——<b>最长路径不超过最短路径的 2 倍</b>，因此红黑树的高度
+$$h\le2\log_2(n+1)=O(\log n)$$
+查找、插入、删除全部 $O(\log n)$。<br>
+<b>与 AVL 的分工：</b>AVL 追求「高度严格平衡」（查询最快），红黑树只求「大致平衡」（插入删除时调整更少）——因此<b>频繁增删</b>场景选红黑树（C++ STL 的 map / Java TreeMap 底层都是红黑树），<b>查询为主</b>选 AVL。<br>
+<b>插入调整直觉：</b>新结点先染红；若违反「无连续红」，看插入点的<b>叔叔结点</b>颜色——叔叔红就「变色上移」，叔叔黑就「旋转 + 变色」（与 AVL 旋转同思想）。</div>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>B 树与 B+ 树<span class="tag">多路平衡查找树</span></h2>
+<div class="box def"><b>$m$ 阶 B 树（多路平衡查找树）定义：</b><br>
+① 每个结点最多有 <b>$m$ 棵子树</b>、最多 <b>$m-1$ 个关键字</b>；<br>
+② 根结点若不是叶，至少有 <b>2 棵子树</b>；<br>
+③ 其他非叶结点至少有 <b>$\lceil m/2\rceil$ 棵子树</b>（即至少 $\lceil m/2\rceil-1$ 个关键字）；<br>
+④ <b>所有叶结点都在同一层</b>（绝对平衡，不像 AVL 只看高度差）；<br>
+⑤ 结点内关键字有序，子树中的关键字落在相邻两关键字之间的区间（多路，一次比较排除一大批）。</div>
+<div class="thm"><span class="label">高度的上下界（含 n 个关键字）</span>
+<b>最小高度</b>（每结点都塞满 $m-1$ 个关键字）：$h\ge\log_m(n+1)$；<br>
+<b>最大高度</b>（每结点都只有最少分叉 $\lceil m/2\rceil$）：
+$$h\le\log_{\lceil m/2\rceil}\frac{n+1}2+1$$</div>
+<div class="box example">
+<b>例（3 阶 B 树——即 2-3 树——的插入与分裂）.</b> 依次插入 1, 2, 3, 4, 5（3 阶：每结点最多 2 个关键字、3 棵子树）：
+<table>
+<thead><tr><th>插入</th><th>动作</th><th>树形（用括号表示结点）</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>根只有 1</td><td>[1]</td></tr>
+<tr><td>2</td><td>塞进根</td><td>[1, 2]</td></tr>
+<tr><td>3</td><td>根溢出（3 个关键字）⇒ <b>分裂：中间 2 上移成新根</b></td><td>[2] → 左 [1]、右 [3]</td></tr>
+<tr><td>4</td><td>比 2 大比 3 大 ⇒ 进右结点</td><td>[2]；左 [1]、右 [3, 4]</td></tr>
+<tr><td>5</td><td>右结点溢出（3,4,5）⇒ 分裂：中间 4 上移；根变 [2, 4]</td><td>[2, 4]；子 [1]、[3]、[5]</td></tr>
+</tbody>
+</table>
+<b>分裂要点：</b>结点超过 $m-1$ 个关键字时，取<b>中间关键字上移</b>到双亲，左右两半各成一个结点——树是「自底向上长高」的 ✓。<br>
+<b>删除（简述）：</b>删到关键字不足 $\lceil m/2\rceil-1$ 时——能<b>向兄弟借</b>就借（经双亲中转关键字），借不到就<b>与兄弟合并</b>（双亲关键字下拉），可能连锁。</div>
+<div class="box def"><b>B+ 树：</b>B 树的变体，专门服务「数据库/文件的索引」：<br>
+① <b>所有关键字都出现在叶结点</b>，叶结点包含「关键字 + 记录指针」；<br>
+② 非叶结点只当<b>索引</b>（存关键字副本 + 子树指针）；<br>
+③ <b>叶结点之间用指针连成有序链表</b>——支持<b>顺序访问与范围查询</b>。</div>
+<table>
+<thead><tr><th>维度</th><th>B 树</th><th>B+ 树</th></tr></thead>
+<tbody>
+<tr><td>关键字位置</td><td>各层结点都存</td><td>全部在叶；非叶只做索引</td></tr>
+<tr><td>查找命中点</td><td>可能在非叶命中提前结束</td><td><b>必须走到叶</b>（每次查找路径等长）</td></tr>
+<tr><td>叶间链</td><td>无</td><td>有（顺序遍历、范围查询 O(1) 起跳）</td></tr>
+<tr><td>树高</td><td>相对高</td><td>更「矮胖」（非叶不存数据，单结点扇出更大）</td></tr>
+<tr><td>典型应用</td><td>文件系统索引</td><td>数据库索引（MySQL 聚簇索引）</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>记忆：</b>「B 树 = 每层都可能中奖；B+ 树 = 一切答案在叶，叶子还串成链」——范围查询为什么偏爱 B+，一句话就通了。</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>散列表<span class="tag">冲突与 ASL</span></h2>
+<div class="box def"><b>散列表（哈希表）：</b>用哈希函数 $H(key)$ 直接计算出存储地址——理想情况一次到位、$O(1)$ 平均查找。<br>
+<b>冲突：</b>$H(key_1)=H(key_2)$ 但 $key_1\ne key_2$（同义词）——冲突不可避免，只能「设计好函数 + 定好处理策略」。</div>
+<div class="box def"><b>常见哈希函数：</b><br>
+① <b>除留余数法（最常用）：</b>$H(key)=key\bmod p$，$p$ 取「不大于表长 $m$ 的最大质数」（减少冲突）；<br>
+② 直接定址法：$H(key)=a\cdot key+b$（无冲突，但要求关键字连续）；<br>
+③ 数字分析法、平方取中法、折叠法——了解名字与适用即可。</div>
+<div class="box method"><b>冲突处理两大家族：</b><br>
+<b>① 开放定址法：</b>$H_i=(H(key)+d_i)\bmod m$——线性探测 $d_i=1,2,3,\dots$；平方探测 $d_i=\pm1^2,\pm2^2,\dots$；再散列/伪随机。特点：<b>同义词与非同义词都可能挤在一起</b>（堆积现象）；<b>删除不能直接置空</b>（要用「墓碑」标记，否则截断探测链）。<br>
+<b>② 拉链法（链地址法）：</b>同义词挂成一条链表，槽内放链头指针。特点：<b>删除方便</b>、无堆积、装填因子可大于 1。</div>
+<div class="box example">
+<b>例 1（线性探测全流程：$H(k)=k\bmod 13$，表长 16）.</b> 关键字依次 $\{19,14,23,1,68,20,84,27,55,11,10,79\}$：
+<table>
+<thead><tr><th>关键字</th><th>H(k)</th><th>探测过程</th><th>比较次数</th><th>落位</th></tr></thead>
+<tbody>
+<tr><td>19</td><td>6</td><td>6 空</td><td>1</td><td>6</td></tr>
+<tr><td>14</td><td>1</td><td>1 空</td><td>1</td><td>1</td></tr>
+<tr><td>23</td><td>10</td><td>10 空</td><td>1</td><td>10</td></tr>
+<tr><td>1</td><td>1</td><td>1 占(14)→2 空</td><td>2</td><td>2</td></tr>
+<tr><td>68</td><td>3</td><td>3 空</td><td>1</td><td>3</td></tr>
+<tr><td>20</td><td>7</td><td>7 空</td><td>1</td><td>7</td></tr>
+<tr><td>84</td><td>6</td><td>6 占(19)→7 占(20)→8 空</td><td>3</td><td>8</td></tr>
+<tr><td>27</td><td>1</td><td>1、2、3 全占→4 空</td><td>4</td><td>4</td></tr>
+<tr><td>55</td><td>3</td><td>3、4 全占→5 空</td><td>3</td><td>5</td></tr>
+<tr><td>11</td><td>11</td><td>11 空</td><td>1</td><td>11</td></tr>
+<tr><td>10</td><td>10</td><td>10 占(23)→11 占(11)→12 空</td><td>3</td><td>12</td></tr>
+<tr><td>79</td><td>1</td><td>1～8 全占→9 空</td><td>9</td><td>9</td></tr>
+</tbody>
+</table>
+最终表（下标 0–15）：1:14，2:1，3:68，4:27，5:55，6:19，7:20，8:84，9:79，10:23，11:11，12:10，其余空。<br>
+$$\text{ASL}_{\text{成功}}=\frac{1+1+1+2+1+1+3+4+3+1+3+9}{12}=\frac{30}{12}=2.5$$</div>
+<div class="box example">
+<b>例 2（拉链法：$H(k)=k\bmod 11$）.</b> 关键字 $\{7,8,30,11,18,9,14\}$，依次插入链头：
+<pre class="flow">槽 0：[11]      槽 3：[14]      槽 7：[18 → 7]
+槽 8：[30 → 8]                  槽 9：[9]</pre>
+比较次数（在链中的位次）：30 第 1、8 第 2、18 第 1、7 第 2、11/9/14 各 1 ⇒
+$$\text{ASL}_{\text{成功}}=\frac{1+2+1+2+1+1+1}{7}=\frac97\approx1.29$$
+<b>对照：</b>同规模下链地址法通常优于线性探测（无堆积），而开放定址胜在「无需额外指针」。</div>
+<div class="box tip"><b>装填因子 $\alpha=n/m$（关键字数/表长）：</b>$\alpha$ 越大，冲突越多、ASL 越大——散列表的平均查找长度只与 $\alpha$ 有关，<b>与 n 的绝对值无关</b>（这是散列的美妙之处）；开放定址要求 $\alpha<1$，拉链法可以 $\alpha>1$。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>典型例题<span class="tag">ASL·删除·旋转·判定</span></h2>
+<div class="box example">
+<b>例 1（满判定树 ASL 秒算）.</b> 15 个元素等概率折半查找（恰好构成满二叉树）：
+$$\text{ASL}_{\text{成功}}=\frac{1\times1+2\times2+4\times3+8\times4}{15}=\frac{49}{15}\approx3.27$$
+<b>通用公式：</b>对于满判定树（$n=2^h-1$）：
+$$\text{ASL}=\frac{(n+1)\log_2(n+1)-n}{n}\ \longrightarrow\ h-1\ \text{量级}$$
+（比顺序查找 8 快一倍以上——这就是 $O(\log n)$ 的威力。）</div>
+<div class="box example">
+<b>例 2（BST 删除双孩子结点：两种替换都演示）.</b> 树：45(24(12,37), 53(∅,93))，删除 24：<br>
+① 24 有两棵子树（12 与 37），取<b>中序直接后继 37</b>（右子树最小）替换：24 的位置放 37 ⇒ 45(37(12,∅), 53(∅,93))；<br>
+② 或取<b>中序直接前驱 12</b> 替换：24 的位置放 12 ⇒ 45(12(∅,37), 53(∅,93))。<br>
+<b>两种结果都是合法 BST</b>（中序仍有序）——考试给步骤要求时按题目指定（王道默认「右子树最小」）。</div>
+<div class="box example">
+<b>例 3（AVL 旋转判断练习）.</b> AVL 树：30(20(10,25), 40)；插入 22（走到 25 的左孩子）：<br>
+① 检查平衡因子：25：0→1 ✓；20：左(10)1、右(25)2 ⇒ BF = −1 ✓；30：左子树高 3、右 1 ⇒ <b>BF=2 失衡</b>；<br>
+② 插入位置 = 30 的<b>左孩子(20) 的右子树</b> ⇒ <b>LR 型</b>；<br>
+③ 先对 20 <b>左旋</b> ⇒ 25 顶上来（20 连同左子树成为 25 的左孩子、原 25 的左孩子 22 转挂到 20 的右侧）；再对 30 <b>右旋</b> ⇒ 25 成整树根：
+<pre class="flow">最终：        25
+           /      \
+         20        30
+        /  \         \
+      10    22        40</pre>
+④ 验算 BF：20：$1-1=0$；30：$0-1=-1$；25：$2-2=0$ ✓。</div>
+<div class="box example">
+<b>例 4（B 树 / B+ 判断四连）.</b><br>
+(a)「3 阶 B 树的非叶非根结点至少有 2 个关键字」⇒ <b>错</b>：至少 $\lceil 3/2\rceil-1=1$ 个关键字；<br>
+(b)「B 树所有叶结点在同一层」⇒ <b>对</b>（绝对平衡的定义）；<br>
+(c)「B+ 树的非叶结点中也存放数据记录」⇒ <b>错</b>：非叶只存索引，记录只在叶；<br>
+(d)「范围查询（找到 ≥k 的所有记录）B+ 比 B 方便」⇒ <b>对</b>（叶链表顺次扫描）。</div>
+</section>
+<section class="card" id="sec-11">
+<h2><span class="num">11</span>决策流程与易错点</h2>
+<pre class="flow">查找题
+├─ ASL 计算
+│   ├─ 先问：成功还是失败？分开算
+│   ├─ 顺序：成功 (n+1)/2；失败 n
+│   ├─ 折半：画判定树 → 数层数
+│   └─ 散列：逐 key 数比较次数 → 求和 / n
+├─ 折半查找
+│   ├─ 判定树 = 平衡 BST；失败结点 n+1 个
+│   ├─ 失败比较次数 = 外部结点的父层数
+│   └─ 前提：有序 + 顺序存储（链表不行）
+├─ BST
+│   ├─ 建树：小左大右、空位即插入点
+│   ├─ 删除双孩子：前驱/后继替换后递归删
+│   └─ 形态取决于插入顺序 → ASL 变化
+├─ AVL：向上找第一个失衡点 → 看方向定 LL/RR/LR/RL → 旋转
+├─ B 树：阶与上下限（ceil(m/2)）；分裂=中间上移；B+ 差异清单
+└─ 散列：函数选质数模；冲突两法；删除要墓碑
+</pre>
+<h3>易错点清单</h3>
+<div class="box warn">
+<ol>
+<li><b>ASL 必分成功/失败：</b>只给一个数会被扣分；失败 ASL 的分母是失败区间数。</li>
+<li><b>折半只限顺序存储：</b>「链表也能折半」一定错（无法 $O(1)$ 定位 mid）。</li>
+<li><b>判定树失败结点 $n+1$ 个：</b>失败比较次数按「外部结点之父的层数」数，不是外部结点本身的层数。</li>
+<li><b>mid 取整方向：</b>$(low+high)/2$ 向下取整——取整方向不同，判定树形状就不同。</li>
+<li><b>分块查找：</b>块间有序、块内可以无序；最优块长 $s=\sqrt n$。</li>
+<li><b>BST 删除双孩子：</b>是「替换数据 + 递归删除前驱/后继」，不是直接删。</li>
+<li><b>BST 的 ASL 不唯一：</b>取决于插入顺序；有序插入退化成链（$O(n)$）。</li>
+<li><b>AVL 旋转类型看「失衡点」不是「根」：</b>从插入点向上找<b>第一个</b>失衡结点，再判断 LL/RR/LR/RL。</li>
+<li><b>B 树下限是 $\lceil m/2\rceil$：</b>子树数下限 $\lceil m/2\rceil$、关键字下限 $\lceil m/2\rceil-1$——别把二者混写。</li>
+<li><b>B+ 必到叶：</b>非叶命中也不能停；范围查询靠叶链表。</li>
+<li><b>开放定址删除：</b>不能直接置空（会截断探测链），必须用标记位。</li>
+<li><b>散列 ASL 与 n 无关：</b>只随装填因子 $\alpha$ 变化——比较对象是 $\alpha$ 不是元素个数。</li>
+</ol>
+</div>
+</section>
+
+<section class="card" id="sec-12">
+<h2><span class="num">12</span>速查表与能力自查</h2>
+<table>
+<thead><tr><th>主题</th><th>结论</th></tr></thead>
+<tbody>
+<tr><td>ASL 定义</td><td>$\sum P_iC_i$；成功/失败分开；等概率 $P_i=1/n$</td></tr>
+<tr><td>顺序查找</td><td>成功 $\frac{n+1}2$；失败 $n$（有序表失败 $\frac n2+\frac n{n+1}$）；无序/链表可用</td></tr>
+<tr><td>折半查找</td><td>$O(\log n)$；判定树 $h=\lceil\log_2(n+1)\rceil$；失败结点 $n+1$；<b>只能顺序存储</b></td></tr>
+<tr><td>分块查找</td><td>ASL $=\frac{b+1}2+\frac{s+1}2$；最优 $s=\sqrt n$ ⇒ $\sqrt n+1$</td></tr>
+<tr><td>BST</td><td>中序有序；插入=空位；删除三类（双孩子用前驱/后继替换）；ASL 依赖树形</td></tr>
+<tr><td>AVL</td><td>$|BF|\le1$；LL=右旋、RR=左旋、LR=先左后右、RL=先右后左；$N(h)=N(h-1)+N(h-2)+1$</td></tr>
+<tr><td>红黑树</td><td>五性质；$h\le2\log_2(n+1)$；增删频繁选它</td></tr>
+<tr><td>B 树</td><td>m 阶：子树 ≤m、关键字 ≤m−1；非根非叶子树 ≥⌈m/2⌉；叶同层；分裂=中间上移；$h\ge\log_m(n+1)$</td></tr>
+<tr><td>B+ 树</td><td>关键字全在叶、叶有链；必查到叶；范围查询强</td></tr>
+<tr><td>散列表</td><td>$H=key\bmod p$（质数）；开放定址（线性/平方）vs 拉链；ASL 由 $\alpha$ 决定</td></tr>
+<tr><td>经典算例</td><td>折半 n=11：成功 3、失败 44/12；散列例：ASL 成功 2.5（线性）、9/7（拉链）</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>查找全章就干一件事——<b>数比较次数</b>：线性表数位置、判定树数层数、BST/AVL 数树高、B 树数结点内比较加层数、散列逐 key 数探测——<b>ASL 是贯穿一切的那根线</b>。</div>
+<h3>能力自查</h3>
+<div class="box method">
+☐ 推导顺序查找成功 $(n+1)/2$ 与有序表失败 $\frac n2+\frac n{n+1}$ (§2)<br>
+☐ 画 n=11 折半判定树，算成功 3 与失败 44/12 (§3)<br>
+☐ 分块查找推导 ASL 与最优 $s=\sqrt n$（n=10000 ⇒ 101）(§4)<br>
+☐ BST 建树 {45,24,53,12,37,93} + ASL 14/6；删除 24 两种替换 (§5、§10 例2)<br>
+☐ AVL 四种旋转各画一例；完整建树 {50,30,60,20,40,35} 的 LR 过程 (§6)<br>
+☐ $N(h)$ 表背到 $h=7$（33）(§6)<br>
+☐ B 树插入 1..5 的分裂轨迹；B 与 B+ 五维对比 (§8)<br>
+☐ 散列线性探测例：12 个关键字全表 + ASL=2.5 (§9)<br>
+☐ 拉链法小例 ASL=9/7 (§9)<br>
+☐ 红黑树五性质与「增删频繁为何选它」 (§7)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax、图表由 Mermaid 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>数据结构（408 · 王道体系） · 第七章 查找 · 内容完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var murls=[
+    "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://registry.npmmirror.com/mermaid/10.9.1/files/dist/mermaid.min.js"
+  ];
+  function mload(i){
+    if(i>=murls.length){return;}
+    var s=document.createElement("script");
+    s.src=murls[i];s.async=true;
+    s.onload=function(){try{mermaid.initialize({startOnLoad:false,theme:"neutral",securityLevel:"loose"});mermaid.run({querySelector:".mermaid"});}catch(e){}};
+    s.onerror=function(){mload(i+1);};
+    document.head.appendChild(s);
+  }
+  mload(0);
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
