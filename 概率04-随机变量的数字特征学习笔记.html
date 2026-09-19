@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>概率04 · 随机变量的数字特征 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#f3faf8;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#0d9488;--accent2:#06b6d4;--soft:#f0fdfa}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#134e4a,#0d9488 55%,#06b6d4);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#ccfbf1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#0f766e;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#134e4a}
+.card h3{font-size:1.05rem;color:#0f766e;margin:24px 0 8px;padding-left:10px;border-left:4px solid #5eead4}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#14b8a6,#06b6d4);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#f0fdfa;border-color:#2dd4bf}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #99f6e4;border-left:4px solid #14b8a6;background:#f7fffd;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#0f766e;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#0f766e;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(13,148,136,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>概率论与数理统计 · 第四章 随机变量的数字特征 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>数学期望</span><span>方差</span><span>常见分布 E 与 D</span><span>协方差</span><span>相关系数</span><span>协方差矩阵</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 数学期望</a>
+<a href="#sec-2">02 · 期望的性质</a>
+<a href="#sec-3">03 · 方差</a>
+<a href="#sec-4">04 · 常见分布的 E 与 D</a>
+<a href="#sec-5">05 · 协方差与相关系数</a>
+<a href="#sec-6">06 · 矩与协方差矩阵</a>
+<a href="#sec-7">07 · 解题决策流程</a>
+<a href="#sec-8">08 · 易错点清单</a>
+<a href="#sec-9">09 · 公式速查表</a>
+<a href="#sec-10">10 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>主线：</b>用几个「数」概括随机变量——<b>期望</b>（位置/中心）、<b>方差</b>（离散程度）、<b>协方差与相关系数</b>（两个变量的联动），最后打包成<b>协方差矩阵</b>。<span style="color:#0f766e;font-weight:700">青框=定义/定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题</span>。</div>
+<pre class="flow">第四章 随机变量的数字特征
+├─ 数学期望（§1–§2）
+│   ├─ 定义：Σxₖpₖ / ∫x·f(x)dx（加权平均，要求绝对收敛）
+│   ├─ 函数期望 E[g(X)]：不必先求 g(X) 的分布
+│   └─ 性质：线性可加（无需独立）；独立时 E(XY)=E(X)E(Y)
+├─ 方差（§3–§4）
+│   ├─ D(X)=E[(X−EX)²]=E(X²)−[E(X)]²
+│   ├─ 性质：D(CX+b)=C²D(X)；独立时 D(X+Y)=D(X)+D(Y)
+│   └─ 常见分布「期望·方差」全家表 + 参数反推题型
+└─ 协方差与相关系数（§5–§6）
+    ├─ Cov(X,Y)=E(XY)−EX·EY（双线性）
+    ├─ ρ=Cov/(σ_Xσ_Y)，|ρ|≤1；ρ=0 ⇔ 不相关
+    ├─ 独立 ⇒ 不相关；反之不然（Y=X² 反例）
+    └─ 矩与协方差矩阵（对称、半正定）
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>数学期望<span class="tag">基础</span></h2>
+<div class="box def">
+<b>定义（加权平均）：</b>要求绝对收敛，否则称期望不存在。<br>
+离散型 $P\{X=x_k\}=p_k$：
+$$E(X)=\sum_kx_k\,p_k\qquad\left(\sum_k|x_k|p_k<\infty\right)$$
+连续型（密度 $f$）：
+$$E(X)=\int_{-\infty}^{+\infty}x\,f(x)\,dx\qquad\left(\int|x|f(x)\,dx<\infty\right)$$
+</div>
+<div class="thm"><span class="label">随机变量函数的期望（免求分布）</span>
+$$E[g(X)]=\begin{cases}\displaystyle\sum_kg(x_k)\,p_k,&\text{离散}\\[8pt]\displaystyle\int_{-\infty}^{+\infty}g(x)f(x)\,dx,&\text{连续}\end{cases}$$
+二维：$E[g(X,Y)]=\sum_i\sum_jg(x_i,y_j)p_{ij}$ 或 $\iint g(x,y)f(x,y)\,dx\,dy$。</div>
+<div class="box tip"><b>便利之处：</b>求 $E(X^2)$、$E(e^X)$ 等，直接用原分布的「取值 × 概率/密度」，不必先求 $X^2$、$e^X$ 的分布。</div>
+<div class="box example">
+<b>例 1（离散）.</b> $P\{X=-1\}=0.2,\ P\{X=0\}=0.3,\ P\{X=1\}=0.3,\ P\{X=2\}=0.2$。求 $E(X)$、$E(X^2)$、$E(2X+1)$。<br>
+① $E(X)=(-1)\times0.2+0+1\times0.3+2\times0.2=0.5$；<br>
+② $E(X^2)=1\times0.2+0+1\times0.3+4\times0.2=1.3$；<br>
+③ $E(2X+1)=2E(X)+1=2$。<br>
+<b>验算（定义直算③）：</b>$\sum(2x_k+1)p_k=2\sum x_kp_k+1=2$ ✓。
+</div>
+<div class="box example">
+<b>例 2（指数分布的期望）.</b> $X\sim E(\lambda)$，求 $E(X)$。<br>
+① 分部积分（$u=x$，$dv=\lambda e^{-\lambda x}dx$）：
+$$E(X)=\int_0^{\infty}x\lambda e^{-\lambda x}dx=\left[-xe^{-\lambda x}\right]_0^{\infty}+\int_0^{\infty}e^{-\lambda x}dx=\frac1\lambda$$
+② 边界项为 0（指数衰减压过多项式）。<br>
+<b>验算：</b>$\lambda=1$ 时 $E=\int_0^{\infty}xe^{-x}dx=1$ ✓；$\lambda$ 越大衰减越快、期望越小，方向正确 ✓。
+</div>
+<div class="box example">
+<b>例 3（标准正态的二阶矩）.</b> $X\sim N(0,1)$，求 $E(X^2)$。<br>
+① 利用 $\varphi'(x)=-x\varphi(x)$：
+$$E(X^2)=\int_{-\infty}^{+\infty}x^2\varphi(x)dx=-\int_{-\infty}^{+\infty}x\,d\varphi(x)$$
+② 分部积分：
+$$=-\left[x\varphi(x)\right]_{-\infty}^{+\infty}+\int_{-\infty}^{+\infty}\varphi(x)dx=0+1=1$$
+<b>验算：</b>与「标准正态方差为 1」的已知结论一致（§4 用它推一般正态的方差）✓。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>期望的性质<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">性质（设期望存在）</span>
+① $E(C)=C$；<br>
+② $E(CX)=CE(X)$；<br>
+③ <b>可加性（无需独立）</b>：$E(X+Y)=E(X)+E(Y)$；推广 $E\!\left(\sum X_i\right)=\sum E(X_i)$；<br>
+④ <b>独立时可乘</b>：$X,Y$ 独立 ⇒ $E(XY)=E(X)E(Y)$。
+</div>
+<div class="proof"><span class="label">证明</span>
+<b>③（离散）</b>按二维分布律拆分：
+$$E(X+Y)=\sum_i\sum_j(x_i+y_j)p_{ij}=\sum_i x_i\underbrace{\sum_j p_{ij}}_{p_{i\cdot}}+\sum_j y_j\underbrace{\sum_i p_{ij}}_{p_{\cdot j}}=E(X)+E(Y)\ ✓$$
+<b>④（离散、独立）</b>此时 $p_{ij}=p_{i\cdot}p_{\cdot j}$：
+$$E(XY)=\sum_i\sum_j x_iy_j\,p_{i\cdot}p_{\cdot j}=\left(\sum_i x_ip_{i\cdot}\right)\left(\sum_j y_jp_{\cdot j}\right)=E(X)E(Y)\ ✓$$
+（连续型把求和换成二重积分，完全同理。）<span class="qed">∎</span></div>
+<div class="box warn"><b>条件提醒：</b>可加性<b>不需要</b>任何条件；而 $E(XY)=E(X)E(Y)$ 需要独立（或更弱的「不相关」，见 §5）——两者不可混用。</div>
+<div class="box example">
+<b>例 1（二项期望 np：可加性的威力）.</b> 求 $X\sim B(n,p)$ 的期望。<br>
+① 第 $i$ 次的示性变量 $X_i=\begin{cases}1,&\text{第 }i\text{ 次成功}\\0,&\text{否则}\end{cases}$，则 $X=X_1+\cdots+X_n$；<br>
+② $E(X_i)=p$；<br>
+③ 可加性（无需独立）：
+$$E(X)=\sum_{i=1}^nE(X_i)=np$$
+<b>验算（n=2 定义直算）：</b>$E=0\cdot q^2+1\cdot2pq+2\cdot p^2=2p(q+p)=2p=np$（其中 $n=2$）✓。
+</div>
+<div class="box example">
+<b>例 2（配对问题）.</b> $n$ 封信随机装入 $n$ 个信封，求配对数的期望。<br>
+① 第 $i$ 封的示性变量 $X_i$：$P\{X_i=1\}=\dfrac1n$；<br>
+② $X=\sum X_i$ ⇒ $E(X)=n\cdot\dfrac1n=1$；<br>
+③ 结论：无论 $n$ 多大，平均恰好配对 1 封。<br>
+<b>验算（n=2 枚举）：</b>两封信两种排列：全对（$X=2$）、全错（$X=0$），各 $\frac12$，$E=1$ ✓。
+</div>
+</section>
+
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>方差<span class="tag">核心</span></h2>
+<div class="box def">
+<b>定义：</b>刻画随机变量偏离中心的「离散程度」：
+$$D(X)=\operatorname{Var}(X)=E\left[(X-E(X))^2\right],\qquad \sigma(X)=\sqrt{D(X)}$$
+</div>
+<div class="thm"><span class="label">计算公式（最常用）</span>
+$$D(X)=E(X^2)-[E(X)]^2$$
+</div>
+<div class="proof"><span class="label">证明</span>记 $\mu=E(X)$，展开平方：
+$$D(X)=E\left[(X-\mu)^2\right]=E(X^2-2\mu X+\mu^2)=E(X^2)-2\mu E(X)+\mu^2=E(X^2)-\mu^2\ ✓$$<span class="qed">∎</span></div>
+<div class="thm"><span class="label">性质</span>
+① $D(C)=0$；② $D(CX)=C^2D(X)$；③ $D(X+C)=D(X)$；<br>
+④ <b>独立时</b> $D(X+Y)=D(X)+D(Y)$（条件可减弱为不相关）；一般情形
+$$D(X+Y)=D(X)+D(Y)+2\operatorname{Cov}(X,Y)$$</div>
+<div class="proof"><span class="label">证明（②④）</span>
+② $D(CX)=E(C^2X^2)-[CE(X)]^2=C^2\left(E(X^2)-[E(X)]^2\right)=C^2D(X)\ ✓$<br>
+④ 记 $\mu_X=E(X)$、$\mu_Y=E(Y)$：
+$$D(X+Y)=E\left[(X+Y-\mu_X-\mu_Y)^2\right]=E\left[(X-\mu_X)^2\right]+E\left[(Y-\mu_Y)^2\right]+2E\left[(X-\mu_X)(Y-\mu_Y)\right]$$
+$$=D(X)+D(Y)+2\operatorname{Cov}(X,Y)$$
+当 $X,Y$ 独立时 $\operatorname{Cov}=E(X-\mu_X)E(Y-\mu_Y)=0$，故 $D(X+Y)=D(X)+D(Y)$ ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（延续 §1 例 1）.</b> 已知 $E(X)=0.5$，$E(X^2)=1.3$，求 $D(X)$ 与 $D(2X+3)$。<br>
+① $D(X)=E(X^2)-[E(X)]^2=1.3-0.25=1.05$；<br>
+② $D(2X+3)=4D(X)=4.2$（常数不影响离散程度）。<br>
+<b>验算（定义直算）：</b>$\sum(x_k-0.5)^2p_k=1.5^2\times0.2+0.5^2\times0.3+0.5^2\times0.3+1.5^2\times0.2=0.45+0.075+0.075+0.45=1.05$ ✓。
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>常见分布的期望与方差<span class="tag">必背+推导</span></h2>
+<table>
+<thead><tr><th>分布</th><th>$E(X)$</th><th>$D(X)$</th><th>推导要点</th></tr></thead>
+<tbody>
+<tr><td>$B(n,p)$</td><td>$np$</td><td>$npq$</td><td>示性变量分解 + 可加性</td></tr>
+<tr><td>$P(\lambda)$</td><td>$\lambda$</td><td>$\lambda$</td><td>级数错位相消</td></tr>
+<tr><td>$U(a,b)$</td><td>$\dfrac{a+b}{2}$</td><td>$\dfrac{(b-a)^2}{12}$</td><td>直接积分</td></tr>
+<tr><td>$E(\lambda)$</td><td>$\dfrac1\lambda$</td><td>$\dfrac1{\lambda^2}$</td><td>分部积分两次</td></tr>
+<tr><td>$N(\mu,\sigma^2)$</td><td>$\mu$</td><td>$\sigma^2$</td><td>标准化 + §1 例3</td></tr>
+</tbody>
+</table>
+<h3>二项分布 $B(n,p)$：$E=np$，$D=npq$</h3>
+<div class="proof"><span class="label">推导</span>示性变量 $X_i\sim$ 0-1（相互独立）：$E(X_i)=p$，$D(X_i)=E(X_i^2)-[E(X_i)]^2=p-p^2=pq$。由 §2 例1 与 §3 性质④：
+$$E(X)=\sum E(X_i)=np,\qquad D(X)=\sum D(X_i)=npq\ ✓$$<span class="qed">∎</span></div>
+<h3>泊松分布 $P(\lambda)$：$E=\lambda$，$D=\lambda$</h3>
+<div class="proof"><span class="label">推导</span>
+① 期望（错位相消）：
+$$E(X)=\sum_{k=0}^{\infty}k\frac{\lambda^ke^{-\lambda}}{k!}=\lambda e^{-\lambda}\sum_{k=1}^{\infty}\frac{\lambda^{k-1}}{(k-1)!}=\lambda e^{-\lambda}e^{\lambda}=\lambda\ ✓$$
+② 先算 $E[X(X-1)]$：
+$$E[X(X-1)]=\sum_{k=2}^{\infty}k(k-1)\frac{\lambda^ke^{-\lambda}}{k!}=\lambda^2e^{-\lambda}\sum_{k=2}^{\infty}\frac{\lambda^{k-2}}{(k-2)!}=\lambda^2e^{-\lambda}e^{\lambda}=\lambda^2$$
+③ 于是 $E(X^2)=E[X(X-1)]+E(X)=\lambda^2+\lambda$，$D(X)=\lambda^2+\lambda-\lambda^2=\lambda\ ✓$<span class="qed">∎</span></div>
+<h3>均匀分布 $U(a,b)$：$E=\dfrac{a+b}{2}$，$D=\dfrac{(b-a)^2}{12}$</h3>
+<div class="proof"><span class="label">推导</span>
+$$E(X)=\int_a^b\frac{x}{b-a}dx=\frac{b^2-a^2}{2(b-a)}=\frac{a+b}{2}\ ✓$$
+$$E(X^2)=\int_a^b\frac{x^2}{b-a}dx=\frac{b^3-a^3}{3(b-a)}=\frac{a^2+ab+b^2}{3}$$
+$$D(X)=\frac{a^2+ab+b^2}{3}-\frac{(a+b)^2}{4}=\frac{4a^2+4ab+4b^2-3a^2-6ab-3b^2}{12}=\frac{(b-a)^2}{12}\ ✓$$<span class="qed">∎</span></div>
+<h3>指数分布 $E(\lambda)$：$E=\dfrac1\lambda$，$D=\dfrac1{\lambda^2}$</h3>
+<div class="proof"><span class="label">推导</span>期望见 §1 例2。二阶矩（两次分部积分）：
+$$E(X^2)=\int_0^{\infty}x^2\lambda e^{-\lambda x}dx=\frac{2}{\lambda^2}\quad\left(\int_0^{\infty}x^2e^{-\lambda x}dx=\frac2{\lambda^3}\right)$$
+$$D(X)=\frac{2}{\lambda^2}-\frac{1}{\lambda^2}=\frac1{\lambda^2}\ ✓$$<span class="qed">∎</span></div>
+<h3>正态分布 $N(\mu,\sigma^2)$：$E=\mu$，$D=\sigma^2$</h3>
+<div class="proof"><span class="label">推导</span>标准化 $Z=\dfrac{X-\mu}{\sigma}\sim N(0,1)$，即 $X=\mu+\sigma Z$。<br>
+① 期望：$E(X)=\mu+\sigma E(Z)=\mu+0=\mu$（$z\varphi(z)$ 为奇函数）；<br>
+② 方差：$D(X)=\sigma^2D(Z)=\sigma^2E(Z^2)=\sigma^2\cdot1=\sigma^2$（§1 例3）✓<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（参数反推）.</b> 已知 $X\sim B(n,p)$，$E(X)=6$，$D(X)=4.2$，求 $n,p$。<br>
+① $np=6$，$np(1-p)=4.2$；<br>
+② 相除：$1-p=\dfrac{4.2}{6}=0.7$ ⇒ $p=0.3$；<br>
+③ 代回：$n=\dfrac6{0.3}=20$。<br>
+<b>验算：</b>$npq=20\times0.3\times0.7=4.2$ ✓。
+</div>
+<div class="box tip"><b>记忆锚点：</b>泊松「期望=方差=$\lambda$」（这一点常用来识别泊松）；指数「期望 $1/\lambda$、方差 $1/\lambda^2$」——记住期望即特征时间，方差是其平方。</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>协方差与相关系数<span class="tag">核心</span></h2>
+<div class="box def">
+<b>引入动机：</b>§3 中 $D(X+Y)=D(X)+D(Y)+\underbrace{2E[(X-\mu_X)(Y-\mu_Y)]}_{\text{交叉项}}$——交叉项恰是刻画两变量「联动」的量，命名为协方差：
+$$\operatorname{Cov}(X,Y)=E\left[(X-E(X))(Y-E(Y))\right]=E(XY)-\mu_XE(Y)-E(X)\mu_Y+\mu_X\mu_Y=E(XY)-E(X)E(Y)$$
+量纲受单位影响，再标准化得到<b>相关系数</b>：
+$$\rho_{XY}=\frac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}$$
+</div>
+<div class="thm"><span class="label">协方差的性质（双线性）</span>
+① $\operatorname{Cov}(X,Y)=\operatorname{Cov}(Y,X)$，$\operatorname{Cov}(X,X)=D(X)$；<br>
+② $\operatorname{Cov}(aX+b,\ Y)=a\operatorname{Cov}(X,Y)$；$\operatorname{Cov}(X_1+X_2,\ Y)=\operatorname{Cov}(X_1,Y)+\operatorname{Cov}(X_2,Y)$；<br>
+③ <b>独立 ⇒ $\operatorname{Cov}=0$</b>（反之不然）。
+</div>
+<div class="proof"><span class="label">证明（③）</span>$X,Y$ 独立 ⇒ $X-\mu_X$ 与 $Y-\mu_Y$ 独立 ⇒
+$$\operatorname{Cov}(X,Y)=E(X-\mu_X)\cdot E(Y-\mu_Y)=0\times0=0\ ✓$$<span class="qed">∎</span></div>
+<div class="thm"><span class="label">相关系数的性质</span>
+① $|\rho_{XY}|\le1$；<br>
+② $|\rho_{XY}|=1$ ⇔ 存在常数 $a\ne0,b$ 使 $Y=aX+b$（几乎必然成立）——完美线性关系；<br>
+③ 称 $\rho=0$ 为<b>不相关</b>，等价于 $\operatorname{Cov}=0\iff E(XY)=E(X)E(Y)$；<br>
+④ <b>独立 ⇒ 不相关；不相关 ⇏ 独立</b>（反例见下）。
+</div>
+<div class="proof"><span class="label">证明（①，Cauchy-Schwarz）</span>设 $D(X)>0$。对任意实数 $\lambda$：
+$$0\le D(Y-\lambda X)=\lambda^2D(X)-2\lambda\operatorname{Cov}(X,Y)+D(Y)$$
+右端是 $\lambda$ 的二次式且恒非负，故判别式 $\le0$：
+$$4\operatorname{Cov}^2(X,Y)-4D(X)D(Y)\le0\ \Longrightarrow\ |\operatorname{Cov}(X,Y)|\le\sigma_X\sigma_Y\ \Longrightarrow\ |\rho_{XY}|\le1\ ✓$$
+<b>（②的思路）</b>当 $|\rho|=1$ 时取 $\lambda_0=\dfrac{\operatorname{Cov}(X,Y)}{D(X)}$ 使 $D(Y-\lambda_0X)=D(Y)(1-\rho^2)=0$，方差为 0 说明 $Y-\lambda_0X$ 几乎必然取常值 $b$，即 $Y=\lambda_0X+b$ ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（离散：计算 Cov 与 ρ）.</b> 联合分布律
+<table><thead><tr><th></th><th>$Y=0$</th><th>$Y=1$</th></tr></thead><tbody>
+<tr><td>$X=0$</td><td>0.4</td><td>0.1</td></tr>
+<tr><td>$X=1$</td><td>0.1</td><td>0.4</td></tr>
+</tbody></table>
+① 边缘：$E(X)=0.5$，$E(Y)=0.5$；$E(X^2)=0.5$ ⇒ $D(X)=0.25=D(Y)$；<br>
+② $E(XY)=P\{X=1,Y=1\}=0.4$；<br>
+③ $\operatorname{Cov}=0.4-0.5\times0.5=0.15$；$\rho=\dfrac{0.15}{\sqrt{0.25\times0.25}}=0.6$。<br>
+<b>验算：</b>$0.6\in(0,1)$ 符合「$X$ 大时 $Y$ 也偏大」的正相关直觉 ✓；又 $P\{X=1,Y=1\}=0.4\ne0.25$ ⇒ 不独立，但不妨碍相关计算 ✓。
+</div>
+<div class="box example">
+<b>例 2（经典反例：不相关但不独立）.</b> $X\sim U(-1,1)$，$Y=X^2$。<br>
+① $E(X)=0$；$E(XY)=E(X^3)=0$（奇函数在对称区间积分）⇒ $\operatorname{Cov}=E(XY)-E(X)E(Y)=0$，即 $\rho=0$：<b>不相关</b>；<br>
+② 但二者有严格的函数关系，必然<b>不独立</b>；<br>
+<b>验算（数值抽查）：</b>$P\{X>0.5\}=0.25$，$P\{Y>0.5\}=P\{|X|>0.707\}\approx0.293$，乘积 $\approx0.073$；而 $P\{X>0.5,\ Y>0.5\}=P\{X>0.707\}\approx0.146\ne0.073$ ⇒ 不独立 ✓；<br>
+③ 结论：$\rho$ 只度量<b>线性</b>相关程度，$Y=X^2$ 是完全的（非线性）依赖，$\rho$ 却为 0。<br>
+<b>补充：</b>在二维正态分布中「不相关 ⇔ 独立」成立；但一般分布不能这样推断（本反例即是）。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>矩与协方差矩阵<span class="tag">打包</span></h2>
+<div class="box def">
+<b>矩（期望的家族）：</b><br>
+$k$ 阶原点矩：$E(X^k)$（一阶即期望）；<br>
+$k$ 阶中心矩：$E\left[(X-E(X))^k\right]$（二阶即方差）；<br>
+$k+l$ 阶混合矩：$E(X^kY^l)$；混合中心矩：$E\left[(X-\mu_X)^k(Y-\mu_Y)^l\right]$（$k=l=1$ 即协方差）。
+</div>
+<div class="box def">
+<b>协方差矩阵：</b>对 $n$ 维随机向量 $(X_1,\dots,X_n)$，记 $c_{ij}=\operatorname{Cov}(X_i,X_j)$（$c_{ii}=D(X_i)$），称
+$$C=(c_{ij})_{n\times n}=\begin{pmatrix}D(X_1)&\operatorname{Cov}(X_1,X_2)&\cdots\\ \operatorname{Cov}(X_2,X_1)&D(X_2)&\cdots\\ \vdots&\vdots&\ddots\end{pmatrix}$$
+为协方差矩阵。<b>性质：对称；半正定</b>（严格正定 ⇔ 任意非零线性组合 $\sum x_iX_i$ 几乎必然不为常数，即各分量间不存在一次（仿射）关系）。
+</div>
+<div class="proof"><span class="label">证明（半正定性）</span>对任意实向量 $\boldsymbol{x}=(x_1,\dots,x_n)^T$：
+$$\boldsymbol{x}^TC\boldsymbol{x}=\sum_i\sum_j x_ix_j\operatorname{Cov}(X_i,X_j)=\operatorname{Cov}\!\left(\sum_i x_iX_i,\ \sum_j x_jX_j\right)=D\!\left(\sum_i x_iX_i\right)\ge0\ ✓$$
+方差非负即得结论。<span class="qed">∎</span></div>
+<div class="box tip"><b>备注（n 维正态）：</b>在概率论中，若 $(X_1,\dots,X_n)$ 服从 $n$ 维正态分布 $N(\boldsymbol{\mu},\ C)$，其分布完全由均值向量 $\boldsymbol{\mu}$ 与协方差矩阵 $C$ 决定（$C$ 可逆时密度亦然）；此时「不相关 ⇔ 独立」且 $C$ 为对角阵当且仅当各分量独立——这是最常用的一类特例（一般分布不具备）。</div>
+<div class="box example">
+<b>例.</b> 已知 $D(X)=4$，$D(Y)=1$，$\operatorname{Cov}(X,Y)=1$。求 $(X,Y)$ 与 $(X+Y,\ X-Y)$ 的协方差矩阵。<br>
+① $(X,Y)$ 的矩阵：
+$$C_1=\begin{pmatrix}4&1\\1&1\end{pmatrix}$$
+② 线性变换按双线性展开：
+$$D(X+Y)=4+1+2\times1=7,\qquad D(X-Y)=4+1-2\times1=3$$
+$$\operatorname{Cov}(X+Y,\ X-Y)=\operatorname{Cov}(X,X)-\operatorname{Cov}(X,Y)+\operatorname{Cov}(Y,X)-\operatorname{Cov}(Y,Y)=4-1+1-1=3$$
+③ 故
+$$C_2=\begin{pmatrix}7&3\\3&3\end{pmatrix}$$
+<b>验算：</b>$\det C_1=4-1=3>0$、$\det C_2=21-9=12>0$ 且对角元为正 ⇒ 均正定 ✓；相关系数 $\rho=\dfrac{3}{\sqrt{7\times3}}=\dfrac{3}{\sqrt{21}}\approx0.65$，与 $C_1$ 中 $\rho=\frac{1}{2}$ 不同——线性变换会改变相关结构 ✓。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>解题决策流程</h2>
+<pre class="flow">拿到数字特征题
+├─ 求期望 / 方差？
+│   ├─ 已给分布律或密度 → 直接求和 / 积分
+│   ├─ 是「和或线性组合」→ 可加性拆成单项（无需独立）
+│   ├─ 求 E[g(X)] → 用「g(x)×密度」积分，免求 g(X) 分布
+│   ├─ 是常见分布 → 查表；给出 E、D 反推参数
+│   └─ 含 max/min、函数变换 → 先求分布（第三章），再算
+├─ 两变量联动？
+│   ├─ 求 Cov → 先算 E(XY)、E(X)、E(Y)，相减
+│   ├─ 求 ρ → 再除以 σ_Xσ_Y，并解释符号与强度
+│   └─ 判「独立 / 不相关」→ 独立 ⇒ 不相关；反例否定反向
+└─ 多变量打包？
+    └─ 协方差矩阵：对角元 D(Xi)，非对角 Cov；线性变换双线性展开
+</pre>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>$E(XY)=E(X)E(Y)$ 需条件：</b>需不相关才成立（独立是其常用充分条件），一般随机变量不成立。</li>
+<li><b>函数期望用原密度：</b>$E[g(X)]=\int g(x)f_X(x)dx$，别错拿 $g(X)$ 的分布或别的变量密度。</li>
+<li><b>$D(aX+b)=a^2D(X)$：</b>常数不改变方差；系数必须平方（$D(2X)=4D(X)$，不是 $2D$）。</li>
+<li><b>不相关 ⇏ 独立：</b>独立才能推出不相关；反向用 $Y=X^2$ 反例排除。</li>
+<li><b>ρ 只测线性关系：</b>$\rho=0$ 不代表无关系（可能是完美非线性关系）。</li>
+<li><b>参数别倒置：</b>泊松 $E=D=\lambda$；指数 $E=1/\lambda$、$D=1/\lambda^2$。</li>
+<li><b>正态第二参数是方差：</b>$N(1,4)$ 的方差是 4、标准差是 2。</li>
+<li><b>协方差展开要全：</b>$\operatorname{Cov}(X+Y,Z)=\operatorname{Cov}(X,Z)+\operatorname{Cov}(Y,Z)$；$\operatorname{Cov}(X+Y,X-Y)=D(X)-D(Y)+0$ 的交叉项两边抵消。</li>
+<li><b>方差可加有前提：</b>$D(X+Y)=D(X)+D(Y)$ 仅当独立（或不相关）；否则要加 $2\operatorname{Cov}$。</li>
+<li><b>期望存在性：</b>定义要求绝对收敛（$\sum|x_k|p_k<\infty$ 或 $\int|x|f<\infty$）；重尾分布（如柯西）期望不存在。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>期望定义</td><td>$E(X)=\sum x_kp_k$；$E(X)=\int xf(x)dx$（绝对收敛）</td></tr>
+<tr><td>函数期望</td><td>$E[g(X)]=\sum g(x_k)p_k$；$E[g(X)]=\int g(x)f(x)dx$</td></tr>
+<tr><td>期望线性</td><td>$E(aX+bY)=aE(X)+bE(Y)$（无需独立）</td></tr>
+<tr><td>独立可乘</td><td>$X\perp Y\Rightarrow E(XY)=E(X)E(Y)$</td></tr>
+<tr><td>方差</td><td>$D(X)=E[(X-EX)^2]=E(X^2)-[E(X)]^2$</td></tr>
+<tr><td>方差性质</td><td>$D(CX+b)=C^2D(X)$；$D(X\pm Y)=DX+DY\pm2\operatorname{Cov}$；独立时交叉项为 0</td></tr>
+<tr><td>$B(n,p)$</td><td>$E=np$，$D=npq$</td></tr>
+<tr><td>$P(\lambda)$</td><td>$E=\lambda$，$D=\lambda$</td></tr>
+<tr><td>$U(a,b)$</td><td>$E=\dfrac{a+b}{2}$，$D=\dfrac{(b-a)^2}{12}$</td></tr>
+<tr><td>$E(\lambda)$</td><td>$E=\dfrac1\lambda$，$D=\dfrac1{\lambda^2}$</td></tr>
+<tr><td>$N(\mu,\sigma^2)$</td><td>$E=\mu$，$D=\sigma^2$</td></tr>
+<tr><td>协方差</td><td>$\operatorname{Cov}(X,Y)=E(XY)-E(X)E(Y)$；双线性；独立时为 0</td></tr>
+<tr><td>相关系数</td><td>$\rho=\dfrac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}$；$|\rho|\le1$；$|\rho|=1\iff$ 线性关系</td></tr>
+<tr><td>不相关</td><td>$\rho=0\iff \operatorname{Cov}=0\iff E(XY)=E(X)E(Y)$；独立 ⇒ 不相关（反之不然）</td></tr>
+<tr><td>协方差矩阵</td><td>$c_{ij}=\operatorname{Cov}(X_i,X_j)$；对称、半正定；$\boldsymbol{x}^TC\boldsymbol{x}=D(\sum x_iX_i)\ge0$</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>期望管「中心」、方差管「散布」、协方差管「联动」——三者都可归结为「求 $E(\cdot)$」这一件事：<b>加权平均算期望，平方去心算方差，乘积去心算协方差。</b></div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>会算期望 → 会算方差 → 会推常见分布 E/D → 会算 Cov/ρ 并解读 → 会写协方差矩阵。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 用定义式求离散/连续型期望（含绝对收敛性的验证）；<br>
+② 用「函数期望免分布」技巧算 $E(X^2)$、$E(e^X)$ 等；<br>
+③ 用可加性与示性变量推导 $B(n,p)$、配对问题等期望；<br>
+④ 独立推导五大分布的 E 与 D（含级数错位相消、分部积分）；<br>
+⑤ 证明 $|\rho|\le1$（Cauchy-Schwarz）并解释 $|\rho|=1$ 的含义；<br>
+⑥ 计算 Cov、ρ 并作符号/强度的解读；写出协方差矩阵并验证正定性。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>给分布律 / 密度求 E、D</td><td>定义式直接算</td><td>§1 例1，§3 例</td></tr>
+<tr><td>「第 i 次成功」型计数</td><td>示性变量 + 可加性</td><td>§2 例1、例2</td></tr>
+<tr><td>指数/正态的高阶矩</td><td>分部积分 / $\varphi'=-x\varphi$</td><td>§1 例2、例3</td></tr>
+<tr><td>已知 E、D 反推参数</td><td>方程组</td><td>§4 例</td></tr>
+<tr><td>两变量联合表求 Cov、ρ</td><td>$E(XY)$ 表格定位</td><td>§5 例1</td></tr>
+<tr><td>判断「独立 / 不相关」</td><td>独立 ⇒ 不相关；$Y=X^2$ 反例</td><td>§5 例2</td></tr>
+<tr><td>线性变换后的协方差矩阵</td><td>双线性展开</td><td>§6 例</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 默写 E、D 的定义与速算公式，并说出各自存在的条件（E 需绝对收敛，D 需 $E(X^2)$ 有限）（§1、§3）<br>
+☐ 完成 §1 例1 的三种期望并口算验算（§1）<br>
+☐ 独立推导 $B(n,p)$ 的 $E=np$、$D=npq$（无需背公式）（§2 例1、§4）<br>
+☐ 用级数技巧推导 $P(\lambda)$ 的 $E=D=\lambda$（§4）<br>
+☐ 独立推导 $U(a,b)$、$E(\lambda)$、$N(\mu,\sigma^2)$ 的 E 与 D（§4）<br>
+☐ 写出 Cauchy-Schwarz 证明（二次式判别式法）（§5）<br>
+☐ 复述 $Y=X^2$ 反例的全部数值校验（§5 例2）<br>
+☐ 独立复算 $(X+Y,X-Y)$ 的协方差矩阵与正定性（§6 例）
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>概率论与数理统计 · 第四章 随机变量的数字特征 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

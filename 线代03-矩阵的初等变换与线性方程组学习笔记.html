@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>线代03 · 矩阵的初等变换与线性方程组 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#f8f6fc;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#7e22ce;--accent2:#4f46e5;--soft:#faf5ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#581c87,#7e22ce 55%,#4f46e5);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#e9d5ff}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#6b21a8;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#581c87}
+.card h3{font-size:1.05rem;color:#6b21a8;margin:24px 0 8px;padding-left:10px;border-left:4px solid #d8b4fe}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#a855f7,#6366f1);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#faf5ff;border-color:#c084fc}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #e9d5ff;border-left:4px solid #a855f7;background:#fdfaff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#6b21a8;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#6b21a8;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(126,34,206,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>线性代数 · 第三章 矩阵的初等变换与线性方程组 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>初等变换</span><span>初等矩阵</span><span>矩阵的秩</span><span>解的存在判定</span><span>通解结构</span><span>学习闭环</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 消元法与初等变换</a>
+<a href="#sec-2">02 · 行阶梯形·行最简形·标准形</a>
+<a href="#sec-3">03 · 初等矩阵</a>
+<a href="#sec-4">04 · 用初等变换求逆矩阵</a>
+<a href="#sec-5">05 · 矩阵的秩</a>
+<a href="#sec-6">06 · 线性方程组的解</a>
+<a href="#sec-7">07 · 解题决策流程</a>
+<a href="#sec-8">08 · 易错点清单</a>
+<a href="#sec-9">09 · 公式速查表</a>
+<a href="#sec-10">10 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>主线：</b>用「初等变换」把矩阵化到最简形式（阶梯形 / 最简形 / 标准形），一次性解决三大问题：<b>求秩、求逆、解方程组</b>。<span style="color:#6b21a8;font-weight:700">紫框=定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题（步骤化）</span>。</div>
+<pre class="flow">第三章 矩阵的初等变换与线性方程组
+├─ 消元法 → 三种初等行变换（§1）
+│   └─ 核心事实：初等行变换把方程组化为同解方程组
+├─ 矩阵的标准形式（§2）
+│   ├─ 行阶梯形 → 找秩
+│   ├─ 行最简形 → 解方程组
+│   └─ 标准形 diag(E_r, O) → 最终简化形式
+├─ 初等矩阵（§3–§4）
+│   ├─ 左乘初等矩阵 = 行变换；右乘 = 列变换
+│   └─ 求逆：(A|E) →行变换→ (E|A⁻¹)
+└─ 两大应用（§5–§6）
+    ├─ 矩阵的秩 = 最高阶非零子式的阶数 = 阶梯形非零行数
+    └─ 解方程组：比较 r(A) 与 r(A|b) 判定解的存在与个数
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>消元法与初等变换<span class="tag">基础</span></h2>
+<div class="box def">
+<b>引例（消元法）.</b> 解方程组
+$$\begin{cases}x_1+x_2+x_3=6\\ 2x_1-x_2+x_3=3\\ x_1-2x_2+x_3=0\end{cases}$$
+把未知量系数与常数分离，只对「数表」操作：
+$$(A\mid\boldsymbol b)=\left(\begin{array}{ccc|c}1&1&1&6\\2&-1&1&3\\1&-2&1&0\end{array}\right)\xrightarrow{\ r_2-2r_1,\ \ r_3-r_1\ }\left(\begin{array}{ccc|c}1&1&1&6\\0&-3&-1&-9\\0&-3&0&-6\end{array}\right)\xrightarrow{\ r_3-r_2\ }\left(\begin{array}{ccc|c}1&1&1&6\\0&-3&-1&-9\\0&0&1&3\end{array}\right)$$
+回代即得 $x_3=3,\ x_2=2,\ x_1=1$。整个消元过程只用了三种「行操作」。
+</div>
+<div class="box def">
+<b>三种初等行变换：</b>
+① <b>换行</b> $r_i\leftrightarrow r_j$；
+② <b>乘数</b> $r_i\times k\ (k\neq0)$；
+③ <b>加倍数</b> $r_i+k\,r_j$。
+<br>把「行」改为「列」即得三种初等列变换；两者统称<b>初等变换</b>。
+</div>
+<div class="thm"><span class="label">定理（同解性）</span>对增广矩阵作初等<b>行</b>变换，所得方程组与原方程组<b>同解</b>。</div>
+<div class="proof"><span class="label">证明（逐条验证可逆性）</span>
+① 换行：只交换方程位置，解集不变；<br>
+② 乘数 $k\neq0$：方程两边同乘非零数，与原方程等价（用 $r_i\times\frac1k$ 还原）；<br>
+③ 加倍数：若解满足方程 $i,j$，则满足新方程 $i$；反之新解用 $r_i-k\,r_j$ 还原后也满足原方程 $i$。三种变换都可逆，故新旧方程组互为充要条件，解集相同 ✓。<span class="qed">∎</span></div>
+<div class="box warn"><b>核心禁忌：</b>解方程组时<b>只能用行变换</b>！列变换相当于更换/重排未知量，会把解「搅乱」（求秩、化标准形时才允许用列变换）。</div>
+<div class="box def">
+<b>矩阵等价：</b>若 $A$ 经有限次初等变换化为 $B$，称 $A\sim B$（等价有自反、对称、传递性）。等价矩阵的秩相同（§5）。
+</div>
+<div class="box example">
+<b>例（消元全程）.</b> 继续把引例的增广矩阵化到行最简形。<br>
+① 已有阶梯形：
+$$\left(\begin{array}{ccc|c}1&1&1&6\\0&-3&-1&-9\\0&0&1&3\end{array}\right)$$
+② $r_2+r_3$ 再乘 $\left(-\frac13\right)$：$[0,-3,0\mid-6]\to[0,1,0\mid2]$；<br>
+③ $r_1-r_2-r_3$：$[1,1,1\mid6]-[0,1,0\mid2]-[0,0,1\mid3]=[1,0,0\mid1]$：
+$$\left(\begin{array}{ccc|c}1&0&0&1\\0&1&0&2\\0&0&1&3\end{array}\right)\ \Longrightarrow\ x_1=1,\ x_2=2,\ x_3=3$$
+<b>验算（回代原方程组）：</b>$1+2+3=6$ ✓；$2-2+3=3$ ✓；$1-4+3=0$ ✓。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>行阶梯形 · 行最简形 · 标准形<span class="tag">基础</span></h2>
+<div class="box def">
+<b>行阶梯形矩阵：</b>① 每个非零行的第一个非零元（<b>主元</b>）所在列，其下方全为 0；② 零行全在非零行下方。<br>
+<b>行最简形矩阵：</b>在行阶梯形基础上，主元全为 1，且主元所在列的<b>其他元素全为 0</b>。<br>
+<b>标准形：</b>
+$$F=\begin{pmatrix}E_r&O\\O&O\end{pmatrix}_{m\times n}$$
+（左上角 $r$ 阶单位块，其余为 0），其中 $r$ 即矩阵的秩。
+</div>
+<div class="thm"><span class="label">定理（化标准形）</span>任何矩阵 $A$ 都能经有限次初等变换化为标准形 $\begin{pmatrix}E_r&O\\O&O\end{pmatrix}$；仅用<b>行</b>变换可化为行阶梯形与行最简形（行最简形唯一，$r$ 由 $A$ 唯一确定——秩的证明见 §5）。</div>
+<div class="proof"><span class="label">证明（算法即证明）</span>若 $A\neq O$：找到最左的非零列，用换行把该列主元换到第一行、化主元为 1，再用「加倍数」把该列其余元素消为 0；接着对右下角子矩阵重复同一操作。每步待处理子矩阵都变「小」，有限步终止，得行最简形。最后用列变换（或继续行消元）把主元以外的块消零，得标准形，主元个数即 $r$ ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（化行最简形并定秩）.</b> 把 $A=\begin{pmatrix}1&2&3&4\\2&4&6&8\\1&1&1&1\end{pmatrix}$ 化为行最简形。<br>
+① 消第一列：$r_2-2r_1$（变零行）、$r_3-r_1$：
+$$\begin{pmatrix}1&2&3&4\\0&0&0&0\\0&-1&-2&-3\end{pmatrix}$$
+② 非零行上移（$r_2\leftrightarrow r_3$）并把主元化 1（$r_2\times(-1)$）：
+$$\begin{pmatrix}1&2&3&4\\0&1&2&3\\0&0&0&0\end{pmatrix}$$
+③ 消主元列上方（$r_1-2r_2$）：
+$$\begin{pmatrix}1&0&-1&-2\\0&1&2&3\\0&0&0&0\end{pmatrix}\quad(\text{行最简形，}r(A)=2)$$
+<b>验算：</b>原第 3 行 $=(1,1,1,1)=[1,0,-1,-2]+[0,1,2,3]$ ✓；原第 2 行 $=2\times$ 原第 1 行 ✓（秩不超过 2）；又 2 阶子式 $\begin{vmatrix}1&2\\1&1\end{vmatrix}=-1\neq0$ ⇒ 秩恰为 2 ✓。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>初等矩阵<span class="tag">核心</span></h2>
+<div class="box def">
+<b>初等矩阵：</b>对单位矩阵 $E$ 施行<b>一次</b>初等变换所得的矩阵：
+$$E(i,j)\ (\text{换 }i,j\ \text{两行}),\qquad E(i(k))\ (\text{第 }i\ \text{行乘 }k\neq0),\qquad E(i,j(k))\ (\text{第 }j\ \text{行的 }k\ \text{倍加到第 }i\ \text{行})$$
+</div>
+<div class="thm"><span class="label">定理（左行右列）</span>设 $A$ 为 $m\times n$ 矩阵：
+① 对 $A$ 做一次初等<b>行</b>变换 = 在<b>左边</b>乘对应 $m$ 阶初等矩阵；
+② 对 $A$ 做一次初等<b>列</b>变换 = 在<b>右边</b>乘对应 $n$ 阶初等矩阵。</div>
+<div class="proof"><span class="label">证明（以换行为例）</span>记 $B=E(i,j)A$。由乘法定义「$B$ 的第 $k$ 行 $=E(i,j)$ 的第 $k$ 行 $\times A$」，而
+$$E(i,j)\ \text{的第}\ k\ \text{行}=\begin{cases}\boldsymbol e_j,&k=i\\ \boldsymbol e_i,&k=j\\ \boldsymbol e_k,&k\neq i,j\end{cases}\qquad(\boldsymbol e_l A=A\ \text{的第}\ l\ \text{行})$$
+故 $B$ 的第 $i$ 行 $=A$ 的第 $j$ 行、第 $j$ 行 $=A$ 的第 $i$ 行——正是「交换 $A$ 的第 $i,j$ 行」✓。<br>
+$E(i(k))$ 的第 $i$ 行是 $k\boldsymbol e_i$，乘 $A$ 得「第 $i$ 行乘 $k$」；$E(i,j(k))$ 对应的行是 $\boldsymbol e_i+k\boldsymbol e_j$，乘 $A$ 得「第 $j$ 行的 $k$ 倍加到第 $i$ 行」✓。列变换由转置关系得到：右乘 $E$ 等价于 $A^{T}$ 左乘 $E^{T}$，而初等矩阵的转置仍是同类初等矩阵 ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">性质（可逆性）</span>初等矩阵都可逆，且逆仍是同类初等矩阵：
+$$E(i,j)^{-1}=E(i,j),\qquad E(i(k))^{-1}=E\!\left(i\!\left(\tfrac1k\right)\right),\qquad E(i,j(k))^{-1}=E(i,j(-k))$$</div>
+<div class="proof"><span class="label">证明</span>用「左乘 = 行变换」解释：换行两次还原、乘 $k$ 再乘 $\tfrac1k$ 还原、加 $k$ 倍再加 $-k$ 倍还原，故
+$$E(i,j)E(i,j)=E,\quad E(i(k))E(i(1/k))=E,\quad E(i,j(k))E(i,j(-k))=E\ ✓$$<span class="qed">∎</span></div>
+<div class="thm"><span class="label">推论</span>方阵 $A$ 可逆 $\iff$ $A$ 可表示成若干初等矩阵的乘积。</div>
+<div class="proof"><span class="label">证明</span>
+<b>(⇒)</b> $A$ 可逆 ⇒ 只用行变换可化为行最简形；可逆方阵行最简形必为 $E$（秩 $n$，主元占满每列），故存在初等矩阵使 $E_s\cdots E_1A=E$，于是
+$$A=E_1^{-1}E_2^{-1}\cdots E_s^{-1}\quad(\text{初等矩阵之积})\ ✓$$
+<b>(⇐)</b> 初等矩阵可逆、可逆矩阵乘积可逆 ⇒ $A$ 可逆 ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（左行右列体验）.</b> 取 $A=\begin{pmatrix}1&2\\3&4\end{pmatrix}$，$E(1,2)=\begin{pmatrix}0&1\\1&0\end{pmatrix}$。<br>
+① 左乘：
+$$E(1,2)A=\begin{pmatrix}3&4\\1&2\end{pmatrix}\quad(\text{交换了 }A\ \text{的两行})$$
+② 右乘：
+$$AE(1,2)=\begin{pmatrix}2&1\\4&3\end{pmatrix}\quad(\text{交换了 }A\ \text{的两列})$$
+<b>验算：</b>再左乘一次：$E(1,2)E(1,2)A=A$ ⇒ $E(1,2)^{-1}=E(1,2)$ ✓。
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>用初等变换求逆矩阵<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">求逆公式</span>设 $A$ 为 $n$ 阶可逆矩阵，对分块矩阵 $(A\mid E)$ 作初等<b>行</b>变换，当左块化为 $E$ 时，右块就是 $A^{-1}$：
+$$(A\mid E)\ \xrightarrow{\ \text{初等行变换}\ }\ (E\mid A^{-1})$$</div>
+<div class="proof"><span class="label">证明</span>对 $(A\mid E)$ 作的行变换等价于左乘一系列初等矩阵：
+$$E_s\cdots E_1\,(A\mid E)=\left(E_s\cdots E_1A\ \middle|\ E_s\cdots E_1\right)$$
+$A$ 可逆时存在序列使 $E_s\cdots E_1A=E$（§3 推论），此时右块
+$$E_s\cdots E_1=E_s\cdots E_1E=E_s\cdots E_1A\cdot A^{-1}=EA^{-1}=A^{-1}\ ✓$$<span class="qed">∎</span></div>
+<div class="box method"><b>操作要点：</b>① 只能行变换；② 先把左块化成上三角、再化上方，逐步逼近 $E$；③ 过程中左块若出现零行 ⇒ 不可逆，立即停止。</div>
+<div class="box example">
+<b>例（$(A\mid E)$ 求逆）.</b> 求 $A=\begin{pmatrix}1&1&1\\1&2&1\\1&1&2\end{pmatrix}$ 的逆。<br>
+① 布局 + 消第一列（$r_2-r_1,\ r_3-r_1$）：
+$$(A\mid E)=\left(\begin{array}{ccc|ccc}1&1&1&1&0&0\\1&2&1&0&1&0\\1&1&2&0&0&1\end{array}\right)\ \longrightarrow\ \left(\begin{array}{ccc|ccc}1&1&1&1&0&0\\0&1&0&-1&1&0\\0&0&1&-1&0&1\end{array}\right)$$
+② 消主元列上方（$r_1-r_2-r_3$）：
+$$\left(\begin{array}{ccc|ccc}1&0&0&3&-1&-1\\0&1&0&-1&1&0\\0&0&1&-1&0&1\end{array}\right)=(E\mid A^{-1})$$
+③ 结果：
+$$A^{-1}=\begin{pmatrix}3&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix}$$
+<b>验算（抽样 $AA^{-1}=E$）：</b>第 1 行 $(1,1,1)$ × 第 1 列 $(3,-1,-1)$：$1$ ✓；× 第 2 列 $(-1,1,0)$：$0$ ✓；第 2 行 $(1,2,1)$ × 第 2 列：$-1+2+0=1$ ✓；第 3 行 $(1,1,2)$ × 第 3 列 $(-1,0,1)$：$1$ ✓。
+</div>
+<div class="box tip"><b>与伴随法对比：</b>三阶及以上优先用 $(A\mid E)$ 行变换（计算量小、不易错）；二阶继续用速算公式。</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>矩阵的秩<span class="tag">核心</span></h2>
+<div class="box def">
+<b>k 阶子式：</b>在 $m\times n$ 矩阵 $A$ 中任取 $k$ 行、$k$ 列，交叉处 $k^2$ 个元素按原位置构成的 $k$ 阶行列式。<br>
+<b>秩：</b>若 $A$ 中存在 $r$ 阶子式不为 0，而所有 $r+1$ 阶子式（若存在）全为 0，称 $A$ 的<b>秩</b>为 $r$，记 $r(A)=r$。零矩阵的秩为 0。
+</div>
+<div class="thm"><span class="label">定理（秩的计算）</span>初等变换不改变矩阵的秩；把 $A$ 化为行阶梯形后，<b>非零行数 = 秩</b>。</div>
+<div class="proof"><span class="label">证明（行变换不改变秩）</span>考察一次初等行变换 $A\to B$：<br>
+① 换行、乘非零数：子式只被重排或整体乘非零数，最高阶非零子式的阶数不变；<br>
+② 加倍数 $r_i+kr_j$：取 $B$ 的任一 $s$ 阶子式 $D_B$。若未涉及第 $i$ 行，则 $D_B$ 就是 $A$ 的某个 $s$ 阶子式；若涉及第 $i$ 行，按行列式的行可加性拆开：
+$$D_B=D_A+k\,D'$$
+其中 $D_A$ 是 $A$ 对应子式；$D'$ 是把该子式的第 $i$ 行替换为第 $j$ 行后的行列式——若第 $j$ 行也在选中的行中，则替换后出现两行相同，$D'=0$；否则 $D'$ 仍为 $A$ 的某个 $s$ 阶子式。<br>
+于是：<b>$B$ 的每个 $s$ 阶子式都是 $A$ 的若干 $s$ 阶子式的线性组合</b>。取 $s=r(A)+1$：$A$ 的所有 $(r(A)+1)$ 阶子式为 0 ⇒ $B$ 的所有 $(r(A)+1)$ 阶子式也为 0 ⇒ $r(B)\le r(A)$。因行变换可逆，对称地 $r(A)\le r(B)$，故 $r(A)=r(B)$ ✓。<br>
+（行阶梯形非零行数为 $r$：主元所在列构成的上三角子式非零。）<span class="qed">∎</span></div>
+<div class="thm"><span class="label">常用结论</span>
+① $0\le r(A)\le\min\{m,n\}$；<br>
+② $r(A^{T})=r(A)$（转置把子式转置，非零性不变）；<br>
+③ $A=O\iff r(A)=0$；<br>
+④ $n$ 阶方阵 $A$ 可逆 $\iff r(A)=n$（满秩）$\iff|A|\neq0$。</div>
+<div class="box example">
+<b>例（含参数的秩）.</b> 求 $A=\begin{pmatrix}1&2&3\\2&4&6\\3&6&\lambda\end{pmatrix}$ 的秩（讨论 $\lambda$）。<br>
+① 消元（$r_2-2r_1$，$r_3-3r_1$）：
+$$\begin{pmatrix}1&2&3\\0&0&0\\0&0&\lambda-9\end{pmatrix}$$
+② 讨论：$\lambda=9$ 时第三行也为零 ⇒ 非零行数 $1$，$r(A)=1$；$\lambda\neq9$ 时非零行数 $2$，$r(A)=2$。<br>
+<b>验算（用子式定义核对）：</b>$\lambda\neq9$ 时，$2$ 阶子式 $\begin{vmatrix}1&3\\3&\lambda\end{vmatrix}=\lambda-9\neq0$ ⇒ 秩 $\ge2$；而 $3$ 阶子式恒为 $0$（因为第 2 行 = 2× 第 1 行，行列式两行成比例）⇒ 秩恰为 $2$ ✓。$\lambda=9$ 时三行成比例 ⇒ 任意 2 阶子式为 0 ⇒ 秩为 1 ✓。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>线性方程组的解<span class="tag">核心</span></h2>
+<div class="box def"><b>记号：</b>$n$ 元线性方程组 $A\boldsymbol x=\boldsymbol b$，系数矩阵 $A$、增广矩阵 $(A\mid\boldsymbol b)$、秩 $r(A)$ 与 $r(A\mid\boldsymbol b)$。</div>
+<div class="thm"><span class="label">判定定理</span>
+<ol>
+<li>$r(A)<r(A\mid\boldsymbol b)$ ⇒ <b>无解</b>；</li>
+<li>$r(A)=r(A\mid\boldsymbol b)=n$ ⇒ <b>唯一解</b>；</li>
+<li>$r(A)=r(A\mid\boldsymbol b)=r<n$ ⇒ <b>无穷多解</b>，自由未知量有 $n-r$ 个。</li>
+</ol></div>
+<div class="proof"><span class="label">证明（化为阶梯形分析）</span>行变换保持同解（§1），故只需分析行阶梯形。设 $r(A)=r$。<br>
+① 若 $r(A)<r(A\mid b)$：阶梯形中必出现 $[0\ \cdots\ 0\mid d]\ (d\neq0)$ 的行，即「$0=d$」，矛盾 ⇒ 无解；<br>
+② 若 $r=r(A)=r(A\mid b)$：阶梯形恰有 $r$ 个主元。主元变量由方程确定，非主元变量作自由参数：<br>
+&nbsp;&nbsp;• $r=n$：全部是主元变量 ⇒ 逐步回代得唯一解；<br>
+&nbsp;&nbsp;• $r<n$：$n-r$ 个自由未知量任意取值，主元变量随之唯一确定 ⇒ 无穷多解。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">推论（齐次方程组）</span>齐次方程组 $A\boldsymbol x=\boldsymbol 0$ 恒有零解，且
+$$\text{有非零解}\iff r(A)<n$$
+（第一章 Cramer 推论的另一半至此补全。）</div>
+<div class="proof"><span class="label">证明</span>齐次时 $r(A)=r(A\mid 0)$ 恒成立 ⇒ 总有解（至少零解）。由判定定理：$r=n$ ⇒ 唯一解即零解；$r<n$ ⇒ 无穷多解，必含非零解 ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（无穷多解）.</b> 解
+$$\begin{cases}x_1+x_2+x_3=6\\ 2x_1-x_2+x_3=3\\ 3x_1+2x_3=9\end{cases}$$
+① 消元（$r_2-2r_1,\ r_3-3r_1$ 后 $r_3-r_2$）：
+$$\left(\begin{array}{ccc|c}1&1&1&6\\2&-1&1&3\\3&0&2&9\end{array}\right)\longrightarrow\left(\begin{array}{ccc|c}1&1&1&6\\0&-3&-1&-9\\0&0&0&0\end{array}\right)$$
+② 秩：$r(A)=r(A\mid b)=2<3$ ⇒ 无穷多解，自由未知量 $3-2=1$ 个；<br>
+③ 化行最简形（$r_2\times(-\frac13)$ 后 $r_1-r_2$）：
+$$\left(\begin{array}{ccc|c}1&0&\frac23&3\\0&1&\frac13&3\\0&0&0&0\end{array}\right)\Longrightarrow\ \begin{cases}x_1=3-\frac23x_3\\[2pt] x_2=3-\frac13x_3\end{cases}\quad(x_3\ \text{自由})$$
+④ 取 $x_3=3t$：$(x_1,x_2,x_3)=\left(3-2t,\ 3-t,\ 3t\right)$。<br>
+<b>验算（代回三个方程）：</b>$(3-2t)+(3-t)+3t=6$ ✓；$2(3-2t)-(3-t)+3t=3$ ✓；$3(3-2t)+2(3t)=9$ ✓。
+</div>
+<div class="box example">
+<b>例 2（无解）.</b> 判断方程组是否有解：
+$$\begin{cases}x_1+x_2-x_3=1\\ x_1+2x_2+x_3=2\\ x_1+3x_2+3x_3=4\end{cases}$$
+① 消元（$r_2-r_1,\ r_3-r_1,\ r_3-2r_2$）：
+$$\left(\begin{array}{ccc|c}1&1&-1&1\\0&1&2&1\\0&0&0&1\end{array}\right)$$
+② 出现 $[0,0,0\mid1]$ ⇒ $r(A)=2<r(A\mid b)=3$ ⇒ <b>无解</b>。<br>
+<b>验算（用行关系自找矛盾）：</b>系数满足「第 3 行 $=2\times$ 第 2 行 $-$ 第 1 行」：$2(1,2,1)-(1,1,-1)=(1,3,3)$ ✓；若方程组有解，必要求 $b_3=2b_2-b_1=3$，但实际 $b_3=4$——矛盾，无解确认 ✓。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>解题决策流程</h2>
+<pre class="flow">拿到方程组 / 矩阵题
+├─ 解方程组 Ax = b
+│   ├─ 写增广矩阵 (A|b) → 初等行变换 → 行最简形
+│   ├─ r(A) < r(A|b) → 无解
+│   ├─ r(A) = r(A|b) = n → 唯一解
+│   └─ r(A) = r(A|b) = r < n → 无穷多解（n−r 个自由未知量）
+├─ 齐次方程组 Ax = 0
+│   └─ 恒有零解；非零解 ⇔ r(A) < n
+├─ 求逆？
+│   └─ (A|E) →初等行变换→ (E|A⁻¹)
+├─ 求秩？
+│   ├─ 化行阶梯形：非零行数 = 秩
+│   └─ 含参数：把参数化到最后一行的主元处，再讨论特值
+└─ 化标准形（允许掺入列变换）：diag(E_r, O)
+</pre>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>解方程组只能行变换：</b>列变换更换未知量对应关系，会破坏同解性。</li>
+<li><b>矩阵行变换没有「变号」：</b>换行、乘数、加倍数都不改变矩阵本身的「值」（它没有值）——那是行列式的性质，切勿混用。</li>
+<li><b>秩 ≠ 非零元素个数：</b>秩是最高阶非零子式的阶数（= 阶梯形非零行数）。</li>
+<li><b>判定必须看两个秩：</b>只有 $r(A)=r(A\mid b)$ 才相容；$r(A)$ 单独一个数说明不了问题。</li>
+<li><b>无穷多解要写清自由量：</b>自由未知量个数 $=n-r$，通解要显式写出（含参数）。</li>
+<li><b>左行右列别弄反：</b>左乘初等矩阵做行变换，右乘做列变换。</li>
+<li><b>$(A\mid E)$ 求逆全程只用行变换：</b>左块一旦出现零行 ⇒ 不可逆，立即停手。</li>
+<li><b>含参讨论要「留到最后」：</b>先把参数化到某一行主元处（如 $\lambda-9$），再分特值讨论。</li>
+<li><b>齐次方程组永远有零解：</b>「$r=n$ 只有零解」不等于「无解」，别写反。</li>
+<li><b>行阶梯形不唯一、行最简形唯一：</b>读解前必须化到行最简形（或至少阶梯形 + 回代），中间形态不要下结论。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>三种初等行变换</td><td>换行 $r_i\leftrightarrow r_j$；乘数 $r_i\times k\,(k\neq0)$；加倍数 $r_i+kr_j$</td></tr>
+<tr><td>初等矩阵</td><td>左乘 = 行变换；右乘 = 列变换；均可逆：$E(i,j)^{-1}=E(i,j)$、$E(i(k))^{-1}=E(i(1/k))$、$E(i,j(k))^{-1}=E(i,j(-k))$</td></tr>
+<tr><td>行最简形</td><td>主元为 1 且所在列其余全 0（唯一）</td></tr>
+<tr><td>标准形</td><td>$\begin{pmatrix}E_r&O\\O&O\end{pmatrix}$，$r=r(A)$</td></tr>
+<tr><td>求逆</td><td>$(A\mid E)\xrightarrow{\ \text{行变换}\ }(E\mid A^{-1})$</td></tr>
+<tr><td>求秩</td><td>最高阶非零子式阶数 = 阶梯形非零行数；初等变换不改变秩</td></tr>
+<tr><td>秩的结论</td><td>$0\le r(A)\le\min\{m,n\}$；$r(A^{T})=r(A)$；$A$ 可逆 $\iff r(A)=n$</td></tr>
+<tr><td>解的存在判定</td><td>$r(A)<r(A\mid b)$ 无解；$r(A)=r(A\mid b)=n$ 唯一；$=r<n$ 无穷多（$n-r$ 自由量）</td></tr>
+<tr><td>齐次方程组</td><td>有非零解 $\iff r(A)<n$</td></tr>
+<tr><td>可逆的多种刻画</td><td>$A$ 可逆 $\iff|A|\neq0\iff r(A)=n\iff$ 行最简形为 $E\iff$ 初等矩阵之积</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>初等变换是「万能工具」——求秩、求逆、解方程组、化标准形全靠它；而系数秩与增广秩的<b>比较</b>决定方程组的命运。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>会化（阶梯形/最简形）→ 会算（秩、逆）→ 会判（解的存在与个数）。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 说出三种初等变换并解释「同解性」为什么成立；<br>
+② 熟练化行阶梯形与行最简形，能鉴别三种标准形式的特征；<br>
+③ 复述左行右列定理与证明思路；写出初等矩阵的逆；<br>
+④ 用 $(A\mid E)$ 求逆并抽样验算；说明它与伴随法的取舍；<br>
+⑤ 用「最高阶非零子式」与「阶梯形非零行数」两种方式求秩；会讨论含参秩；<br>
+⑥ 用两个秩判定解的存在与个数；写出通解并回代验算。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>解线性方程组</td><td>增广矩阵 → 行最简形 → 回代/参数</td><td>§1 例、§6 例1</td></tr>
+<tr><td>判定无解</td><td>找 $[0\cdots0\mid d]$ / 比较两秩</td><td>§6 例2</td></tr>
+<tr><td>化行最简形 / 找秩</td><td>行变换 + 数非零行</td><td>§2 例、§5 例</td></tr>
+<tr><td>含参数求秩</td><td>参数留到最后再讨论</td><td>§5 例</td></tr>
+<tr><td>求逆（3 阶以上）</td><td>$(A\mid E)$ 行变换</td><td>§4 例</td></tr>
+<tr><td>初等矩阵运算</td><td>左行右列</td><td>§3 例</td></tr>
+<tr><td>齐次方程组非零解判定</td><td>$r(A)<n$</td><td>§6 推论</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 复述三种初等变换的同解性证明（可逆性论证，§1）<br>
+☐ 独立完成一道「消元 + 判定 + 通解 + 验算」全过程（§6 例1 模式）<br>
+☐ 复述左行右列定理证明中「$B$ 的第 $k$ 行 = $E(i,j)$ 的第 $k$ 行 × $A$」的用法（§3）<br>
+☐ 独立完成 §4 例（$(A\mid E)$ 求逆）并抽三处验算<br>
+☐ 用子式定义独立复核 §5 例（含参秩）<br>
+☐ 默写解判定定理三种情形与齐次方程组推论
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>线性代数 · 第三章 矩阵的初等变换与线性方程组 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

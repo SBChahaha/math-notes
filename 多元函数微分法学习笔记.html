@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高等数学 · 多元函数微分法及其应用（下册第九章 · 含全部证明）</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#0f766e;--accent2:#0ea5e9;--soft:#ecfeff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#134e4a,#0f766e 55%,#0ea5e9);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.5rem,4vw,2.2rem);letter-spacing:2px}
+.hero p{margin:0;color:#cffafe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#0e7490;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#134e4a}
+.card h3{font-size:1.05rem;color:#0f766e;margin:24px 0 8px;padding-left:10px;border-left:4px solid #5eead4}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#14b8a6,#0ea5e9);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#ecfeff;border-color:#06b6d4}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #99f6e4;border-left:4px solid #14b8a6;background:#f0fdfa;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#0f766e;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#155e75;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(15,118,110,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>高等数学 · 多元函数微分法及其应用</h1>
+<p>下册 第九章 · 全部内容 + 全部定理证明</p>
+<div class="chips"><span>全章覆盖</span><span>定理全证明</span><span>例题步骤化</span><span>拉格朗日乘数法</span><span>泰勒公式与最小二乘</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 多元函数基本概念</a>
+<a href="#sec-2">02 · 偏导数与高阶偏导</a>
+<a href="#sec-3">03 · 全微分</a>
+<a href="#sec-4">04 · 复合函数求导法则</a>
+<a href="#sec-5">05 · 隐函数求导公式</a>
+<a href="#sec-6">06 · 几何应用</a>
+<a href="#sec-7">07 · 方向导数与梯度</a>
+<a href="#sec-8">08 · 极值与最值</a>
+<a href="#sec-9">09 · 二元泰勒公式</a>
+<a href="#sec-10">10 · 最小二乘法</a>
+<a href="#sec-11">11 · 解题决策流程</a>
+<a href="#sec-12">12 · 易错点清单</a>
+<a href="#sec-13">13 · 公式速查表</a>
+<a href="#sec-14">14 · 附录A 混合偏导相等</a>
+<a href="#sec-15">15 · 附录B 泰勒公式证明</a>
+<a href="#sec-16">16 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章逻辑主线：</b>多元函数 → 极限与连续 → 偏导数 → 全微分 → 求导技术（复合 / 隐函数 / 几何）→ 方向导数与梯度 → 极值 → 泰勒公式与最小二乘。<span style="color:#0f766e;font-weight:700">青框=定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题（步骤化）</span>。</div>
+<pre class="flow">多元函数微分法
+├─ 基础（§1–§3）
+│   ├─ 极限：必须任意路径趋近一致（路径法判不存在）
+│   ├─ 偏导数：固定其余变量求一元导数
+│   └─ 全微分：Δz = AΔx + BΔy + o(ρ)
+│       关系链：偏导连续 ⇒ 可微 ⇒ 偏导存在 & 连续
+├─ 求导技术（§4–§6）
+│   ├─ 复合：链式法则（树图），全微分形式不变性
+│   ├─ 隐函数：dy/dx = −F_x/F_y；方程组用雅可比
+│   └─ 几何：曲线切向量 / 曲面法向量 = ∇F
+├─ 方向导数与梯度（§7）：最大方向导数 = |∇f|
+├─ 极值与最值（§8）
+│   ├─ 无条件：驻点 + AC−B² 判别
+│   └─ 条件：拉格朗日乘数法
+└─ 进阶（§9–§10）
+    ├─ 二元泰勒公式（算符展开）
+    └─ 最小二乘法（正规方程组）
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>多元函数的基本概念<span class="tag">基础</span></h2>
+
+<h3>1.1 平面点集与 n 维空间</h3>
+<div class="box def">
+<ul>
+<li><b>邻域</b>：$U(P_0,\delta)=\left\{(x,y)\ \middle|\ \sqrt{(x-x_0)^2+(y-y_0)^2}<\delta\right\}$；去掉中心即为<b>去心邻域</b>。</li>
+<li><b>内点 / 外点 / 边界点</b>：分别按「存在整个邻域含于点集 / 含于补集 / 任何邻域内既有属于点集的点又有不属于点集的点」来定义。</li>
+<li><b>聚点</b>：$P_0$ 的任何去心邻域都含点集中的点（$P_0$ 本身可以不属于该点集）。</li>
+<li><b>开集</b>（每点都是内点）、<b>闭集</b>（补集是开集）；<b>区域</b>＝连通的开集；区域连同边界叫<b>闭区域</b>；<b>有界集</b>（整个点集能含在某个邻域内）。</li>
+</ul>
+</div>
+<p>把平面换成 $\mathbb{R}^n$：$\mathbb{R}^n=\{(x_1,\dots,x_n)\mid x_i\in\mathbb{R}\}$，两点距离 $\rho(P,Q)=\sqrt{\sum_{i=1}^{n}(x_i-y_i)^2}$，邻域、开集等概念照搬。<b>多元函数</b>就是定义在点集 $D\subset\mathbb{R}^n$ 上的映射，$n=2$ 时写 $z=f(x,y)$。</p>
+<div class="box def">
+<b>二元函数：</b>$z=f(x,y),\ (x,y)\in D$。$D$ 称为定义域，值域为 $f(D)$，图形是空间中的一张<b>曲面</b>。本章所有概念都在平面上进行。
+</div>
+
+<h3>1.2 二重极限：与一元极限的本质差别</h3>
+<div class="box def">
+<b>定义：</b>$\displaystyle\lim_{(x,y)\to(x_0,y_0)}f(x,y)=A$ 指：$\forall\varepsilon>0,\ \exists\delta>0$，当 $0<\sqrt{(x-x_0)^2+(y-y_0)^2}<\delta$ 时，$|f(x,y)-A|<\varepsilon$。
+</div>
+<div class="box method">
+<b>核心原则：</b>$(x,y)$ 必须以<b>任何方式、任何路径</b>趋近 $(x_0,y_0)$ 时都趋于同一个 $A$（平面上路径有无限多条，这是与一元函数「左右极限」的本质区别）。两类题的做法：<br>
+<b>证存在：</b>① 定义／夹逼（放缩成只含 $\rho$ 或 $|x|,|y|$ 的式子）；② 极坐标 $x=x_0+\rho\cos\theta,\ y=y_0+\rho\sin\theta$，若放缩后与 $\theta$ 无关且 $\to 0$；③ 无穷小 × 有界量。<br>
+<b>证不存在：</b>找两条路径得到不同极限（常用 $y=kx$、$y=x^2$ 等）。<b>只验证一条路径相同不能判存在；算出与路径有关的极限就能判不存在。</b>
+</div>
+<div class="box example">
+<b>例 1（证不存在）.</b> 证明 $\displaystyle\lim_{(x,y)\to(0,0)}\frac{xy}{x^2+y^2}$ 不存在。<br>
+① 取路径 $y=kx$（过原点的直线）并代入：
+$$\frac{xy}{x^2+y^2}=\frac{kx^2}{x^2+k^2x^2}=\frac{k}{1+k^2}$$
+② 该值随 $k$ 变化：沿 $y=x$（$k=1$）得 $\dfrac12$，沿 $y=2x$（$k=2$）得 $\dfrac25$；<br>
+③ 极限不可能同时等于两个不同的值，故不存在。
+</div>
+<div class="box example">
+<b>例 2（证存在）.</b> 求 $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^2y}{x^2+y^2}$。<br>
+① 放缩：$\left|\dfrac{x^2y}{x^2+y^2}\right|=\dfrac{x^2}{x^2+y^2}\,|y|\le|y|$（因 $\dfrac{x^2}{x^2+y^2}\le 1$）；<br>
+② $(x,y)\to(0,0)$ 时 $|y|\to0$；<br>
+③ 由夹逼原理，原极限 $=0$。<br>
+<b>另解（极坐标）：</b>令 $x=\rho\cos\theta,\ y=\rho\sin\theta$，原式 $=\rho\cos^2\theta\sin\theta$，而 $\left|\rho\cos^2\theta\sin\theta\right|\le\rho\to0$，与 $\theta$ 无关，故极限为 $0$。
+</div>
+<div class="box tip">
+<b>累次极限 ≠ 二重极限（选读）：</b>先后求极限得到「累次极限」$\displaystyle\lim_{x\to0}\lim_{y\to0}f(x,y)$ 与 $\displaystyle\lim_{y\to0}\lim_{x\to0}f(x,y)$。例：$f=\dfrac{x^2-y^2}{x^2+y^2}$ 在原点处两个累次极限分别为 $1$ 与 $-1$，而二重极限不存在——累次极限存在也不能推断二重极限存在。
+</div>
+
+<h3>1.3 连续与有界闭区域上连续函数的性质</h3>
+<div class="box def">
+<b>连续：</b>$\displaystyle\lim_{(x,y)\to(x_0,y_0)}f(x,y)=f(x_0,y_0)$。多元初等函数在定义区域内连续；分段函数在分界处要按定义检验。
+</div>
+<div class="thm"><span class="label">定理（有界闭区域上连续函数的性质）</span>设 $f$ 在有界闭区域 $D$ 上连续，则：
+<ol>
+<li><b>有界性：</b>存在 $M>0$，使对一切 $P\in D$ 有 $|f(P)|\le M$；</li>
+<li><b>最值定理：</b>$f$ 在 $D$ 上必取得最大值与最小值；</li>
+<li><b>介值定理：</b>对介于最小值与最大值之间的任何 $\mu$，存在 $P\in D$ 使 $f(P)=\mu$；</li>
+<li><b>一致连续性：</b>$f$ 在 $D$ 上一致连续（$\delta$ 只依赖 $\varepsilon$，与点的位置无关）。</li>
+</ol></div>
+<div class="box tip"><b>用途：</b>最值定理是 §8「有界闭区域上求最值」方法的理论依据；介值定理常用于方程根的存在性。</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>偏导数与高阶偏导<span class="tag">基础</span></h2>
+
+<h3>2.1 偏导数的定义与求法</h3>
+<div class="box def">
+<b>定义：</b>
+$$f_x(x_0,y_0)=\lim_{\Delta x\to0}\frac{f(x_0+\Delta x,y_0)-f(x_0,y_0)}{\Delta x},\qquad f_y(x_0,y_0)=\lim_{\Delta y\to0}\frac{f(x_0,y_0+\Delta y)-f(x_0,y_0)}{\Delta y}$$
+记作 $\dfrac{\partial z}{\partial x},\ \dfrac{\partial f}{\partial x},\ f_x,\ z_x$（对 $y$ 同理）。<b>本质：</b>把另一个变量固定，对一元函数求导。
+</div>
+<div class="box method">
+<b>求偏导的做法：</b>
+① 显函数：对谁求导，就把其他变量全部当常数（四则运算、链式法则照常用）；<br>
+② <b>分段函数在分界点</b>：必须回到定义用极限求，不能对分段表达式直接求导后再代入；<br>
+③ 求值建议双算：先求导后代点 / 先代入再求一元导数，互相验证。
+</div>
+<div class="box def">
+<b>几何意义：</b>$f_x(x_0,y_0)$ 是曲面 $z=f(x,y)$ 被平面 $y=y_0$ 截出的曲线在点处的切线斜率（对 $x$ 方向）；$f_y$ 对应平面 $x=x_0$。
+</div>
+<div class="box example">
+<b>例 1（基本计算）.</b> 求 $z=x^3+2xy+y^2$ 的偏导数，并求在 $(1,2)$ 处的值。<br>
+① 对 $x$ 求导（把 $y$ 当常数）：$z_x=3x^2+2y$；<br>
+② 对 $y$ 求导（把 $x$ 当常数）：$z_y=2x+2y$；<br>
+③ 代点：$z_x(1,2)=3+4=7,\quad z_y(1,2)=2+4=6$。<br>
+<b>验算：</b>先代入 $y=2$ 得 $z=x^3+4x+4$，对 $x$ 求导得 $3x^2+4$，在 $x=1$ 处为 $7$ ✓（与 $z_x(1,2)$ 一致）。
+</div>
+
+<h3>2.2 高阶偏导数与混合偏导</h3>
+<div class="box def">
+二阶偏导：$z_{xx}=(z_x)_x,\ z_{xy}=(z_x)_y,\ z_{yx}=(z_y)_x,\ z_{yy}=(z_y)_y$；更高阶同理。$z_{xy}$ 与 $z_{yx}$ 称为<b>混合偏导</b>。
+</div>
+<div class="thm"><span class="label">定理（混合偏导相等）</span>若 $f_{xy}$ 与 $f_{yx}$ 都在区域内连续，则在该区域内
+$$f_{xy}=f_{yx}$$
+（求导次序可以交换）。完整证明见附录 A（§14）。</div>
+<div class="box example">
+<b>例 2（验证相等）.</b> 计算 $z=x^2y^3+\sin(xy)$ 的混合偏导 $z_{xy}$ 与 $z_{yx}$。<br>
+① 先对 $x$ 求导：$z_x=2xy^3+y\cos(xy)$；<br>
+② 再对 $y$ 求导：
+$$z_{xy}=\frac{\partial}{\partial y}\left(2xy^3+y\cos(xy)\right)=6xy^2+\cos(xy)-xy\sin(xy)$$
+③ 换序计算：$z_y=3x^2y^2+x\cos(xy)$，再对 $x$ 求导：
+$$z_{yx}=\frac{\partial}{\partial x}\left(3x^2y^2+x\cos(xy)\right)=6xy^2+\cos(xy)-xy\sin(xy)$$
+④ 两者相等 ✓（两个混合偏导处处连续，与定理结论一致）。
+</div>
+<div class="box example">
+<b>例 3（经典反例：不连续时可以不相等）.</b> 设
+$$f(x,y)=\begin{cases}\dfrac{xy(x^2-y^2)}{x^2+y^2},&(x,y)\neq(0,0)\\[6pt] 0,&(x,y)=(0,0)\end{cases}$$
+求 $f_{xy}(0,0)$ 与 $f_{yx}(0,0)$。<br>
+① 先在直线 $x=0$ 上求 $f_x$（用定义，注意 $f(0,y)=0$）：
+$$f_x(0,y)=\lim_{h\to0}\frac{f(h,y)-f(0,y)}{h}=\lim_{h\to0}\frac{y(h^2-y^2)}{h^2+y^2}=-y$$
+② 在直线 $y=0$ 上求 $f_y$：
+$$f_y(x,0)=\lim_{k\to0}\frac{f(x,k)-f(x,0)}{k}=\lim_{k\to0}\frac{x(x^2-k^2)}{x^2+k^2}=x$$
+③ 于是
+$$f_{xy}(0,0)=\left.\frac{d}{dy}\left(-y\right)\right|_{y=0}=-1,\qquad f_{yx}(0,0)=\left.\frac{d}{dx}\left(x\right)\right|_{x=0}=1$$
+④ 二者不相等。原因是 $f_{xy}$ 与 $f_{yx}$ 在原点<b>不连续</b>，不满足定理条件——定理并未失效。
+</div>
+<div class="box warn">
+<b>要点小结：</b>
+① 偏导存在 ⇏ 连续（如 $f=\dfrac{xy}{x^2+y^2}$ 在原点两个偏导都为 $0$，但由 §1 例 1 它在原点不连续）；<br>
+② 偏导存在 ⇏ 可微（见 §3）；<br>
+③ 分段函数在分界点、求混合偏导时，先化成一般点再求导，或直接回到定义。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>全微分<span class="tag">核心</span></h2>
+<div class="box def">
+<b>全增量与可微：</b>设 $z=f(x,y)$ 在 $(x_0,y_0)$ 附近有定义，全增量
+$$\Delta z=f(x_0+\Delta x,y_0+\Delta y)-f(x_0,y_0)$$
+若存在与 $\Delta x,\Delta y$ 无关的常数 $A,B$，使
+$$\Delta z=A\Delta x+B\Delta y+o(\rho),\qquad \rho=\sqrt{\Delta x^2+\Delta y^2}$$
+则称 $f$ 在 $(x_0,y_0)$ <b>可微</b>，$A\Delta x+B\Delta y$ 称为<b>全微分</b>，记作 $dz$。
+</div>
+<div class="thm"><span class="label">定理 1（可微的必要条件）</span>若 $f$ 在点可微，则偏导数存在，且
+$$A=f_x(x_0,y_0),\qquad B=f_y(x_0,y_0)$$</div>
+<div class="proof"><span class="label">证明</span>在定义式中取 $\Delta y=0$，则 $\rho=|\Delta x|$，
+$$\Delta z=f(x_0+\Delta x,y_0)-f(x_0,y_0)=A\Delta x+o(|\Delta x|)$$
+两边除以 $\Delta x$ 并令 $\Delta x\to0$：
+$$\lim_{\Delta x\to0}\frac{\Delta z}{\Delta x}=A+\lim_{\Delta x\to0}\frac{o(|\Delta x|)}{\Delta x}=A$$
+左边正是 $f_x(x_0,y_0)$，故 $A=f_x(x_0,y_0)$；同理取 $\Delta x=0$ 得 $B=f_y(x_0,y_0)$。<span class="qed">∎</span></div>
+<div class="box tip">所以<b>可微时</b>
+$$dz=f_x\,dx+f_y\,dy$$
+（$\Delta x,\Delta y$ 可任取，故习惯记 $dx=\Delta x,\ dy=\Delta y$。）</div>
+<div class="thm"><span class="label">定理 2（可微的充分条件）</span>若 $f_x,f_y$ 在点 $(x_0,y_0)$ 的某邻域内存在，且在该点连续，则 $f$ 在该点可微。</div>
+<div class="proof"><span class="label">证明（拆项 + 拉格朗日中值定理）</span>把全增量拆成两段：
+$$\Delta z=\underbrace{\left[f(x_0+\Delta x,y_0+\Delta y)-f(x_0,y_0+\Delta y)\right]}_{Ⅰ}+\underbrace{\left[f(x_0,y_0+\Delta y)-f(x_0,y_0)\right]}_{Ⅱ}$$
+对 Ⅰ（固定第二个变量，关于第一个变量）用拉格朗日中值定理：
+$$Ⅰ=f_x(\xi,y_0+\Delta y)\Delta x,\qquad \xi\ \text{介于}\ x_0,\ x_0+\Delta x$$
+对 Ⅱ 同理：
+$$Ⅱ=f_y(x_0,\eta)\Delta y,\qquad \eta\ \text{介于}\ y_0,\ y_0+\Delta y$$
+于是
+$$\Delta z=f_x(x_0,y_0)\Delta x+f_y(x_0,y_0)\Delta y+\varepsilon_1\Delta x+\varepsilon_2\Delta y$$
+其中 $\varepsilon_1=f_x(\xi,y_0+\Delta y)-f_x(x_0,y_0)\to0$，$\varepsilon_2=f_y(x_0,\eta)-f_y(x_0,y_0)\to0$（偏导连续）。而
+$$\frac{\left|\varepsilon_1\Delta x+\varepsilon_2\Delta y\right|}{\rho}\le|\varepsilon_1|+|\varepsilon_2|\to0$$
+即 $\varepsilon_1\Delta x+\varepsilon_2\Delta y=o(\rho)$，故 $f$ 可微。<span class="qed">∎</span></div>
+<div class="box warn">
+<b>关系链（必背）：</b>
+$$\text{偏导连续}\ \Longrightarrow\ \text{可微}\ \Longrightarrow\ \begin{cases}\text{偏导存在}\\[2pt]\text{连续}\end{cases}$$
+每个箭头都不可逆。反例：$f=\dfrac{xy}{\sqrt{x^2+y^2}}$（原点取 $0$）连续、偏导存在，却不可微（见例 1）。
+</div>
+<div class="box method">
+<b>判断可微性——三步模板：</b>
+① 求 $f_x(x_0,y_0),\ f_y(x_0,y_0)$（分段点用定义）；<br>
+② 写全增量 $\Delta z$ 与线性主部 $f_x\Delta x+f_y\Delta y$；<br>
+③ 检验
+$$\lim_{\rho\to0}\frac{\Delta z-f_x\Delta x-f_y\Delta y}{\rho}\overset{?}{=}0$$
+等于 $0$ 则可微。若偏导连续，可用定理 2 直接判定可微；偏导不连续时必须回到 ③。
+</div>
+<div class="box example">
+<b>例 1（连续、偏导存在，但不可微）.</b> 设 $f(x,y)=\dfrac{xy}{\sqrt{x^2+y^2}}\ ((x,y)\neq(0,0))$，$f(0,0)=0$。判断原点处是否可微。<br>
+① 用定义求偏导：$f_x(0,0)=\lim\limits_{h\to0}\dfrac{f(h,0)-f(0,0)}{h}=0$，同理 $f_y(0,0)=0$；<br>
+② 全增量为 $\Delta z=\dfrac{\Delta x\Delta y}{\sqrt{\Delta x^2+\Delta y^2}}$，线性主部为 $0$；<br>
+③ 取路径 $\Delta x=\Delta y=t>0$：
+$$\frac{\Delta z-0}{\rho}=\frac{t^2/\left(\sqrt{2}\,t\right)}{\sqrt{2}\,t}=\frac{1}{2}\not\to0$$
+故<b>不可微</b>。<br>
+（顺带验证：$|f|\le\dfrac{\rho}{2}\to0$，函数在原点<b>连续</b>——说明「连续 + 偏导存在」仍推不出可微。）
+</div>
+<div class="box example">
+<b>例 2（求全微分）.</b> 求 $z=x^2y+\sin(xy)$ 的全微分。<br>
+① $z_x=2xy+y\cos(xy)$；<br>
+② $z_y=x^2+x\cos(xy)$；<br>
+③ 两个偏导处处连续，故可微：
+$$dz=\left[2xy+y\cos(xy)\right]dx+\left[x^2+x\cos(xy)\right]dy$$
+<b>验算（混合偏导相等）：</b>$z_{xy}=\dfrac{\partial}{\partial y}\left(2xy+y\cos xy\right)=2x+\cos xy-xy\sin xy=z_{yx}$ ✓（两偏导连续，与 §2 定理一致）。
+</div>
+<div class="box example">
+<b>例 3（近似计算）.</b> 计算 $(1.04)^{2.02}$ 的近似值。<br>
+① 取 $f(x,y)=x^y$，基点 $(1,2)$，$\Delta x=0.04,\ \Delta y=0.02$；<br>
+② 偏导：$f_x=yx^{y-1}\Rightarrow f_x(1,2)=2$；$f_y=x^y\ln x\Rightarrow f_y(1,2)=0$；<br>
+③ 用近似公式：
+$$f(1.04,2.02)\approx f(1,2)+f_x(1,2)\Delta x+f_y(1,2)\Delta y=1+2\times0.04+0=1.08$$
+即 $(1.04)^{2.02}\approx1.08$（真值约 $1.082$，误差很小）。
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>多元复合函数的求导法则<span class="tag">核心</span></h2>
+
+<h3>4.1 链式法则与全微分形式不变性</h3>
+<div class="thm"><span class="label">定理 1（一元中间变量）</span>设 $z=f(u,v)$ 可微，$u=u(t),\ v=v(t)$ 可导，则
+$$\frac{dz}{dt}=\frac{\partial z}{\partial u}\frac{du}{dt}+\frac{\partial z}{\partial v}\frac{dv}{dt}$$</div>
+<div class="proof"><span class="label">证明</span>给 $t$ 以增量 $\Delta t$，相应有 $\Delta u,\Delta v$。由 $f$ 可微：
+$$\Delta z=f_u\Delta u+f_v\Delta v+o(\rho),\qquad \rho=\sqrt{\Delta u^2+\Delta v^2}$$
+两边除以 $\Delta t$：
+$$\frac{\Delta z}{\Delta t}=f_u\frac{\Delta u}{\Delta t}+f_v\frac{\Delta v}{\Delta t}+\frac{o(\rho)}{\Delta t}$$
+当 $\Delta t\to0$ 时 $\Delta u,\Delta v\to0$（可导必连续），且
+$$\frac{\rho}{|\Delta t|}=\sqrt{\left(\frac{\Delta u}{\Delta t}\right)^2+\left(\frac{\Delta v}{\Delta t}\right)^2}\ \text{有界}\ \Longrightarrow\ \frac{o(\rho)}{\Delta t}=\frac{o(\rho)}{\rho}\cdot\frac{\rho}{\Delta t}\to0$$
+取极限即得公式。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 2（多元中间变量）</span>设 $z=f(u,v)$ 可微，$u=u(x,y),\ v=v(x,y)$ 有偏导，则
+$$\frac{\partial z}{\partial x}=\frac{\partial z}{\partial u}\frac{\partial u}{\partial x}+\frac{\partial z}{\partial v}\frac{\partial v}{\partial x},\qquad \frac{\partial z}{\partial y}=\frac{\partial z}{\partial u}\frac{\partial u}{\partial y}+\frac{\partial z}{\partial v}\frac{\partial v}{\partial y}$$
+（固定 $y$ 就是对 $x$ 的一元复合，定理 1 直接给出第一式；第二式同理。）</div>
+<div class="box method">
+<b>树图记忆法：</b>以 $z$ 为根、中间变量 $u,v$ 为枝、自变量 $x,y$ 为叶，画树状图。<br>
+<b>规则：</b>「$z$ 到某个自变量的每条路径上各导数相乘，该自变量的所有路径相加」。<br>
+<b>抽象函数记号：</b>记 $f_1'=\dfrac{\partial f}{\partial u},\ f_2'=\dfrac{\partial f}{\partial v}$。注意 $f_1',f_2'$ 仍是 $(u,v)$ 的函数，<b>再求导时要继续用链式法则</b>，会出现 $f_{11}'',f_{12}'',f_{22}''$。
+</div>
+<div class="thm"><span class="label">定理 3（全微分形式不变性）</span>无论 $u,v$ 是自变量还是中间变量，只要 $f$ 可微，恒有
+$$dz=\frac{\partial z}{\partial u}du+\frac{\partial z}{\partial v}dv$$</div>
+<div class="proof"><span class="label">证明</span>设 $u,v$ 是 $x,y$ 的函数。由定理 2 与 $du=u_xdx+u_ydy,\ dv=v_xdx+v_ydy$：
+$$z_xdx+z_ydy=\left(f_uu_x+f_vv_x\right)dx+\left(f_uu_y+f_vv_y\right)dy=f_u\left(u_xdx+u_ydy\right)+f_v\left(v_xdx+v_ydy\right)=f_udu+f_vdv$$
+故 $dz=f_udu+f_vdv$ 恒成立。<span class="qed">∎</span></div>
+<div class="box tip"><b>用途：</b>不必区分中间变量与自变量，直接以微分形式运算；求隐函数、验证方程时很省力。</div>
+
+<h3>4.2 例题</h3>
+<div class="box example">
+<b>例 1（显函数复合，双算验证）.</b> $z=u^2+v^2,\ u=x+y,\ v=x-y$，求 $z_x,z_y$。<br>
+① 链式法则：
+$$z_x=2u\cdot1+2v\cdot1=2(x+y)+2(x-y)=4x$$
+② 同理：
+$$z_y=2u\cdot1+2v\cdot(-1)=2(x+y)-2(x-y)=4y$$
+<b>验算：</b>先代入得 $z=(x+y)^2+(x-y)^2=2x^2+2y^2$，直接求导 $z_x=4x,\ z_y=4y$ ✓。
+</div>
+<div class="box example">
+<b>例 2（抽象函数一阶偏导）.</b> 设 $z=f\left(x^2y,\ \dfrac{y}{x}\right)$（$f$ 可微），求 $z_x,z_y$。<br>
+① 记 $u=x^2y,\ v=\dfrac{y}{x}$，则 $z_x=f_1'u_x+f_2'v_x$；<br>
+② 中间变量偏导：$u_x=2xy,\quad v_x=-\dfrac{y}{x^2}$；<br>
+③ 故
+$$z_x=2xy\,f_1'-\frac{y}{x^2}f_2'$$
+④ 又 $u_y=x^2,\ v_y=\dfrac{1}{x}$：
+$$z_y=x^2f_1'+\frac{1}{x}f_2'$$
+<b>验算（取具体函数 $f(u,v)=u+v$）：</b>$z=x^2y+\dfrac{y}{x}$，$z_y=x^2+\dfrac1x$，与 $x^2f_1'+\frac1x f_2'$（此时 $f_1'=f_2'=1$）一致 ✓。
+</div>
+<div class="box example">
+<b>例 3（抽象函数二阶偏导）.</b> 设 $z=f(x+y,\ xy)$（$f$ 二阶连续可偏导），求 $z_x$ 与 $z_{xx}$。<br>
+① 一阶偏导（$u=x+y,\ v=xy$，$u_x=1,\ v_x=y$）：
+$$z_x=f_1'\cdot1+f_2'\cdot y=f_1'+yf_2'$$
+② 再对 $x$ 求导。注意 $f_1',f_2'$ 仍以 $(u,v)$ 为中间变量，必须继续用链式法则：
+$$\frac{\partial f_1'}{\partial x}=f_{11}''u_x+f_{12}''v_x=f_{11}''+yf_{12}'',\qquad \frac{\partial f_2'}{\partial x}=f_{21}''+yf_{22}''$$
+③ 于是（混合偏导连续，$f_{12}''=f_{21}''$）
+$$z_{xx}=f_{11}''+yf_{12}''+y\left(f_{21}''+yf_{22}''\right)=f_{11}''+2yf_{12}''+y^2f_{22}''$$
+<b>验算（取具体函数 $f(u,v)=u^2+v^2$）：</b>此时 $z=(x+y)^2+x^2y^2$，直接求导 $z_x=2(x+y)+2xy^2$、$z_{xx}=2+2y^2$，与公式 $2+0+2y^2$ 一致 ✓。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>隐函数的求导公式<span class="tag">核心</span></h2>
+
+<h3>5.1 一个方程的情形</h3>
+<div class="thm"><span class="label">隐函数存在定理</span>设 $F(x,y)$ 在点 $P_0(x_0,y_0)$ 的某邻域内连续且有连续偏导，且
+$$F(x_0,y_0)=0,\qquad F_y(x_0,y_0)\neq0$$
+则存在 $P_0$ 的某邻域，在其中方程 $F(x,y)=0$ 唯一确定可导函数 $y=f(x)$，满足 $y_0=f(x_0)$，且
+$$\frac{dy}{dx}=-\frac{F_x}{F_y}$$</div>
+<div class="proof"><span class="label">公式推导</span>设 $y=y(x)$ 由方程确定，则恒有 $F(x,y(x))\equiv0$。两边对 $x$ 求导（左边用链式法则）：
+$$F_x+F_y\cdot\frac{dy}{dx}=0\ \Longrightarrow\ \frac{dy}{dx}=-\frac{F_x}{F_y}$$
+（$F_y\neq0$ 保证可除。）<span class="qed">∎</span></div>
+<div class="box tip">
+<b>多元推广：</b>方程 $F(x,y,z)=0$ 在 $F_z\neq0$ 处确定 $z=z(x,y)$：
+$$\frac{\partial z}{\partial x}=-\frac{F_x}{F_z},\qquad \frac{\partial z}{\partial y}=-\frac{F_y}{F_z}$$
+</div>
+<div class="box method">
+<b>求隐函数导数的三种写法（同一件事，顺手即可）：</b><br>
+① <b>公式法</b>：写出 $F$，算 $F_x,F_y$，代入 $-\dfrac{F_x}{F_y}$；<br>
+② <b>两边求导法</b>：把 $y$ 看作 $x$ 的函数，方程两边对 $x$ 求导，再解出 $y'$；<br>
+③ <b>全微分法</b>：两边取全微分 $F_xdx+F_ydy=0$，直接解出 $\dfrac{dy}{dx}$。
+</div>
+<div class="box example">
+<b>例 1（二元隐函数）.</b> 方程 $e^y+xy-e=0$ 确定 $y=y(x)$，求 $\dfrac{dy}{dx}$ 及 $x=0$ 处的值。<br>
+① 取 $F(x,y)=e^y+xy-e$。检验条件：$F(0,1)=e+0-e=0$ ✓；$F_y=e^y+x$，$F_y(0,1)=e\neq0$ ✓；<br>
+② 偏导：$F_x=y,\qquad F_y=e^y+x$；<br>
+③ 代公式：
+$$\frac{dy}{dx}=-\frac{F_x}{F_y}=-\frac{y}{e^y+x}$$
+④ $x=0$ 时 $y=1$：
+$$\left.\frac{dy}{dx}\right|_{x=0}=-\frac{1}{e+0}=-\frac{1}{e}$$
+<b>验算（两边求导法）：</b>对 $e^y+xy-e=0$ 两边求导：$e^y y'+y+xy'=0\Rightarrow y'=-\dfrac{y}{e^y+x}$ ✓，与公式一致。
+</div>
+<div class="box example">
+<b>例 2（三元隐函数）.</b> 方程 $x^2+y^2+z^2=4z$ 确定 $z=z(x,y)$，求 $z_x,z_y$。<br>
+① 取 $F=x^2+y^2+z^2-4z$，$F_z=2z-4$（在 $z\neq2$ 处不为零）；<br>
+② 偏导：$F_x=2x,\ F_y=2y$；<br>
+③ 公式：
+$$z_x=-\frac{F_x}{F_z}=\frac{x}{2-z},\qquad z_y=-\frac{F_y}{F_z}=\frac{y}{2-z}$$
+<b>验算（两边求导法）：</b>方程两边对 $x$ 求导（$y$ 固定）：$2x+2z\,z_x=4z_x$，故 $2x=(4-2z)z_x$，得 $z_x=\dfrac{x}{2-z}$ ✓。
+</div>
+
+<h3>5.2 方程组的情形</h3>
+<div class="thm"><span class="label">定理（两个方程确定两个隐函数）</span>设 $F(x,y,u,v)=0,\ G(x,y,u,v)=0$ 在点附近连续可偏导，且雅可比行列式
+$$\frac{\partial(F,G)}{\partial(u,v)}=\begin{vmatrix}F_u&F_v\\[2pt] G_u&G_v\end{vmatrix}\neq0$$
+则方程组唯一确定 $u=u(x,y),\ v=v(x,y)$，且（以对 $x$ 求导为例）
+$$\frac{\partial u}{\partial x}=-\frac{\partial(F,G)/\partial(x,v)}{\partial(F,G)/\partial(u,v)},\qquad \frac{\partial v}{\partial x}=-\frac{\partial(F,G)/\partial(u,x)}{\partial(F,G)/\partial(u,v)}$$</div>
+<div class="box method">
+<b>实操步骤（比背公式更稳）：</b>
+① 两个方程分别对 $x$ 求导（$y$ 当常数，$u,v$ 是 $x,y$ 的函数，用链式法则）；<br>
+② 得到关于未知量 $u_x,v_x$ 的<b>二元一次方程组</b>；<br>
+③ 解方程组即可（用克莱姆法则解出来的正是上面的公式）；对 $y$ 求导同理。
+</div>
+<div class="box example">
+<b>例 3（方程组）.</b> 设 $u,v$ 由
+$$\begin{cases}u^2+v^2=x\\ u+v=y\end{cases}$$
+确定，求 $u_x,v_x$。<br>
+① 两式对 $x$ 求导（$y$ 固定）：
+$$\begin{cases}2u\,u_x+2v\,v_x=1\\ u_x+v_x=0\end{cases}$$
+② 由第二式 $v_x=-u_x$，代入第一式：$2u\,u_x-2v\,u_x=1$，故
+$$u_x=\frac{1}{2(u-v)},\qquad v_x=-\frac{1}{2(u-v)}$$
+③ 雅可比检验：$\dfrac{\partial(F,G)}{\partial(u,v)}=\begin{vmatrix}2u&2v\\1&1\end{vmatrix}=2(u-v)\neq0$，恰为分母——与条件一致。<br>
+<b>验算：</b>代回求导后的方程组：$u_x+v_x=0$ ✓；$2u\,u_x+2v\,v_x=\dfrac{2u-2v}{2(u-v)}=1$ ✓。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>多元函数微分法的几何应用<span class="tag">核心</span></h2>
+<div class="box method">
+<b>总纲（一句话记住）：</b>求<b>曲线</b>的切线/法平面 → 找<b>切向量</b>；求<b>曲面</b>的切平面/法线 → 找<b>法向量</b>。<br>
+① 曲线切向量：参数式用导数；交线式用两梯度叉乘 $\nabla F\times\nabla G$。<br>
+② 曲面法向量：隐式用 $\nabla F$；显式 $z=f(x,y)$ 用 $(f_x,\ f_y,\ -1)$。
+</div>
+
+<h3>6.1 空间曲线的切线与法平面</h3>
+<div class="thm"><span class="label">参数方程情形</span>曲线 $\Gamma:\ x=x(t),\ y=y(t),\ z=z(t)$ 在 $t=t_0$ 对应点 $P_0(x_0,y_0,z_0)$ 处，切向量
+$$\boldsymbol T=\left(x'(t_0),\ y'(t_0),\ z'(t_0)\right)$$
+切线：$\dfrac{x-x_0}{x'(t_0)}=\dfrac{y-y_0}{y'(t_0)}=\dfrac{z-z_0}{z'(t_0)}$；<br>
+法平面：$x'(t_0)(x-x_0)+y'(t_0)(y-y_0)+z'(t_0)(z-z_0)=0$。</div>
+<div class="box example">
+<b>例 1.</b> 求曲线 $x=t,\ y=t^2,\ z=t^3$ 在 $t=1$ 处的切线与法平面。<br>
+① 切点：$t=1\Rightarrow P_0(1,1,1)$；<br>
+② 切向量：$(x',y',z')=(1,\,2t,\,3t^2)$，在 $t=1$ 处 $\boldsymbol T=(1,2,3)$；<br>
+③ 切线：
+$$\frac{x-1}{1}=\frac{y-1}{2}=\frac{z-1}{3}$$
+④ 法平面：$1(x-1)+2(y-1)+3(z-1)=0$，即
+$$x+2y+3z=6$$
+<b>验算：</b>$(1,1,1)$ 代入法平面：$1+2+3=6$ ✓。
+</div>
+<div class="thm"><span class="label">交线情形</span>曲线 $\Gamma$ 为两曲面 $F(x,y,z)=0$ 与 $G(x,y,z)=0$ 的交线，则 $\Gamma$ 在 $P_0$ 处的切向量
+$$\boldsymbol T=\nabla F\times\nabla G=\begin{vmatrix}\boldsymbol i&\boldsymbol j&\boldsymbol k\\ F_x&F_y&F_z\\ G_x&G_y&G_z\end{vmatrix}\Bigg|_{P_0}$$
+（因为切向量同时垂直于两个曲面的法向量。）</div>
+<div class="box example">
+<b>例 2（交线）.</b> 求曲线 $\begin{cases}x^2+y^2+z^2=6\\ x+y+z=0\end{cases}$ 在点 $(1,-2,1)$ 处的切线。<br>
+① 验证点在曲线上：$1+4+1=6$ ✓，$1-2+1=0$ ✓；<br>
+② 两个梯度：$\nabla F=(2x,2y,2z)|_{(1,-2,1)}=(2,-4,2)$，$\nabla G=(1,1,1)$；<br>
+③ 叉乘：
+$$\boldsymbol T=\begin{vmatrix}\boldsymbol i&\boldsymbol j&\boldsymbol k\\ 2&-4&2\\ 1&1&1\end{vmatrix}=\left((-4)(1)-2(1)\right)\boldsymbol i-\left(2(1)-2(1)\right)\boldsymbol j+\left(2(1)-(-4)(1)\right)\boldsymbol k=(-6,0,6)\sim(-1,0,1)$$
+④ 切线（方向约简为 $(-1,0,1)$）：
+$$\frac{x-1}{-1}=\frac{y+2}{0}=\frac{z-1}{1}\qquad\left(\text{即 } y=-2,\ \tfrac{x-1}{-1}=\tfrac{z-1}{1}\right)$$
+<b>验算：</b>方向 $(-1,0,1)$ 与 $\nabla F=(2,-4,2)$ 点乘：$-2+0+2=0$ ✓；与 $\nabla G=(1,1,1)$ 点乘：$-1+0+1=0$ ✓——切线方向同时垂直于两个曲面的法向量。
+</div>
+<h3>6.2 曲面的切平面与法线</h3>
+<div class="thm"><span class="label">隐式曲面</span>曲面 $\Sigma:\ F(x,y,z)=0$ 在点 $P_0(x_0,y_0,z_0)$ 处法向量
+$$\boldsymbol n=\left(F_x,\ F_y,\ F_z\right)\Big|_{P_0}$$
+切平面：$F_x(x-x_0)+F_y(y-y_0)+F_z(z-z_0)=0$；<br>
+法线：$\dfrac{x-x_0}{F_x}=\dfrac{y-y_0}{F_y}=\dfrac{z-z_0}{F_z}$。</div>
+<div class="proof"><span class="label">证明（∇F 是法向量）</span>设曲面 $\Sigma$ 上任意一条过 $P_0$ 的参数曲线 $\boldsymbol r(t)=(x(t),y(t),z(t))$，$t_0$ 对应 $P_0$。因曲线在曲面上：
+$$F(x(t),y(t),z(t))\equiv0$$
+两边对 $t$ 求导并在 $t_0$ 取值（链式法则）：
+$$F_x x'(t_0)+F_y y'(t_0)+F_z z'(t_0)=0\ \Longrightarrow\ \nabla F(P_0)\cdot\boldsymbol r'(t_0)=0$$
+即 $\nabla F(P_0)$ 垂直于曲面上任何过 $P_0$ 的曲线的切向量，也就垂直于切平面内的一切方向，故它就是<b>法向量</b>。<span class="qed">∎</span></div>
+<div class="box tip">
+<b>显式曲面：</b>$z=f(x,y)$ 可写成 $F=f(x,y)-z=0$，故
+$$\boldsymbol n=(f_x,\ f_y,\ -1),\qquad \text{切平面}:\ z-z_0=f_x(x-x_0)+f_y(y-y_0)$$
+</div>
+<div class="box example">
+<b>例 3（显式曲面）.</b> 求曲面 $z=x^2+y^2$ 在点 $(1,1,2)$ 处的切平面与法线。<br>
+① 验证点在曲面上：$z=1+1=2$ ✓；<br>
+② 法向量：$f_x=2x\Rightarrow f_x(1,1)=2$，$f_y=2y\Rightarrow f_y(1,1)=2$，故 $\boldsymbol n=(2,2,-1)$；<br>
+③ 切平面：$2(x-1)+2(y-1)-(z-2)=0$，即
+$$2x+2y-z-2=0$$
+④ 法线：$\dfrac{x-1}{2}=\dfrac{y-1}{2}=\dfrac{z-2}{-1}$。<br>
+<b>验算：</b>$(1,1,2)$ 代入切平面：$2+2-2-2=0$ ✓；法线方向与法向量一致 ✓。
+</div>
+<div class="box example">
+<b>例 4（隐式曲面）.</b> 求曲面 $x^2+2y^2+z^2=4$ 在点 $(1,1,1)$ 处的切平面。<br>
+① 验证：$1+2+1=4$ ✓；<br>
+② 取 $F=x^2+2y^2+z^2-4$，$\nabla F=(2x,4y,2z)|_{(1,1,1)}=(2,4,2)$，约简 $\boldsymbol n=(1,2,1)$；<br>
+③ 切平面：$(x-1)+2(y-1)+(z-1)=0$，即
+$$x+2y+z=4$$
+<b>验算：</b>$(1,1,1)$ 代入：$1+2+1=4$ ✓。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>方向导数与梯度<span class="tag">核心</span></h2>
+<div class="box def">
+<b>方向导数：</b>设从 $P_0$ 出发的射线方向为 $l$，$\boldsymbol e_l=(\cos\alpha,\cos\beta)$ 为其<b>单位</b>方向向量（$\alpha,\beta$ 是方向角）：
+$$\left.\frac{\partial f}{\partial l}\right|_{P_0}=\lim_{t\to0^+}\frac{f(x_0+t\cos\alpha,\ y_0+t\cos\beta)-f(x_0,y_0)}{t}$$
+几何意义：函数沿该方向的变化率。三元情形有三个方向余弦，完全类似。
+</div>
+<div class="thm"><span class="label">定理（计算公式）</span>若 $f$ 在 $P_0$ 可微，则对任意单位方向 $\boldsymbol e_l$：
+$$\frac{\partial f}{\partial l}=f_x\cos\alpha+f_y\cos\beta$$
+（三元：$f_x\cos\alpha+f_y\cos\beta+f_z\cos\gamma$。）</div>
+<div class="proof"><span class="label">证明</span>记 $P(t)=(x_0+t\cos\alpha,\ y_0+t\cos\beta)$。由 $f$ 在 $P_0$ 可微：
+$$f(P(t))-f(P_0)=f_x(P_0)\,t\cos\alpha+f_y(P_0)\,t\cos\beta+o(t)\qquad(t\to0^+)$$
+两边除以 $t$ 并令 $t\to0^+$，即得公式。<span class="qed">∎</span></div>
+<div class="box warn"><b>两个前提：</b>① $f$ 必须<b>可微</b>；② $(\cos\alpha,\cos\beta)$ 必须是<b>单位向量</b>——题目给非单位向量时先归一化。</div>
+<div class="box def">
+<b>梯度：</b>$\operatorname{grad}f=\nabla f=(f_x,\ f_y)$（三元为 $(f_x,f_y,f_z)$）。
+</div>
+<div class="thm"><span class="label">定理（梯度的几何意义）</span>设 $f$ 可微，$\boldsymbol e_l$ 为单位方向，则
+$$\frac{\partial f}{\partial l}=\nabla f\cdot\boldsymbol e_l=|\nabla f|\cos\theta$$
+其中 $\theta$ 为 $\boldsymbol e_l$ 与 $\nabla f$ 的夹角。从而：
+<ol>
+<li>$\nabla f$ 垂直于等值线（等值面）：沿等值线方向的导数为 $0$；</li>
+<li>沿 $\nabla f$ 方向方向导数最大，最大值为 $|\nabla f|$；</li>
+<li>沿 $-\nabla f$ 方向函数下降最快。</li>
+</ol></div>
+<div class="proof"><span class="label">证明（最大方向）</span>由 $\dfrac{\partial f}{\partial l}=|\nabla f|\cos\theta$ 及 $\cos\theta\le1$，当 $\boldsymbol e_l$ 与 $\nabla f$ 同向（$\theta=0$）时取最大值 $|\nabla f|$；$\theta=\pi$ 时取最小值 $-|\nabla f|$（下降最快）。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（方向导数与最大方向）.</b> 设 $f=x^2+xy+y^2$，求在 $P_0(1,1)$ 处沿 $l=(1,1)$ 方向的方向导数及最大方向导数。<br>
+① 偏导：$f_x=2x+y,\ f_y=x+2y$，在 $(1,1)$ 处 $f_x=3,\ f_y=3$，故 $\nabla f=(3,3)$；<br>
+② 方向归一化：$\boldsymbol e_l=\left(\dfrac{1}{\sqrt2},\dfrac{1}{\sqrt2}\right)$；<br>
+③ 方向导数：
+$$\frac{\partial f}{\partial l}=3\cdot\frac{1}{\sqrt2}+3\cdot\frac{1}{\sqrt2}=3\sqrt2$$
+④ 最大方向导数 $=|\nabla f|=\sqrt{3^2+3^2}=3\sqrt2$，沿方向 $\left(\dfrac{1}{\sqrt2},\dfrac{1}{\sqrt2}\right)$。<br>
+<b>验算：</b>本例中 $l$ 恰是梯度方向，方向导数应等于最大值，两种算法都得 $3\sqrt2$ ✓。
+</div>
+<div class="box example">
+<b>例 2（三元梯度）.</b> 求 $u=x^2+2y^2+3z^2$ 在 $P_0(1,1,1)$ 处的梯度及沿 $\boldsymbol l=(1,1,1)$ 方向的方向导数。<br>
+① 偏导：$u_x=2x,\ u_y=4y,\ u_z=6z$，在 $(1,1,1)$ 处 $\nabla u=(2,4,6)$；<br>
+② 归一化：$|\boldsymbol l|=\sqrt3$，$\boldsymbol e_l=\left(\dfrac1{\sqrt3},\dfrac1{\sqrt3},\dfrac1{\sqrt3}\right)$；<br>
+③ 方向导数：
+$$\frac{\partial u}{\partial l}=\left(2+4+6\right)\cdot\frac{1}{\sqrt3}=\frac{12}{\sqrt3}=4\sqrt3$$
+<b>验算：</b>$4\sqrt3\approx6.93\le|\nabla u|=2\sqrt{14}\approx7.48$——方向导数不超过梯度模，符合 §7 定理 ✓。
+</div>
+</section>
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>极值与最值<span class="tag">核心</span></h2>
+
+<h3>8.1 无条件极值</h3>
+<div class="box def">
+<b>定义：</b>若对 $P_0$ 某邻域内的所有 $P$ 都有 $f(P)\le f(P_0)$（或 $\ge$），则称 $P_0$ 为极大（小）值点，$f(P_0)$ 为极大（小）值。
+</div>
+<div class="thm"><span class="label">定理 1（必要条件）</span>设 $f$ 在 $P_0(x_0,y_0)$ 可偏导且取极值，则
+$$f_x(x_0,y_0)=0,\qquad f_y(x_0,y_0)=0$$
+（这样的点称为<b>驻点</b>。）</div>
+<div class="proof"><span class="label">证明</span>固定 $y=y_0$，考虑一元函数 $\varphi(x)=f(x,y_0)$。$P_0$ 是 $f$ 的极值点 ⇒ $\varphi$ 在 $x_0$ 取极值，由一元费马引理 $\varphi'(x_0)=0$，即 $f_x(x_0,y_0)=0$；同理固定 $x=x_0$ 得 $f_y(x_0,y_0)=0$。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 2（充分条件）</span>设 $f$ 在 $P_0$ 的某邻域内二阶连续可偏导，且 $f_x(P_0)=f_y(P_0)=0$。记
+$$A=f_{xx}(P_0),\qquad B=f_{xy}(P_0),\qquad C=f_{yy}(P_0)$$
+则：
+<ol>
+<li>$AC-B^2>0$：$P_0$ 是极值点（$A<0$ 取极大，$A>0$ 取极小）；</li>
+<li>$AC-B^2<0$：$P_0$ 不是极值点（鞍点）；</li>
+<li>$AC-B^2=0$：不能判定，需另行讨论。</li>
+</ol></div>
+<div class="proof"><span class="label">证明思路（二阶泰勒）</span>由 §9 的二阶泰勒公式，
+$$f(P_0+\boldsymbol h)-f(P_0)=\frac{1}{2}\left(Ah^2+2Bhk+Ck^2\right)+o(\rho^2),\qquad \rho=|\boldsymbol h|$$
+主部是不定元为 $(h,k)$ 的二次型：$AC-B^2>0$ 时二次型定号（符号由 $A$ 决定），且 $o(\rho^2)$ 不改变符号，故取极值；$AC-B^2<0$ 时二次型不定号，沿两组方向增量符号相反，不是极值。<span class="qed">∎</span></div>
+<div class="box method">
+<b>求无条件极值——四步模板：</b>
+① 解方程组 $f_x=0,\ f_y=0$，求出全部驻点；<br>
+② 求 $A=f_{xx},\ B=f_{xy},\ C=f_{yy}$；<br>
+③ 对每个驻点计算 $AC-B^2$，按定理 2 判定；<br>
+④ 写出极值点的函数值；可用邻域取点验算。
+</div>
+<div class="box example">
+<b>例 1.</b> 求 $f=x^3+y^3-3xy$ 的极值。<br>
+① 驻点：$f_x=3x^2-3y=0\Rightarrow y=x^2$；$f_y=3y^2-3x=0\Rightarrow x=y^2$。联立得 $x=x^4$，即 $x=0$ 或 $x=1$，驻点为 $(0,0)$ 与 $(1,1)$；<br>
+② 二阶偏导：$A=f_{xx}=6x,\quad B=f_{xy}=-3,\quad C=f_{yy}=6y$；<br>
+③ 判定：<br>
+&nbsp;&nbsp;• 在 $(0,0)$：$A=0,\ C=0$，$AC-B^2=-9<0$，不是极值点；<br>
+&nbsp;&nbsp;• 在 $(1,1)$：$A=6,\ C=6$，$AC-B^2=36-9=27>0$，且 $A>0$，是极小值点；<br>
+④ 极小值 $f(1,1)=1+1-3=-1$。<br>
+<b>验算：</b>在 $(1,1)$ 附近取 $(1.1,1.1)$：$f=1.331+1.331-3.63=-0.968>-1$；取 $(0.9,0.9)$：$f=0.729+0.729-2.43=-0.972>-1$ ✓（与「极小值 $-1$」一致）。
+</div>
+<h3>8.2 条件极值与拉格朗日乘数法</h3>
+<div class="box def">
+<b>问题：</b>求目标函数 $f(x,y)$ 在约束条件 $g(x,y)=0$ 下的极值（极值点只在约束曲线上取）。
+</div>
+<div class="thm"><span class="label">拉格朗日乘数法</span>构造拉格朗日函数
+$$L(x,y,\lambda)=f(x,y)+\lambda\,g(x,y)$$
+则条件极值的候选点（连同约束）是方程组
+$$\begin{cases}L_x=f_x+\lambda g_x=0\\[2pt] L_y=f_y+\lambda g_y=0\\[2pt] L_\lambda=g(x,y)=0\end{cases}$$
+的解。多约束情形：$L=f+\lambda_1g_1+\cdots+\lambda_mg_m$，对每个变量与每个 $\lambda_i$ 求偏导令其为零。</div>
+<div class="proof"><span class="label">推导</span>设在约束 $g(x,y)=0$ 下 $f$ 于 $P_0$ 取极值，且 $g_y(P_0)\neq0$。由隐函数定理，$g=0$ 在 $P_0$ 附近确定 $y=y(x)$，于是沿约束曲线的一元函数 $\varphi(x)=f(x,y(x))$ 在 $x_0$ 取极值：
+$$\varphi'(x_0)=f_x(P_0)+f_y(P_0)\,y'(x_0)=0$$
+再由隐函数求导 $y'(x_0)=-\dfrac{g_x(P_0)}{g_y(P_0)}$，代入得
+$$f_x(P_0)\,g_y(P_0)-f_y(P_0)\,g_x(P_0)=0\qquad(\star)$$
+另一方面取 $\lambda_0=-\dfrac{f_y(P_0)}{g_y(P_0)}$，则 $f_y(P_0)+\lambda_0g_y(P_0)=0$；再由 $(\star)$ 得
+$$f_x(P_0)+\lambda_0g_x(P_0)=\frac{f_xg_y-f_yg_x}{g_y}\Bigg|_{P_0}=0$$
+所以 $(x_0,y_0,\lambda_0)$ 满足拉格朗日方程组；反之，满足方程组的点必满足 $(\star)$ 与 $g=0$。两个表述等价。<span class="qed">∎</span></div>
+<div class="box method">
+<b>操作性说明（做题就按这个来）：</b>① 写 $L=f+\lambda g$；② 令 $L_x=L_y=L_\lambda=0$；③ 消去 $\lambda$ 求驻点；④ 计算各候选点函数值，或由实际意义判断极大/极小。
+</div>
+<div class="box example">
+<b>例 2（经典）.</b> 求 $f=xyz$ 在约束 $x+y+z=a$（$x,y,z>0$，$a>0$）下的最大值。<br>
+① $L=xyz+\lambda(x+y+z-a)$；<br>
+② 方程组：
+$$L_x=yz+\lambda=0,\quad L_y=xz+\lambda=0,\quad L_z=xy+\lambda=0,\quad x+y+z=a$$
+③ 由前三式得 $yz=xz=xy$；因 $x,y,z>0$，约去正因子得 $x=y=z$。代入约束：$3x=a$，即 $x=y=z=\dfrac{a}{3}$；<br>
+④ 最大值 $f=\left(\dfrac{a}{3}\right)^3=\dfrac{a^3}{27}$（边界上 $f\to0$，故内部驻点必为最大点）。<br>
+<b>验算：</b>约束满足 ✓；另取可行点 $(a/2,a/4,a/4)$，$f=\dfrac{a^3}{32}<\dfrac{a^3}{27}$ ✓。
+</div>
+<div class="box example">
+<b>例 3（表面积为 $a^2$ 的长方体最大体积）.</b><br>
+① 设三边长 $x,y,z>0$，目标 $V=xyz$，约束 $2(xy+yz+zx)=a^2$；<br>
+② $L=xyz+\lambda\left(2xy+2yz+2zx-a^2\right)$：
+$$L_x=yz+2\lambda(y+z)=0,\quad L_y=xz+2\lambda(x+z)=0,\quad L_z=xy+2\lambda(x+y)=0$$
+③ $L_x-L_y=(y-x)(z+2\lambda)=0$。若 $y\neq x$，则 $z=-2\lambda$，代回 $L_x$ 得 $-z^2=0$，与 $z>0$ 矛盾，故 $y=x$；同理比较其余两式得 $z=y$。于是 $x=y=z$；<br>
+④ 由约束 $6x^2=a^2$，$x=\dfrac{a}{\sqrt6}$，故
+$$V_{\max}=x^3=\frac{a^3}{6\sqrt6}$$
+<b>验算：</b>另取可行点 $a\left(\frac{1}{2\sqrt2},\ \frac{1}{2\sqrt2},\ \frac{3\sqrt2}{8}\right)$：约束 $2(xy+yz+zx)=a^2$ 满足，体积 $\approx0.0663a^3<\dfrac{a^3}{6\sqrt6}\approx0.0680a^3$ ✓。
+</div>
+
+<h3>8.3 有界闭区域上的最值</h3>
+<div class="box method">
+<b>闭区域最值——三步法（内部 → 边界 → 比较）：</b>
+① <b>内部：</b>求 $f_x=f_y=0$ 的驻点（以及偏导不存在的点）；<br>
+② <b>边界：</b>把边界方程代入 $f$ 化为一元函数求最值（或对边界用拉格朗日乘数法）；<br>
+③ 内部与边界候选值<b>逐一比较</b>，最大者/最小者即所求（由 §1 最值定理：有界闭区域上连续函数的最值必存在）。<br>
+<b>应用题捷径：</b>若由实际意义已知最值存在于内部，且驻点唯一，则该驻点就是最值点，不必算边界。
+</div>
+<div class="box example">
+<b>例 4（闭区域最值）.</b> 求 $f=x^2+y^2-2x$ 在闭区域 $D:\ x^2+y^2\le4$ 上的最值。<br>
+① 内部驻点：$f_x=2x-2=0,\ f_y=2y=0\Rightarrow(1,0)$，$f(1,0)=1-2=-1$；<br>
+② 边界 $x^2+y^2=4$：代入 $y^2=4-x^2$（$x\in[-2,2]$）：
+$$f=x^2+\left(4-x^2\right)-2x=4-2x$$
+在 $x=-2$ 处最大 $f=8$，在 $x=2$ 处最小 $f=0$；<br>
+③ 比较：最小值 $-1$（内部驻点 $(1,0)$），最大值 $8$（边界点 $(-2,0)$）。<br>
+<b>验算：</b>$f=(x-1)^2+y^2-1\ge-1$，且 $(1,0)$ 处取到 $-1$ ✓；边界上 $f=4-2x\le4+4=8$ ✓。
+</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>二元函数的泰勒公式<span class="tag">进阶</span></h2>
+<div class="thm"><span class="label">定理（泰勒公式）</span>设 $f$ 在 $P_0(x_0,y_0)$ 的某邻域内有直到 $n+1$ 阶的连续偏导数，则该邻域内任意 $(x_0+h,\ y_0+k)$ 处
+$$f(x_0+h,\ y_0+k)=\sum_{m=0}^{n}\frac{1}{m!}\left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)^{m}f(x_0,y_0)+R_n$$
+拉格朗日余项为
+$$R_n=\frac{1}{(n+1)!}\left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)^{n+1}f(x_0+\theta h,\ y_0+\theta k),\qquad 0<\theta<1$$
+（也可用皮亚诺余项 $o(\rho^n)$。）</div>
+<div class="box tip">
+<b>算符记忆法：</b>把 $\left(h\dfrac{\partial}{\partial x}+k\dfrac{\partial}{\partial y}\right)^{m}$ 按二项式定理展开，如
+$$m=2:\quad h^2f_{xx}+2hkf_{xy}+k^2f_{yy};\qquad m=3:\ f_{xxx}h^3+3f_{xxy}h^2k+3f_{xyy}hk^2+f_{yyy}k^3$$
+$n=0$ 时退化为拉格朗日中值定理。
+</div>
+<div class="box method">
+<b>写泰勒式三步：</b>① 求 $f$ 在 $P_0$ 处各阶偏导；② 按算符展开逐项代入；③ 写出余项（皮亚诺 $o(\rho^n)$ 或拉格朗日形式）。<br>
+<b>证明：</b>见附录 B（§15）——思路是构造一元函数 $g(t)=f(x_0+th,\ y_0+tk)$，对它用一元泰勒公式。
+</div>
+<div class="box example">
+<b>例 1.</b> 写出 $f(x,y)=e^{x}\ln(1+y)$ 在 $(0,0)$ 处带皮亚诺余项的二阶泰勒公式。<br>
+① 各阶偏导及在 $(0,0)$ 的值：
+$$f_x=e^x\ln(1+y)\Big|_{(0,0)}=0,\qquad f_y=\frac{e^x}{1+y}\Bigg|_{(0,0)}=1$$
+$$f_{xx}\Big|_{(0,0)}=0,\qquad f_{xy}=\frac{e^x}{1+y}\Bigg|_{(0,0)}=1,\qquad f_{yy}=-\frac{e^x}{(1+y)^2}\Bigg|_{(0,0)}=-1$$
+② 代入算符（$m=1,2$）：
+$$f=0+\left(0\cdot h+1\cdot k\right)+\frac{1}{2}\left(0\cdot h^2+2\cdot1\cdot hk+\left(-1\right)k^2\right)+o\!\left(\rho^2\right)$$
+③ 即
+$$e^{x}\ln(1+y)=y+xy-\frac{y^2}{2}+o\!\left(x^2+y^2\right)$$
+<b>验算：</b>直接相乘 $e^x\ln(1+y)=\left(1+x+\dfrac{x^2}{2}+\cdots\right)\left(y-\dfrac{y^2}{2}+\cdots\right)=y+xy-\dfrac{y^2}{2}+\cdots$ ✓。
+</div>
+<div class="box tip"><b>与极值判别的关系：</b>二阶泰勒主部 $\dfrac12\left(Ah^2+2Bhk+Ck^2\right)$ 正是 §8 定理 2 二次型的来源：$AC-B^2>0$ 定号 ⇒ 极值；$<0$ 不定号 ⇒ 鞍点。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>最小二乘法<span class="tag">进阶</span></h2>
+<div class="box def">
+<b>问题：</b>给 $n$ 组数据 $(x_i,y_i)$，求线性函数 $y=ax+b$ 使<b>误差平方和</b>
+$$s(a,b)=\sum_{i=1}^{n}\left(ax_i+b-y_i\right)^2$$
+最小（这就是「最小二乘」准则）。
+</div>
+<div class="proof"><span class="label">推导（正规方程组）</span>$s$ 是 $a,b$ 的二次函数，最小值点处两个偏导为零：
+$$\frac{\partial s}{\partial a}=2\sum_{i=1}^{n}\left(ax_i+b-y_i\right)x_i=0,\qquad \frac{\partial s}{\partial b}=2\sum_{i=1}^{n}\left(ax_i+b-y_i\right)=0$$
+整理得<b>正规方程组</b>：
+$$\begin{cases}\left(\sum x_i^2\right)a+\left(\sum x_i\right)b=\sum x_iy_i\\[4pt] \left(\sum x_i\right)a+n\,b=\sum y_i\end{cases}$$
+用克莱姆法则解出：
+$$a=\frac{n\sum x_iy_i-\sum x_i\sum y_i}{n\sum x_i^2-\left(\sum x_i\right)^2},\qquad b=\frac{\sum x_i^2\sum y_i-\sum x_i\sum x_iy_i}{n\sum x_i^2-\left(\sum x_i\right)^2}$$
+（分母 $n\sum x_i^2-\left(\sum x_i\right)^2=n\sum\left(x_i-\bar x\right)^2>0$，只要 $x_i$ 不全相等。）<span class="qed">∎</span></div>
+<div class="box example">
+<b>例.</b> 用数据 $(1,3),(2,4),(3,6),(4,7)$ 拟合直线 $y=ax+b$。<br>
+① 求和：$n=4$，$\sum x_i=10$，$\sum y_i=20$，$\sum x_i^2=30$，$\sum x_iy_i=3+8+18+28=57$；<br>
+② 正规方程组：
+$$\begin{cases}30a+10b=57\\ 10a+4b=20\end{cases}$$
+③ 解：由第二式 $b=5-2.5a$，代入第一式得 $30a+50-25a=57$，即 $5a=7$，$a=1.4$，回代 $b=1.5$；<br>
+④ 拟合直线
+$$y=1.4x+1.5$$
+<b>验算（偏导为零）：</b>各点偏差 $1.4x_i+1.5-y_i$ 依次为 $-0.1,\ 0.3,\ -0.3,\ 0.1$，和 $=0$ ✓；加权和 $-0.1+0.6-0.9+0.4=0$ ✓，确实满足正规方程。
+</div>
+<div class="box tip"><b>推广：</b>拟合多项式 $y=a_0+a_1x+\cdots+a_mx^m$ 时，对 $a_0,\dots,a_m$ 分别求偏导为零，得 $m+1$ 元正规方程组。最小二乘法的本质就是 §8 的多元函数无条件极值。</div>
+</section>
+<section class="card" id="sec-11">
+<h2><span class="num">11</span>解题决策流程</h2>
+<pre class="flow">拿到题
+├─ 求二重极限？
+│   ├─ 证存在：定义 / 夹逼 / 极坐标（放缩到与 θ 无关）/ 无穷小×有界
+│   └─ 证不存在：两条路径（y=kx、y=x²…）极限不同
+├─ 偏导 / 全微分？
+│   ├─ 显函数：其余变量当常数（分段点用定义）
+│   ├─ 可微判定：① 求 f_x, f_y（定义）② 比值 [Δz−f_xΔx−f_yΔy]/ρ → 0？
+│   └─ 充分条件：偏导连续 ⇒ 可微，直接用
+├─ 复合函数？
+│   ├─ 画树图：路径相乘、同类相加
+│   └─ 抽象函数：f₁′、f₂′ 仍是 (u,v) 的函数，二阶再套链式
+├─ 隐函数？
+│   ├─ 一个方程：−F_x/F_y（或两边求导 / 全微分）
+│   └─ 方程组：两边对 x 求导 → 解二元一次方程组（雅可比作分母）
+├─ 几何题？
+│   ├─ 曲线：参数式切向量 = (x′, y′, z′)；交线 = ∇F×∇G
+│   └─ 曲面：隐式法向量 = ∇F；显式 = (f_x, f_y, −1)
+├─ 方向导数 / 梯度？
+│   └─ 先归一化 l：∂f/∂l = ∇f·e_l；最大方向 = ∇f 方向，值 = |∇f|
+└─ 极值 / 最值？
+    ├─ 无条件：驻点 + AC−B² 判别
+    ├─ 条件：拉格朗日乘数法（L = f + Σλg）
+    └─ 闭区域：内部驻点 + 边界（代入降维）→ 比较
+</pre>
+</section>
+
+<section class="card" id="sec-12">
+<h2><span class="num">12</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>路径法方向别搞反：</b>沿一条路径极限相同<b>不能</b>说明二重极限存在；只有算出（或找到）与路径有关的极限、两条路径值不同，才能判<b>不存在</b>。</li>
+<li><b>关系链：</b>偏导连续 ⇒ 可微 ⇒ 偏导存在 ＆ 连续；反方向全部不成立（配反例记忆）。</li>
+<li><b>分段函数在分界点：</b>求偏导、判可微都必须回到定义用极限，不能先对表达式求导再代点。</li>
+<li><b>抽象函数二阶偏导：</b>$f_1',f_2'$ 仍是 $(u,v)$ 的函数，再求导要继续用链式法则；只有混合偏导连续时才能合并 $f_{12}''=f_{21}''$。</li>
+<li><b>隐函数公式条件：</b>$F_y\neq0$（或 $F_z\neq0$）才可以解出；方程组情形的分母是雅可比行列式，必须非零。</li>
+<li><b>方向导数：</b>方向向量必须先<b>归一化</b>；计算公式要求函数在该点<b>可微</b>。</li>
+<li><b>极值判别：</b>只对驻点判别；$AC-B^2=0$ 时定理失效需另法讨论；闭区域求最值别漏边界。</li>
+<li><b>拉格朗日乘数法：</b>$L_\lambda=0$ 就是约束本身；解出的驻点要逐一代入目标函数比较大小。</li>
+<li><b>几何应用：</b>显式曲面法向量是 $(f_x,f_y,-1)$（有负号）；交线切向量用<b>叉乘</b> $\nabla F\times\nabla G$。</li>
+<li><b>全微分近似：</b>$\Delta z\approx f_x\Delta x+f_y\Delta y$ 只在增量较小时可用，误差为 $o(\rho)$。</li>
+<li><b>最小二乘：</b>正规方程组里 $a$ 的系数是 $\sum x_i^2$、$b$ 的系数是 $\sum x_i$，不要对调。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-13">
+<h2><span class="num">13</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>概念关系链</td><td>偏导连续 $\Rightarrow$ 可微 $\Rightarrow$ 偏导存在 ＆ 连续</td></tr>
+<tr><td>全微分</td><td>$dz=f_x\,dx+f_y\,dy$；可微定义 $\Delta z=A\Delta x+B\Delta y+o(\rho)$</td></tr>
+<tr><td>可微判定</td><td>$\dfrac{\Delta z-f_x\Delta x-f_y\Delta y}{\rho}\to0$，$\rho=\sqrt{\Delta x^2+\Delta y^2}$</td></tr>
+<tr><td>链式法则（多元中间变量）</td><td>$z_x=f_uu_x+f_vv_x$（树图：路径相乘、同类相加）</td></tr>
+<tr><td>全微分形式不变性</td><td>$dz=f_u\,du+f_v\,dv$（$u,v$ 是否为自变量都成立）</td></tr>
+<tr><td>隐函数（一个方程）</td><td>$\dfrac{dy}{dx}=-\dfrac{F_x}{F_y}$；$\dfrac{\partial z}{\partial x}=-\dfrac{F_x}{F_z}$</td></tr>
+<tr><td>隐函数（方程组）</td><td>两边求导解线性方程组；分母 $\dfrac{\partial(F,G)}{\partial(u,v)}\neq0$</td></tr>
+<tr><td>曲线切线（参数式）</td><td>$\boldsymbol T=\left(x'(t_0),\ y'(t_0),\ z'(t_0)\right)$</td></tr>
+<tr><td>曲线切线（两曲面交线）</td><td>$\boldsymbol T=\nabla F\times\nabla G$</td></tr>
+<tr><td>切平面（隐式 $F=0$）</td><td>$F_x(x-x_0)+F_y(y-y_0)+F_z(z-z_0)=0$，$\boldsymbol n=\nabla F$</td></tr>
+<tr><td>切平面（显式 $z=f(x,y)$）</td><td>$z-z_0=f_x(x-x_0)+f_y(y-y_0)$，$\boldsymbol n=(f_x,f_y,-1)$</td></tr>
+<tr><td>方向导数</td><td>$\dfrac{\partial f}{\partial l}=f_x\cos\alpha+f_y\cos\beta=\nabla f\cdot\boldsymbol e_l$（$\boldsymbol e_l$ 为单位向量）</td></tr>
+<tr><td>梯度</td><td>$\nabla f=(f_x,f_y)$；最大方向导数 $=|\nabla f|$，沿 $\nabla f$ 方向；负梯度下降最快</td></tr>
+<tr><td>极值必要条件</td><td>$f_x=f_y=0$（驻点）</td></tr>
+<tr><td>极值充分条件</td><td>$AC-B^2>0$ 是极值（$A<0$ 极大，$A>0$ 极小）；$<0$ 非极值；$=0$ 另判</td></tr>
+<tr><td>拉格朗日乘数法</td><td>$L=f+\lambda g$；$L_x=L_y=L_\lambda=0$（多约束加 $\lambda_ig_i$）</td></tr>
+<tr><td>二阶泰勒（主部）</td><td>$f(P_0)+hf_x+kf_y+\dfrac{1}{2}\left(h^2f_{xx}+2hkf_{xy}+k^2f_{yy}\right)+\cdots$</td></tr>
+<tr><td>最小二乘正规方程</td><td>$\left(\sum x_i^2\right)a+\left(\sum x_i\right)b=\sum x_iy_i$；$\left(\sum x_i\right)a+nb=\sum y_i$</td></tr>
+</tbody>
+</table>
+</section>
+<section class="card" id="sec-14">
+<h2><span class="num">14</span>附录A：混合偏导相等定理的证明<span class="tag">拓展</span></h2>
+<div class="thm"><span class="label">定理</span>若 $f_{xy}(x,y)$ 与 $f_{yx}(x,y)$ 在点 $P_0(x_0,y_0)$ 的某邻域内都存在，且都在 $P_0$ 连续，则
+$$f_{xy}(x_0,y_0)=f_{yx}(x_0,y_0)$$</div>
+<div class="proof"><span class="label">证明（两次中值定理）</span>在 $P_0$ 的邻域内取小矩形，作<b>二阶混合增量</b>
+$$W=f(x_0+\Delta x,\ y_0+\Delta y)-f(x_0,\ y_0+\Delta y)-f(x_0+\Delta x,\ y_0)+f(x_0,y_0)$$
+（矩形四个顶点处「对角相减」）。<br><br>
+<b>第一种分组：</b>令 $\varphi(x)=f(x,\ y_0+\Delta y)-f(x,\ y_0)$，则 $W=\varphi(x_0+\Delta x)-\varphi(x_0)$。对 $\varphi$ 用拉格朗日中值定理（$\xi$ 介于 $x_0,x_0+\Delta x$ 之间）：
+$$W=\varphi'(\xi)\Delta x=\left[f_x(\xi,\ y_0+\Delta y)-f_x(\xi,\ y_0)\right]\Delta x$$
+再对中括号内关于 $y$ 用拉格朗日中值定理（$\eta$ 介于 $y_0,y_0+\Delta y$ 之间）：
+$$W=f_{xy}(\xi,\eta)\,\Delta x\,\Delta y$$
+<b>第二种分组：</b>改令 $\psi(y)=f(x_0+\Delta x,\ y)-f(x_0,\ y)$，同理得（$\tilde\xi,\tilde\eta$ 在相应的增量区间内）
+$$W=f_{yx}(\tilde\xi,\tilde\eta)\,\Delta x\,\Delta y$$
+两式相比（$\Delta x\,\Delta y\neq0$）：
+$$f_{xy}(\xi,\eta)=f_{yx}(\tilde\xi,\tilde\eta)$$
+令 $\Delta x\to0,\ \Delta y\to0$，则 $\xi,\tilde\xi\to x_0$，$\eta,\tilde\eta\to y_0$。由 $f_{xy}$ 与 $f_{yx}$ 在 $P_0$ 连续，两边取极限得
+$$f_{xy}(x_0,y_0)=f_{yx}(x_0,y_0)$$<span class="qed">∎</span></div>
+<div class="box tip"><b>用法：</b>题目只要说明「二阶连续可偏导」或两个混合偏导连续，就可换序合并，如 §4 例 3 中 $f_{12}''=f_{21}''$；不连续时未必相等（§2 例 3 是反例）。</div>
+</section>
+
+<section class="card" id="sec-15">
+<h2><span class="num">15</span>附录B：二元泰勒公式的证明<span class="tag">拓展</span></h2>
+<div class="proof"><span class="label">证明（化为一元泰勒）</span>固定 $(h,k)$，构造一元函数
+$$g(t)=f(x_0+th,\ y_0+tk),\qquad t\in[0,1]$$
+则 $g(0)=f(x_0,y_0)$，$g(1)=f(x_0+h,\ y_0+k)$——把二元的泰勒公式归结为 $g$ 在 $0$ 点的一元泰勒公式。<br><br>
+<b>第一步：算 $g^{(m)}(t)$。</b>由链式法则
+$$g'(t)=f_x\cdot h+f_y\cdot k=\left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)f$$
+再求导时对每一项继续用同一算符（归纳），得
+$$g^{(m)}(t)=\left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)^{m}f(x_0+th,\ y_0+tk)\ \Longrightarrow\ g^{(m)}(0)=\left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)^{m}f(x_0,y_0)$$
+<b>第二步：对 $g$ 用一元泰勒公式</b>（带拉格朗日余项，$0<\theta<1$）：
+$$g(1)=g(0)+\sum_{m=1}^{n}\frac{g^{(m)}(0)}{m!}+\frac{g^{(n+1)}(\theta)}{(n+1)!}$$
+<b>第三步：代回</b> $g^{(m)}(0)$ 与
+$$g^{(n+1)}(\theta)=\left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)^{n+1}f(x_0+\theta h,\ y_0+\theta k)$$
+即得
+$$f(x_0+h,\ y_0+k)=\sum_{m=0}^{n}\frac{1}{m!}\left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)^{m}f(x_0,y_0)+R_n$$
+$$R_n=\frac{1}{(n+1)!}\left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)^{n+1}f(x_0+\theta h,\ y_0+\theta k)$$<span class="qed">∎</span></div>
+<div class="box tip"><b>皮亚诺余项版本：</b>若只需要 $o(\rho^n)$ 的精度（求极限、判极值常用），只需 $n$ 阶连续偏导，对 $g$ 用带皮亚诺余项的一元泰勒即可，证明完全平行。</div>
+</section>
+
+<section class="card" id="sec-16">
+<h2><span class="num">16</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>能讲出「为什么」→ 能在题面里认出方法 → 能闭卷复现关键计算。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 用路径法与夹逼/极坐标处理二重极限；<br>
+② 求偏导、高阶偏导，说清混合偏导可交换的条件（并会举反例）；<br>
+③ 用三步模板判定可微，默写关系链；<br>
+④ 用树图处理复合求导，独立写出抽象函数的二阶偏导；<br>
+⑤ 三法求隐函数导数，方程组用「两边求导 + 联立解线性组」；<br>
+⑥ 写切线、法平面、切平面、法线方程（记住 $(f_x,f_y,-1)$ 的负号）；<br>
+⑦ 求方向导数与梯度，解释「梯度方向是最快增长方向」；<br>
+⑧ 用 $AC-B^2$ 判极值、拉格朗日乘数法解条件极值、闭区域最值三步法；<br>
+⑨ 用正规方程做最小二乘拟合。
+</div>
+<h3>用法索引</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>证极限不存在 / 存在</td><td>两条路径 / 夹逼·极坐标</td><td>§1 例1、2</td></tr>
+<tr><td>分段函数分界点求偏导</td><td>回到定义</td><td>§2 例3</td></tr>
+<tr><td>判断可微性</td><td>三步模板</td><td>§3 例1、2</td></tr>
+<tr><td>复合 / 抽象函数求导</td><td>树图 + $f_1',f_2'$</td><td>§4 例2、3</td></tr>
+<tr><td>隐函数（含方程组）</td><td>$-\dfrac{F_x}{F_y}$ / 联立解组</td><td>§5 例1–3</td></tr>
+<tr><td>切平面 · 法向量</td><td>$\nabla F$ 或 $(f_x,f_y,-1)$</td><td>§6 例3、4</td></tr>
+<tr><td>方向导数 / 最大方向</td><td>$\nabla f\cdot\boldsymbol e_l$</td><td>§7 例1、2</td></tr>
+<tr><td>极值</td><td>驻点 + $AC-B^2$</td><td>§8 例1</td></tr>
+<tr><td>条件极值 / 应用最值</td><td>拉格朗日乘数法</td><td>§8 例2、3</td></tr>
+<tr><td>数据拟合</td><td>最小二乘正规方程</td><td>§10 例</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 默写偏导连续/可微/偏导存在/连续的关系链，并各举一个反例（§3）<br>
+☐ 复述可微充分条件的证明思路（拉格朗日拆项，§3 定理2）<br>
+☐ 独立完成 §4 例3（抽象函数二阶偏导）并取具体 $f$ 验算<br>
+☐ 独立完成 §5 例3（方程组隐函数）并验算<br>
+☐ 复述拉格朗日乘数法与条件极值的等价推导（§8.2 证明）<br>
+☐ 默写二阶泰勒算符展开式（§9）
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>高等数学（下册）· 第九章 多元函数微分法及其应用 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

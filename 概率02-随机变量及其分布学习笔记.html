@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>概率02 · 随机变量及其分布 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#f8f6fd;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#7c3aed;--accent2:#c026d3;--soft:#f5f3ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#4c1d95,#7c3aed 55%,#c026d3);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#ddd6fe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#6d28d9;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#4c1d95}
+.card h3{font-size:1.05rem;color:#6d28d9;margin:24px 0 8px;padding-left:10px;border-left:4px solid #c4b5fd}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#d946ef);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#f5f3ff;border-color:#a78bfa}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #ddd6fe;border-left:4px solid #8b5cf6;background:#faf8ff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#6d28d9;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#6d28d9;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(124,58,237,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>概率论与数理统计 · 第二章 随机变量及其分布 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>分布函数</span><span>离散型·二项·泊松</span><span>概率密度</span><span>均匀·指数·正态</span><span>函数分布</span><span>学习闭环</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 随机变量与分布函数</a>
+<a href="#sec-2">02 · 离散型随机变量</a>
+<a href="#sec-3">03 · 连续型随机变量</a>
+<a href="#sec-4">04 · 三大连续分布</a>
+<a href="#sec-5">05 · 随机变量函数的分布</a>
+<a href="#sec-6">06 · 解题决策流程</a>
+<a href="#sec-7">07 · 易错点清单</a>
+<a href="#sec-8">08 · 公式速查表</a>
+<a href="#sec-9">09 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>主线：</b>把「随机结果」映射成「数」——随机变量；再用分布函数统一描述；然后按取值形态分成离散（分布律）与连续（概率密度）；最后研究随机变量函数的分布。<span style="color:#6d28d9;font-weight:700">紫框=定义/定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题</span>。</div>
+<pre class="flow">第二章 随机变量及其分布
+├─ 随机变量（§1）
+│   ├─ X = X(ω)：样本点的函数
+│   └─ 分布函数 F(x) = P{X≤x}：单调不减、右连续、F(∓∞)=0/1
+├─ 离散型（§2）
+│   ├─ 分布律 pk（Σpk=1）；F 是阶梯函数
+│   └─ 0-1、二项 B(n,p)、泊松 P(λ)（含泊松定理证明）
+├─ 连续型（§3–§4）
+│   ├─ 概率密度 f：f≥0、∫f=1、P{a<X≤b}=∫f、单点概率 0
+│   └─ 均匀 U(a,b)、指数 E(λ)（无记忆性）、正态 N(μ,σ²)（标准化+Φ表）
+└─ 函数的分布（§5）
+    ├─ 离散：列表合并同值概率
+    └─ 连续：分布函数法（万能）/ 单调可导公式法 f_X(h)|h′|
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>随机变量与分布函数<span class="tag">基础</span></h2>
+<div class="box def">
+<b>随机变量：</b>定义在样本空间 $S$ 上的实值函数 $X=X(\omega)$（把每个试验结果对应到一个数）。取值至多可数的为<b>离散型</b>；存在概率密度的为<b>连续型</b>。<br>
+（$\{X\le x\}$ 是事件 $\{\omega\mid X(\omega)\le x\}$。）
+</div>
+<div class="box def">
+<b>分布函数：</b>
+$$F(x)=P\{X\le x\},\qquad -\infty<x<+\infty$$
+</div>
+<div class="thm"><span class="label">分布函数的四条性质</span>
+① $0\le F(x)\le1$；② <b>单调不减</b>；③ $F(-\infty)=0$，$F(+\infty)=1$；④ <b>右连续</b>：$F(x+0)=F(x)$。<br>
+反之，任何满足这四条的 $F$ 必是某随机变量的分布函数。</div>
+<div class="proof"><span class="label">证明（核心两条）</span>
+<b>②</b> 设 $x_1<x_2$：$\{X\le x_1\}\subset\{X\le x_2\}$，由概率单调性 $F(x_1)\le F(x_2)$ ✓。<br>
+<b>③</b> $\{X\le n\}\uparrow S$，由概率的连续性 $F(n)\to P(S)=1$；同理 $F(-n)\to P(\varnothing)=0$ ✓。<br>
+<b>④</b> 取 $x_n\downarrow x$，则 $\{X\le x_n\}\downarrow\{X\le x\}$，概率连续性给出 $F(x_n)\to F(x)$ ✓。<span class="qed">∎</span></div>
+<div class="box tip">
+<b>由 $F$ 算概率：</b>
+$$P\{a<X\le b\}=F(b)-F(a),\qquad P\{X=a\}=F(a)-F(a-0)$$
+（后者是 $F$ 在 $a$ 处的<b>跳跃高度</b>；连续型随机变量任意单点概率为 0。）
+</div>
+<div class="box example">
+<b>例（由分布函数算概率）.</b> 设
+$$F(x)=\begin{cases}0,&x<0\\[2pt] \dfrac{x^2}{4},&0\le x<2\\[2pt] 1,&x\ge2\end{cases}$$
+验证它是分布函数，并求 $P\{0.5<X\le1\}$、$P\{X=1\}$、$P\{X>1\}$。<br>
+① 验证：单调不减（$x^2/4$ 递增，$F(0)=0$、$F(2)=1$ 衔接）✓；值域 $[0,1]$ ✓；右连续（在 $0$、$2$ 处连续）✓；<br>
+② $P\{0.5<X\le1\}=F(1)-F(0.5)=\dfrac14-\dfrac1{16}=\dfrac3{16}$；<br>
+③ $P\{X=1\}=F(1)-F(1-0)=0$；<br>
+④ $P\{X>1\}=1-F(1)=\dfrac34$。<br>
+<b>验算（密度法）：</b>该 $F$ 对应密度 $f(x)=\dfrac x2\ (0\le x<2)$：$\displaystyle\int_{0.5}^{1}\frac x2dx=\frac3{16}$ ✓，$\displaystyle\int_1^2\frac x2dx=\frac34$ ✓。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>离散型随机变量<span class="tag">核心</span></h2>
+<div class="box def">
+<b>分布律：</b>$P\{X=x_k\}=p_k\ (k=1,2,\dots)$，满足 $p_k\ge0$，$\displaystyle\sum_k p_k=1$。分布函数
+$$F(x)=\sum_{x_k\le x}p_k$$
+是<b>阶梯函数</b>（在 $x_k$ 处跳跃高度恰为 $p_k$）。
+</div>
+<h3>2.1 三种常用离散分布</h3>
+<div class="box def">
+<b>① 0-1 分布：</b>$P\{X=1\}=p,\ P\{X=0\}=1-p$。<br>
+<b>② 二项分布 $B(n,p)$：</b>$n$ 重独立试验中的成功次数
+$$P\{X=k\}=C_n^k\,p^k(1-p)^{n-k},\qquad k=0,1,\dots,n$$
+<b>③ 泊松分布 $P(\lambda)$：</b>
+$$P\{X=k\}=\frac{\lambda^k e^{-\lambda}}{k!},\qquad k=0,1,2,\dots$$
+（$\lambda>0$ 是平均次数。）
+</div>
+<div class="proof"><span class="label">验证（都满足归一性 $\sum p_k=1$）</span>
+二项：$\displaystyle\sum_{k=0}^nC_n^kp^kq^{n-k}=(p+q)^n=1$（二项式定理）✓<br>
+泊松：$\displaystyle\sum_{k=0}^{\infty}\frac{\lambda^k}{k!}=e^{\lambda}$（指数展开）⇒ $\displaystyle\sum_k\frac{\lambda^ke^{-\lambda}}{k!}=1$ ✓<span class="qed">∎</span></div>
+<div class="thm"><span class="label">泊松定理（二项 → 泊松）</span>若 $np_n\to\lambda>0$，则对固定的 $k$：
+$$C_n^kp^k(1-p)^{n-k}\ \longrightarrow\ \frac{\lambda^ke^{-\lambda}}{k!}$$
+（实用：$n$ 大、$p$ 小（约 $p\le0.05$）时用泊松近似，取 $\lambda=np$。）</div>
+<div class="proof"><span class="label">证明</span>记 $\lambda_n=np_n$（题设 $\lambda_n\to\lambda$，故 $p_n=\dfrac{\lambda_n}{n}$）：
+$$C_n^kp_n^k(1-p_n)^{n-k}=\frac{n(n-1)\cdots(n-k+1)}{k!}\left(\frac{\lambda_n}{n}\right)^k\left(1-\frac{\lambda_n}{n}\right)^{n-k}$$
+$$=\frac{\lambda_n^k}{k!}\cdot\underbrace{\frac{n(n-1)\cdots(n-k+1)}{n^k}}_{\to\,1}\cdot\underbrace{\left(1-\frac{\lambda_n}{n}\right)^{n}}_{\to\,e^{-\lambda}}\cdot\underbrace{\left(1-\frac{\lambda_n}{n}\right)^{-k}}_{\to\,1}$$
+（$k$ 固定；因 $\lambda_n\to\lambda$，各因子按标准极限收敛。）四个因子之积收敛到 $\dfrac{\lambda^ke^{-\lambda}}{k!}$ ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（二项分布）.</b> 掷均匀骰子 6 次，记 6 点出现次数 $X\sim B\!\left(6,\frac16\right)$。求 $P\{X=2\}$、$P\{X\ge1\}$。<br>
+① $P\{X=2\}=C_6^2\left(\frac16\right)^2\left(\frac56\right)^4=15\times\dfrac{625}{46656}=\dfrac{9375}{46656}\approx0.201$；<br>
+② $P\{X\ge1\}=1-P\{X=0\}=1-\left(\frac56\right)^6=1-\dfrac{15625}{46656}\approx0.665$。<br>
+<b>验算（分布全表）：</b>$k=0,\dots,6$ 的概率约为 $0.335,\ 0.402,\ 0.201,\ 0.054,\ 0.008,\ 0.0006,\ 0.00002$，之和 $=1$ ✓（二项式定理保证）。
+</div>
+<div class="box example">
+<b>例 2（泊松分布）.</b> 某电话台每分钟呼叫次数 $X\sim P(3)$。求 $P\{X=2\}$ 与 $P\{X\ge2\}$。<br>
+① $P\{X=2\}=\dfrac{3^2e^{-3}}{2!}=4.5e^{-3}\approx0.224$；<br>
+② $P\{X\ge2\}=1-P\{X=0\}-P\{X=1\}=1-e^{-3}(1+3)=1-4e^{-3}\approx0.801$。<br>
+<b>验算（归一 + 数值）：</b>$\sum_k\dfrac{3^ke^{-3}}{k!}=e^{-3}e^{3}=1$ ✓；$e^{-3}\approx0.0498$，$P\{0\}=0.0498$、$P\{1\}=0.1494$，$1-0.1992=0.8008$ ✓。
+</div>
+<div class="box example">
+<b>例 3（泊松近似）.</b> 次品率 $p=0.002$，抽查 $n=1000$ 件，求恰有 2 件次品的概率。<br>
+① 精确（二项）：$C_{1000}^2(0.002)^2(0.998)^{998}$；<br>
+② 泊松近似（$\lambda=np=2$）：$P\{X=2\}\approx\dfrac{2^2e^{-2}}{2}=2e^{-2}\approx0.2707$；<br>
+③ 精确数值：$499500\times4\times10^{-6}\times0.998^{998}\approx1.998\times0.1356\approx0.271$——与近似值相差不到 $0.001$。<br>
+<b>验算：</b>$0.998^{998}=e^{998\ln 0.998}\approx e^{-1.998}\approx0.1356$ ✓。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>连续型随机变量<span class="tag">核心</span></h2>
+<div class="box def">
+<b>定义：</b>若存在非负可积函数 $f(x)$ 使
+$$F(x)=\int_{-\infty}^{x}f(t)\,dt$$
+则称 $X$ 为<b>连续型</b>随机变量，$f$ 为<b>概率密度函数</b>。
+</div>
+<div class="thm"><span class="label">概率密度的性质</span>
+① $f(x)\ge0$；② $\displaystyle\int_{-\infty}^{+\infty}f(x)\,dx=1$；③ 对 $a<b$：
+$$P\{a<X\le b\}=\int_a^bf(x)\,dx$$
+④ $P\{X=a\}=0$（任意单点概率为零）⇒ 开闭区间概率无差别；⑤ 在 $F$ 可导处 $F'(x)=f(x)$。</div>
+<div class="proof"><span class="label">证明（③④）</span>
+③ 由定义：$P\{a<X\le b\}=F(b)-F(a)=\displaystyle\int_a^bf$ ✓。<br>
+④ $P\{X=a\}=\lim\limits_{\varepsilon\to0^+}P\{a-\varepsilon<X\le a\}=\lim\limits_{\varepsilon\to0^+}\displaystyle\int_{a-\varepsilon}^{a}f=0$（积分对区间端点连续）✓。<span class="qed">∎</span></div>
+<div class="box warn"><b>密度不是概率：</b>$f(x)$ 可以大于 1（如 $U(0,\frac12)$ 的密度恒为 2）；只有积分才是概率。「$P\{X=x\}=f(x)$」是错的（连续型该概率恒为 0）。</div>
+<div class="box example">
+<b>例（由密度定参数并计算）.</b> 设密度
+$$f(x)=\begin{cases}Ax,&0\le x<2\\ 0,&\text{其他}\end{cases}$$
+求 $A$、$F(x)$ 与 $P\{1<X\le2\}$。<br>
+① 归一：$\displaystyle\int_0^{2}Ax\,dx=2A=1\Rightarrow A=\dfrac12$；<br>
+② 积分求 $F$：
+$$F(x)=\begin{cases}0,&x<0\\[2pt]\dfrac{x^2}{4},&0\le x<2\\[2pt]1,&x\ge2\end{cases}$$
+③ $P\{1<X\le2\}=F(2)-F(1)=1-\dfrac14=\dfrac34$。<br>
+<b>验算：</b>直接积分 $\displaystyle\int_1^2\frac x2dx=\dfrac{4-1}{4}=\dfrac34$ ✓；与 §1 例的 $F$ 完全相同（同一个分布的两面）。
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>三大连续分布：均匀 · 指数 · 正态<span class="tag">核心</span></h2>
+<h3>4.1 均匀分布 $U(a,b)$</h3>
+<div class="box def">
+$$f(x)=\begin{cases}\dfrac{1}{b-a},&a\le x\le b\\[2pt]0,&\text{其他}\end{cases}\qquad F(x)=\begin{cases}0,&x<a\\[2pt]\dfrac{x-a}{b-a},&a\le x<b\\[2pt]1,&x\ge b\end{cases}$$
+含义：$X$ 落入 $[a,b]$ 内任何等长小区间的概率相同。
+</div>
+<div class="box example">
+<b>例 1（等车时间）.</b> 公交车每 10 分钟一班，乘客随机到站，等车 $X\sim U(0,10)$。求 ① $P\{X\le7\}$；② $P\{X>7\}$。<br>
+① $P\{X\le7\}=F(7)=\dfrac7{10}$；② $P\{X>7\}=\dfrac3{10}$。<br>
+<b>验算（积分）：</b>$\displaystyle\int_0^7\frac1{10}dx=0.7$ ✓（且两问概率和为 1 ✓）。
+</div>
+<h3>4.2 指数分布 $E(\lambda)$</h3>
+<div class="box def">
+$$f(x)=\begin{cases}\lambda e^{-\lambda x},&x>0\\ 0,&x\le0\end{cases}\qquad F(x)=\begin{cases}1-e^{-\lambda x},&x>0\\ 0,&x\le0\end{cases}$$
+</div>
+<div class="thm"><span class="label">无记忆性</span>对任意 $s,t>0$：
+$$P\{X>s+t\mid X>s\}=P\{X>t\}$$</div>
+<div class="proof"><span class="label">证明</span>
+$$P\{X>s+t\mid X>s\}=\frac{P\{X>s+t\}}{P\{X>s\}}=\frac{e^{-\lambda(s+t)}}{e^{-\lambda s}}=e^{-\lambda t}=P\{X>t\}\ ✓$$
+（「已用过 $s$ 小时再活 $t$ 小时」与「从头活 $t$ 小时」概率相同——只有指数分布具有此性质。）<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 2（元件寿命）.</b> 寿命 $X\sim E\!\left(\frac1{1000}\right)$（小时）。求 ① 用满 1000 小时；② 已用满 1000 小时后再用 500 小时。<br>
+① $P\{X>1000\}=e^{-1}\approx0.368$；<br>
+② 无记忆性：$P\{X>1500\mid X>1000\}=P\{X>500\}=e^{-0.5}\approx0.607$。<br>
+<b>验算（直接算②）：</b>$\dfrac{P\{X>1500\}}{P\{X>1000\}}=\dfrac{e^{-1.5}}{e^{-1}}=e^{-0.5}$ ✓——与无记忆性一致。
+</div>
+<h3>4.3 正态分布 $N(\mu,\sigma^2)$</h3>
+<div class="box def">
+$$f(x)=\frac{1}{\sqrt{2\pi}\,\sigma}\,e^{-\frac{(x-\mu)^2}{2\sigma^2}},\qquad -\infty<x<+\infty$$
+标准正态 $N(0,1)$ 的分布函数记 $\Phi(z)$（查表）；对称性 $\Phi(-z)=1-\Phi(z)$；常用值 $\Phi(1)=0.8413$、$\Phi(2)=0.9772$、$\Phi(3)=0.9987$。</div>
+<div class="thm"><span class="label">标准化定理</span>若 $X\sim N(\mu,\sigma^2)$，则
+$$Z=\frac{X-\mu}{\sigma}\sim N(0,1)$$</div>
+<div class="proof"><span class="label">证明（分布函数法 + 换元）</span>对任意实数 $z$：
+$$F_Z(z)=P\{X\le\mu+\sigma z\}=\int_{-\infty}^{\mu+\sigma z}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}dx\ \xrightarrow{\ x=\mu+\sigma t\ }\ \int_{-\infty}^{z}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}dt=\Phi(z)\ ✓$$<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 3（正态计算与 3σ 原则）.</b> $X\sim N(3,4)$（$\mu=3,\ \sigma=2$）。求 ① $P\{1<X\le5\}$；② $P\{|X-3|<4\}$。<br>
+① 标准化：
+$$P\{1<X\le5\}=P\left\{-1<Z\le1\right\}=2\Phi(1)-1\approx0.6826$$
+② $|X-3|<4\iff|Z|<2$：
+$$P=2\Phi(2)-1\approx0.9544$$
+<b>验算（3σ 原则对照表）：</b>$|X-\mu|<\sigma\approx0.6826$、$<2\sigma\approx0.9544$、$<3\sigma\approx0.9974$——与标准值一致 ✓。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>随机变量函数的分布<span class="tag">核心</span></h2>
+<h3>5.1 离散型：列表合并</h3>
+<div class="box method">把 $Y=g(X)$ 的每个取值算出，<b>相同取值合并概率</b>，最后校验 $\sum p_k=1$。</div>
+<div class="box example">
+<b>例 1（离散函数分布）.</b> $P\{X=0\}=P\{X=1\}=P\{X=2\}=\dfrac13$，求 $Y=(X-1)^2$ 的分布律。<br>
+① 逐值映射：$X=0\to Y=1$；$X=1\to Y=0$；$X=2\to Y=1$；<br>
+② 合并：$P\{Y=0\}=\dfrac13$；$P\{Y=1\}=\dfrac13+\dfrac13=\dfrac23$；<br>
+③ 分布律：$Y$ 取 $0,1$，概率 $\dfrac13,\dfrac23$。<br>
+<b>验算：</b>$\dfrac13+\dfrac23=1$ ✓；且 $P\{Y=1\}=P\{X\neq1\}=\dfrac23$ ✓。
+</div>
+<h3>5.2 连续型：分布函数法（万能）与公式法（单调）</h3>
+<div class="box method">
+<b>方法一（分布函数法）：</b>先求 $F_Y(y)=P\{g(X)\le y\}$（把不等式解成 $X$ 的范围，用 $F_X$ 表示），再对 $y$ 求导得 $f_Y(y)$。适用于一切情形，尤其<b>非单调</b>函数。<br>
+<b>方法二（公式法）：</b>若 $g$ 严格单调、可导，反函数 $h=g^{-1}$，则
+$$f_Y(y)=f_X\!\left(h(y)\right)\left|h'(y)\right|$$
+</div>
+<div class="proof"><span class="label">证明（公式法）</span>设 $g$ 严格单调增：$F_Y(y)=P\{g(X)\le y\}=P\{X\le h(y)\}=F_X(h(y))$，两边求导：
+$$f_Y(y)=f_X(h(y))\,h'(y)$$
+单调减时 $F_Y(y)=P\{X\ge h(y)\}=1-F_X(h(y))$，求导得 $f_Y=-f_X(h)h'=f_X(h)|h'|$ ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 2（线性变换：均匀 → 均匀）.</b> $X\sim U(0,1)$，求 $Y=2X+1$ 的密度。<br>
+① 分布函数法（$1\le y\le3$）：
+$$F_Y(y)=P\{2X+1\le y\}=F_X\!\left(\frac{y-1}{2}\right)=\frac{y-1}{2}\ \Longrightarrow\ f_Y(y)=\frac12$$
+② 公式法核对：$h(y)=\dfrac{y-1}{2}$，$|h'|=\dfrac12$，$f_Y=f_X(h)\cdot\dfrac12=\dfrac12$ ✓；<br>
+③ 结论：$Y\sim U(1,3)$。<br>
+<b>验算：</b>$\displaystyle\int_1^3\frac12dy=1$ ✓。
+</div>
+<div class="box example">
+<b>例 3（非单调：正态 → 卡方）.</b> $X\sim N(0,1)$，求 $Y=X^2$ 的密度。<br>
+① $y<0$ 时 $F_Y=0$；$y\ge0$ 时：
+$$F_Y(y)=P\{-\sqrt y\le X\le\sqrt y\}=\Phi(\sqrt y)-\Phi(-\sqrt y)=2\Phi(\sqrt y)-1$$
+② 求导：
+$$f_Y(y)=2\varphi(\sqrt y)\cdot\frac{1}{2\sqrt y}=\frac{1}{\sqrt{2\pi y}}\,e^{-y/2},\qquad y>0$$
+③ 即自由度 1 的 $\chi^2$ 分布。<br>
+<b>验算（归一性）：</b>令 $y=t^2$：
+$$\int_0^{\infty}\frac{1}{\sqrt{2\pi y}}e^{-y/2}dy=\int_0^{\infty}\frac{1}{\sqrt{2\pi}}e^{-t^2/2}\cdot 2\,dt=2\times\frac12=1\ ✓$$
+</div>
+<div class="box warn"><b>非单调别用公式法：</b>$X^2$、$|X|$ 等要老实走分布函数法（分两支），并写全 $y$ 的定义域（$y<0$ 时 $F_Y=0$）。</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>解题决策流程</h2>
+<pre class="flow">拿到随机变量题
+├─ 求分布？
+│   ├─ 离散：列全部取值 → 概率 → 校验 Σpk = 1
+│   ├─ 连续：由 ∫f = 1 定参数 → 积分得 F 或概率
+│   └─ 由 F 求 f：分段求导（段内求导、端点归并）
+├─ 求概率？
+│   ├─ 通用：P{a<X≤b} = F(b) − F(a)
+│   ├─ 离散：区间内求和；「至少」用 1 − P(0)
+│   └─ 正态：标准化 Z=(X−μ)/σ → 查 Φ；Φ(−z) = 1−Φ(z)
+├─ 识别分布？
+│   ├─ n 重独立试验 → 二项 B(n,p)
+│   ├─ 稀有事件 / 单位时间次数 → 泊松 P(λ)（n 大 p 小时 λ=np 近似）
+│   ├─ 等可能连续 → 均匀；寿命等待 + 无记忆 → 指数
+│   └─ 误差 / 群体指标 → 正态
+├─ 函数的分布？
+│   ├─ 离散 → 列表合并同值
+│   ├─ 单调可导 → 公式 f_X(h)|h′|
+│   └─ 非单调 → 分布函数法（拆支写全域）
+└─ 已知分布求参数？
+    └─ 离散用 Σp=1；连续用 ∫f=1（配合 F 右连续）
+</pre>
+</section>
+
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>右连续：</b>$F$ 是右连续的；$P\{X=a\}=F(a)-F(a-0)$ 是跳跃高度，连续型恒为 0。</li>
+<li><b>密度不是概率：</b>$f(x)$ 可大于 1；$P\{X=x\}=0$（连续型），只有积分才是概率。</li>
+<li><b>二项别丢系数：</b>$C_n^k$ 不能漏；「至少 1 次」先想 $1-P(0)$。</li>
+<li><b>泊松近似条件：</b>$n$ 大、$p$ 小，取 $\lambda=np$；参数 $\lambda$ 是平均次数。</li>
+<li><b>正态标准化分式：</b>除以 $\sigma$（不是 $\sigma^2$）；对称公式 $\Phi(-z)=1-\Phi(z)$。</li>
+<li><b>均匀密度：</b>是 $\dfrac1{b-a}$（不是 $b-a$），且区间外为 0。</li>
+<li><b>指数无记忆是专属性质：</b>一般分布不成立；别对正态、均匀乱用。</li>
+<li><b>函数分布拆支：</b>$Y=X^2$ 的负半支不能丢；$y$ 超出值域时 $F_Y$ 是 0 或 1，要写全。</li>
+<li><b>分段密度求参数：</b>积分区间要与分段一致（只在非零段积分）。</li>
+<li><b>最后一步别忘求导：</b>分布函数法得到 $F_Y$ 后必须再求导得 $f_Y$，并注明 $y$ 的范围。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>分布函数</td><td>$F(x)=P\{X\le x\}$；单调不减、右连续、$F(-\infty)=0$、$F(+\infty)=1$；$P\{a<X\le b\}=F(b)-F(a)$</td></tr>
+<tr><td>离散分布律</td><td>$p_k\ge0$，$\sum p_k=1$；$F$ 为阶梯函数</td></tr>
+<tr><td>0-1 分布</td><td>$P\{X=1\}=p$，$P\{X=0\}=1-p$</td></tr>
+<tr><td>二项 $B(n,p)$</td><td>$P\{X=k\}=C_n^kp^k(1-p)^{n-k}$</td></tr>
+<tr><td>泊松 $P(\lambda)$</td><td>$P\{X=k\}=\dfrac{\lambda^ke^{-\lambda}}{k!}$</td></tr>
+<tr><td>泊松定理</td><td>$np\to\lambda$ 时二项 $\to$ 泊松（$n$ 大 $p$ 小用 $\lambda=np$）</td></tr>
+<tr><td>概率密度</td><td>$f\ge0$，$\int f=1$，$P\{a<X\le b\}=\int_a^bf$，$P\{X=a\}=0$，$F'=f$</td></tr>
+<tr><td>均匀 $U(a,b)$</td><td>$f=\dfrac1{b-a}$；$F=\dfrac{x-a}{b-a}$</td></tr>
+<tr><td>指数 $E(\lambda)$</td><td>$f=\lambda e^{-\lambda x}$（$x>0$）；$F=1-e^{-\lambda x}$；无记忆性</td></tr>
+<tr><td>正态 $N(\mu,\sigma^2)$</td><td>$Z=\dfrac{X-\mu}{\sigma}\sim N(0,1)$；$\Phi(-z)=1-\Phi(z)$；$P\{|X-\mu|<k\sigma\}$：$0.6826/0.9544/0.9974$</td></tr>
+<tr><td>函数分布</td><td>离散：列表合并；连续：$F_Y=P\{g(X)\le y\}$ 求导；单调：$f_Y=f_X(h)|h'|$</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>第二章只做三件事——<b>把结果变成数（随机变量）、给这个数配一把「度量尺」（分布函数/分布律/密度）、再研究数的函数（复合变换）</b>。</div>
+</section>
+
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>会描述（F/分布律/密度互换）→ 会计算（区间概率与参数）→ 会识别（二项/泊松/均匀/指数/正态）→ 会变换（函数分布）。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 由分布函数求概率（含单点跳跃），验证 $F$ 的四条性质；<br>
+② 由密度求参数（$\int f=1$）、求 $F$、求区间概率，并用另一种途径验算；<br>
+③ 默写三种离散分布的分布律、三种连续分布的密度，并验证归一性；<br>
+④ 证明泊松定理；判断何时用泊松近似（$n$ 大 $p$ 小，$\lambda=np$）；<br>
+⑤ 证明标准化定理与指数无记忆性，并用 3σ 数值自查正态计算；<br>
+⑥ 求 $g(X)$ 的分布（离散合并；单调公式；非单调拆支）。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>给了 $F$ 求概率</td><td>$F(b)-F(a)$ / 跳跃高度</td><td>§1 例</td></tr>
+<tr><td>n 重独立试验</td><td>二项分布</td><td>§2 例1</td></tr>
+<tr><td>稀有事件次数 / 呼叫数</td><td>泊松分布</td><td>§2 例2</td></tr>
+<tr><td>n 大 p 小的抽查</td><td>泊松近似</td><td>§2 例3</td></tr>
+<tr><td>分段密度含参数</td><td>$\int f=1$ 定参数</td><td>§3 例</td></tr>
+<tr><td>等可能连续 / 等车</td><td>均匀分布</td><td>§4 例1</td></tr>
+<tr><td>寿命、无记忆</td><td>指数分布</td><td>§4 例2</td></tr>
+<tr><td>正态概率 / 区间</td><td>标准化 + Φ 表</td><td>§4 例3</td></tr>
+<tr><td>离散函数 $g(X)$</td><td>列表合并</td><td>§5 例1</td></tr>
+<tr><td>单调连续变换</td><td>公式 $f_X(h)|h'|$</td><td>§5 例2</td></tr>
+<tr><td>非单调（$X^2$、$|X|$）</td><td>分布函数法拆支</td><td>§5 例3</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 独立验证「$F$ 单调不减、右连续、$F(\pm\infty)$ 取值」四条性质，并解释 $P\{X=a\}=F(a)-F(a-0)$（§1）<br>
+☐ 默写二项与泊松分布律并各自验证 $\sum=1$；完整证明泊松定理（§2）<br>
+☐ 独立完成 §3 例（定参数 → 求 $F$ → 求概率 → 积分验算）<br>
+☐ 复述无记忆性证明，并用直接计算验证 §4 例2 ②<br>
+☐ 完整证明标准化定理（换元步骤不能跳）（§4）<br>
+☐ 独立完成 §5 例3（$Y=X^2$）并用归一性验算密度
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>概率论与数理统计 · 第二章 随机变量及其分布 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

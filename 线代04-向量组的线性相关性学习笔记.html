@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>线代04 · 向量组的线性相关性 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#15803d;--accent2:#0d9488;--soft:#f0fdf4}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#14532d,#15803d 55%,#0d9488);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#bbf7d0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#166534;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#14532d}
+.card h3{font-size:1.05rem;color:#166534;margin:24px 0 8px;padding-left:10px;border-left:4px solid #86efac}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#22c55e,#0d9488);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#f0fdf4;border-color:#4ade80}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #bbf7d0;border-left:4px solid #22c55e;background:#f7fef9;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#166534;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#166534;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(21,128,61,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>线性代数 · 第四章 向量组的线性相关性 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>线性组合</span><span>相关与无关</span><span>最大无关组</span><span>基础解系</span><span>向量空间</span><span>学习闭环</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 向量组及其线性组合</a>
+<a href="#sec-2">02 · 线性相关与线性无关</a>
+<a href="#sec-3">03 · 相关性的重要定理</a>
+<a href="#sec-4">04 · 向量组的秩与最大无关组</a>
+<a href="#sec-5">05 · 线性方程组解的结构</a>
+<a href="#sec-6">06 · 向量空间</a>
+<a href="#sec-7">07 · 解题决策流程</a>
+<a href="#sec-8">08 · 易错点清单</a>
+<a href="#sec-9">09 · 公式速查表</a>
+<a href="#sec-10">10 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>主线：</b>把「方程组问题」翻译成「向量语言」——线性表示 = 有解，线性相关 = 有非零解；再用秩统一判定，最后用基础解系写出一切解。<span style="color:#166534;font-weight:700">绿框=定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题（步骤化）</span>。</div>
+<pre class="flow">第四章 向量组的线性相关性
+├─ 线性表示（§1）
+│   └─ β = k₁α₁+…+kₘαₘ ⇔ Ax=β 有解 ⇔ r(A)=r(A,β)
+├─ 线性相关 / 无关（§2–§3）
+│   ├─ 定义：存在「不全为零」的系数使 Σkᵢαᵢ = 0
+│   ├─ 判别：向量个数 m 与秩 r 比大小
+│   └─ 三大直觉定理：部分/整体、接长/截短、个数超维数
+├─ 秩与最大无关组（§4）
+│   └─ 按列排 + 行变换：主元列 = 最大无关组
+├─ 解的结构（§5）
+│   ├─ 齐次：基础解系 n−r 个，x = Σcᵢξᵢ
+│   └─ 非齐次：x = 特解 η* + 齐次通解
+└─ 向量空间（§6）：基、维数、坐标、过渡矩阵
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>向量组及其线性组合<span class="tag">基础</span></h2>
+<div class="box def">
+<b>n 维向量：</b>$n$ 个数组成的有序数组，写作行向量 $\boldsymbol\alpha=(a_1,\dots,a_n)$ 或列向量 $\boldsymbol\alpha=(a_1,\dots,a_n)^{T}$；加法与数乘按分量进行。<br>
+<b>向量组：</b>若干个同维向量组成的集合 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m$。<br>
+<b>线性组合 / 线性表示：</b>若存在数 $k_1,\dots,k_m$ 使
+$$\boldsymbol\beta=k_1\boldsymbol\alpha_1+k_2\boldsymbol\alpha_2+\cdots+k_m\boldsymbol\alpha_m$$
+则称 $\boldsymbol\beta$ 能由 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m$ <b>线性表示</b>。
+</div>
+<div class="thm"><span class="label">定理（表示 ⇔ 方程组有解）</span>设 $A=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m)$，则
+$$\boldsymbol\beta\ \text{能由}\ \boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m\ \text{线性表示}\iff A\boldsymbol x=\boldsymbol\beta\ \text{有解}\iff r(A)=r(A\mid\boldsymbol\beta)$$</div>
+<div class="proof"><span class="label">证明</span>把 $\boldsymbol\beta=k_1\boldsymbol\alpha_1+\cdots+k_m\boldsymbol\alpha_m$ 按分量展开即得方程组 $A\boldsymbol x=\boldsymbol\beta$（未知数 $x_i=k_i$）。故「能否表示」等价于「方程组是否有解」；再由第三章判定定理，有解 $\iff r(A)=r(A\mid\boldsymbol\beta)$ ✓。<span class="qed">∎</span></div>
+<div class="box def">
+<b>向量组等价：</b>若向量组 $B$ 的每个向量都能由向量组 $A$ 线性表示，称 $B$ 能由 $A$ 线性表示；若二者能<b>互相</b>线性表示，称两向量组<b>等价</b>。
+</div>
+<div class="box example">
+<b>例（判断能否线性表示）.</b> 设 $\boldsymbol\alpha_1=(1,1,0)^{T}$，$\boldsymbol\alpha_2=(0,1,1)^{T}$，判断 $\boldsymbol\beta_1=(1,2,1)^{T}$、$\boldsymbol\beta_2=(1,0,0)^{T}$ 能否由 $\boldsymbol\alpha_1,\boldsymbol\alpha_2$ 表示。<br>
+① 对 $\boldsymbol\beta_1$：设 $k_1\boldsymbol\alpha_1+k_2\boldsymbol\alpha_2=\boldsymbol\beta_1$，按分量比较：
+$$\begin{cases}k_1=1\\ k_1+k_2=2\\ k_2=1\end{cases}\Longrightarrow k_1=k_2=1$$
+三个方程相容 ⇒ $\boldsymbol\beta_1=\boldsymbol\alpha_1+\boldsymbol\alpha_2$，<b>能表示</b>；<br>
+② 对 $\boldsymbol\beta_2$：方程组变为 $k_1=1,\ k_1+k_2=0,\ k_2=0$——由第一、三式得 $k_1=1,\ k_2=0$，代入第二式得 $1\neq0$，三式不相容 ⇒ <b>不能表示</b>；<br>
+③ 秩复核：$r(A)=2$，而 $(A\mid\boldsymbol\beta_2)$ 的 3 阶子式
+$$\begin{vmatrix}1&0&1\\1&1&0\\0&1&0\end{vmatrix}=1\neq0\ \Longrightarrow\ r(A\mid\boldsymbol\beta_2)=3>2$$
+⇒ 无解，与 ② 一致 ✓。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>线性相关与线性无关<span class="tag">核心</span></h2>
+<div class="box def">
+<b>定义：</b>对向量组 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m$，若存在<b>不全为零</b>的数 $k_1,\dots,k_m$ 使
+$$k_1\boldsymbol\alpha_1+k_2\boldsymbol\alpha_2+\cdots+k_m\boldsymbol\alpha_m=\boldsymbol 0$$
+则称该向量组<b>线性相关</b>；若只有全零系数才能组合出零向量，则称<b>线性无关</b>。
+</div>
+<div class="thm"><span class="label">判别定理（秩判别法）</span>设 $A=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m)$，则
+$$\text{线性相关}\iff A\boldsymbol x=\boldsymbol 0\ \text{有非零解}\iff r(A)<m$$
+$$\text{线性无关}\iff A\boldsymbol x=\boldsymbol 0\ \text{只有零解}\iff r(A)=m$$
+（$m$ 为向量个数。）</div>
+<div class="proof"><span class="label">证明</span>组合式 $k_1\boldsymbol\alpha_1+\cdots+k_m\boldsymbol\alpha_m=\boldsymbol0$ 恰好是方程组 $A\boldsymbol x=\boldsymbol0$。「相关」⇔ 存在非零解；由第三章齐次方程组推论，非零解 $\iff r(A)<m$；取逆否，无关 $\iff r(A)=m$ ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 1（相关 ⇔ 有向量可由其余表示）</span>当 $m\ge2$ 时，
+$$\text{相关}\iff \text{至少有一个向量能由其余 }m-1\ \text{个线性表示}$$</div>
+<div class="proof"><span class="label">证明</span>
+<b>(⇒)</b> 设 $\sum k_i\boldsymbol\alpha_i=\boldsymbol0$ 且某 $k_j\neq0$，则
+$$\boldsymbol\alpha_j=-\frac{k_1}{k_j}\boldsymbol\alpha_1-\cdots-\frac{k_{j-1}}{k_j}\boldsymbol\alpha_{j-1}-\frac{k_{j+1}}{k_j}\boldsymbol\alpha_{j+1}-\cdots-\frac{k_m}{k_j}\boldsymbol\alpha_m\ ✓$$
+<b>(⇐)</b> 若 $\boldsymbol\alpha_j$ 可由其余向量表示，移项即得一个「$\boldsymbol\alpha_j$ 系数为 $-1$」的零组合，系数不全为零 ⇒ 相关 ✓。<span class="qed">∎</span></div>
+<div class="box warn"><b>注意「至少有一个」：</b>不是「每一个都能被其余表示」——如 $\boldsymbol\alpha_1=(1,0),\ \boldsymbol\alpha_2=(2,0),\ \boldsymbol\alpha_3=(0,1)$：$\boldsymbol\alpha_2=2\boldsymbol\alpha_1$ 可表示，但 $\boldsymbol\alpha_3$ 不能由前两个表示。</div>
+<div class="thm"><span class="label">定理 2（无关 + 加 β 相关 ⇒ β 表示唯一）</span>若 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_r$ 线性无关，而 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_r,\boldsymbol\beta$ 线性相关，则 $\boldsymbol\beta$ 能由 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_r$ 线性表示，<b>且表示式唯一</b>。</div>
+<div class="proof"><span class="label">证明</span>
+<b>存在性：</b>相关 ⇒ 存在不全为零的 $k_1,\dots,k_r,k$ 使 $\sum k_i\boldsymbol\alpha_i+k\boldsymbol\beta=\boldsymbol0$。若 $k=0$ 则给出 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_r$ 的一个非零零组合，矛盾；故 $k\neq0$，解得
+$$\boldsymbol\beta=-\frac{k_1}{k}\boldsymbol\alpha_1-\cdots-\frac{k_r}{k}\boldsymbol\alpha_r\ ✓$$
+<b>唯一性：</b>若 $\sum k_i\boldsymbol\alpha_i=\sum l_i\boldsymbol\alpha_i$，相减得 $\sum(k_i-l_i)\boldsymbol\alpha_i=\boldsymbol0$，由无关性 $k_i=l_i$ ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（秩判别 + 找关系式）.</b> 判断 $\boldsymbol\alpha_1=(1,1,0)^{T},\ \boldsymbol\alpha_2=(0,1,1)^{T},\ \boldsymbol\alpha_3=(1,2,1)^{T}$ 的相关性。<br>
+① 按列排并消元：
+$$A=\begin{pmatrix}1&0&1\\1&1&2\\0&1&1\end{pmatrix}\xrightarrow{\ r_2-r_1\ }\begin{pmatrix}1&0&1\\0&1&1\\0&1&1\end{pmatrix}\xrightarrow{\ r_3-r_2\ }\begin{pmatrix}1&0&1\\0&1&1\\0&0&0\end{pmatrix}$$
+② $r(A)=2<3$ ⇒ <b>线性相关</b>；<br>
+③ RREF 中第三列 = 第一列 + 第二列 ⇒
+$$\boldsymbol\alpha_3=\boldsymbol\alpha_1+\boldsymbol\alpha_2\iff \boldsymbol\alpha_1+\boldsymbol\alpha_2-\boldsymbol\alpha_3=\boldsymbol 0$$
+<b>验算：</b>$(1,1,0)+(0,1,1)=(1,2,1)$ ✓——非零系数组合为零向量，确实相关 ✓。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>相关性的重要定理<span class="tag">核心</span></h2>
+<div class="box def"><b>常用小结论：</b>① 单个向量线性相关 $\iff$ 它是零向量；② 两个向量线性相关 $\iff$ 成比例；③ 含零向量的向量组必线性相关。</div>
+<div class="thm"><span class="label">定理 3（部分与整体）</span>若一组向量中<b>有一部分</b>线性相关，则整组线性相关；等价地：整组无关 ⇒ 任何部分组无关。</div>
+<div class="proof"><span class="label">证明</span>设部分组 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_s$ 有非零零组合 $k_1\boldsymbol\alpha_1+\cdots+k_s\boldsymbol\alpha_s=\boldsymbol0$。把其余向量的系数补 0 扩充到整组，系数仍不全为零 ⇒ 整组相关 ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 4（接长无关、截短相关）</span>线性无关的向量组把各向量<b>接长</b>（增加分量）后仍无关；线性相关的组把各向量<b>截短</b>（删去分量）后仍相关。</div>
+<div class="proof"><span class="label">证明（证「截短」，二者互为逆否）</span>设 $\sum k_i\boldsymbol\alpha_i=\boldsymbol0$（$k_i$ 不全为零）。删去分量后等式在各剩余分量上仍成立 ⇒ 截短组相关 ✓。<br>
+（直觉：减少方程个数，不可能把「非零解」变成「只有零解」。）<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 5（个数超过维数必相关）</span>$n$ 维向量空间中任意 $m>n$ 个向量必线性相关。</div>
+<div class="proof"><span class="label">证明</span>把 $m$ 个向量按列排成 $n\times m$ 矩阵 $A$。齐次方程组 $A\boldsymbol x=\boldsymbol 0$：方程数 $n<{}$未知数个数 $m$，且 $r(A)\le n<m$，由第三章推论必有非零解 ⇒ 向量组相关 ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 6（秩的比较定理）</span>若向量组 $B$ 能由向量组 $A$ 线性表示，则
+$$r(B)\le r(A)$$</div>
+<div class="proof"><span class="label">证明</span>取 $A$ 的一个最大无关组（最大无关组见 §4，其大小 $=r(A)=r$）：$A$ 中每个向量都能由这 $r$ 个向量表示，故 $B$ 的每个向量也能由它们表示，即
+$$(\boldsymbol\beta_1,\dots,\boldsymbol\beta_l)=(\boldsymbol\alpha_{i_1},\dots,\boldsymbol\alpha_{i_r})K\qquad(K\ \text{为}\ r\times l\ \text{系数矩阵})$$
+任取 $B$ 中 $r+1$ 个向量：若 $l\ge r+1$，则齐次方程组 $K\boldsymbol y=\boldsymbol0$（$r$ 个方程、$r+1$ 个未知数）有非零解 $\boldsymbol y$，于是
+$$(\boldsymbol\beta_{\text{选中}})\boldsymbol y=(\boldsymbol\alpha_{i_1},\dots,\boldsymbol\alpha_{i_r})K\boldsymbol y=\boldsymbol0$$
+⇒ 这 $r+1$ 个向量线性相关 ⇒ $B$ 中不存在 $r+1$ 个无关向量 ⇒ $r(B)\le r$ ✓。<span class="qed">∎</span></div>
+<div class="box tip"><b>推论：</b>① 互相等价的向量组秩相同；② 矩阵乘积的列组秩不超过左因子的列秩（$AB$ 的列是 $A$ 的列的线性组合）。</div>
+<div class="box example">
+<b>例（接长后仍无关的验证）.</b> 已知 $\boldsymbol\alpha_1=(1,1)^{T},\ \boldsymbol\alpha_2=(1,-1)^{T}$ 无关，验证接长向量 $\widetilde{\boldsymbol\alpha_1}=(1,1,0)^{T}$、$\widetilde{\boldsymbol\alpha_2}=(1,-1,5)^{T}$ 仍无关。<br>
+① 设 $k_1\widetilde{\boldsymbol\alpha_1}+k_2\widetilde{\boldsymbol\alpha_2}=\boldsymbol0$，只看前两个分量：
+$$\begin{cases}k_1+k_2=0\\ k_1-k_2=0\end{cases}\Longrightarrow k_1=k_2=0$$
+② 系数全零 ⇒ 线性无关（与定理 4 一致）；<br>
+③ 秩复核：$\widetilde A=\begin{pmatrix}1&1\\1&-1\\0&5\end{pmatrix}$，2 阶子式 $\begin{vmatrix}1&1\\1&-1\end{vmatrix}=-2\neq0$ ⇒ $r=2=$ 向量个数 ⇒ 无关 ✓。
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>向量组的秩与最大无关组<span class="tag">核心</span></h2>
+<div class="box def">
+<b>最大无关组：</b>向量组 $T$ 的部分组 $\boldsymbol\alpha_{i_1},\dots,\boldsymbol\alpha_{i_r}$ 若满足：① 线性无关；② $T$ 中任一向量都可由它线性表示，则称它是 $T$ 的<b>最大线性无关组</b>。<br>
+<b>向量组的秩：</b>最大无关组所含向量个数，记 $r(T)$。
+</div>
+<div class="thm"><span class="label">定理（基本性质）</span>
+① 向量组与它的任一最大无关组<b>等价</b>；<br>
+② 不同最大无关组所含向量个数相同（都等于秩）；<br>
+③ 向量组的秩 = 把它按列排成矩阵后的矩阵秩。</div>
+<div class="proof"><span class="label">证明要点</span>
+① 最大无关组由整体表示（定义）；反之整体能由它表示（定义），故等价 ✓；<br>
+② 设两个最大无关组 $A,B$：都等价于整体，故互相等价，由 §3 定理 6 双向不等式得个数相同 ✓；<br>
+③ 见下面的「行秩 = 列秩」定理 ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理（行秩 = 列秩 = 秩）</span>对任意矩阵 $A$：
+$$r(A)=\text{行向量组的秩}=\text{列向量组的秩}$$</div>
+<div class="proof"><span class="label">证明（列秩 = 秩）</span>
+① 行变换不改变列向量之间的线性关系：行变换 = 左乘可逆矩阵 $P$，而
+$$k_1\boldsymbol\alpha_1+\cdots+k_s\boldsymbol\alpha_s=\boldsymbol0\iff P\left(k_1\boldsymbol\alpha_1+\cdots+k_s\boldsymbol\alpha_s\right)=\boldsymbol0$$
+故「哪几列相关、哪几列无关」在行变换前后完全一致 ⇒ 列秩不变；<br>
+② 把 $A$ 化为行最简形（只用行变换）：主元所在的 $r(A)$ 列线性无关（其主元部分构成单位块），而其余列都是主元列的线性组合（RREF 中这些列的每个分量正是组合系数）⇒ 列秩 $=r(A)$ ✓。<br>
+行秩同理（转置或对称论证）✓。<span class="qed">∎</span></div>
+<div class="box method"><b>求最大无关组与秩（考试标准流程）：</b>① 把向量<b>按列</b>排成矩阵 $A$；② 只作初等<b>行</b>变换化为行最简形；③ 主元所在列对应的原向量组就是最大无关组；④ 非零行数 = 秩；⑤ 其余向量可由主元列的组合系数直接读出（RREF 的列即系数）。</div>
+<div class="box example">
+<b>例（求最大无关组与秩）.</b> 求 $\boldsymbol\alpha_1=(1,1,0)^{T},\ \boldsymbol\alpha_2=(0,1,1)^{T},\ \boldsymbol\alpha_3=(1,2,1)^{T},\ \boldsymbol\alpha_4=(1,0,-1)^{T}$ 的秩与一个最大无关组。<br>
+① 按列排 + 行变换：
+$$A=\begin{pmatrix}1&0&1&1\\1&1&2&0\\0&1&1&-1\end{pmatrix}\xrightarrow{\ r_2-r_1\ }\begin{pmatrix}1&0&1&1\\0&1&1&-1\\0&1&1&-1\end{pmatrix}\xrightarrow{\ r_3-r_2\ }\begin{pmatrix}1&0&1&1\\0&1&1&-1\\0&0&0&0\end{pmatrix}$$
+② 主元在第 1、2 列 ⇒ 最大无关组 $\{\boldsymbol\alpha_1,\boldsymbol\alpha_2\}$，秩 $=2$；<br>
+③ 读关系：第 3 列 $=$ 第 1 列 $+$ 第 2 列 ⇒ $\boldsymbol\alpha_3=\boldsymbol\alpha_1+\boldsymbol\alpha_2$；第 4 列 $=$ 第 1 列 $-$ 第 2 列 ⇒ $\boldsymbol\alpha_4=\boldsymbol\alpha_1-\boldsymbol\alpha_2$。<br>
+<b>验算：</b>$\boldsymbol\alpha_1+\boldsymbol\alpha_2=(1,2,1)=\boldsymbol\alpha_3$ ✓；$\boldsymbol\alpha_1-\boldsymbol\alpha_2=(1,0,-1)=\boldsymbol\alpha_4$ ✓；$\boldsymbol\alpha_1,\boldsymbol\alpha_2$ 不成比例（2 阶子式 $\begin{vmatrix}1&0\\1&1\end{vmatrix}=1\neq0$）故无关 ✓。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>线性方程组解的结构<span class="tag">核心</span></h2>
+<h3>5.1 齐次方程组 $A\boldsymbol x=\boldsymbol 0$</h3>
+<div class="box def"><b>解的两条性质：</b>若 $\boldsymbol\xi_1,\boldsymbol\xi_2$ 是解，$k$ 为任意数，则 $\boldsymbol\xi_1+\boldsymbol\xi_2$、$k\boldsymbol\xi_1$ 都是解（解集对加法、数乘封闭）。</div>
+<div class="proof"><span class="label">证明</span>$A(\boldsymbol\xi_1+\boldsymbol\xi_2)=A\boldsymbol\xi_1+A\boldsymbol\xi_2=\boldsymbol0$；$A(k\boldsymbol\xi_1)=kA\boldsymbol\xi_1=\boldsymbol0$ ✓。<span class="qed">∎</span></div>
+<div class="box def"><b>基础解系：</b>一组解 $\boldsymbol\xi_1,\dots,\boldsymbol\xi_t$ 若满足① 线性无关；② 任一解都可由它们线性表示，则称为<b>基础解系</b>。此时通解为
+$$\boldsymbol x=c_1\boldsymbol\xi_1+\cdots+c_t\boldsymbol\xi_t\qquad(c_1,\dots,c_t\ \text{任意})$$</div>
+<div class="thm"><span class="label">定理（基础解系的存在与个数）</span>设 $r(A)=r<n$（$n$ 为未知数个数），则基础解系恰含 $n-r$ 个解向量。</div>
+<div class="proof"><span class="label">证明（构造性）</span>把 $A$ 化为行最简形，不妨设主元在前 $r$ 列，方程组等价于
+$$\begin{cases}x_1=-b_{1,r+1}x_{r+1}-\cdots-b_{1n}x_n\\ \ \ \vdots\\ x_r=-b_{r,r+1}x_{r+1}-\cdots-b_{rn}x_n\end{cases}$$
+① 令自由未知量 $(x_{r+1},\dots,x_n)^{T}$ 依次取标准单位向量 $\boldsymbol e_1,\dots,\boldsymbol e_{n-r}$，得 $n-r$ 个解 $\boldsymbol\xi_1,\dots,\boldsymbol\xi_{n-r}$；<br>
+② <b>线性无关：</b>若 $\sum c_k\boldsymbol\xi_k=\boldsymbol0$，只看自由分量得 $\sum c_k\boldsymbol e_k=\boldsymbol0$ ⇒ 各 $c_k=0$ ✓；<br>
+③ <b>可表示任意解：</b>设解 $\boldsymbol x$ 的自由分量为 $(d_{r+1},\dots,d_n)$，作 $\boldsymbol\eta=\boldsymbol x-\sum_{k}d_{r+k}\boldsymbol\xi_k$：其自由分量全为 0，而主元分量由自由分量唯一决定（上式），故主元分量也全为 0，即 $\boldsymbol\eta=\boldsymbol0$ ⇒ $\boldsymbol x=\sum d_{r+k}\boldsymbol\xi_k$ ✓。<span class="qed">∎</span></div>
+<div class="box method"><b>求基础解系三步：</b>① 行变换化行最简形；② 主元变量用自由变量表出；③ 自由变量依次取单位值，即得 $n-r$ 个解。</div>
+<div class="box example">
+<b>例 1（齐次：基础解系）.</b> 解
+$$\begin{cases}x_1+x_2-x_3-x_4=0\\ 2x_1-x_2+2x_3+x_4=0\end{cases}$$
+① 行最简形（$r_2-2r_1$、$r_2\times(-\frac13)$、$r_1-r_2$）：
+$$\begin{pmatrix}1&0&\frac13&0\\[2pt]0&1&-\frac43&-1\end{pmatrix}$$
+② 表出主元变量：$x_1=-\dfrac13x_3$，$x_2=\dfrac43x_3+x_4$；$n-r=4-2=2$ 个自由量；<br>
+③ 取 $(x_3,x_4)=(3,0)$ 得 $\boldsymbol\xi_1=(-1,4,3,0)^{T}$；取 $(0,1)$ 得 $\boldsymbol\xi_2=(0,1,0,1)^{T}$；<br>
+④ 通解 $\boldsymbol x=c_1\boldsymbol\xi_1+c_2\boldsymbol\xi_2$。<br>
+<b>验算：</b>$\boldsymbol\xi_1$：$-1+4-3-0=0$ ✓ 且 $-2-4+6+0=0$ ✓；$\boldsymbol\xi_2$：$0+1-0-1=0$ ✓ 且 $0-1+0+1=0$ ✓。
+</div>
+<h3>5.2 非齐次方程组 $A\boldsymbol x=\boldsymbol b$</h3>
+<div class="box def"><b>解的两条性质：</b>① 两个非齐次解之差是对应齐次方程组的解；② 非齐次解 + 对应齐次解仍是非齐次解。</div>
+<div class="proof"><span class="label">证明</span>$A(\boldsymbol\eta_1-\boldsymbol\eta_2)=\boldsymbol b-\boldsymbol b=\boldsymbol0$；$A(\boldsymbol\eta+\boldsymbol\xi)=\boldsymbol b+\boldsymbol0=\boldsymbol b$ ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理（通解结构）</span>设 $\boldsymbol\eta^{*}$ 是 $A\boldsymbol x=\boldsymbol b$ 的一个特解，$\boldsymbol\xi_1,\dots,\boldsymbol\xi_{n-r}$ 是齐次组的基础解系，则非齐次组通解为
+$$\boldsymbol x=\boldsymbol\eta^{*}+c_1\boldsymbol\xi_1+\cdots+c_{n-r}\boldsymbol\xi_{n-r}\qquad(c_i\ \text{任意})$$</div>
+<div class="proof"><span class="label">证明</span>
+<b>「都在解集里」：</b>由性质②，任意 $\boldsymbol\eta^*+\sum c_i\boldsymbol\xi_i$ 都是解；<br>
+<b>「解集全在内」：</b>设 $\boldsymbol\eta$ 为任一解，由性质①知 $\boldsymbol\eta-\boldsymbol\eta^*$ 是齐次解 $=\sum c_i\boldsymbol\xi_i$，故 $\boldsymbol\eta=\boldsymbol\eta^*+\sum c_i\boldsymbol\xi_i$ ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 2（非齐次：特解 + 齐次通解）.</b> 解
+$$\begin{cases}x_1+x_2-x_3-x_4=1\\ 2x_1-x_2+2x_3+x_4=2\end{cases}$$
+① 增广矩阵化行最简形：
+$$\left(\begin{array}{cccc|c}1&0&\frac13&0&1\\[2pt]0&1&-\frac43&-1&0\end{array}\right)$$
+② 令自由量 $x_3=x_4=0$ 得特解 $\boldsymbol\eta^{*}=(1,0,0,0)^{T}$；<br>
+③ 齐次通解沿用例 1：$\boldsymbol\xi_1=(-1,4,3,0)^{T}$，$\boldsymbol\xi_2=(0,1,0,1)^{T}$；<br>
+④ 通解：
+$$\boldsymbol x=(1,0,0,0)^{T}+c_1(-1,4,3,0)^{T}+c_2(0,1,0,1)^{T}$$
+<b>验算（代一般形式）：</b>第一个方程左边 $=1+c_1(-1+4-3)+c_2(0+1-1)=1$ ✓；第二个方程同理 $=2+c_1(-2-4+6)+c_2(0-1+1)=2$ ✓。
+</div>
+<div class="box tip"><b>几何直觉：</b>齐次解集是「过原点的解空间」（维数 $n-r$）；非齐次解集是它平移 $\boldsymbol\eta^*$ 的「仿射集」——这就是「特解 + 齐次通解」的几何含义。</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>向量空间<span class="tag">进阶</span></h2>
+<div class="box def">
+<b>向量空间：</b>非空向量集合 $V$ 若对加法与数乘封闭：
+$$\boldsymbol\alpha,\boldsymbol\beta\in V\Rightarrow\boldsymbol\alpha+\boldsymbol\beta\in V;\qquad \boldsymbol\alpha\in V,\ k\in\mathbb R\Rightarrow k\boldsymbol\alpha\in V$$
+则称 $V$ 为<b>向量空间</b>（必含零向量）。由 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m$ 的一切线性组合构成的集合记 $L(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m)$。<br>
+<b>基与维数：</b>若 $V$ 中向量组 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_r$ 线性无关，且 $V$ 中任一向量都可由它表示，则称其为 $V$ 的<b>基</b>，$r=\dim V$ 为<b>维数</b>。<br>
+<b>坐标：</b>$\boldsymbol\beta=k_1\boldsymbol\alpha_1+\cdots+k_r\boldsymbol\alpha_r$ 中的系数列 $(k_1,\dots,k_r)^{T}$（表示唯一 ⇒ 坐标唯一）。
+</div>
+<div class="box example">
+<b>例 1（子空间判断与求基）.</b><br>
+① $V_1=\{(x,y,z)^{T}\mid x+y+z=0\}$：由齐次解的性质，对加法、数乘封闭 ⇒ 是向量空间；化 $x=-y-z$，自由量 $y,z$ 取单位值：基 $\boldsymbol\xi_1=(-1,1,0)^{T}$、$\boldsymbol\xi_2=(-1,0,1)^{T}$，$\dim V_1=2$（过原点的平面）；<br>
+② $V_2=\{(x,y,z)^{T}\mid x+y+z=1\}$：不含零向量 ⇒ <b>不是</b>向量空间（不过原点的平面）；<br>
+③ $V_3=L\left((1,0,0)^{T},(0,1,0)^{T}\right)=\{(x,y,0)^{T}\}$：基 $(1,0,0)^{T},(0,1,0)^{T}$，$\dim V_3=2$（$xOy$ 面）。<br>
+<b>验算：</b>$\boldsymbol\xi_1+\boldsymbol\xi_2=(-2,1,1)$：$-2+1+1=0$ ✓ 仍在 $V_1$；在 $V_2$ 中取 $(1,0,0)$，则 $2(1,0,0)=(2,0,0)\notin V_2$（数乘不封闭，印证不是空间）✓。
+</div>
+<div class="thm"><span class="label">基变换与坐标变换</span>设旧基 $(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)$、新基 $(\boldsymbol\beta_1,\dots,\boldsymbol\beta_n)$，且
+$$(\boldsymbol\beta_1,\dots,\boldsymbol\beta_n)=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)P$$
+则 $P$ 称为从旧基到新基的<b>过渡矩阵</b>（必可逆）。若向量 $\boldsymbol\gamma$ 在新、旧基下的坐标分别为 $\boldsymbol x'$ 与 $\boldsymbol x$，则
+$$\boldsymbol x=P\boldsymbol x'\qquad\Longleftrightarrow\qquad \boldsymbol x'=P^{-1}\boldsymbol x$$</div>
+<div class="proof"><span class="label">证明</span>$\boldsymbol\gamma=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)\boldsymbol x=(\boldsymbol\beta_1,\dots,\boldsymbol\beta_n)\boldsymbol x'=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)P\boldsymbol x'$；由坐标唯一性 $\boldsymbol x=P\boldsymbol x'$ ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 2（坐标变换）.</b> 旧基 $\boldsymbol\alpha_1=(1,0)^{T},\ \boldsymbol\alpha_2=(0,1)^{T}$；新基 $\boldsymbol\beta_1=(1,1)^{T},\ \boldsymbol\beta_2=(1,-1)^{T}$。求 $\boldsymbol\gamma=(3,1)^{T}$ 在新基下的坐标。<br>
+① 过渡矩阵：
+$$(\boldsymbol\beta_1,\boldsymbol\beta_2)=(\boldsymbol\alpha_1,\boldsymbol\alpha_2)\begin{pmatrix}1&1\\1&-1\end{pmatrix}\Longrightarrow P=\begin{pmatrix}1&1\\1&-1\end{pmatrix}$$
+② 求逆：$P^{-1}=\dfrac{1}{-2}\begin{pmatrix}-1&-1\\-1&1\end{pmatrix}=\begin{pmatrix}\frac12&\frac12\\[2pt]\frac12&-\frac12\end{pmatrix}$；<br>
+③ 新坐标：
+$$\boldsymbol x'=P^{-1}\boldsymbol x=\begin{pmatrix}\frac12&\frac12\\[2pt]\frac12&-\frac12\end{pmatrix}\begin{pmatrix}3\\1\end{pmatrix}=\begin{pmatrix}2\\1\end{pmatrix}$$
+<b>验算：</b>$2\boldsymbol\beta_1+1\boldsymbol\beta_2=2(1,1)+(1,-1)=(3,1)=\boldsymbol\gamma$ ✓。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>解题决策流程</h2>
+<pre class="flow">拿到向量组题
+├─ 判线性相关 / 无关？
+│   ├─ 先数个数：m > n（维数）→ 必相关
+│   ├─ 按列排 → 行变换求秩：r < m 相关；r = m 无关
+│   └─ 特殊结构：含零向量、成比例、明显的线性组合 → 直接判
+├─ 能否线性表示 / 求表示式？
+│   ├─ 解 Ax = β：有解 ⇔ r(A) = r(A|β)
+│   └─ A 的列无关时表示唯一（无关 + 加 β 相关 ⇒ 唯一表示）
+├─ 求最大无关组与秩？
+│   └─ 按列排 + 行变换 → 主元列 = 最大无关组；非零行数 = 秩
+├─ 解方程组？（参见第三章流程）
+│   ├─ 齐次：基础解系 n−r 个 → x = Σcᵢξᵢ
+│   └─ 非齐次：x = η* + Σcᵢξᵢ
+└─ 向量空间？
+    ├─ 判封闭（含零、对加与数乘封闭）
+    └─ 求基与维数：找最大无关组；坐标变换 x = Px′
+</pre>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>「存在不全为零」≠「全为零」：</b>相关的定义容易被读反；无关才是「只有全零系数」。</li>
+<li><b>m>n 必相关，反之不然：</b>个数不超维数也可能相关（如成比例的两个向量）。</li>
+<li><b>含零向量必相关：</b>零向量单独拿出即可给非零零组合。</li>
+<li><b>定理 1 是「至少有一个」：</b>不是说每个向量都能被其余表示。</li>
+<li><b>秩比较方向：</b>$B$ 能由 $A$ 表示 ⇒ $r(B)\le r(A)$，方向别写反。</li>
+<li><b>求最大无关组要按列排、只做行变换：</b>列变换/按行排会得到错误答案。</li>
+<li><b>基础解系个数是 $n-r$：</b>不是 $r$，也不是 $m$；自由变量的个数决定它。</li>
+<li><b>非齐次通解必须写成「特解 + 齐次通解」：</b>漏掉特解或漏掉齐次部分都错。</li>
+<li><b>非齐次解相加不是解：</b>$A(\boldsymbol\eta_1+\boldsymbol\eta_2)=2\boldsymbol b\neq\boldsymbol b$；只有「差」是齐次解。</li>
+<li><b>向量空间必含零向量：</b>不过原点的直线/平面不是子空间（封闭性检验一步即可识破）。</li>
+<li><b>过渡矩阵方向：</b>$(\boldsymbol\beta)=(\boldsymbol\alpha)P$ 是「旧到新」；坐标关系是 $\boldsymbol x=P\boldsymbol x'$，别用成 $\boldsymbol x'=P\boldsymbol x$。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>线性表示</td><td>$\boldsymbol\beta$ 可由 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m$ 表示 $\iff r(A)=r(A\mid\boldsymbol\beta)$</td></tr>
+<tr><td>线性相关</td><td>存在不全为零的 $k_i$ 使 $\sum k_i\boldsymbol\alpha_i=\boldsymbol 0\iff r(A)<m$</td></tr>
+<tr><td>线性无关</td><td>$r(A)=m$（$m$ 为向量个数）</td></tr>
+<tr><td>三个小结论</td><td>单个向量相关 $\iff$ 零向量；两个相关 $\iff$ 成比例；含零必相关</td></tr>
+<tr><td>部分与整体</td><td>部分相关 ⇒ 整体相关（整体无关 ⇒ 部分无关）</td></tr>
+<tr><td>接长与截短</td><td>无关组接长仍无关；相关组截短仍相关</td></tr>
+<tr><td>个数超维数</td><td>$n$ 维空间中 $m>n$ 个向量必相关</td></tr>
+<tr><td>秩的比较</td><td>$B$ 可由 $A$ 线性表示 $\Rightarrow r(B)\le r(A)$；等价向量组等秩</td></tr>
+<tr><td>行秩 = 列秩</td><td>$r(A)=$ 行秩 $=$ 列秩</td></tr>
+<tr><td>最大无关组</td><td>按列排 + 行变换：主元列即最大无关组；秩 = 非零行数</td></tr>
+<tr><td>齐次通解</td><td>$\boldsymbol x=c_1\boldsymbol\xi_1+\cdots+c_{n-r}\boldsymbol\xi_{n-r}$（基础解系 $n-r$ 个）</td></tr>
+<tr><td>非齐次通解</td><td>$\boldsymbol x=\boldsymbol\eta^{*}+c_1\boldsymbol\xi_1+\cdots+c_{n-r}\boldsymbol\xi_{n-r}$</td></tr>
+<tr><td>解的性质</td><td>齐次解对加、数乘封闭；两非齐次解之差为齐次解</td></tr>
+<tr><td>向量空间</td><td>基与维数；坐标变换 $\boldsymbol x=P\boldsymbol x'$（$P$ 为过渡矩阵）</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>本章一切概念最后都落在<b>一个矩阵的秩</b>上——表示看两个秩是否相等，相关性看秩与个数的大小。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>会翻译（向量语言 ⇄ 方程）→ 会判定（秩的比较）→ 会构造（最大无关组、基础解系）。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 把「线性表示 / 相关 / 无关」翻译成方程组语言并用秩判定；<br>
+② 复述并证明定理 1、2 与三大定理（部分/整体、接长/截短、m>n）；<br>
+③ 复述定理 6（秩比较）的证明思路（用齐次方程组 $K\boldsymbol y=\boldsymbol0$ 造非零解）；<br>
+④ 用主元列法求最大无关组，并读出其余向量的组合系数；<br>
+⑤ 构造基础解系（$n-r$ 个），写齐次与非齐次通解并验算；<br>
+⑥ 判断子空间、求基与维数、求过渡矩阵与坐标变换。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>能否线性表示？</td><td>解 $Ax=\beta$ / 比较两秩</td><td>§1 例</td></tr>
+<tr><td>判相关 / 无关</td><td>按列排求秩比个数</td><td>§2 例</td></tr>
+<tr><td>接长 / 截短命题</td><td>定理 4 + 只看部分分量</td><td>§3 例</td></tr>
+<tr><td>求最大无关组 / 秩</td><td>列排 + 行变换 → 主元列</td><td>§4 例</td></tr>
+<tr><td>齐次方程组通解</td><td>行最简形 → 自由量取单位值</td><td>§5 例1</td></tr>
+<tr><td>非齐次方程组通解</td><td>特解 + 齐次通解</td><td>§5 例2</td></tr>
+<tr><td>子空间判断 / 求基</td><td>封闭性 + 解出自由量</td><td>§6 例1</td></tr>
+<tr><td>坐标变换</td><td>过渡矩阵 + 求逆</td><td>§6 例2</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 默写相关/无关的秩判别，并解释「为什么看 $r$ 与 $m$ 的大小」<br>
+☐ 独立证明定理 1 与定理 2（唯一性部分）<br>
+☐ 复述接长/截短定理的证明（截短方向）<br>
+☐ 独立完成 §4 例（最大无关组 + 读出组合系数）并验算<br>
+☐ 独立完成一道「齐次基础解系 + 非齐次通解」全过程（§5 两例模型）<br>
+☐ 说明「$V_2: x+y+z=1$ 不是向量空间」的理由（两条：无零向量 / 数乘不封闭）
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>线性代数 · 第四章 向量组的线性相关性 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

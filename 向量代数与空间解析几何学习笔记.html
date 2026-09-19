@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>向量代数与空间解析几何 · 完全教程（下册第八章 · 含全部证明）</title>
+<style>
+:root{--bg:#f6f5fb;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#7c3aed;--accent2:#c026d3;--soft:#f5f3ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#4c1d95,#7c3aed 55%,#c026d3);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.5rem,4vw,2.2rem);letter-spacing:2px}
+.hero p{margin:0;color:#ddd6fe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#6d28d9;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#4c1d95}
+.card h3{font-size:1.05rem;color:#6d28d9;margin:24px 0 8px;padding-left:10px;border-left:4px solid #c4b5fd}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#d946ef);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#f5f3ff;border-color:#8b5cf6}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #ddd6fe;border-left:4px solid #8b5cf6;background:#faf8ff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#6d28d9;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#5b21b6;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(124,58,237,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>高等数学 · 向量代数与空间解析几何 · 完全教程</h1>
+<p>下册 第八章 · 全部内容 + 全部定理证明 + 例题步骤化</p>
+<div class="chips"><span>向量三积</span><span>平面与直线</span><span>旋转曲面</span><span>二次曲面</span><span>投影曲线</span><span>例题验算</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 向量及其线性运算</a>
+<a href="#sec-2">02 · 数量积·向量积·混合积</a>
+<a href="#sec-3">03 · 平面及其方程</a>
+<a href="#sec-4">04 · 空间直线及其方程</a>
+<a href="#sec-5">05 · 曲面及其方程</a>
+<a href="#sec-6">06 · 空间曲线及其方程</a>
+<a href="#sec-7">07 · 解题决策流程</a>
+<a href="#sec-8">08 · 易错点清单</a>
+<a href="#sec-9">09 · 公式速查表</a>
+<a href="#sec-10">10 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章逻辑：</b>先掌握「向量」这个工具（§1–§2），再用它刻画平面（§3）、直线（§4）、曲面（§5）、曲线（§6）。<span style="color:#6d28d9;font-weight:700">紫框=定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题（步骤化）</span>。</div>
+<pre class="flow">向量代数与空间解析几何
+├─ 向量代数（§1–§2）
+│   ├─ 线性运算：加减、数乘、坐标表示 r = xi + yj + zk
+│   ├─ 模、方向余弦：cos²α + cos²β + cos²γ = 1
+│   └─ 三种乘法（出什么？几何意义？）
+│       ├─ 数量积 a·b：出数 → 夹角、投影、垂直
+│       ├─ 向量积 a×b：出向量 → 面积、法向量、平行
+│       └─ 混合积 (a×b)·c：出数 → 体积、三向量共面
+├─ 平面（§3）
+│   └─ 点法式 n·M₀M = 0 → 一般式；夹角、点到平面距离
+├─ 直线（§4）
+│   └─ 对称式/参数式；一般方程方向向量 s = n₁×n₂；夹角；平面束
+├─ 曲面（§5）
+│   └─ 旋转曲面（绕谁转谁不变）、柱面（缺谁母线平行谁）、二次曲面
+└─ 曲线（§6）
+    └─ 一般方程、参数方程、投影柱面与投影曲线（消元）
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>向量及其线性运算<span class="tag">基础</span></h2>
+<div class="box def">
+<b>向量：</b>既有大小又有方向的量，记 $\boldsymbol a$ 或 $\overrightarrow{AB}$。$|\boldsymbol a|$ 为<b>模</b>；模为 $1$ 的向量叫单位向量；模为 $0$ 的叫零向量（方向任意）。<br>
+两个向量的关系：<b>相等</b>（同向且等长）、<b>平行（共线）</b>（方向相同或相反，记 $\boldsymbol a\parallel\boldsymbol b$）、<b>共面</b>（平移到同起点后在同一个平面内）。本章用<b>自由向量</b>：只由大小、方向确定，可以任意平移。
+</div>
+<div class="box def">
+<b>线性运算：</b>
+<ul>
+<li><b>加减法：</b>三角形法则（首尾相接）、平行四边形法则；$\boldsymbol a-\boldsymbol b=\boldsymbol a+(-\boldsymbol b)$；</li>
+<li><b>数乘：</b>$\lambda\boldsymbol a$ 的模 $=|\lambda|\,|\boldsymbol a|$；方向：$\lambda>0$ 同向，$\lambda<0$ 反向；</li>
+<li><b>运算规律：</b>交换、结合、分配：$(\lambda+\mu)\boldsymbol a=\lambda\boldsymbol a+\mu\boldsymbol a$，$\lambda(\boldsymbol a+\boldsymbol b)=\lambda\boldsymbol a+\lambda\boldsymbol b$。</li>
+</ul>
+</div>
+<div class="box def">
+<b>坐标表示：</b>取标准基 $\boldsymbol i,\boldsymbol j,\boldsymbol k$（三个坐标轴正向的单位向量），任意向量
+$$\boldsymbol r=x\boldsymbol i+y\boldsymbol j+z\boldsymbol k=(x,y,z)$$
+线性运算按分量进行；设 $A(x_1,y_1,z_1),\ B(x_2,y_2,z_2)$，则
+$$\overrightarrow{AB}=(x_2-x_1,\ y_2-y_1,\ z_2-z_1)$$
+（<b>终点减起点</b>。）
+</div>
+<div class="thm"><span class="label">模、方向角与方向余弦</span>对 $\boldsymbol r=(x,y,z)\neq\boldsymbol0$：
+$$|\boldsymbol r|=\sqrt{x^2+y^2+z^2}$$
+设 $\boldsymbol r$ 与 $x,y,z$ 轴正向的夹角（<b>方向角</b>）为 $\alpha,\beta,\gamma\in[0,\pi]$，则
+$$\cos\alpha=\frac{x}{|\boldsymbol r|},\qquad \cos\beta=\frac{y}{|\boldsymbol r|},\qquad \cos\gamma=\frac{z}{|\boldsymbol r|}$$
+$$\cos^2\alpha+\cos^2\beta+\cos^2\gamma=1$$</div>
+<div class="proof"><span class="label">证明（恒等式）</span>三余弦平方和：
+$$\cos^2\alpha+\cos^2\beta+\cos^2\gamma=\frac{x^2+y^2+z^2}{|\boldsymbol r|^2}=\frac{|\boldsymbol r|^2}{|\boldsymbol r|^2}=1$$
+<span class="qed">∎</span></div>
+<div class="box tip"><b>单位向量：</b>$\boldsymbol e_r=\dfrac{\boldsymbol r}{|\boldsymbol r|}=(\cos\alpha,\ \cos\beta,\ \cos\gamma)$——方向余弦恰是单位向量的三个分量，考试常直接用。</div>
+<div class="box def">
+<b>投影：</b>向量 $\boldsymbol a$ 在 $\boldsymbol u$ 方向上的投影 $\mathrm{Prj}_{\boldsymbol u}\boldsymbol a=|\boldsymbol a|\cos\varphi$（$\varphi$ 为 $\boldsymbol a$ 与 $\boldsymbol u$ 的夹角）。<br>
+<b>性质：</b>$\mathrm{Prj}_{\boldsymbol u}(\boldsymbol a+\boldsymbol b)=\mathrm{Prj}_{\boldsymbol u}\boldsymbol a+\mathrm{Prj}_{\boldsymbol u}\boldsymbol b$；$\mathrm{Prj}_{\boldsymbol u}(\lambda\boldsymbol a)=\lambda\,\mathrm{Prj}_{\boldsymbol u}\boldsymbol a$。<br>
+$\boldsymbol a$ 在坐标轴上的投影就是对应坐标；$\mathrm{Prj}_{\boldsymbol u}\boldsymbol a=\boldsymbol a\cdot\dfrac{\boldsymbol u}{|\boldsymbol u|}$（见 §2）。
+</div>
+<div class="box example">
+<b>例 1.</b> 已知 $M_1(2,2,\sqrt2)$、$M_2(1,3,0)$，求 $\overrightarrow{M_1M_2}$ 及其模、方向余弦、方向角。<br>
+① 坐标：$\overrightarrow{M_1M_2}=(1-2,\ 3-2,\ 0-\sqrt2)=(-1,\ 1,\ -\sqrt2)$；<br>
+② 模：$|\overrightarrow{M_1M_2}|=\sqrt{1+1+2}=2$；<br>
+③ 方向余弦：$\cos\alpha=-\dfrac12,\ \cos\beta=\dfrac12,\ \cos\gamma=-\dfrac{\sqrt2}{2}$；<br>
+④ 方向角：$\alpha=\dfrac{2\pi}{3},\ \beta=\dfrac{\pi}{3},\ \gamma=\dfrac{3\pi}{4}$。<br>
+<b>验算：</b>$\cos^2\alpha+\cos^2\beta+\cos^2\gamma=\dfrac14+\dfrac14+\dfrac12=1$ ✓。
+</div>
+<div class="box example">
+<b>例 2（向量法证几何命题）.</b> 证明：三角形两边中点的连线平行于第三边，且长度为第三边的一半。<br>
+① 设顶点 $A,B,C$ 的位置向量为 $\boldsymbol a,\boldsymbol b,\boldsymbol c$，$AB$、$AC$ 中点为 $M_1,M_2$；<br>
+② 中点向量：$\overrightarrow{OM_1}=\dfrac{\boldsymbol a+\boldsymbol b}{2}$，$\overrightarrow{OM_2}=\dfrac{\boldsymbol a+\boldsymbol c}{2}$；<br>
+③ 相减：
+$$\overrightarrow{M_1M_2}=\frac{\boldsymbol a+\boldsymbol c}{2}-\frac{\boldsymbol a+\boldsymbol b}{2}=\frac{\boldsymbol c-\boldsymbol b}{2}=\frac12\overrightarrow{BC}$$
+④ 故 $\overrightarrow{M_1M_2}\parallel\overrightarrow{BC}$ 且长度是其一半。<br>
+<b>验算（取特殊坐标）：</b>$A(0,0,0),B(2,0,0),C(0,4,0)$：$M_1(1,0,0),M_2(0,2,0)$，$\overrightarrow{M_1M_2}=(-1,2,0)=\frac12(-2,4,0)$ ✓。
+</div>
+<div class="box example">
+<b>例 3（平行条件）.</b> 已知 $\boldsymbol a=(2,-1,3)$，$\boldsymbol b=(4,m,6)$，求 $m$ 使 $\boldsymbol a\parallel\boldsymbol b$。<br>
+① 平行 ⇔ 对应坐标成比例：$\dfrac42=\dfrac{m}{-1}=\dfrac63$；<br>
+② 由 $\dfrac42=\dfrac63=2$ 得比例为 $2$，故 $m=-1\times2=-2$；<br>
+③ 答案 $m=-2$，此时 $\boldsymbol b=2\boldsymbol a$。<br>
+<b>验算：</b>$2\boldsymbol a=(4,-2,6)=\boldsymbol b$ ✓。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>数量积 · 向量积 · 混合积<span class="tag">核心</span></h2>
+<h3>2.1 数量积（点积）</h3>
+<div class="box def">
+<b>定义：</b>$\boldsymbol a\cdot\boldsymbol b=|\boldsymbol a||\boldsymbol b|\cos\theta$（$\theta$ 为两向量夹角，$0\le\theta\le\pi$）。结果是<b>数</b>。<br>
+<b>物理原型：</b>恒力做功 $W=\boldsymbol F\cdot\boldsymbol s$。
+</div>
+<div class="box def"><b>性质：</b>① $\boldsymbol a\cdot\boldsymbol a=|\boldsymbol a|^2$；② 交换律；③ 分配律 $(\boldsymbol a+\boldsymbol b)\cdot\boldsymbol c=\boldsymbol a\cdot\boldsymbol c+\boldsymbol b\cdot\boldsymbol c$；④ $(\lambda\boldsymbol a)\cdot\boldsymbol b=\lambda(\boldsymbol a\cdot\boldsymbol b)$；⑤ 非零向量：$\boldsymbol a\perp\boldsymbol b\iff\boldsymbol a\cdot\boldsymbol b=0$。</div>
+<div class="thm"><span class="label">坐标公式</span>$\boldsymbol a=(a_x,a_y,a_z),\ \boldsymbol b=(b_x,b_y,b_z)$：
+$$\boldsymbol a\cdot\boldsymbol b=a_xb_x+a_yb_y+a_zb_z$$</div>
+<div class="proof"><span class="label">证明（分配律 + 基向量）</span>按标准基展开，用分配律乘成 9 项。基向量的数量积为
+$$\boldsymbol i\cdot\boldsymbol i=\boldsymbol j\cdot\boldsymbol j=\boldsymbol k\cdot\boldsymbol k=1,\qquad \boldsymbol i\cdot\boldsymbol j=\boldsymbol j\cdot\boldsymbol k=\boldsymbol k\cdot\boldsymbol i=0$$
+（同基向量夹角 $0$；不同基向量垂直。）故 9 项中只剩 3 项：
+$$\boldsymbol a\cdot\boldsymbol b=a_xb_x+a_yb_y+a_zb_z$$
+<span class="qed">∎</span></div>
+<div class="box method"><b>四个直接推论：</b>① 夹角 $\cos\theta=\dfrac{\boldsymbol a\cdot\boldsymbol b}{|\boldsymbol a||\boldsymbol b|}$；② 投影 $\mathrm{Prj}_{\boldsymbol a}\boldsymbol b=\dfrac{\boldsymbol a\cdot\boldsymbol b}{|\boldsymbol a|}$；③ 垂直判定 $\boldsymbol a\cdot\boldsymbol b=0$；④ 模 $|\boldsymbol a|=\sqrt{\boldsymbol a\cdot\boldsymbol a}$。</div>
+
+<h3>2.2 向量积（叉积）</h3>
+<div class="box def">
+<b>定义：</b>$\boldsymbol c=\boldsymbol a\times\boldsymbol b$ 是<b>向量</b>：<br>
+① 模 $|\boldsymbol c|=|\boldsymbol a||\boldsymbol b|\sin\theta$；② 方向 $\boldsymbol c\perp\boldsymbol a,\ \boldsymbol c\perp\boldsymbol b$，且 $\boldsymbol a,\boldsymbol b,\boldsymbol c$ 成<b>右手系</b>（右手四指从 $\boldsymbol a$ 转向 $\boldsymbol b$，拇指指向 $\boldsymbol c$）。<br>
+<b>几何意义：</b>$|\boldsymbol a\times\boldsymbol b|$ = 以 $\boldsymbol a,\boldsymbol b$ 为邻边的平行四边形面积。
+</div>
+<div class="box def"><b>性质：</b>① $\boldsymbol a\times\boldsymbol a=\boldsymbol 0$；② <b>反交换</b> $\boldsymbol a\times\boldsymbol b=-\boldsymbol b\times\boldsymbol a$；③ 分配律；④ $(\lambda\boldsymbol a)\times\boldsymbol b=\lambda(\boldsymbol a\times\boldsymbol b)$；⑤ 非零向量：$\boldsymbol a\parallel\boldsymbol b\iff\boldsymbol a\times\boldsymbol b=\boldsymbol 0$。</div>
+<div class="thm"><span class="label">坐标公式（行列式）</span>
+$$\boldsymbol a\times\boldsymbol b=\begin{vmatrix}\boldsymbol i&\boldsymbol j&\boldsymbol k\\ a_x&a_y&a_z\\ b_x&b_y&b_z\end{vmatrix}=\left(a_yb_z-a_zb_y,\ a_zb_x-a_xb_z,\ a_xb_y-a_yb_x\right)$$</div>
+<div class="proof"><span class="label">证明</span>按分配律展开
+$$\boldsymbol a\times\boldsymbol b=\left(a_x\boldsymbol i+a_y\boldsymbol j+a_z\boldsymbol k\right)\times\left(b_x\boldsymbol i+b_y\boldsymbol j+b_z\boldsymbol k\right)$$
+基向量叉积：$\boldsymbol i\times\boldsymbol i=\boldsymbol j\times\boldsymbol j=\boldsymbol k\times\boldsymbol k=\boldsymbol 0$；循环顺序
+$$\boldsymbol i\times\boldsymbol j=\boldsymbol k,\qquad \boldsymbol j\times\boldsymbol k=\boldsymbol i,\qquad \boldsymbol k\times\boldsymbol i=\boldsymbol j$$
+反序变号（如 $\boldsymbol j\times\boldsymbol i=-\boldsymbol k$）。代入整理即得行列式公式。<span class="qed">∎</span></div>
+<div class="box method"><b>两个高频用途：</b>① 三角形面积 $S=\dfrac12\left|\overrightarrow{AB}\times\overrightarrow{AC}\right|$；② <b>生成法向量</b>：同时垂直于 $\boldsymbol a,\boldsymbol b$ 的向量取 $\boldsymbol a\times\boldsymbol b$——§3、§4 求平面、直线全靠它。</div>
+
+<h3>2.3 混合积</h3>
+<div class="box def"><b>定义：</b>$[\boldsymbol a\,\boldsymbol b\,\boldsymbol c]=(\boldsymbol a\times\boldsymbol b)\cdot\boldsymbol c$，结果是<b>数</b>。</div>
+<div class="thm"><span class="label">坐标表示与几何意义</span>
+$$[\boldsymbol a\,\boldsymbol b\,\boldsymbol c]=\begin{vmatrix}a_x&a_y&a_z\\ b_x&b_y&b_z\\ c_x&c_y&c_z\end{vmatrix}$$
+$|[\,\boldsymbol a\,\boldsymbol b\,\boldsymbol c\,]|$ = 以 $\boldsymbol a,\boldsymbol b,\boldsymbol c$ 为棱的平行六面体<b>体积</b>；<br>
+$\boldsymbol a,\boldsymbol b,\boldsymbol c$ 共面 $\iff[\boldsymbol a\,\boldsymbol b\,\boldsymbol c]=0$。</div>
+<div class="proof"><span class="label">说明（几何意义）</span>以 $\boldsymbol a,\boldsymbol b$ 张成的平行四边形为底：底面积 $S=|\boldsymbol a\times\boldsymbol b|$，法向量 $\boldsymbol n=\boldsymbol a\times\boldsymbol b$；高为 $\boldsymbol c$ 在 $\boldsymbol n$ 上投影的绝对值 $h=\left|\dfrac{\boldsymbol c\cdot\boldsymbol n}{|\boldsymbol n|}\right|$。于是
+$$V=S\cdot h=\left|\boldsymbol n\right|\cdot\frac{\left|\boldsymbol c\cdot\boldsymbol n\right|}{|\boldsymbol n|}=\left|(\boldsymbol a\times\boldsymbol b)\cdot\boldsymbol c\right|$$
+三向量共面 ⇔ 高为 $0$ ⇔ 混合积为 $0$。<span class="qed">∎</span></div>
+<div class="box tip"><b>轮换不变：</b>$[\boldsymbol a\,\boldsymbol b\,\boldsymbol c]=[\boldsymbol b\,\boldsymbol c\,\boldsymbol a]=[\boldsymbol c\,\boldsymbol a\,\boldsymbol b]$（行列式行列轮换），任意交换两个变号。</div>
+<div class="box example">
+<b>例 1（数量积求夹角）.</b> 求 $\boldsymbol a=(1,1,0)$ 与 $\boldsymbol b=(1,0,1)$ 的夹角。<br>
+① 数量积：$\boldsymbol a\cdot\boldsymbol b=1\times1+1\times0+0\times1=1$；<br>
+② 模：$|\boldsymbol a|=\sqrt2,\ |\boldsymbol b|=\sqrt2$；<br>
+③ 夹角：
+$$\cos\theta=\frac{1}{\sqrt2\cdot\sqrt2}=\frac12\ \Longrightarrow\ \theta=\frac{\pi}{3}$$
+<b>验算：</b>由对称性 $(\boldsymbol a-\boldsymbol b)=(0,1,-1)$ 与 $\boldsymbol a,\boldsymbol b$ 等长：$|\boldsymbol a-\boldsymbol b|=\sqrt2=|\boldsymbol a|=|\boldsymbol b|$，三边等长即等边三角形，夹角 $60^\circ$ ✓。
+</div>
+<div class="box example">
+<b>例 2（向量积求面积）.</b> 求以 $A(1,2,3),\ B(3,4,5),\ C(2,4,7)$ 为顶点的三角形面积。<br>
+① 两条边向量：$\overrightarrow{AB}=(2,2,2),\ \overrightarrow{AC}=(1,2,4)$；<br>
+② 叉乘：
+$$\overrightarrow{AB}\times\overrightarrow{AC}=\begin{vmatrix}\boldsymbol i&\boldsymbol j&\boldsymbol k\\ 2&2&2\\ 1&2&4\end{vmatrix}=(8-4)\boldsymbol i-(8-2)\boldsymbol j+(4-2)\boldsymbol k=(4,-6,2)$$
+③ 面积：
+$$S=\frac12\left|\overrightarrow{AB}\times\overrightarrow{AC}\right|=\frac12\sqrt{16+36+4}=\frac{2\sqrt{14}}{2}=\sqrt{14}$$
+（$|\overrightarrow{AB}\times\overrightarrow{AC}|=2\sqrt{14}$。）<br>
+<b>验算（用「两边夹角」重算）：</b>$\overrightarrow{AB}\cdot\overrightarrow{AC}=2+4+8=14$，$|\overrightarrow{AB}|=2\sqrt3$，$|\overrightarrow{AC}|=\sqrt{21}$：
+$$\sin\theta=\sqrt{1-\frac{14^2}{12\times21}}=\sqrt{1-\frac79}=\frac{\sqrt2}{3}$$
+$$S=\frac12\cdot2\sqrt3\cdot\sqrt{21}\cdot\frac{\sqrt2}{3}=\sqrt{14}\ ✓$$
+</div>
+<div class="box example">
+<b>例 3（混合积判共面）.</b> 判断 $A(1,0,0),\ B(0,1,0),\ C(0,0,1),\ D(1,1,1)$ 四点是否共面。<br>
+① 三个向量：$\overrightarrow{AB}=(-1,1,0),\ \overrightarrow{AC}=(-1,0,1),\ \overrightarrow{AD}=(0,1,1)$；<br>
+② 混合积（行列式）：
+$$[\overrightarrow{AB}\ \overrightarrow{AC}\ \overrightarrow{AD}]=\begin{vmatrix}-1&1&0\\ -1&0&1\\ 0&1&1\end{vmatrix}=-1\cdot(0-1)-1\cdot(-1-0)+0=(1)+(1)=2$$
+③ $2\neq0$ ⇒ 不共面；四点构成四面体，体积 $=\dfrac{|2|}{6}=\dfrac13$。<br>
+<b>验算（用平面方程）：</b>由 $\overrightarrow{AB}\times\overrightarrow{AC}=(1,1,1)$ 得平面 $ABC$：$x+y+z=1$；把 $D(1,1,1)$ 代入：$3\neq1$，不在平面上 ⇒ 不共面 ✓（与混合积结论一致）。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>平面及其方程<span class="tag">核心</span></h2>
+<div class="box def"><b>法向量：</b>与平面垂直的非零向量 $\boldsymbol n=(A,B,C)$。</div>
+<div class="thm"><span class="label">点法式方程</span>过点 $M_0(x_0,y_0,z_0)$、法向量为 $\boldsymbol n=(A,B,C)$ 的平面：
+$$A(x-x_0)+B(y-y_0)+C(z-z_0)=0$$</div>
+<div class="proof"><span class="label">推导</span>设 $M(x,y,z)$ 为平面上任意点，则 $\overrightarrow{M_0M}=(x-x_0,\ y-y_0,\ z-z_0)$ 在平面内。由 $\boldsymbol n\perp$ 平面：
+$$M\ \text{在平面上}\iff\boldsymbol n\perp\overrightarrow{M_0M}\iff\boldsymbol n\cdot\overrightarrow{M_0M}=0$$
+展开即得点法式方程。<span class="qed">∎</span></div>
+<div class="box def">
+<b>一般方程：</b>$Ax+By+Cz+D=0$，法向量 $\boldsymbol n=(A,B,C)$（$A,B,C$ 不全为 $0$）。<br>
+<b>截距式：</b>若平面与三坐标轴交于 $(a,0,0),(0,b,0),(0,0,c)$（$abc\neq0$）：
+$$\frac xa+\frac yb+\frac zc=1$$
+<b>特例：</b>$D=0$ 过原点；$C=0$ 平行 $z$ 轴；$A=B=0$ 平行 $xOy$ 面（即 $Cz+D=0$）。
+</div>
+<div class="thm"><span class="label">两平面的夹角与位置关系</span>设平面 $\pi_1,\pi_2$ 的法向量为 $\boldsymbol n_1,\boldsymbol n_2$，夹角 $\theta\in\left[0,\frac\pi2\right]$：
+$$\cos\theta=\frac{\left|\boldsymbol n_1\cdot\boldsymbol n_2\right|}{|\boldsymbol n_1||\boldsymbol n_2|}$$
+<ol>
+<li>$\pi_1\parallel\pi_2\iff\boldsymbol n_1\parallel\boldsymbol n_2\iff\dfrac{A_1}{A_2}=\dfrac{B_1}{B_2}=\dfrac{C_1}{C_2}$；</li>
+<li>$\pi_1\perp\pi_2\iff\boldsymbol n_1\cdot\boldsymbol n_2=0\iff A_1A_2+B_1B_2+C_1C_2=0$。</li>
+</ol></div>
+<div class="thm"><span class="label">点到平面的距离</span>点 $P_1(x_1,y_1,z_1)$ 到平面 $Ax+By+Cz+D=0$ 的距离
+$$d=\frac{\left|Ax_1+By_1+Cz_1+D\right|}{\sqrt{A^2+B^2+C^2}}$$</div>
+<div class="proof"><span class="label">推导（投影法）</span>在平面上任取一点 $P_0(x_0,y_0,z_0)$。距离等于 $\overrightarrow{P_0P_1}$ 在法向量 $\boldsymbol n=(A,B,C)$ 上投影的绝对值：
+$$d=\left|\mathrm{Prj}_{\boldsymbol n}\overrightarrow{P_0P_1}\right|=\frac{\left|\boldsymbol n\cdot\overrightarrow{P_0P_1}\right|}{|\boldsymbol n|}=\frac{\left|A(x_1-x_0)+B(y_1-y_0)+C(z_1-z_0)\right|}{\sqrt{A^2+B^2+C^2}}$$
+又 $P_0$ 在平面上：$Ax_0+By_0+Cz_0=-D$，代入分子得 $\left|Ax_1+By_1+Cz_1+D\right|$，证毕。<span class="qed">∎</span></div>
+<div class="box method"><b>求平面方程的模板：</b>核心永远是「找<b>一个点</b> + <b>一个法向量</b>」。<br>
+① 有点、有法向量 → 点法式；<br>
+② 有三个点 → 叉乘两条边向量得 $\boldsymbol n$；<br>
+③ 垂直于两个已知平面 → $\boldsymbol n=\boldsymbol n_1\times\boldsymbol n_2$；<br>
+④ 平行于已知平面 → 直接借用法向量；<br>
+⑤ 过直线 → 用平面束（§4）。</div>
+<div class="box example">
+<b>例 1（过三点）.</b> 求过 $M_1(2,-1,4)$、$M_2(-1,3,-2)$、$M_3(0,2,3)$ 的平面方程。<br>
+① 两条边向量：$\overrightarrow{M_1M_2}=(-3,4,-6)$，$\overrightarrow{M_1M_3}=(-2,3,-1)$；<br>
+② 法向量（叉乘）：
+$$\boldsymbol n=\overrightarrow{M_1M_2}\times\overrightarrow{M_1M_3}=\begin{vmatrix}\boldsymbol i&\boldsymbol j&\boldsymbol k\\ -3&4&-6\\ -2&3&-1\end{vmatrix}=(-4+18)\boldsymbol i-(3-12)\boldsymbol j+(-9+8)\boldsymbol k=(14,9,-1)$$
+③ 点法式（取 $M_1$）：
+$$14(x-2)+9(y+1)-(z-4)=0\ \Longrightarrow\ 14x+9y-z-15=0$$
+<b>验算（三点全部代入）：</b>$M_1$：$28-9-4-15=0$ ✓；$M_2$：$-14+27+2-15=0$ ✓；$M_3$：$0+18-3-15=0$ ✓。
+</div>
+<div class="box example">
+<b>例 2（点到平面距离）.</b> 求点 $P(2,-1,3)$ 到平面 $x+2y+2z-3=0$ 的距离。<br>
+① 代入公式（$\boldsymbol n=(1,2,2)$，$|\boldsymbol n|=3$）：
+$$d=\frac{\left|2-2+6-3\right|}{3}=\frac{3}{3}=1$$
+② <b>顺带求垂足</b>（验证用）：$\boldsymbol n\cdot P+D=3$，
+$$P'=P-\frac{\boldsymbol n\cdot P+D}{|\boldsymbol n|^2}\boldsymbol n=(2,-1,3)-\frac{3}{9}(1,2,2)=\left(\frac53,\ -\frac53,\ \frac73\right)$$
+<b>验算：</b>垂足在平面上：$\dfrac53-\dfrac{10}{3}+\dfrac{14}{3}-3=\dfrac{9}{3}-3=0$ ✓；$\left|PP'\right|=\sqrt{\left(\frac13\right)^2+\left(\frac23\right)^2+\left(\frac23\right)^2}=\sqrt{\frac99}=1$ ✓。
+</div>
+<div class="box example">
+<b>例 3（垂直于两平面）.</b> 求过点 $P(2,0,-1)$ 且垂直于平面 $\pi_1:x+2y-z+1=0$ 与 $\pi_2:2x-y+z=0$ 的平面。<br>
+① 所求平面的法向量同时垂直于 $\boldsymbol n_1,\boldsymbol n_2$，取叉乘：
+$$\boldsymbol n=\boldsymbol n_1\times\boldsymbol n_2=\begin{vmatrix}\boldsymbol i&\boldsymbol j&\boldsymbol k\\ 1&2&-1\\ 2&-1&1\end{vmatrix}=(2-1)\boldsymbol i-(1+2)\boldsymbol j+(-1-4)\boldsymbol k=(1,-3,-5)$$
+② 点法式：
+$$(x-2)-3y-5(z+1)=0\ \Longrightarrow\ x-3y-5z-7=0$$
+<b>验算：</b>过 $P$：$2-0+5-7=0$ ✓；与 $\pi_1$ 垂直：$\boldsymbol n\cdot\boldsymbol n_1=1-6+5=0$ ✓；与 $\pi_2$ 垂直：$\boldsymbol n\cdot\boldsymbol n_2=2+3-5=0$ ✓。
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>空间直线及其方程<span class="tag">核心</span></h2>
+<div class="box def">
+<b>一般方程：</b>空间直线是两个平面的交线：
+$$L:\ \begin{cases}A_1x+B_1y+C_1z+D_1=0\\[2pt] A_2x+B_2y+C_2z+D_2=0\end{cases}$$
+</div>
+<div class="thm"><span class="label">对称式（点向式）与参数式</span>直线过点 $M_0(x_0,y_0,z_0)$，方向向量 $\boldsymbol s=(m,n,p)$：
+$$\frac{x-x_0}{m}=\frac{y-y_0}{n}=\frac{z-z_0}{p}\qquad(\text{对称式})$$
+令比值为 $t$：
+$$x=x_0+mt,\qquad y=y_0+nt,\qquad z=z_0+pt\qquad(\text{参数式})$$
+（某个分量为 $0$ 时，理解为对应分子为 $0$，如 $\dfrac{x-1}{2}=\dfrac{y-2}{0}=z$ 表示直线在平面 $y=2$ 内。）</div>
+<div class="box method">
+<b>一般方程 → 对称式（三步）：</b><br>
+① <b>方向向量</b>：$\boldsymbol s=\boldsymbol n_1\times\boldsymbol n_2$（$\boldsymbol s$ 同时垂直于两个法向量）；<br>
+② <b>找一点</b>：令某个坐标取方便值（如 $z=0$），解二元一次方程组；<br>
+③ 写出对称式或参数式。
+</div>
+<div class="thm"><span class="label">两直线的夹角与位置关系</span>方向向量 $\boldsymbol s_1,\boldsymbol s_2$，夹角 $\theta\in\left[0,\dfrac\pi2\right]$：
+$$\cos\theta=\frac{\left|\boldsymbol s_1\cdot\boldsymbol s_2\right|}{|\boldsymbol s_1||\boldsymbol s_2|}$$
+<b>平行</b>：$\boldsymbol s_1\parallel\boldsymbol s_2$（再看是否重合）；<b>垂直</b>：$\boldsymbol s_1\cdot\boldsymbol s_2=0$；<b>共面判定</b>：取 $L_1$ 上点 $M_1$、$L_2$ 上点 $M_2$，若
+$$\left[\boldsymbol s_1\ \boldsymbol s_2\ \overrightarrow{M_1M_2}\right]=0$$
+则两直线共面（否则异面）。</div>
+<div class="thm"><span class="label">直线与平面的夹角</span>直线方向 $\boldsymbol s$，平面法向量 $\boldsymbol n$，夹角 $\varphi\in\left[0,\dfrac\pi2\right]$：
+$$\sin\varphi=\frac{\left|\boldsymbol s\cdot\boldsymbol n\right|}{|\boldsymbol s||\boldsymbol n|}$$
+（注意是 $\sin$：直线与法向量夹角与 $\varphi$ 互余。）<br>
+直线 $\parallel$ 平面 $\iff\boldsymbol s\cdot\boldsymbol n=0$（还需点不在平面内才是严格平行）；直线 $\perp$ 平面 $\iff\boldsymbol s\parallel\boldsymbol n$。</div>
+<div class="thm"><span class="label">平面束</span>过直线 $L:\ \begin{cases}\pi_1:\ A_1x+B_1y+C_1z+D_1=0\\ \pi_2:\ A_2x+B_2y+C_2z+D_2=0\end{cases}$ 的<b>平面束</b>方程：
+$$A_1x+B_1y+C_1z+D_1+\lambda\left(A_2x+B_2y+C_2z+D_2\right)=0$$
+（$\lambda$ 为参数，给出过 $L$ 的除 $\pi_2$ 外的所有平面；需含 $\pi_2$ 时用双参数形 $\mu\pi_1+\lambda\pi_2=0$。）<br>
+<b>用途：</b>「过直线 + 附加条件」的平面问题 → 只需解出 $\lambda$。</div>
+<div class="box example">
+<b>例 1（一般方程化对称式）.</b> 化直线 $L:\begin{cases}x+y+z=1\\ x-y+z=0\end{cases}$ 为对称式。<br>
+① 方向向量：
+$$\boldsymbol s=\boldsymbol n_1\times\boldsymbol n_2=\begin{vmatrix}\boldsymbol i&\boldsymbol j&\boldsymbol k\\ 1&1&1\\ 1&-1&1\end{vmatrix}=(1+1)\boldsymbol i-(1-1)\boldsymbol j+(-1-1)\boldsymbol k=(2,0,-2)\sim(1,0,-1)$$
+② 找一点：两式相减 $2y=1\Rightarrow y=\dfrac12$；令 $z=0$，代入得 $x=\dfrac12$，取点 $\left(\dfrac12,\dfrac12,0\right)$；<br>
+③ 对称式：
+$$\frac{x-\frac12}{1}=\frac{y-\frac12}{0}=\frac{z}{-1}$$
+<b>验算（参数式回代）：</b>令 $x=\frac12+t,\ y=\frac12,\ z=-t$：第一个方程 $\frac12+t+\frac12-t=1$ ✓；第二个方程 $\frac12+t-\frac12-t=0$ ✓。
+</div>
+<div class="box example">
+<b>例 2（直线与平面的交点）.</b> 求直线 $L:\dfrac{x-1}{2}=\dfrac{y+1}{-1}=\dfrac{z-2}{3}$ 与平面 $\pi:x+y+z=6$ 的交点。<br>
+① 参数化：$x=1+2t,\ y=-1-t,\ z=2+3t$；<br>
+② 代入平面方程：
+$$(1+2t)+(-1-t)+(2+3t)=6\ \Longrightarrow\ 2+4t=6\ \Longrightarrow\ t=1$$
+③ 交点：$t=1$ 代回 $x=3,\ y=-2,\ z=5$，即 $P(3,-2,5)$。<br>
+<b>验算：</b>在平面上：$3-2+5=6$ ✓；在直线上：$\dfrac{3-1}{2}=\dfrac{-2+1}{-1}=\dfrac{5-2}{3}=1$ ✓。
+</div>
+<div class="box example">
+<b>例 3（直线与平面的夹角）.</b> 求直线 $L:\begin{cases}x-y-1=0\\ z-2=0\end{cases}$ 与平面 $\pi:y-z+1=0$ 的夹角。<br>
+① 方向向量：
+$$\boldsymbol s=\boldsymbol n_1\times\boldsymbol n_2=(1,-1,0)\times(0,0,1)=\begin{vmatrix}\boldsymbol i&\boldsymbol j&\boldsymbol k\\ 1&-1&0\\ 0&0&1\end{vmatrix}=(-1,-1,0)\sim(1,1,0)$$
+② 平面法向量 $\boldsymbol n=(0,1,-1)$；<br>
+③
+$$\sin\varphi=\frac{\left|\boldsymbol s\cdot\boldsymbol n\right|}{|\boldsymbol s||\boldsymbol n|}=\frac{|0+1-0|}{\sqrt2\cdot\sqrt2}=\frac12\ \Longrightarrow\ \varphi=\frac{\pi}{6}$$
+<b>验算：</b>$\cos\!\left(\boldsymbol s,\boldsymbol n\right)=\dfrac{1}{2}\Rightarrow$ 两向量夹角 $\dfrac\pi3$，而 $\varphi=\dfrac\pi2-\dfrac\pi3=\dfrac\pi6$ ✓。
+</div>
+<div class="box example">
+<b>例 4（平面束）.</b> 求过直线 $L:\begin{cases}x+5y+z=0\\ x-z+4=0\end{cases}$ 且与平面 $\pi_0:x-4y-8z+12=0$ 垂直的平面。<br>
+① 写出过 $L$ 的平面束：
+$$(x+5y+z)+\lambda(x-z+4)=0\ \Longrightarrow\ (1+\lambda)x+5y+(1-\lambda)z+4\lambda=0$$
+其法向量 $\boldsymbol n=(1+\lambda,\ 5,\ 1-\lambda)$；<br>
+② 与 $\pi_0$ 垂直 ⇔ $\boldsymbol n\cdot\boldsymbol n_0=0$（$\boldsymbol n_0=(1,-4,-8)$）：
+$$(1+\lambda)-20-8(1-\lambda)=0\ \Longrightarrow\ 9\lambda-27=0\ \Longrightarrow\ \lambda=3$$
+③ 所求平面：
+$$4x+5y-2z+12=0$$
+<b>验算：</b>① 平面 $=(\pi_1+3\pi_2)$ 的线性组合，直线 $L$ 上两式都为 $0$，故也在该平面上——取 $L$ 上一点 $(0,-\frac45,4)$：$0-4-8+12=0$ ✓；② 垂直性：$(4,5,-2)\cdot(1,-4,-8)=4-20+16=0$ ✓。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>曲面及其方程<span class="tag">核心</span></h2>
+<div class="box def">
+<b>曲面方程：</b>若曲面 $\Sigma$ 上任意点的坐标都满足方程 $F(x,y,z)=0$，且不在曲面上的点都不满足，则该方程为曲面的方程。<br>
+<b>球面：</b>以 $M_0(x_0,y_0,z_0)$ 为球心、$R$ 为半径：
+$$(x-x_0)^2+(y-y_0)^2+(z-z_0)^2=R^2$$
+</div>
+<div class="thm"><span class="label">旋转曲面（关键推导）</span>设 $yOz$ 平面上曲线 $C:\ f(y,z)=0$。把 $C$ 绕 $z$ 轴旋转一周，得旋转曲面：
+$$f\!\left(\pm\sqrt{x^2+y^2},\ z\right)=0$$
+绕 $y$ 轴旋转则为 $f\!\left(y,\ \pm\sqrt{x^2+z^2}\right)=0$。<br>
+<b>口诀：</b>绕谁转，谁不变；另一个变量用 $\pm\sqrt{\text{另外两个变量的平方和}}$ 替换。</div>
+<div class="proof"><span class="label">推导（以绕 z 轴为例）</span>设 $M(x,y,z)$ 为旋转曲面上的任一点，它由曲线 $C$ 上某点 $M_0(0,y_0,z_0)$ 绕 $z$ 轴旋转得到：<br>
+① 高度不变：$z_0=z$；<br>
+② 到 $z$ 轴的距离不变：
+$$|y_0|=\sqrt{x^2+y^2}\ \Longrightarrow\ y_0=\pm\sqrt{x^2+y^2}$$
+把 $y_0,z_0$ 代入 $f(y_0,z_0)=0$ 即得旋转曲面方程；反之满足该方程的点必可由 $C$ 上某点旋转得到（取 $y_0$ 为相应的带号值）。<span class="qed">∎</span></div>
+<div class="box def">
+<b>柱面：</b>平行直线（母线）沿定曲线（准线）移动形成的曲面。方程中<b>缺少哪个变量，母线就平行哪个轴</b>。例如
+$$F(x,y)=0$$
+在平面里是曲线，在空间里是母线平行 $z$ 轴的柱面。常见：$x^2+y^2=R^2$（圆柱面）、$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$（椭圆柱面）、$y^2=2x$（抛物柱面）。
+</div>
+<div class="box def">
+<b>常见二次曲面一览（截痕法研究：用坐标面平行平面去截）：</b>
+<table>
+<thead><tr><th>方程</th><th>名称</th><th>形状要点</th></tr></thead>
+<tbody>
+<tr><td>$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}+\dfrac{z^2}{c^2}=1$</td><td>椭球面</td><td>三方向有界，半轴 $a,b,c$</td></tr>
+<tr><td>$z=\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}$</td><td>椭圆抛物面</td><td>开口向上，水平截痕为椭圆</td></tr>
+<tr><td>$z=\dfrac{x^2}{a^2}-\dfrac{y^2}{b^2}$</td><td>双曲抛物面（马鞍面）</td><td>鞍形，$xz$ 截痕开口向上、$yz$ 截痕向下</td></tr>
+<tr><td>$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}-\dfrac{z^2}{c^2}=1$</td><td>单叶双曲面</td><td>腰部椭圆，「腰鼓」形</td></tr>
+<tr><td>$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}-\dfrac{z^2}{c^2}=-1$</td><td>双叶双曲面</td><td>分离两叶（$|z|\ge c$）</td></tr>
+<tr><td>$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}-\dfrac{z^2}{c^2}=0$</td><td>椭圆锥面</td><td>顶点在原点，水平截痕为椭圆</td></tr>
+</tbody>
+</table>
+</div>
+<div class="box method"><b>识别曲面三问：</b>① 缺变量？→ 柱面；② 含 $\pm\sqrt{x^2+y^2}$ 一类配对？→ 旋转曲面；③ 二次方程？→ 对照表格用截痕法判断。</div>
+<div class="box example">
+<b>例 1（抛物线旋转）.</b> 求 $yOz$ 平面上曲线 $C:\ y^2=z$ 绕 $z$ 轴旋转所得曲面。<br>
+① 绕 $z$ 轴转，$z$ 不变，把 $y$ 换成 $\pm\sqrt{x^2+y^2}$；<br>
+② 代入：
+$$\left(\pm\sqrt{x^2+y^2}\right)^2=z\ \Longrightarrow\ x^2+y^2=z$$
+③ 这是<b>旋转抛物面</b>。<br>
+<b>验算：</b>$C$ 上点 $(0,1,1)$ 旋转一周得圆 $x^2+y^2=1,\ z=1$；代入方程 $1=1$ ✓，恰为「同高度、同半径」的圆。
+</div>
+<div class="box example">
+<b>例 2（直线旋转成圆锥面）.</b> 求直线 $z=2y$（在 $yOz$ 面内）绕 $z$ 轴旋转所得曲面。<br>
+① 把 $y$ 换为 $\pm\sqrt{x^2+y^2}$：
+$$z=2\left(\pm\sqrt{x^2+y^2}\right)\ \Longrightarrow\ z^2=4\left(x^2+y^2\right)$$
+② 这是顶点在原点、开口沿 $z$ 轴的<b>圆锥面</b>。<br>
+<b>验算：</b>直线上的点 $(0,1,2)$（满足 $2=2\times1$）旋转得圆 $x^2+y^2=1,\ z=2$；代入曲面方程：$4=4\times1$ ✓。
+</div>
+<div class="box example">
+<b>例 3（柱面识别）.</b> 方程 $\dfrac{x^2}{4}+\dfrac{y^2}{9}=1$ 在空间中表示什么曲面？<br>
+① 方程缺少 $z$：对任何 $z$，截痕都是同一个椭圆；<br>
+② 故它是<b>母线平行 $z$ 轴的椭圆柱面</b>；<br>
+③ 在 $xOy$ 面内看，它就是椭圆曲线。<br>
+<b>验算（截痕法）：</b>用平面 $z=5$ 去截：$\dfrac{x^2}{4}+\dfrac{y^2}{9}=1$ 且 $z=5$（同一椭圆）；用平面 $x=0$ 截得两条平行直线 $y=\pm3$（母线方向），与「柱面」定义一致 ✓。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>空间曲线及其方程<span class="tag">核心</span></h2>
+<div class="box def">
+<b>一般方程：</b>空间曲线是两个曲面的交线
+$$\Gamma:\ \begin{cases}F(x,y,z)=0\\ G(x,y,z)=0\end{cases}$$
+</div>
+<div class="box def">
+<b>参数方程：</b>$\begin{cases}x=x(t)\\ y=y(t)\\ z=z(t)\end{cases}$。例如<b>螺旋线</b>
+$$x=a\cos\omega t,\qquad y=a\sin\omega t,\qquad z=vt$$
+——在圆柱面 $x^2+y^2=a^2$ 上盘旋上升，转一圈上升高度（螺距）$h=\dfrac{2\pi v}{\omega}$。
+</div>
+<div class="thm"><span class="label">投影柱面与投影曲线</span>设 $\Gamma$ 为曲面 $F=0$ 与 $G=0$ 的交线：<br>
+① 从两方程中<b>消去 $z$</b>，得 $H(x,y)=0$——这是以 $\Gamma$ 为准线、母线平行 $z$ 轴的<b>投影柱面</b>；<br>
+② $\Gamma$ 在 $xOy$ 面上的<b>投影曲线</b>为
+$$\begin{cases}H(x,y)=0\\ z=0\end{cases}$$
+（消去 $x$ 或 $y$ 可分别得到向 $yOz$、$zOx$ 面的投影，方法完全相同。）</div>
+<div class="box method"><b>三步模板：</b>① 从方程组消去目标坐标；② 写出「消元所得方程 + 目标坐标面方程」联立；③ 交代投影柱面的母线方向。</div>
+<div class="box example">
+<b>例 1（求投影）.</b> 求曲线 $\Gamma:\begin{cases}x^2+y^2+z^2=4\\ x+z=0\end{cases}$ 在 $xOy$ 面的投影柱面与投影曲线。<br>
+① 消去 $z$：由 $z=-x$ 代入球面方程：
+$$x^2+y^2+x^2=4\ \Longrightarrow\ 2x^2+y^2=4$$
+② 投影柱面：$2x^2+y^2=4$（母线平行 $z$ 轴）；<br>
+③ 投影曲线：
+$$\begin{cases}2x^2+y^2=4\\ z=0\end{cases}$$
+<b>验算：</b>取 $\Gamma$ 上点 $x=1\Rightarrow z=-1$，由球面得 $y=\pm\sqrt2$，点 $(1,\sqrt2,-1)$ 的投影 $(1,\sqrt2,0)$ 满足 $2\times1+2=4$ ✓。
+</div>
+<div class="box example">
+<b>例 2（螺旋线）.</b> 验证螺旋线 $x=a\cos t,\ y=a\sin t,\ z=vt$ 在圆柱面 $x^2+y^2=a^2$ 上，并求 $t\in[0,2\pi]$ 的螺距。<br>
+① 代入：
+$$x^2+y^2=a^2\cos^2t+a^2\sin^2t=a^2$$
+恒成立 ✓，即整条曲线在圆柱面上；<br>
+② 螺距 $h=z(2\pi)-z(0)=2\pi v$。<br>
+<b>验算：</b>取 $t=\dfrac\pi2$：点 $\left(0,a,\dfrac{\pi v}{2}\right)$ 到 $z$ 轴距离 $\sqrt{0+a^2}=a$ ✓。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>解题决策流程</h2>
+<pre class="flow">拿到空间几何题
+├─ 向量运算？
+│   ├─ 出数、夹角、投影、垂直 → 数量积 a·b
+│   ├─ 出向量、面积、法向量、平行 → 向量积 a×b
+│   └─ 体积、共面、四点共面 → 混合积 [a b c]
+├─ 平面方程？
+│   ├─ 找点 + 法向量 → 点法式
+│   ├─ 三点 → 叉乘两边；垂直两平面 → n1×n2；平行 → 借用法向量
+│   └─ 过直线 → 平面束（解 λ）
+├─ 直线方程？
+│   ├─ 一般方程 → s = n1×n2 + 找点 → 对称式/参数式
+│   ├─ 与平面求交点 → 参数式代入平面方程
+│   ├─ 直线-直线夹角 → cos；直线-平面夹角 → sin（互余）
+│   └─ 是否共面/异面 → 混合积判
+├─ 曲面？
+│   ├─ 旋转曲面：绕谁转谁不变，另一变量换 ±√(另两变量平方和)
+│   ├─ 缺变量 → 柱面（缺谁平行谁）
+│   └─ 二次曲面 → 截痕法对照表格
+└─ 曲线？
+    ├─ 参数化（螺旋线型）
+    └─ 投影：消去目标坐标 → 柱面 + {方程, 坐标面=0}
+</pre>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>数量积出数、向量积出向量：</b>$\boldsymbol a\cdot\boldsymbol b$ 与 $\boldsymbol a\times\boldsymbol b$ 不能混；写 $\boldsymbol a\cdot\boldsymbol b$ 时结果不能带箭头。</li>
+<li><b>夹角公式选择：</b>两平面、两直线用 $\cos$ 且加绝对值（取锐角）；直线与平面用 $\sin\varphi$——写成 $\cos\varphi$ 是常见硬伤。</li>
+<li><b>方向余弦验算：</b>$\cos^2\alpha+\cos^2\beta+\cos^2\gamma=1$，算完自查。</li>
+<li><b>平行条件的零分母：</b>$\dfrac{a_x}{b_x}=\dfrac{a_y}{b_y}=\dfrac{a_z}{b_z}$ 允许某分母为 $0$（此时对应分子也为 $0$），不能直接「分母不能为零」排除。</li>
+<li><b>对称式中 $0$ 分量：</b>$\dfrac{x-x_0}{m}=\dfrac{y-y_0}{0}=\dfrac{z-z_0}{p}$ 理解为 $y=y_0$，不要以为方程无意义。</li>
+<li><b>点到平面距离：</b>分子必须套绝对值；分母是法向量的模 $\sqrt{A^2+B^2+C^2}$，不是 $|A|+|B|+|C|$。</li>
+<li><b>混合积与体积：</b>平行六面体体积 $=|[\boldsymbol a\,\boldsymbol b\,\boldsymbol c]|$；四面体还要除以 $6$；共面 $\iff$ 混合积为 $0$。</li>
+<li><b>旋转曲面替换方向：</b>绕 $z$ 轴转动时替换的是 $y$（用 $\sqrt{x^2+y^2}$），$z$ 保持不变——替换错变量全盘错。</li>
+<li><b>柱面「缺谁平行谁」：</b>$F(x,y)=0$ 的母线平行 $z$ 轴；$F(y,z)=0$ 平行 $x$ 轴——别记反。</li>
+<li><b>投影曲线要联立：</b>只写消元方程 $H(x,y)=0$ 是「投影柱面」；投影曲线必须加上 $z=0$。</li>
+<li><b>平面束的 $\lambda$ 形式不含第二个平面：</b>若答案恰是 $\pi_2$，需单独说明或用双参数形式。</li>
+<li><b>直线平行平面：</b>需同时满足「$\boldsymbol s\perp\boldsymbol n$」与「直线上点不在平面内」；只验证前者可能直线落在平面内。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>模与两点距离</td><td>$|\boldsymbol r|=\sqrt{x^2+y^2+z^2}$；$\overrightarrow{AB}=(x_2-x_1,\ y_2-y_1,\ z_2-z_1)$</td></tr>
+<tr><td>方向余弦</td><td>$\cos\alpha=\dfrac{x}{|\boldsymbol r|}$ 等；$\cos^2\alpha+\cos^2\beta+\cos^2\gamma=1$</td></tr>
+<tr><td>数量积</td><td>$\boldsymbol a\cdot\boldsymbol b=|\boldsymbol a||\boldsymbol b|\cos\theta=a_xb_x+a_yb_y+a_zb_z$</td></tr>
+<tr><td>夹角 / 投影</td><td>$\cos\theta=\dfrac{\boldsymbol a\cdot\boldsymbol b}{|\boldsymbol a||\boldsymbol b|}$；$\mathrm{Prj}_{\boldsymbol a}\boldsymbol b=\dfrac{\boldsymbol a\cdot\boldsymbol b}{|\boldsymbol a|}$</td></tr>
+<tr><td>向量积</td><td>$\boldsymbol a\times\boldsymbol b=\begin{vmatrix}\boldsymbol i&\boldsymbol j&\boldsymbol k\\ a_x&a_y&a_z\\ b_x&b_y&b_z\end{vmatrix}$；$|\boldsymbol a\times\boldsymbol b|=$ 平行四边形面积</td></tr>
+<tr><td>混合积</td><td>$[\boldsymbol a\,\boldsymbol b\,\boldsymbol c]=$ 行列式；$|\,[\boldsymbol a\,\boldsymbol b\,\boldsymbol c]\,|=$ 平行六面体体积；共面 $\iff 0$</td></tr>
+<tr><td>平面点法式</td><td>$A(x-x_0)+B(y-y_0)+C(z-z_0)=0$（法向量 $(A,B,C)$）</td></tr>
+<tr><td>两平面夹角</td><td>$\cos\theta=\dfrac{|\boldsymbol n_1\cdot\boldsymbol n_2|}{|\boldsymbol n_1||\boldsymbol n_2|}$</td></tr>
+<tr><td>点到平面距离</td><td>$d=\dfrac{|Ax_1+By_1+Cz_1+D|}{\sqrt{A^2+B^2+C^2}}$</td></tr>
+<tr><td>直线对称式 / 参数式</td><td>$\dfrac{x-x_0}{m}=\dfrac{y-y_0}{n}=\dfrac{z-z_0}{p}$；$x=x_0+mt,\ y=y_0+nt,\ z=z_0+pt$</td></tr>
+<tr><td>一般方程方向向量</td><td>$\boldsymbol s=\boldsymbol n_1\times\boldsymbol n_2$</td></tr>
+<tr><td>两直线夹角</td><td>$\cos\theta=\dfrac{|\boldsymbol s_1\cdot\boldsymbol s_2|}{|\boldsymbol s_1||\boldsymbol s_2|}$</td></tr>
+<tr><td>直线与平面夹角</td><td>$\sin\varphi=\dfrac{|\boldsymbol s\cdot\boldsymbol n|}{|\boldsymbol s||\boldsymbol n|}$</td></tr>
+<tr><td>平面束</td><td>$\pi_1+\lambda\pi_2=0$（过两平面交线；含 $\pi_2$ 用双参数）</td></tr>
+<tr><td>旋转曲面</td><td>绕 $z$ 轴：$f\!\left(\pm\sqrt{x^2+y^2},\ z\right)=0$（绕谁转谁不变）</td></tr>
+<tr><td>柱面</td><td>$F(x,y)=0$：母线平行 $z$ 轴（缺谁平行谁）</td></tr>
+<tr><td>投影柱面 / 投影曲线</td><td>消去 $z$ 得 $H(x,y)=0$；投影曲线 $\begin{cases}H(x,y)=0\\ z=0\end{cases}$</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>本章所有「求平面/直线」问题的核心都是<b>找法向量或方向向量</b>——平面靠 $\boldsymbol n$（点法式），直线靠 $\boldsymbol s$（点向式）；而 $\boldsymbol n,\boldsymbol s$ 几乎都用<b>叉乘</b>造出来。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>三积会选 → 平面直线会用叉乘造向量 → 曲面曲线会识别会投影。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 计算模、方向余弦、投影，并用 $\cos^2\alpha+\cos^2\beta+\cos^2\gamma=1$ 自查；<br>
+② 三种乘法自由选用：点积出数（夹角/投影/垂直）、叉积出向量（面积/法向量/平行）、混合积判共面与体积；<br>
+③ 求平面方程（点法式、过三点、垂直于两平面、过直线用平面束）；<br>
+④ 求直线方程（对称式/参数式、一般方程化对称式、交点、夹角）；<br>
+⑤ 识别旋转曲面、柱面、二次曲面；<br>
+⑥ 求投影柱面与投影曲线。
+</div>
+<h3>用法索引</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>夹角 / 投影 / 垂直</td><td>数量积</td><td>§2 例1</td></tr>
+<tr><td>面积 / 求垂直于两向量的向量</td><td>向量积</td><td>§2 例2</td></tr>
+<tr><td>体积 / 四点共面</td><td>混合积</td><td>§2 例3</td></tr>
+<tr><td>求平面（点、三点点、垂直两平面）</td><td>点法式 + 叉乘</td><td>§3 例1、3</td></tr>
+<tr><td>点到平面距离</td><td>距离公式</td><td>§3 例2</td></tr>
+<tr><td>一般方程求直线</td><td>$\boldsymbol s=\boldsymbol n_1\times\boldsymbol n_2$ + 找点</td><td>§4 例1</td></tr>
+<tr><td>直线与平面交点</td><td>参数式代入</td><td>§4 例2</td></tr>
+<tr><td>直线与平面夹角</td><td>$\sin\varphi$ 公式</td><td>§4 例3</td></tr>
+<tr><td>过直线的平面（附加条件）</td><td>平面束解 $\lambda$</td><td>§4 例4</td></tr>
+<tr><td>旋转曲面 / 柱面识别</td><td>替换变量 / 缺变量</td><td>§5 例1–3</td></tr>
+<tr><td>投影柱面与投影曲线</td><td>消元 + 坐标面</td><td>§6 例1</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 默写叉乘行列式与混合积的几何意义（面积、体积）<br>
+☐ 独立完成 §4 例4（平面束）并用两种方式验算<br>
+☐ 复述「绕谁转谁不变」替换规则，现场构造一个旋转曲面（§5）<br>
+☐ 解释「缺变量 ⇒ 柱面」以及母线与缺变量的对应（§5）<br>
+☐ 用叉乘独立推导过三点的平面方程（§3 例1 思路）
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>高等数学（下册）· 第八章 向量代数与空间解析几何 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

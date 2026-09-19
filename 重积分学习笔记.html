@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>重积分 · 完全教程（下册第十章 · 含全部证明）</title>
+<style>
+:root{--bg:#f4f8f7;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#059669;--accent2:#0891b2;--soft:#ecfdf5}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#064e3b,#059669 55%,#0891b2);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.5rem,4vw,2.2rem);letter-spacing:2px}
+.hero p{margin:0;color:#a7f3d0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#047857;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#064e3b}
+.card h3{font-size:1.05rem;color:#047857;margin:24px 0 8px;padding-left:10px;border-left:4px solid #6ee7b7}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#10b981,#0891b2);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#ecfdf5;border-color:#10b981}
+.box.method{background:#ecfdf5;border-color:#059669}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #a7f3d0;border-left:4px solid #10b981;background:#f5fffb;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#047857;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#065f46;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(5,150,105,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>高等数学 · 重积分 · 完全教程</h1>
+<p>下册 第十章 · 全部内容 + 全部定理证明 + 例题步骤化</p>
+<div class="chips"><span>二重积分</span><span>极坐标</span><span>三重积分</span><span>柱面/球面坐标</span><span>曲面面积与质心</span><span>含参变量积分</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 二重积分的概念与性质</a>
+<a href="#sec-2">02 · 二重积分：直角坐标计算</a>
+<a href="#sec-3">03 · 二重积分：极坐标与对称性</a>
+<a href="#sec-4">04 · 三重积分（直角/柱面/球面）</a>
+<a href="#sec-5">05 · 重积分的应用</a>
+<a href="#sec-6">06 · 含参变量的积分（选学）</a>
+<a href="#sec-7">07 · 解题决策流程</a>
+<a href="#sec-8">08 · 易错点清单</a>
+<a href="#sec-9">09 · 公式速查表</a>
+<a href="#sec-10">10 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>主线：</b>定义 → 化累次积分 → 选坐标系（直角 / 极 / 柱 / 球）→ 应用。<span style="color:#047857;font-weight:700">绿框=定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题（步骤化）</span>。</div>
+<pre class="flow">重积分
+├─ 二重积分 ∬_D f dσ（§1–§3）
+│   ├─ 概念：曲顶柱体体积（分割、近似、求和、取极限）
+│   ├─ 性质：线性、可加、保号、估值、中值定理
+│   └─ 计算
+│       ├─ 直角坐标：X 型 / Y 型区域 → 累次积分
+│       ├─ 交换积分次序（先画图、再换型）
+│       ├─ 极坐标：dσ = r dr dθ（别忘了 r！）
+│       └─ 对称性：奇偶、轮换 → 直接消项
+├─ 三重积分 ∭_Ω f dv（§4）
+│   ├─ 直角坐标：投影法（先一后二）/ 截面法（先二后一）
+│   ├─ 柱面坐标：dv = r dr dθ dz（柱体、含 x²+y²）
+│   └─ 球面坐标：dv = r² sinφ dr dφ dθ（球、锥）
+└─ 应用（§5）与选学（§6）
+    ├─ 曲面面积 ∬√(1+zx²+zy²)
+    ├─ 质心、转动惯量、引力
+    └─ 含参变量积分：连续性、求导（莱布尼茨公式）、换序
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>二重积分的概念与性质<span class="tag">基础</span></h2>
+<div class="box def">
+<b>引例（曲顶柱体体积）.</b> 以有界闭区域 $D$ 为底、曲面 $z=f(x,y)\ge0$ 为顶的曲顶柱体，求体积：<br>
+① <b>分割</b>：把 $D$ 分成 $n$ 小块 $\Delta\sigma_1,\dots,\Delta\sigma_n$，过各块边界作平行 $z$ 轴的柱面，分成 $n$ 个小曲顶柱体；<br>
+② <b>近似</b>：任取 $(\xi_i,\eta_i)\in\Delta\sigma_i$，用小扁柱体近似 $\Delta V_i\approx f(\xi_i,\eta_i)\Delta\sigma_i$；<br>
+③ <b>求和</b>：$\displaystyle V\approx\sum_{i=1}^{n}f(\xi_i,\eta_i)\,\Delta\sigma_i$；<br>
+④ <b>取极限</b>：各小块直径最大值 $\lambda\to0$ 时（若极限存在）
+$$V=\lim_{\lambda\to0}\sum_{i=1}^{n}f(\xi_i,\eta_i)\,\Delta\sigma_i$$
+</div>
+<div class="box def">
+<b>定义（二重积分）：</b>
+$$\iint_D f(x,y)\,d\sigma=\lim_{\lambda\to0}\sum_{i=1}^{n}f(\xi_i,\eta_i)\,\Delta\sigma_i$$
+（有界闭区域上的<b>连续函数一定可积</b>。）<br>
+<b>几何意义：</b>$f\ge0$ 时为曲顶柱体体积；$\displaystyle\iint_D 1\,d\sigma=$ 区域 $D$ 的面积。
+</div>
+<div class="thm"><span class="label">性质（$f,g$ 可积）</span>
+<ol>
+<li><b>线性：</b>$\displaystyle\iint_D(af+bg)\,d\sigma=a\iint_D f\,d\sigma+b\iint_D g\,d\sigma$；</li>
+<li><b>区域可加：</b>$D=D_1\cup D_2$（无公共内点）⇒ $\displaystyle\iint_D=\iint_{D_1}+\iint_{D_2}$；</li>
+<li><b>保号：</b>$f\le g$ ⇒ $\displaystyle\iint_D f\le\iint_D g$；推论 $\left|\iint f\right|\le\iint|f|$；</li>
+<li><b>估值定理：</b>$mA\le\displaystyle\iint_D f\,d\sigma\le MA$（$m,M$ 为 $f$ 在 $D$ 上的最小、最大值，$A$ 为 $D$ 的面积）；</li>
+<li><b>中值定理：</b>$f$ 连续时存在 $(\xi,\eta)\in D$：
+$$\iint_D f(x,y)\,d\sigma=f(\xi,\eta)\,A$$
+</li>
+</ol></div>
+<div class="proof"><span class="label">证明（估值 + 中值）</span>
+<b>估值定理：</b>在 $D$ 上 $m\le f\le M$。对 $f-m\ge0$、$M-f\ge0$ 用保号性质：
+$$0\le\iint_D(f-m)\,d\sigma=\iint_D f-m\iint_D d\sigma\ \Longrightarrow\ \iint_D f\ge mA$$
+同理 $\iint_D f\le MA$。<br>
+<b>中值定理：</b>两边除以 $A$ 得 $\dfrac{1}{A}\displaystyle\iint_D f\in[m,M]$。$f$ 在连通闭区域上连续、能取到 $m,M$，由介值定理存在 $(\xi,\eta)\in D$ 使 $f(\xi,\eta)=\dfrac1A\iint_D f$，即证。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（估值）.</b> 估计 $\displaystyle\iint_D\left(x^2+y^2+1\right)d\sigma$，$D:\ x^2+y^2\le1$。<br>
+① 在 $D$ 上 $0\le x^2+y^2\le1$，故 $f\in[1,2]$；<br>
+② 面积 $A=\pi$；<br>
+③ 估值：$\pi\le\iint_D f\,d\sigma\le2\pi$。<br>
+<b>验算（算精确值落入区间）：</b>
+$$\iint_D\left(x^2+y^2\right)d\sigma+\iint_D 1\,d\sigma=\frac{\pi}{2}+\pi=\frac{3\pi}{2}\in[\pi,\ 2\pi]\ ✓$$
+</div>
+<div class="box example">
+<b>例 2（比较大小）.</b> 比较 $I_1=\displaystyle\iint_D\ln(x+y)\,d\sigma$ 与 $I_2=\displaystyle\iint_D\ln^2(x+y)\,d\sigma$，$D:\ 3\le x\le5,\ 0\le y\le1$。<br>
+① $x+y\in[3,6]$，故 $\ln(x+y)\in[\ln3,\ln6]$ 且 $\ln(x+y)>\ln3>1$；<br>
+② 当 $t>1$ 时 $t<t^2$，故在 $D$ 上 $\ln(x+y)<\ln^2(x+y)$；<br>
+③ 由保号性质：$I_1<I_2$。<br>
+<b>验算：</b>取 $(x,y)=(5,1)$：$\ln6\approx1.79$，平方约 $3.2$，确实更大 ✓。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>二重积分：直角坐标计算<span class="tag">核心</span></h2>
+<div class="box def">
+<b>X 型区域：</b>$D=\{(x,y)\mid a\le x\le b,\ \varphi_1(x)\le y\le\varphi_2(x)\}$（竖着穿线：下进上出）；<br>
+<b>Y 型区域：</b>$D=\{(x,y)\mid c\le y\le d,\ \psi_1(y)\le x\le\psi_2(y)\}$（横着穿线：左进右出）。
+</div>
+<div class="thm"><span class="label">化累次积分</span>
+<b>X 型：</b>
+$$\iint_D f(x,y)\,d\sigma=\int_a^b\left[\int_{\varphi_1(x)}^{\varphi_2(x)}f(x,y)\,dy\right]dx$$
+<b>Y 型：</b>
+$$\iint_D f(x,y)\,d\sigma=\int_c^d\left[\int_{\psi_1(y)}^{\psi_2(y)}f(x,y)\,dx\right]dy$$</div>
+<div class="proof"><span class="label">说明（截面法推导 X 型）</span>用平面 $x=$ 常数截曲顶柱体：固定 $x$ 时截面是曲边梯形，面积
+$$S(x)=\int_{\varphi_1(x)}^{\varphi_2(x)}f(x,y)\,dy$$
+沿 $x$ 方向把「薄片」$S(x)\,dx$ 累加：
+$$V=\int_a^b S(x)\,dx=\int_a^b\left[\int_{\varphi_1(x)}^{\varphi_2(x)}f(x,y)\,dy\right]dx$$
+Y 型对称（先截 $y$、再累加 $y$）。<span class="qed">∎</span></div>
+<div class="box method">
+<b>计算模板（四步）：</b>
+① <b>画图</b>：画边界曲线、求交点；<br>
+② <b>选型</b>：竖穿用 X 型、横穿用 Y 型（选边界函数简单的）；<br>
+③ <b>定限</b>：外层限必为常数，内层限可含外层变量；<br>
+④ <b>计算</b>：先算内层（外层变量当常数）。
+</div>
+<div class="box method">
+<b>交换积分次序（五步）：</b>① 由原积分写出区域不等式；② 画区域图；③ 改用另一种穿线方向；④ 重定内外限；⑤ 计算。常用于原次序「积不出」（如 $\int e^{-y^2}dy$、$\int\frac{\sin y}{y}dy$）。
+</div>
+<div class="box example">
+<b>例 1（两种次序互验）.</b> 计算 $\displaystyle\iint_D xy\,d\sigma$，$D$ 由 $y=x^2$ 与 $y=x$ 围成。<br>
+① 交点：$x^2=x\Rightarrow x=0,1$，即 $(0,0),(1,1)$；<br>
+② X 型（$0\le x\le1,\ x^2\le y\le x$）：
+$$\iint_D xy\,d\sigma=\int_0^1 x\left[\int_{x^2}^{x}y\,dy\right]dx=\int_0^1 x\cdot\frac{x^2-x^4}{2}\,dx=\frac12\int_0^1\left(x^3-x^5\right)dx=\frac12\left(\frac14-\frac16\right)=\frac{1}{24}$$
+③ <b>验算（换成 Y 型）</b>：$0\le y\le1,\ y\le x\le\sqrt y$，
+$$\int_0^1 y\left[\int_{y}^{\sqrt y}x\,dx\right]dy=\int_0^1 y\cdot\frac{y-y^2}{2}\,dy=\frac12\left(\frac13-\frac14\right)=\frac{1}{24}\ ✓$$
+</div>
+<div class="box example">
+<b>例 2（交换次序救人）.</b> 计算 $\displaystyle\int_0^1 dx\int_x^1 e^{-y^2}\,dy$。<br>
+① 区域：$0\le x\le1,\ x\le y\le1$，即顶点 $(0,0),(0,1),(1,1)$ 的三角形（画图即得）；<br>
+② 直接积不出来（$\int e^{-y^2}dy$ 不是初等函数），交换次序——按 Y 型：$0\le y\le1,\ 0\le x\le y$：
+$$\int_0^1 dy\int_0^y e^{-y^2}dx=\int_0^1 y\,e^{-y^2}dy$$
+③ 凑微分（$d(e^{-y^2})=-2ye^{-y^2}dy$）：
+$$=-\frac12e^{-y^2}\Bigg|_0^1=\frac{1-e^{-1}}{2}$$
+<b>验算：</b>被积函数恒正，结果 $\approx0.316>0$ ✓。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>二重积分：极坐标与对称性<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">极坐标变换</span>令 $x=r\cos\theta,\ y=r\sin\theta$，则
+$$\iint_D f(x,y)\,dx\,dy=\iint_{D'}f\!\left(r\cos\theta,\ r\sin\theta\right)\,r\,dr\,d\theta$$
+即<b>面积微元 $d\sigma=r\,dr\,d\theta$（因子 $r$ 绝不能漏）</b>。</div>
+<div class="proof"><span class="label">说明（面积微元）</span>用 $r=$ 常数（圆）与 $\theta=$ 常数（射线）分割区域。位于 $[r,r+\Delta r]\times[\theta,\theta+\Delta\theta]$ 的小块是扇形环，面积
+$$\Delta\sigma=\frac12\left[(r+\Delta r)^2-r^2\right]\Delta\theta=\frac12\left(2r\Delta r+\Delta r^2\right)\Delta\theta\approx r\,\Delta r\,\Delta\theta$$
+舍去高阶小量即得 $d\sigma=r\,dr\,d\theta$。<span class="qed">∎</span></div>
+<div class="box method">
+<b>常见区域的极坐标表示：</b><br>
+① 圆 $x^2+y^2\le a^2$：$0\le\theta\le2\pi,\ 0\le r\le a$；<br>
+② 圆 $x^2+y^2\le2ax$（即 $(x-a)^2+y^2\le a^2$）：$-\dfrac\pi2\le\theta\le\dfrac\pi2,\ 0\le r\le2a\cos\theta$；<br>
+③ 圆环 / 扇形：$\theta$ 定角度范围、$r$ 定内外边界；<br>
+④ 直线边界：$x=c\Rightarrow r=\dfrac{c}{\cos\theta}$，$y=c\Rightarrow r=\dfrac{c}{\sin\theta}$（考试常用）。
+</div>
+<div class="thm"><span class="label">对称性（省计算神器）</span>
+<ol>
+<li>$D$ 关于 $x$ 轴对称：若 $f(x,-y)=-f(x,y)$（对 $y$ 奇）⇒ 积分为 $0$；若偶 ⇒ 等于上半部分积分的 $2$ 倍；</li>
+<li>关于 $y$ 轴、原点对称：同理匹配相应变量（或同时变号）的奇偶性；</li>
+<li><b>轮换对称：</b>若 $D$ 关于直线 $y=x$ 对称（$(x,y)\in D\iff(y,x)\in D$），则
+$$\iint_D f(x,y)\,d\sigma=\iint_D f(y,x)\,d\sigma$$
+特别地 $\displaystyle\iint_D x\,d\sigma=\iint_D y\,d\sigma$，$\displaystyle\iint_D x^2d\sigma=\iint_D y^2d\sigma=\frac12\iint_D(x^2+y^2)\,d\sigma$。
+</li>
+</ol></div>
+<div class="box example">
+<b>例 1（圆域 + 极坐标）.</b> 计算 $\displaystyle\iint_D e^{-x^2-y^2}d\sigma$，$D:\ x^2+y^2\le1$。<br>
+① 圆域 → 极坐标：$0\le\theta\le2\pi,\ 0\le r\le1$；<br>
+② 代入：
+$$\iint_D e^{-x^2-y^2}d\sigma=\int_0^{2\pi}d\theta\int_0^1 e^{-r^2}\,r\,dr$$
+③ 内层凑微分：
+$$\int_0^1 re^{-r^2}dr=-\frac12e^{-r^2}\Bigg|_0^1=\frac{1-e^{-1}}{2}$$
+④ 结果：$\displaystyle 2\pi\cdot\frac{1-e^{-1}}{2}=\pi\left(1-e^{-1}\right)$。<br>
+<b>验算：</b>$0<e^{-r^2}\le1$，区域面积 $\pi$，故 $0<I<\pi$；而 $\pi(1-e^{-1})\approx1.99<\pi$ ✓。
+</div>
+<div class="box example">
+<b>例 2（$r=2a\cos\theta$ 型区域）.</b> 计算 $\displaystyle\iint_D x\,d\sigma$，$D:\ x^2+y^2\le2x$。<br>
+① 配方 $(x-1)^2+y^2\le1$；极坐标：$r^2\le2r\cos\theta\Rightarrow0\le r\le2\cos\theta$，$\theta\in\left[-\dfrac\pi2,\ \dfrac\pi2\right]$；<br>
+② 直接计算：
+$$\iint_D x\,d\sigma=\int_{-\pi/2}^{\pi/2}d\theta\int_0^{2\cos\theta}r\cos\theta\cdot r\,dr=\int_{-\pi/2}^{\pi/2}\cos\theta\cdot\frac{8\cos^3\theta}{3}\,d\theta=\frac83\int_{-\pi/2}^{\pi/2}\cos^4\theta\,d\theta$$
+③ 用 $\displaystyle\int_{-\pi/2}^{\pi/2}\cos^4\theta\,d\theta=\frac{3\pi}{8}$：
+$$I=\frac83\cdot\frac{3\pi}{8}=\pi$$
+<b>验算（几何直觉）：</b>圆盘形心在 $(1,0)$、面积 $\pi$，故 $\iint x\,d\sigma=$ 面积 $\times\bar x=\pi\cdot1=\pi$ ✓。
+</div>
+<div class="box example">
+<b>例 3（对称性组合拳）.</b> 计算 $\displaystyle\iint_D\left(2xy+y^2\right)d\sigma$，$D:\ x^2+y^2\le1$。<br>
+① $2xy$ 对 $x$（也对 $y$）为奇函数，而 $D$ 关于坐标轴对称 ⇒ $\displaystyle\iint_D 2xy\,d\sigma=0$；<br>
+② 轮换对称把 $y^2$ 化简单：$\displaystyle\iint_D y^2d\sigma=\frac12\iint_D\left(x^2+y^2\right)d\sigma$；<br>
+③ 极坐标：
+$$\iint_D\left(x^2+y^2\right)d\sigma=\int_0^{2\pi}d\theta\int_0^1 r^3dr=2\pi\cdot\frac14=\frac\pi2\ \Longrightarrow\ \iint_D y^2d\sigma=\frac\pi4$$
+④ 原积分 $=\dfrac\pi4$。<br>
+<b>验算（极坐标硬算 $y^2$）：</b>$\displaystyle\int_0^{2\pi}\sin^2\theta\,d\theta=\pi$，$\displaystyle\int_0^1r^3dr=\frac14$，乘积 $\dfrac\pi4$ ✓。
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>三重积分（直角 / 柱面 / 球面）<span class="tag">核心</span></h2>
+<div class="box def">
+<b>定义：</b>把空间闭区域 $\Omega$ 分成小体积 $\Delta v_i$，任取点 $(\xi_i,\eta_i,\zeta_i)$：
+$$\iiint_\Omega f(x,y,z)\,dv=\lim_{\lambda\to0}\sum_{i=1}^{n}f(\xi_i,\eta_i,\zeta_i)\,\Delta v_i$$
+（物理意义：$\rho$ 为体密度时 $=$ 质量。特别地 $\displaystyle\iiint_\Omega 1\,dv=$ 体积。）
+</div>
+<h3>4.1 直角坐标：投影法（先一后二）</h3>
+<div class="thm"><span class="label">投影法</span>设 $\Omega$ 在 $xOy$ 面上的投影为 $D_{xy}$，竖直方向上下界面为 $z_1(x,y)\le z\le z_2(x,y)$，则
+$$\iiint_\Omega f\,dv=\iint_{D_{xy}}\left[\int_{z_1(x,y)}^{z_2(x,y)}f(x,y,z)\,dz\right]d\sigma$$
+</div>
+<div class="proof"><span class="label">思路</span>固定 $(x,y)$，沿 $z$ 方向先积一根「细线」：
+$$F(x,y)=\int_{z_1(x,y)}^{z_2(x,y)}f\,dz$$
+再对投影区域做二重积分 $\iint_{D_{xy}}F\,d\sigma$。（「先 z 后 xy」。）<span class="qed">∎</span></div>
+<h3>4.2 直角坐标：截面法（先二后一）</h3>
+<div class="thm"><span class="label">截面法</span>若 $\Omega$ 介于平面 $z=c$ 与 $z=d$ 之间，用平面 $z=$ 常数截得截面 $D_z$：
+$$\iiint_\Omega f\,dv=\int_c^d\left[\iint_{D_z}f(x,y,z)\,dx\,dy\right]dz$$</div>
+<div class="box tip"><b>怎么选：</b>投影清楚、上下界面简单 → 投影法；截面形状规则（圆、椭圆）、面积好算、且被积函数只含 $z$ 或可分离 → 截面法。</div>
+<h3>4.3 柱面坐标</h3>
+<div class="thm"><span class="label">柱面坐标</span>令 $x=r\cos\theta,\ y=r\sin\theta,\ z=z$（$0\le\theta\le2\pi,\ r\ge0$），则
+$$\iiint_\Omega f\,dv=\iiint_{\Omega'}f\!\left(r\cos\theta,\ r\sin\theta,\ z\right)\,r\,dr\,d\theta\,dz$$
+即 $dv=r\,dr\,d\theta\,dz$。<br>
+<b>适用：</b>区域或投影含 $x^2+y^2$（圆柱、圆锥、抛物面），被积函数含 $x^2+y^2$。</div>
+<div class="proof"><span class="label">说明（体积微元）</span>$(r,\theta,z)$ 的小块体积 ≈ 底面扇形环面积 × 高 $=(r\Delta r\Delta\theta)\cdot\Delta z$，故 $dv=r\,dr\,d\theta\,dz$。<span class="qed">∎</span></div>
+<h3>4.4 球面坐标</h3>
+<div class="thm"><span class="label">球面坐标</span>令
+$$x=r\sin\varphi\cos\theta,\qquad y=r\sin\varphi\sin\theta,\qquad z=r\cos\varphi$$
+其中 $r$ 为到原点距离，$\varphi$ 为与 $z$ 轴正向的夹角（$0\le\varphi\le\pi$），$\theta$ 为绕 $z$ 轴的方位角（$0\le\theta\le2\pi$）。则
+$$\iiint_\Omega f\,dv=\iiint_{\Omega'}f\!\left(r\sin\varphi\cos\theta,\ r\sin\varphi\sin\theta,\ r\cos\varphi\right)\,r^2\sin\varphi\,dr\,d\varphi\,d\theta$$
+<b>常用对照：</b>球面 $x^2+y^2+z^2=a^2\iff r=a$；锥面 $z=\sqrt{x^2+y^2}\iff\varphi=\dfrac\pi4$；上半空间 $z\ge0\iff0\le\varphi\le\dfrac\pi2$。</div>
+<div class="proof"><span class="label">说明（体积微元）</span>小块的三个边长近似为：径向 $dr$、纬向 $r\,d\varphi$、经向 $r\sin\varphi\,d\theta$（纬线圈半径为 $r\sin\varphi$），三边两两垂直，故
+$$dv=r^2\sin\varphi\,dr\,d\varphi\,d\theta$$
+（别漏 $r^2\sin\varphi$ 这个因子）<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（投影法 + 形心验算）.</b> 计算 $\displaystyle\iiint_\Omega x\,dv$，$\Omega$ 由平面 $x+y+z=1$ 与三个坐标面围成。<br>
+① 投影到 $xOy$ 面：三角形 $D:\ x\ge0,\ y\ge0,\ x+y\le1$；竖直：$0\le z\le1-x-y$；<br>
+② 投影法：
+$$\iiint_\Omega x\,dv=\int_0^1x\left[\int_0^{1-x}\left(\int_0^{1-x-y}dz\right)dy\right]dx=\int_0^1x\cdot\frac{(1-x)^2}{2}\,dx$$
+③ 计算：
+$$\frac12\int_0^1\left(x-2x^2+x^3\right)dx=\frac12\left(\frac12-\frac23+\frac14\right)=\frac{1}{24}$$
+<b>验算（形心）：</b>体积 $V=\dfrac16$；四面体形心为四顶点平均值 $\left(\dfrac14,\dfrac14,\dfrac14\right)$，故 $\iiint x\,dv=V\bar x=\dfrac16\cdot\dfrac14=\dfrac1{24}$ ✓。
+</div>
+<div class="box example">
+<b>例 2（截面法 + 对称性验算）.</b> 计算 $\displaystyle\iiint_\Omega z^2\,dv$，$\Omega$ 为单位球 $x^2+y^2+z^2\le1$。<br>
+① 截面法：$z=$ 常数截得圆盘 $D_z:\ x^2+y^2\le1-z^2$，面积 $\pi(1-z^2)$；被积函数只含 $z$；<br>
+②
+$$\iiint_\Omega z^2dv=\int_{-1}^{1}z^2\cdot\pi\left(1-z^2\right)dz=\pi\left(\frac23-\frac25\right)=\frac{4\pi}{15}$$
+<b>验算（轮换对称）：</b>由对称性 $\iiint x^2=\iiint y^2=\iiint z^2=\dfrac13\iiint r^2dv$，而 $\iiint r^2dv=2\pi\cdot2\cdot\dfrac15=\dfrac{4\pi}{5}$，故 $\dfrac13\cdot\dfrac{4\pi}{5}=\dfrac{4\pi}{15}$ ✓。
+</div>
+<div class="box example">
+<b>例 3（柱面坐标）.</b> 计算 $\displaystyle\iiint_\Omega z\,dv$，$\Omega$ 由抛物面 $z=x^2+y^2$ 与平面 $z=1$ 围成。<br>
+① 柱坐标：$0\le r\le1$，竖直 $r^2\le z\le1$：<br>
+②
+$$\iiint_\Omega z\,dv=\int_0^{2\pi}d\theta\int_0^1r\,dr\int_{r^2}^{1}z\,dz=2\pi\int_0^1r\cdot\frac{1-r^4}{2}\,dr$$
+③
+$$=\pi\int_0^1\left(r-r^5\right)dr=\pi\left(\frac12-\frac16\right)=\frac{\pi}{3}$$
+<b>验算（估界）：</b>$\Omega$ 内 $0<z\le1$，故 $0<I<V$；体积 $V=\displaystyle\int_0^{2\pi}d\theta\int_0^1\left(1-r^2\right)r\,dr=2\pi\left(\frac12-\frac14\right)=\frac\pi2$，而 $0<\dfrac\pi3<\dfrac\pi2$ ✓。
+</div>
+<div class="box example">
+<b>例 4（球面坐标）.</b> 计算 $\displaystyle\iiint_\Omega\left(x^2+y^2+z^2\right)dv$，$\Omega$ 为单位球。<br>
+① 球坐标：$x^2+y^2+z^2=r^2$，$0\le r\le1,\ 0\le\varphi\le\pi,\ 0\le\theta\le2\pi$；<br>
+② 变量分离：
+$$\iiint_\Omega r^2dv=\left(\int_0^{2\pi}d\theta\right)\left(\int_0^{\pi}\sin\varphi\,d\varphi\right)\left(\int_0^1r^4dr\right)=2\pi\cdot2\cdot\frac15=\frac{4\pi}{5}$$
+<b>验算：</b>$r^2\le1$ ⇒ $I\le V=\dfrac{4\pi}{3}$，而 $\dfrac{4\pi}{5}=\dfrac35\cdot\dfrac{4\pi}{3}<\dfrac{4\pi}{3}$ ✓；$r^2$ 的加权平均为 $3/5$（偏向外层）也符合直觉 ✓。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>重积分的应用<span class="tag">核心</span></h2>
+<h3>5.1 曲面面积</h3>
+<div class="thm"><span class="label">曲面面积公式</span>设曲面 $\Sigma:\ z=f(x,y)$ 在 $D$ 上有一阶连续偏导，则
+$$A=\iint_D\sqrt{1+z_x^2+z_y^2}\,dx\,dy$$</div>
+<div class="proof"><span class="label">推导</span>曲面小块的面积 $\Delta S$ 与它在 $xOy$ 面上的投影 $\Delta\sigma$ 之比由法向量与 $z$ 轴夹角 $\gamma$ 决定：
+$$\cos\gamma=\frac{1}{\sqrt{1+z_x^2+z_y^2}},\qquad \Delta\sigma=\Delta S\,|\cos\gamma|$$
+故
+$$\Delta S=\frac{\Delta\sigma}{|\cos\gamma|}=\sqrt{1+z_x^2+z_y^2}\,\Delta\sigma$$
+积分即得。<span class="qed">∎</span></div>
+<h3>5.2 质心与形心</h3>
+<div class="box def">
+<b>平面薄片</b>（面密度 $\rho$）：$M=\displaystyle\iint_D\rho\,d\sigma$，
+$$\bar x=\frac{1}{M}\iint_D x\rho\,d\sigma,\qquad \bar y=\frac{1}{M}\iint_D y\rho\,d\sigma$$
+<b>空间物体</b>：$M=\displaystyle\iiint_\Omega\rho\,dv$，$\bar x=\dfrac1M\displaystyle\iiint_\Omega x\rho\,dv$（其余分量同理）。<br>
+$\rho\equiv$ 常数时质心 $=$ <b>形心</b>。
+</div>
+<h3>5.3 转动惯量</h3>
+<div class="box def">
+<b>平面薄片：</b>$I_x=\displaystyle\iint_D y^2\rho\,d\sigma$（对 $x$ 轴），$I_y=\displaystyle\iint_D x^2\rho\,d\sigma$，$I_O=\displaystyle\iint_D\left(x^2+y^2\right)\rho\,d\sigma$。<br>
+<b>空间物体：</b>$I_z=\displaystyle\iiint_\Omega\left(x^2+y^2\right)\rho\,dv$（对 $z$ 轴）；对 $xOy$ 面 $I_{xy}=\displaystyle\iiint_\Omega z^2\rho\,dv$。
+</div>
+<h3>5.4 引力（了解）</h3>
+<div class="box def">
+平面薄片对点 $(x_0,y_0)$ 处质点 $m$ 的引力分量：
+$$F_x=Gm\iint_D\frac{\rho(x,y)\,(x-x_0)}{\left[(x-x_0)^2+(y-y_0)^2\right]^{3/2}}\,d\sigma$$
+（$F_y$ 同型；空间物体再补 $z$ 分量。）
+</div>
+<div class="box example">
+<b>例 1（曲面面积）.</b> 求抛物面 $z=x^2+y^2$ 在圆域 $x^2+y^2\le1$ 上的面积。<br>
+① $z_x=2x,\ z_y=2y$，$\sqrt{1+z_x^2+z_y^2}=\sqrt{1+4\left(x^2+y^2\right)}$；<br>
+② 极坐标：
+$$A=\int_0^{2\pi}d\theta\int_0^1\sqrt{1+4r^2}\,r\,dr$$
+③ 凑微分（$d(1+4r^2)=8r\,dr$）：
+$$\int_0^1r\sqrt{1+4r^2}\,dr=\frac{1}{12}\left(5\sqrt5-1\right)\ \Longrightarrow\ A=\frac{\pi\left(5\sqrt5-1\right)}{6}$$
+<b>验算：</b>面积必大于底圆面积 $\pi$：$\dfrac{5\sqrt5-1}{6}\approx1.697>1$ ✓。
+</div>
+<div class="box example">
+<b>例 2（形心）.</b> 求半圆域 $D:\ x^2+y^2\le a^2,\ y\ge0$ 的形心。<br>
+① 对称性：$\bar x=0$；<br>
+② 面积 $A=\dfrac{\pi a^2}{2}$；<br>
+③
+$$\iint_D y\,d\sigma=\int_0^{\pi}d\theta\int_0^a r\sin\theta\cdot r\,dr=\left(\int_0^{\pi}\sin\theta\,d\theta\right)\frac{a^3}{3}=\frac{2a^3}{3}$$
+④
+$$\bar y=\frac{2a^3/3}{\pi a^2/2}=\frac{4a}{3\pi}$$
+<b>验算：</b>$\dfrac{4}{3\pi}\approx0.424$，形心在圆心上方约 $0.42a$ 处——与半圆形心的经典结论一致 ✓。
+</div>
+<div class="box example">
+<b>例 3（转动惯量）.</b> 求均匀圆盘 $x^2+y^2\le a^2$（面密度 $\rho$）对直径的转动惯量 $I_x$。<br>
+① 轮换对称：
+$$I_x=\iint_D y^2\rho\,d\sigma=\frac{\rho}{2}\iint_D\left(x^2+y^2\right)d\sigma$$
+② 极坐标：
+$$\iint_D\left(x^2+y^2\right)d\sigma=\int_0^{2\pi}d\theta\int_0^a r^3dr=2\pi\cdot\frac{a^4}{4}=\frac{\pi a^4}{2}$$
+③ 故
+$$I_x=\frac{\rho\pi a^4}{4}=\frac{ma^2}{4}\qquad\left(m=\rho\pi a^2\right)$$
+<b>验算：</b>与「细圆环对直径 $I=\frac12ma^2$」比较：圆盘质量向内集中，转动惯量应更小，$\frac14ma^2<\frac12ma^2$ ✓。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>含参变量的积分（选学）<span class="tag">进阶</span></h2>
+<div class="box def">
+<b>定义：</b>设 $f(x,y)$ 在矩形 $[c,d]\times[a,b]$ 上连续（即 $x\in[c,d],\ y\in[a,b]$），称
+$$\varphi(x)=\int_a^b f(x,y)\,dy\qquad(x\in[c,d])$$
+为含参变量 $x$ 的积分（积分结果仍是 $x$ 的函数）。
+</div>
+<div class="thm"><span class="label">定理 1（连续性）</span>若 $f$ 在矩形上连续，则 $\varphi(x)$ 在 $[c,d]$ 上连续。</div>
+<div class="proof"><span class="label">证明（用一致连续）</span>$f$ 在闭矩形上连续 ⇒ 一致连续：$\forall\varepsilon>0,\ \exists\delta>0$，当 $|x-x_0|<\delta$ 时对<b>一切</b> $y$ 有 $|f(x,y)-f(x_0,y)|<\varepsilon$。于是
+$$\left|\varphi(x)-\varphi(x_0)\right|\le\int_a^b\left|f(x,y)-f(x_0,y)\right|dy<\varepsilon(b-a)$$
+故 $\varphi$ 连续。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 2（莱布尼茨求导公式）</span>若 $f$ 与 $f_x$ 在矩形上连续，则 $\varphi$ 可导，且
+$$\varphi'(x)=\int_a^b f_x(x,y)\,dy$$
+（求导与积分可交换：「把导数搬进积分号」。）</div>
+<div class="proof"><span class="label">证明（思路）</span>对 $f$ 用拉格朗日中值定理（$\xi$ 介于 $x,x+\Delta x$ 之间）：
+$$\frac{\varphi(x+\Delta x)-\varphi(x)}{\Delta x}=\int_a^b\frac{f(x+\Delta x,y)-f(x,y)}{\Delta x}\,dy=\int_a^b f_x(\xi,y)\,dy$$
+令 $\Delta x\to0$，由 $f_x$ 一致连续：
+$$\left|\int_a^b f_x(\xi,y)dy-\int_a^b f_x(x,y)dy\right|\le\int_a^b\left|f_x(\xi,y)-f_x(x,y)\right|dy\to0$$
+取极限即得。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 3（交换积分次序）</span>若 $f$ 在矩形上连续，则
+$$\int_c^d\left[\int_a^b f(x,y)\,dy\right]dx=\int_a^b\left[\int_c^d f(x,y)\,dx\right]dy$$</div>
+<div class="box tip"><b>推广（上下限也含参）：</b>
+$$\frac{d}{dx}\int_{\alpha(x)}^{\beta(x)}f(x,y)\,dy=\int_{\alpha(x)}^{\beta(x)}f_x(x,y)\,dy+f\!\left(x,\beta(x)\right)\beta'(x)-f\!\left(x,\alpha(x)\right)\alpha'(x)$$</div>
+<div class="box example">
+<b>例 1（积分号下求导的经典应用）.</b> 计算 $\displaystyle I=\int_0^1\frac{x^b-x^a}{\ln x}\,dx\quad(0<a<b)$。<br>
+① 关键观察：
+$$\frac{x^b-x^a}{\ln x}=\int_a^b x^t\,dt$$
+（对 $t$ 积分即得 $x^b-x^a$ 除以 $\ln x$）；<br>
+② 代入并交换积分次序：
+$$I=\int_0^1\left(\int_a^b x^t\,dt\right)dx=\int_a^b\left(\int_0^1x^t\,dx\right)dt$$
+③ 内层：$\displaystyle\int_0^1x^t\,dx=\frac{1}{t+1}$；<br>
+④ 故
+$$I=\int_a^b\frac{dt}{t+1}=\ln\frac{b+1}{a+1}$$
+<b>验算（特例）：</b>取 $a=0,b=1$ 得 $\displaystyle\int_0^1\frac{x-1}{\ln x}dx=\ln2$（被积函数在 $(0,1)$ 内为正，$\ln2>0$ ✓）；取 $a=b$ 时公式给 $0$，原积分也为 $0$ ✓。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>解题决策流程</h2>
+<pre class="flow">拿到重积分
+├─ 二重积分？
+│   ├─ 区域含圆/扇形/含 x²+y² → 极坐标（dσ = r dr dθ，别漏 r）
+│   ├─ 一般区域 → 直角坐标：画图 → 选 X/Y 型 → 定限 → 先算内层
+│   ├─ 原次序积不出（e^{−y²}、sin y/y…）→ 交换积分次序
+│   ├─ 奇偶 / 轮换对称 → 先消项、再算剩余
+│   └─ 求面积/体积：∬ dσ 或 ∭ dv
+├─ 三重积分？
+│   ├─ 柱体、含 x²+y² → 柱面坐标 dv = r dr dθ dz
+│   ├─ 球、锥、含 x²+y²+z² → 球面坐标 dv = r² sinφ dr dφ dθ
+│   ├─ 投影清楚、上下界面简单 → 投影法（先一后二）
+│   └─ 截面规整（圆盘）、被积函数只含 z → 截面法（先二后一）
+└─ 应用？
+    ├─ 曲面面积 → ∬√(1+zx²+zy²)
+    ├─ 质心/形心 → 加权积分 ÷ 总质量（常数密度时除以面积/体积）
+    ├─ 转动惯量 → 到轴（面）距离平方加权
+    └─ 引力 → 分母 r³ 的分量积分
+</pre>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>极坐标漏 $r$：</b>$d\sigma=r\,dr\,d\theta$ 的因子 $r$ 是最高频错误；球坐标则别漏 $r^2\sin\varphi$。</li>
+<li><b>积分限规则：</b>外层限必须是常数；内层限可以含外层变量，但绝不能含内层变量自己。</li>
+<li><b>X/Y 型边界写反：</b>「下进上出」（X 型）、「左进右出」（Y 型），画图确认。</li>
+<li><b>交换次序要重新定限：</b>不能只把两个积分号对调，必须先画图。</li>
+<li><b>对称性两个前提：</b>区域对称 + 被积函数匹配奇偶（关于 $x$ 轴对称时看<b>对 $y$</b> 的奇偶性）。</li>
+<li><b>球坐标的 $\varphi$：</b>是与 $z$ 轴（不是 $xOy$ 面）的夹角，范围 $[0,\pi]$；$z=\sqrt{x^2+y^2}$ 对应 $\varphi=\dfrac\pi4$。</li>
+<li><b>投影法上下界面：</b>写成 $z_1\le z\le z_2$，不能颠倒；投影区域要正确定出。</li>
+<li><b>估值/中值定理条件：</b>$f$ 连续（至少可积）；中值点 $(\xi,\eta)$ 在 $D$ 内。</li>
+<li><b>曲面面积分片：</b>若同一投影上有多片曲面（如球面的上下半球），要分别算再加。</li>
+<li><b>质心别忘除以质量：</b>$\bar x=\dfrac{\iint x\rho\,d\sigma}{\iint\rho\,d\sigma}$，分子分母别写反。</li>
+<li><b>含参积分求导条件：</b>需要 $f_x$ 连续；上下限含参时还要加边界项 $f(x,\beta)\beta'-f(x,\alpha)\alpha'$。</li>
+<li><b>轮换对称的应用：</b>$\iint x^2=\iint y^2=\frac12\iint(x^2+y^2)$ 只在区域关于 $y=x$ 对称时可用。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>二重积分定义与几何</td><td>$\displaystyle\iint_D f\,d\sigma=\lim_{\lambda\to0}\sum f(\xi_i,\eta_i)\Delta\sigma_i$；$f=1$ 时为面积</td></tr>
+<tr><td>性质</td><td>线性、可加、保号；$mA\le\iint f\le MA$；中值 $\iint f=f(\xi,\eta)A$</td></tr>
+<tr><td>X 型区域</td><td>$\displaystyle\int_a^b dx\int_{\varphi_1(x)}^{\varphi_2(x)}f\,dy$</td></tr>
+<tr><td>Y 型区域</td><td>$\displaystyle\int_c^d dy\int_{\psi_1(y)}^{\psi_2(y)}f\,dx$</td></tr>
+<tr><td>极坐标</td><td>$d\sigma=r\,dr\,d\theta$；$\displaystyle\iint_{D'}f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta$</td></tr>
+<tr><td>对称性</td><td>奇函数配对称区域 → $0$；轮换对称 $\iint x=\iint y$</td></tr>
+<tr><td>三重积分</td><td>$\displaystyle\iiint_\Omega f\,dv$；$\iiint 1\,dv=$ 体积</td></tr>
+<tr><td>投影法（先一后二）</td><td>$\displaystyle\iint_{D_{xy}}d\sigma\int_{z_1(x,y)}^{z_2(x,y)}f\,dz$</td></tr>
+<tr><td>截面法（先二后一）</td><td>$\displaystyle\int_c^d dz\iint_{D_z}f\,dx\,dy$</td></tr>
+<tr><td>柱面坐标</td><td>$dv=r\,dr\,d\theta\,dz$</td></tr>
+<tr><td>球面坐标</td><td>$dv=r^2\sin\varphi\,dr\,d\varphi\,d\theta$；$x=r\sin\varphi\cos\theta$ 等</td></tr>
+<tr><td>曲面面积</td><td>$\displaystyle A=\iint_D\sqrt{1+z_x^2+z_y^2}\,dx\,dy$</td></tr>
+<tr><td>质心（薄片）</td><td>$\displaystyle\bar x=\frac{\iint x\rho\,d\sigma}{\iint\rho\,d\sigma}$（其余分量同理）</td></tr>
+<tr><td>转动惯量</td><td>$I_x=\iint y^2\rho\,d\sigma$；$I_z=\iiint\left(x^2+y^2\right)\rho\,dv$</td></tr>
+<tr><td>含参积分连续与求导</td><td>$f$ 连续 ⇒ $\varphi$ 连续；$\varphi'(x)=\displaystyle\int_a^b f_x\,dy$（$f_x$ 连续）</td></tr>
+<tr><td>含参积分换序</td><td>$\displaystyle\int_c^d dx\int_a^b f\,dy=\int_a^b dy\int_c^d f\,dx$</td></tr>
+<tr><td>上下限含参的求导</td><td>$\displaystyle\frac{d}{dx}\int_{\alpha}^{\beta}f\,dy=\int_{\alpha}^{\beta}f_x\,dy+f(x,\beta)\beta'-f(x,\alpha)\alpha'$</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>重积分的全部计算都在做同一件事——<b>选对坐标系，把「区域」翻译成「内外限」</b>。圆的用极（柱）、球的用球面；剩下的直角做。因子 $r$、$r^2\sin\varphi$ 是坐标变换的「体积膨胀率」，永远不能忘。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>会选坐标系 → 会把区域翻译成内外限 → 会用对称性省力 → 会把公式用到几何/物理量上。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 复述二重积分定义与性质（含估值定理、中值定理）；<br>
+② 直角坐标化累次积分、交换次序；<br>
+③ 极坐标/柱面/球面坐标正确写微元与限；<br>
+④ 用对称性（奇偶、轮换）简化计算；<br>
+⑤ 三重积分投影法与截面法选择；<br>
+⑥ 用重积分求体积、曲面面积、质心、转动惯量；<br>
+⑦ 含参变量积分三定理（连续、求导、换序）及用法。
+</div>
+<h3>用法索引</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>圆域 / 含 $x^2+y^2$</td><td>极坐标（$d\sigma=r\,dr\,d\theta$）</td><td>§3 例1、2</td></tr>
+<tr><td>一般区域</td><td>X/Y 型化累次</td><td>§2 例1</td></tr>
+<tr><td>原次序积不出</td><td>交换积分次序</td><td>§2 例2</td></tr>
+<tr><td>对称区域</td><td>奇偶 / 轮换对称</td><td>§3 例3</td></tr>
+<tr><td>三重·投影清楚</td><td>先一后二</td><td>§4 例1</td></tr>
+<tr><td>三重·截面规整</td><td>先二后一</td><td>§4 例2</td></tr>
+<tr><td>柱体 / 抛物面</td><td>柱面坐标</td><td>§4 例3</td></tr>
+<tr><td>球 / 锥 / 含 $r^2$</td><td>球面坐标</td><td>§4 例4</td></tr>
+<tr><td>曲面面积</td><td>$\iint\sqrt{1+z_x^2+z_y^2}$</td><td>§5 例1</td></tr>
+<tr><td>质心 / 转动惯量</td><td>加权公式</td><td>§5 例2、3</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 推导 $d\sigma=r\,dr\,d\theta$ 与 $dv=r^2\sin\varphi\,dr\,d\varphi\,d\theta$（§3、§4.4）<br>
+☐ 独立完成 §2 例2（交换次序），从画图开始复述<br>
+☐ 独立完成 §4 例3（柱坐标）并用估界验算<br>
+☐ 说出截面法适合的题型特征（§4.2 提示框）<br>
+☐ 用轮换对称重做 §5 例3，比较两种算法的工作量
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>高等数学（下册）· 第十章 重积分 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

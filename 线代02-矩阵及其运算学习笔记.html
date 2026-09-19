@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>线代02 · 矩阵及其运算 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#f3f7fa;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#0e7490;--accent2:#2563eb;--soft:#ecfeff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#164e63,#0e7490 55%,#2563eb);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.5rem,4vw,2.2rem);letter-spacing:2px}
+.hero p{margin:0;color:#cffafe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#155e75;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#164e63}
+.card h3{font-size:1.05rem;color:#155e75;margin:24px 0 8px;padding-left:10px;border-left:4px solid #67e8f9}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#06b6d4,#2563eb);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#ecfeff;border-color:#22d3ee}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #a5f3fc;border-left:4px solid #06b6d4;background:#f5feff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#155e75;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#155e75;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(14,116,144,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>线性代数 · 第二章 矩阵及其运算 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>矩阵运算</span><span>乘法不可交换</span><span>转置与行列式</span><span>伴随矩阵</span><span>矩阵方程</span><span>分块矩阵</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 矩阵的概念与方程组表示</a>
+<a href="#sec-2">02 · 矩阵的运算：加法·数乘·乘法</a>
+<a href="#sec-3">03 · 转置·方阵的行列式·矩阵的幂</a>
+<a href="#sec-4">04 · 逆矩阵与伴随矩阵</a>
+<a href="#sec-5">05 · 逆矩阵的运算性质与矩阵方程</a>
+<a href="#sec-6">06 · 分块矩阵</a>
+<a href="#sec-7">07 · 解题决策流程</a>
+<a href="#sec-8">08 · 易错点清单</a>
+<a href="#sec-9">09 · 公式速查表</a>
+<a href="#sec-10">10 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>主线：</b>矩阵 = 「数的表格 + 一套运算规则」。本章把第一章的行列式工具与矩阵结合，得到逆矩阵、矩阵方程与分块技巧——它们也是第三章解方程组的语言基础。<span style="color:#155e75;font-weight:700">青框=定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题（步骤化）</span>。</div>
+<pre class="flow">第二章 矩阵及其运算
+├─ 概念（§1）
+│   ├─ 矩阵、方阵、单位阵、对角阵、对称 / 反对称矩阵
+│   └─ 方程组的系数矩阵、增广矩阵、Ax = b
+├─ 运算（§2–§3）
+│   ├─ 加法、数乘、乘法（左行右列；不可交换；AB=O 陷阱）
+│   ├─ 转置：(AB)^T = B^T A^T（顺序倒过来）
+│   └─ 方阵行列式：|AB| = |A||B|，|kA| = k^n|A|
+├─ 逆矩阵（§4–§5）
+│   ├─ 伴随矩阵：AA* = A*A = |A|E
+│   ├─ 可逆 ⇔ |A| ≠ 0；A⁻¹ = A*/|A|
+│   └─ 矩阵方程：AX=B ⇒ X=A⁻¹B（注意左乘 / 右乘）
+└─ 分块矩阵（§6）：分块对角求逆、行列式相乘
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>矩阵的概念与方程组的矩阵表示<span class="tag">基础</span></h2>
+<div class="box def">
+<b>矩阵：</b>由 $m\times n$ 个数排成的 $m$ 行 $n$ 列数表
+$$A=\begin{pmatrix}a_{11}&a_{12}&\cdots&a_{1n}\\ a_{21}&a_{22}&\cdots&a_{2n}\\ \vdots&\vdots&&\vdots\\ a_{m1}&a_{m2}&\cdots&a_{mn}\end{pmatrix}$$
+记作 $A=(a_{ij})_{m\times n}$。$m=n$ 时称<b>方阵</b>（$n$ 阶矩阵）；只有一行（列）的称行（列）矩阵。两个矩阵同型且对应元素全相等时称相等。
+</div>
+<div class="box def">
+<b>几类特殊矩阵：</b>
+<ul>
+<li><b>零矩阵</b> $O$：元素全为 $0$；</li>
+<li><b>对角矩阵</b> $\Lambda=\operatorname{diag}(\lambda_1,\dots,\lambda_n)$：非主对角元全为 $0$；</li>
+<li><b>单位矩阵</b> $E$：主对角元全为 $1$ 的对角矩阵；</li>
+<li><b>数量矩阵</b> $kE$：与任何同阶矩阵可交换；</li>
+<li><b>三角矩阵</b>：主对角线某一侧全为 $0$；</li>
+<li><b>对称矩阵</b> $A^{T}=A$；<b>反对称矩阵</b> $A^{T}=-A$（其主对角元必全为 $0$）。</li>
+</ul>
+</div>
+<div class="thm"><span class="label">命题（对称分解）</span>对任意 $n$ 阶方阵 $A$：① $A+A^{T}$ 对称；② $A-A^{T}$ 反对称；③
+$$A=\frac{A+A^{T}}{2}+\frac{A-A^{T}}{2}$$
+（任何方阵可唯一分解为对称矩阵与反对称矩阵之和。）</div>
+<div class="proof"><span class="label">证明</span>① $\left(A+A^{T}\right)^{T}=A^{T}+A=A+A^{T}$ ✓；② $\left(A-A^{T}\right)^{T}=A^{T}-A=-\left(A-A^{T}\right)$ ✓；③ 两式相加即得。反对称矩阵主对角元 $a_{ii}=-a_{ii}\Rightarrow a_{ii}=0$ ✓。<span class="qed">∎</span></div>
+<div class="box def">
+<b>方程组的矩阵表示：</b>对线性方程组
+$$\begin{cases}a_{11}x_1+\cdots+a_{1n}x_n=b_1\\ \qquad\cdots\cdots\cdots\\ a_{m1}x_1+\cdots+a_{mn}x_n=b_m\end{cases}$$
+记系数矩阵 $A=(a_{ij})_{m\times n}$，未知数列 $\boldsymbol x=(x_1,\dots,x_n)^{T}$，常数列 $\boldsymbol b=(b_1,\dots,b_m)^{T}$，则方程组即矩阵方程
+$$A\boldsymbol x=\boldsymbol b$$
+把 $\boldsymbol b$ 并入 $A$ 得<b>增广矩阵</b> $(A\mid\boldsymbol b)$（第三章解方程组的核心工具）。
+</div>
+<div class="box example">
+<b>例（写矩阵形式）.</b> 把 $\begin{cases}2x_1-x_2=3\\ x_1+x_3=-1\\ x_2+2x_3=4\end{cases}$ 写成矩阵形式并写出增广矩阵。<br>
+① 系数矩阵与常数列：
+$$A=\begin{pmatrix}2&-1&0\\1&0&1\\0&1&2\end{pmatrix},\qquad \boldsymbol b=\begin{pmatrix}3\\-1\\4\end{pmatrix}$$
+② 矩阵方程：$A\boldsymbol x=\boldsymbol b$；<br>
+③ 增广矩阵：
+$$(A\mid\boldsymbol b)=\left(\begin{array}{ccc|c}2&-1&0&3\\1&0&1&-1\\0&1&2&4\end{array}\right)$$
+<b>验算（展开核对）：</b>把 $A\boldsymbol x$ 按乘法展开第 1 行：$2x_1-x_2+0\cdot x_3=2x_1-x_2$，恰是原第一个方程 ✓；第 2、3 行同理 ✓。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>矩阵的运算：加法 · 数乘 · 乘法<span class="tag">核心</span></h2>
+<div class="box def">
+<b>加法与数乘：</b>同型矩阵才能相加（对应元素相加）；数乘 $\lambda A$ 是每个元素乘 $\lambda$。运算律：$A+B=B+A$、$(A+B)+C=A+(B+C)$、$\lambda(A+B)=\lambda A+\lambda B$、$(\lambda+\mu)A=\lambda A+\mu A$、$\lambda(\mu A)=(\lambda\mu)A$。
+</div>
+<div class="box def">
+<b>乘法（左行右列）：</b>设 $A=(a_{ij})_{m\times s}$，$B=(b_{ij})_{s\times n}$（<b>左矩阵的列数 = 右矩阵的行数</b>），则 $C=AB$ 是 $m\times n$ 矩阵，且
+$$c_{ij}=\sum_{k=1}^{s}a_{ik}b_{kj}\qquad(A\ \text{的第 }i\ \text{行点乘}\ B\ \text{的第 }j\ \text{列})$$
+</div>
+<div class="box method"><b>乘法三查：</b>① 可乘吗（前列 = 后行）？② 结果几行几列（前几行 × 后几列）？③ 算 $c_{ij}$ 时严格「左行右列」，别拿错行列。</div>
+<div class="thm"><span class="label">运算律</span>（可乘且可加时）：
+① 结合律 $(AB)C=A(BC)$；② 分配律 $A(B+C)=AB+AC$、$(B+C)A=BA+CA$；③ 与数乘相容 $\lambda(AB)=(\lambda A)B=A(\lambda B)$；④ $E_mA=A$，$AE_n=A$。</div>
+<div class="proof"><span class="label">证明（结合律）</span>设 $A=(a_{ik})_{m\times s}$、$B=(b_{kl})_{s\times t}$、$C=(c_{lj})_{t\times n}$。记 $x_{ij}=((AB)C)_{ij}$，$y_{ij}=(A(BC))_{ij}$，两次用乘法定义并交换求和次序：
+$$x_{ij}=\sum_{l}(AB)_{il}c_{lj}=\sum_{l}\left(\sum_{k}a_{ik}b_{kl}\right)c_{lj}=\sum_{k}a_{ik}\left(\sum_{l}b_{kl}c_{lj}\right)=\sum_{k}a_{ik}(BC)_{kj}=y_{ij}$$
+故 $(AB)C=A(BC)$ ✓（分配律与数乘相容性同法逐元素验证）。<span class="qed">∎</span></div>
+<div class="box warn"><b>与数的三大区别（必记）：</b>
+① <b>不可交换：</b>一般 $AB\neq BA$；
+② <b>无零因子律：</b>$AB=O$ 推不出 $A=O$ 或 $B=O$；
+③ <b>无消去律：</b>$AC=BC$ 且 $C\neq O$ 推不出 $A=B$。
+（下例逐一展示。）</div>
+<div class="box example">
+<b>例 1（AB=O 但 BA≠O）.</b> 取 $A=\begin{pmatrix}1&1\\-1&-1\end{pmatrix}$，$B=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}$，计算 $AB$ 与 $BA$。<br>
+① $AB$ 的元素（左行右列）：
+$$AB=\begin{pmatrix}1\cdot1+1\cdot(-1)&1\cdot(-1)+1\cdot1\\ -1\cdot1+(-1)(-1)&-1\cdot(-1)+(-1)\cdot1\end{pmatrix}=\begin{pmatrix}0&0\\0&0\end{pmatrix}=O$$
+② 交换次序：
+$$BA=\begin{pmatrix}1\cdot1+(-1)(-1)&1\cdot1+(-1)(-1)\\ (-1)\cdot1+1\cdot(-1)&(-1)\cdot1+1\cdot1\end{pmatrix}=\begin{pmatrix}2&2\\-2&-2\end{pmatrix}\neq O$$
+③ 结论：$AB\neq BA$，且 $AB=O$ 推不出任何因子为 $O$——三条「与数的区别」一次全展示。<br>
+<b>验算：</b>检查 $BA$ 的 $(1,1)$ 元：$B$ 第 1 行 $(1,-1)$ 与 $A$ 第 1 列 $(1,-1)^T$ 点乘：$1\times1+(-1)\times(-1)=1+1=2$ ✓。
+</div>
+<div class="box example">
+<b>例 2（矩阵多项式，先因式分解）.</b> 设 $A=\begin{pmatrix}2&-1\\-1&2\end{pmatrix}$，计算 $A^2-3A+2E$。<br>
+① 注意 $A^2-3A+2E=(A-E)(A-2E)$（把 $A$ 当「数」因式分解合法，因为 $A$ 与 $E$、$A$ 自身可交换）；<br>
+② $A-E=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}$，$A-2E=\begin{pmatrix}0&-1\\-1&0\end{pmatrix}$；<br>
+③ 相乘：
+$$(A-E)(A-2E)=\begin{pmatrix}1\cdot0+(-1)(-1)&1\cdot(-1)+(-1)\cdot0\\ (-1)\cdot0+1\cdot(-1)&(-1)(-1)+1\cdot0\end{pmatrix}=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}$$
+④ 结果：$A^2-3A+2E=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}$。<br>
+<b>验算（硬算 A² 对比）：</b>$A^2=\begin{pmatrix}5&-4\\-4&5\end{pmatrix}$，$3A=\begin{pmatrix}6&-3\\-3&6\end{pmatrix}$，$2E=\begin{pmatrix}2&0\\0&2\end{pmatrix}$，$A^2-3A+2E=\begin{pmatrix}5-6+2&-4+3\\-4+3&5-6+2\end{pmatrix}=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}$ ✓。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>转置 · 方阵的行列式 · 矩阵的幂<span class="tag">核心</span></h2>
+<div class="box def">
+<b>转置：</b>行列互换得 $A^{T}$（$A^T$ 的第 $i$ 行 = $A$ 的第 $i$ 列）。性质：
+① $(A^{T})^{T}=A$；② $(A+B)^{T}=A^{T}+B^{T}$；③ $(\lambda A)^{T}=\lambda A^{T}$；④ <b>$(AB)^{T}=B^{T}A^{T}$（顺序倒置！）</b></div>
+<div class="proof"><span class="label">证明（性质④）</span>设 $A=(a_{ik})_{m\times s}$，$B=(b_{kj})_{s\times n}$。由定义
+$$\left((AB)^{T}\right)_{ij}=(AB)_{ji}=\sum_{k=1}^{s}a_{jk}b_{ki}$$
+而
+$$\left(B^{T}A^{T}\right)_{ij}=\sum_{k=1}^{s}\left(B^{T}\right)_{ik}\left(A^{T}\right)_{kj}=\sum_{k=1}^{s}b_{ki}a_{jk}$$
+两式在数的乘法交换律下相同，故 $(AB)^{T}=B^{T}A^{T}$ ✓。推广：$(A_1A_2\cdots A_s)^{T}=A_s^{T}\cdots A_2^{T}A_1^{T}$。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">方阵的行列式</span>设 $A,B$ 为 $n$ 阶方阵：
+① $|A^{T}|=|A|$（第一章性质）；② $|kA|=k^{n}|A|$；③ $|AB|=|A|\,|B|$；④ $|A^{k}|=|A|^{k}$。</div>
+<div class="proof"><span class="label">证明</span>
+<b>②：</b>$kA$ 的每一行都提出一个 $k$，共 $n$ 行 ⇒ $|kA|=k^{n}|A|$ ✓。<br>
+<b>③（$2n$ 阶行列式技巧，只用到行列式性质与块三角）</b>构造
+$$D=\begin{vmatrix}A&O\\-E&B\end{vmatrix}$$
+<b>(i)</b> 按分块三角展开，$D=|A|\cdot|B|$。<br>
+<b>(ii)</b> 作分块列消元：对每个 $j$，把 $C_{n+j}$ 换成 $C_{n+j}+\displaystyle\sum_{k=1}^{n}C_k\,b_{kj}$（列消元不改变行列式）。上块变为 $\displaystyle\sum_k a_{ik}b_{kj}=(AB)$ 的第 $j$ 列；下块变为 $B$ 的第 $j$ 列减去 $\displaystyle\sum_k \boldsymbol e_kb_{kj}=B$ 的第 $j$ 列 $=0$。于是
+$$D=\begin{vmatrix}A&AB\\-E&O\end{vmatrix}$$
+<b>(iii)</b> 交换两个块行（即相邻行 $i$ 与 $n+i$ 逐对换，共 $n$ 次对换，乘 $(-1)^n$）：
+$$D=(-1)^n\begin{vmatrix}-E&O\\A&AB\end{vmatrix}=(-1)^n\cdot(-1)^n|AB|=|AB|$$
+比较 (i)(iii)：$|A||B|=|AB|$ ✓。④ 由 ③ 反复：$|A^k|=|A|^k$ ✓。<span class="qed">∎</span></div>
+<div class="box def">
+<b>矩阵的幂：</b>方阵的幂 $A^{0}=E$，$A^{k+1}=A^{k}A$，满足 $A^{k}A^{m}=A^{k+m}$、$(A^{k})^{m}=A^{km}$。<br>
+<b>注意：</b>一般 $(AB)^{k}\neq A^{k}B^{k}$（不可交换）；但若 $AB=BA$，则二项式定理成立：
+$$(A+B)^{m}=\sum_{k=0}^{m}\binom{m}{k}A^{k}B^{m-k}$$
+</div>
+<div class="box example">
+<b>例 1（行列式性质口算）.</b> 设 $A$ 为 3 阶方阵且 $|A|=2$，求 $|-3A|$ 与 $|A^{2}|$。<br>
+① 由 ②（$n=3$）：$|-3A|=(-3)^{3}|A|=-27\times2=-54$；<br>
+② 由 ④：$|A^{2}|=|A|^{2}=4$。<br>
+<b>验算（取特例 $A=\operatorname{diag}(2,1,1)$，此时 $|A|=2$）：</b>$-3A=\operatorname{diag}(-6,-3,-3)$，$|-3A|=(-6)(-3)(-3)=-54$ ✓；$A^{2}=\operatorname{diag}(4,1,1)$，$|A^{2}|=4$ ✓。
+</div>
+<div class="box example">
+<b>例 2（验证 |AB|=|A||B|）.</b> 取 $A=\begin{pmatrix}1&2\\3&4\end{pmatrix}$，$B=\begin{pmatrix}2&0\\1&-1\end{pmatrix}$。<br>
+① $|A|=1\times4-2\times3=-2$，$|B|=-2$，故 $|A||B|=4$；<br>
+② $AB=\begin{pmatrix}1\cdot2+2\cdot1&1\cdot0+2\cdot(-1)\\3\cdot2+4\cdot1&3\cdot0+4\cdot(-1)\end{pmatrix}=\begin{pmatrix}4&-2\\10&-4\end{pmatrix}$；<br>
+③ $|AB|=4\times(-4)-(-2)\times10=-16+20=4$ ✓。<br>
+<b>验算：</b>$|A||B|=(-2)\times(-2)=4=|AB|$ ✓。
+</div>
+<div class="box example">
+<b>例 3（验证转置倒序）.</b> 用例 2 的 $A,B$ 验证 $(AB)^{T}=B^{T}A^{T}$。<br>
+① $(AB)^{T}=\begin{pmatrix}4&10\\-2&-4\end{pmatrix}$；<br>
+② $B^{T}A^{T}=\begin{pmatrix}2&1\\0&-1\end{pmatrix}\begin{pmatrix}1&3\\2&4\end{pmatrix}=\begin{pmatrix}2+2&6+4\\0-2&0-4\end{pmatrix}=\begin{pmatrix}4&10\\-2&-4\end{pmatrix}$ ✓。<br>
+<b>验算（反向核对）：</b>若把顺序写反成 $A^{T}B^{T}$：
+$$A^{T}B^{T}=\begin{pmatrix}1&3\\2&4\end{pmatrix}\begin{pmatrix}2&1\\0&-1\end{pmatrix}=\begin{pmatrix}1\times2+3\times0&1\times1+3\times(-1)\\2\times2+4\times0&2\times1+4\times(-1)\end{pmatrix}=\begin{pmatrix}2&-2\\4&-2\end{pmatrix}$$
+$$\neq(AB)^T=\begin{pmatrix}4&10\\-2&-4\end{pmatrix}$$
+——顺序千万不能反！
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>逆矩阵与伴随矩阵<span class="tag">核心</span></h2>
+<div class="box def">
+<b>可逆与逆矩阵：</b>对 $n$ 阶方阵 $A$，若存在 $n$ 阶方阵 $B$ 使
+$$AB=BA=E$$
+则称 $A$ <b>可逆</b>，$B$ 称为 $A$ 的<b>逆矩阵</b>，记 $B=A^{-1}$。
+</div>
+<div class="thm"><span class="label">定理 1（唯一性）</span>可逆矩阵的逆矩阵唯一。</div>
+<div class="proof"><span class="label">证明</span>设 $B,C$ 均为 $A$ 的逆，则
+$$B=BE=B(AC)=(BA)C=EC=C\ ✓$$
+（只用到结合律与单位矩阵性质。）<span class="qed">∎</span></div>
+<div class="box def">
+<b>伴随矩阵：</b>设 $A=(a_{ij})_{n\times n}$，$A_{ij}$ 为第一章的代数余子式，称
+$$A^{*}=\begin{pmatrix}A_{11}&A_{21}&\cdots&A_{n1}\\ A_{12}&A_{22}&\cdots&A_{n2}\\ \vdots&&&\vdots\\ A_{1n}&A_{2n}&\cdots&A_{nn}\end{pmatrix}=\left(A_{ji}\right)_{n\times n}$$
+为 $A$ 的<b>伴随矩阵</b>。<b>要点：第 $i$ 行放的是第 $i$ 列元素的代数余子式（代数余子式矩阵要转置）</b>。
+</div>
+<div class="thm"><span class="label">定理 2（伴随核心恒等式）</span>
+$$AA^{*}=A^{*}A=|A|\,E$$
+</div>
+<div class="proof"><span class="label">证明（第一章展开定理）</span>考察 $AA^{*}$ 的 $(i,j)$ 元：
+$$\left(AA^{*}\right)_{ij}=\sum_{k=1}^{n}a_{ik}\left(A^{*}\right)_{kj}=\sum_{k=1}^{n}a_{ik}A_{jk}=\begin{cases}|A|,&i=j\\[2pt]0,&i\neq j\end{cases}$$
+其中 $i=j$ 就是「按第 $i$ 行展开」；$i\neq j$ 是「第 $i$ 行元素 × 第 $j$ 行代数余子式之和」（第一章 §5 推论 $=0$）。故 $AA^{*}=|A|E$；同法 $A^{*}A=|A|E$ ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 3（可逆判据与求逆公式）</span>
+$$A\ \text{可逆}\iff|A|\neq0,\qquad\text{且}\ A^{-1}=\frac{1}{|A|}A^{*}$$</div>
+<div class="proof"><span class="label">证明（双向）</span>
+<b>(⇒)</b> 在 $AB=E$ 两边取行列式：$|A|\,|B|=|E|=1$，故 $|A|\neq0$ ✓。<br>
+<b>(⇐)</b> 设 $|A|\neq0$，由定理 2：
+$$A\cdot\frac{A^{*}}{|A|}=E,\qquad \frac{A^{*}}{|A|}\cdot A=E$$
+两边同时成立 ⇒ $\dfrac{A^{*}}{|A|}$ 就是 $A$ 的逆，即 $A^{-1}=\dfrac{1}{|A|}A^{*}$ ✓。<span class="qed">∎</span></div>
+<div class="box tip"><b>二阶速算公式（必背）：</b>
+$$\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1}=\frac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$$
+口诀：<b>主对角交换、副对角变号、除以行列式</b>；可逆 $\iff ad-bc\neq0$。</div>
+<div class="box method"><b>伴随法求逆三步：</b>① 算 $|A|$（为 $0$ 直接判不可逆）；② 算全部代数余子式（别丢 $(-1)^{i+j}$），<b>转置</b>排成 $A^{*}$；③ $A^{-1}=A^{*}/|A|$。</div>
+<div class="box example">
+<b>例 1（二阶逆矩阵口算）.</b> 求 $A=\begin{pmatrix}3&1\\5&2\end{pmatrix}$ 的逆。<br>
+① $|A|=3\times2-1\times5=1\neq0$，可逆；<br>
+② 套速算公式（主对换、副变号、除行列式）：
+$$A^{-1}=\frac{1}{1}\begin{pmatrix}2&-1\\-5&3\end{pmatrix}=\begin{pmatrix}2&-1\\-5&3\end{pmatrix}$$
+<b>验算：</b>$AA^{-1}=\begin{pmatrix}3\times2+1\times(-5)&3\times(-1)+1\times3\\5\times2+2\times(-5)&5\times(-1)+2\times3\end{pmatrix}=\begin{pmatrix}1&0\\0&1\end{pmatrix}=E$ ✓。
+</div>
+<div class="box example">
+<b>例 2（三阶伴随法）.</b> 求 $A=\begin{pmatrix}1&0&1\\2&1&0\\0&1&1\end{pmatrix}$ 的逆。<br>
+① 行列式：
+$$|A|=1\cdot\begin{vmatrix}1&0\\1&1\end{vmatrix}+1\cdot\begin{vmatrix}2&1\\0&1\end{vmatrix}=1+2=3\neq0$$
+② 逐个算代数余子式（注意 $(-1)^{i+j}$）：
+$$A_{11}=1,\ A_{12}=-2,\ A_{13}=2;\qquad A_{21}=1,\ A_{22}=1,\ A_{23}=-1;\qquad A_{31}=-1,\ A_{32}=2,\ A_{33}=1$$
+③ 转置排列得伴随矩阵（第 $i$ 行 = 第 $i$ 列的代数余子式）：
+$$A^{*}=\begin{pmatrix}1&1&-1\\-2&1&2\\2&-1&1\end{pmatrix}$$
+④ 除以行列式：
+$$A^{-1}=\frac{1}{3}A^{*}=\begin{pmatrix}\frac13&\frac13&-\frac13\\[2pt]-\frac23&\frac13&\frac23\\[2pt]\frac23&-\frac13&\frac13\end{pmatrix}$$
+<b>验算（抽样验证 $AA^{*}=3E$）：</b>第 1 行 $(1,0,1)$ 点乘 $A^{*}$ 第 1 列 $(1,-2,2)$：$1+0+2=3$ ✓；点乘第 2 列 $(1,1,-1)$：$1+0-1=0$ ✓；第 2 行 $(2,1,0)$ 点乘第 2 列：$2+1+0=3$ ✓；第 3 行 $(0,1,1)$ 点乘第 3 列 $(-1,2,1)$：$0+2+1=3$ ✓——对角线全 3、非对角全 0，正是 $|A|E$。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>逆矩阵的运算性质与矩阵方程<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">运算性质</span>（$A,B$ 可逆，$\lambda\neq0$）
+① $(A^{-1})^{-1}=A$；
+② $(\lambda A)^{-1}=\dfrac{1}{\lambda}A^{-1}$；
+③ $(AB)^{-1}=B^{-1}A^{-1}$（<b>顺序倒置</b>；推广 $(A_1A_2\cdots A_s)^{-1}=A_s^{-1}\cdots A_2^{-1}A_1^{-1}$）；
+④ $(A^{T})^{-1}=(A^{-1})^{T}$；
+⑤ $|A^{-1}|=\dfrac{1}{|A|}$。</div>
+<div class="proof"><span class="label">证明（③④⑤）</span>
+<b>③</b> 直接验证：$(AB)\left(B^{-1}A^{-1}\right)=A\left(BB^{-1}\right)A^{-1}=AEA^{-1}=E$，同法 $\left(B^{-1}A^{-1}\right)(AB)=E$，由逆的唯一性得 $(AB)^{-1}=B^{-1}A^{-1}$ ✓。<br>
+<b>④</b> 对 $AA^{-1}=E$ 两边转置（用 $(XY)^{T}=Y^{T}X^{T}$）：$(A^{-1})^{T}A^{T}=E$，即 $(A^{-1})^{T}$ 为 $A^{T}$ 的逆 ⇒ $(A^{T})^{-1}=(A^{-1})^{T}$ ✓。<br>
+<b>⑤</b> 对 $AA^{-1}=E$ 取行列式：$|A|\,\left|A^{-1}\right|=1$ ⇒ $|A^{-1}|=\dfrac{1}{|A|}$ ✓。<span class="qed">∎</span></div>
+<div class="box tip"><b>一条规律记两处：</b>「<b>乘积的转置、乘积的逆，都要倒序</b>」——$(AB)^{T}=B^{T}A^{T}$，$(AB)^{-1}=B^{-1}A^{-1}$。</div>
+<div class="thm"><span class="label">矩阵方程三标准型</span>（先确认系数矩阵可逆）
+① $AX=B\ \Rightarrow\ X=A^{-1}B$（<b>左乘</b>）；
+② $XA=B\ \Rightarrow\ X=BA^{-1}$（<b>右乘</b>）；
+③ $AXB=C\ \Rightarrow\ X=A^{-1}CB^{-1}$。
+<br>（矩阵没有「除法」；方程里含 $kX$ 项时先合并成 $(A-kE)X=\cdots$ 再求逆。）</div>
+<div class="box example">
+<b>例 1（$AX=B$）.</b> 解 $AX=B$，$A=\begin{pmatrix}1&2\\1&3\end{pmatrix}$，$B=\begin{pmatrix}2&1\\3&2\end{pmatrix}$。<br>
+① $|A|=1\times3-2\times1=1\neq0$，可逆；<br>
+② $A^{-1}=\begin{pmatrix}3&-2\\-1&1\end{pmatrix}$；<br>
+③ 左乘：
+$$X=A^{-1}B=\begin{pmatrix}3&-2\\-1&1\end{pmatrix}\begin{pmatrix}2&1\\3&2\end{pmatrix}=\begin{pmatrix}0&-1\\1&1\end{pmatrix}$$
+<b>验算（代回 $AX$）：</b>$AX=\begin{pmatrix}1&2\\1&3\end{pmatrix}\begin{pmatrix}0&-1\\1&1\end{pmatrix}=\begin{pmatrix}2&1\\3&2\end{pmatrix}=B$ ✓。
+</div>
+<div class="box example">
+<b>例 2（先合并再求逆）.</b> 解 $AX=A+2X$，$A=\begin{pmatrix}4&2\\3&3\end{pmatrix}$。<br>
+① 移项合并：$(A-2E)X=A$；<br>
+② $A-2E=\begin{pmatrix}2&2\\3&1\end{pmatrix}$，$|A-2E|=2\times1-2\times3=-4\neq0$；<br>
+③ 求逆：$(A-2E)^{-1}=\dfrac{1}{-4}\begin{pmatrix}1&-2\\-3&2\end{pmatrix}=\begin{pmatrix}-\frac14&\frac12\\[2pt]\frac34&-\frac12\end{pmatrix}$；<br>
+④ 左乘：
+$$X=(A-2E)^{-1}A=\begin{pmatrix}-\frac14&\frac12\\[2pt]\frac34&-\frac12\end{pmatrix}\begin{pmatrix}4&2\\3&3\end{pmatrix}=\begin{pmatrix}\frac12&1\\[2pt]\frac32&0\end{pmatrix}$$
+<b>验算（代回原方程）：</b>$AX=\begin{pmatrix}4&2\\3&3\end{pmatrix}\begin{pmatrix}\frac12&1\\[1pt]\frac32&0\end{pmatrix}=\begin{pmatrix}5&4\\[1pt]6&3\end{pmatrix}$，而 $A+2X=\begin{pmatrix}4&2\\3&3\end{pmatrix}+\begin{pmatrix}1&2\\3&0\end{pmatrix}=\begin{pmatrix}5&4\\6&3\end{pmatrix}$ ✓。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>分块矩阵<span class="tag">核心</span></h2>
+<div class="box def">
+<b>分块矩阵：</b>用横、竖线把矩阵划分成若干子块，如
+$$A=\left(\begin{array}{cc|c}1&0&2\\0&1&3\\\hline4&5&6\end{array}\right)=\begin{pmatrix}A_{11}&A_{12}\\A_{21}&A_{22}\end{pmatrix}$$
+分块后可将<b>子块当作元素</b>参与运算（是「降维思考」的工具）。
+</div>
+<div class="box method">
+<b>分块运算三规则：</b><br>
+① 加法 / 数乘：分法一致时对应子块相加、逐块数乘；<br>
+② 乘法：子块按「元素」相乘求和，要求<b>左矩阵的列分法与右矩阵的行分法一致</b>，且每个子块乘积可乘；<br>
+③ 转置：
+$$\begin{pmatrix}A&B\\C&D\end{pmatrix}^{T}=\begin{pmatrix}A^{T}&C^{T}\\B^{T}&D^{T}\end{pmatrix}$$
+（子块各自转置 + 整体按块转置。）
+</div>
+<div class="thm"><span class="label">分块对角矩阵</span>设 $A=\operatorname{diag}(A_1,A_2,\dots,A_s)$：
+① 乘法 $\operatorname{diag}(A_1,\dots,A_s)\operatorname{diag}(B_1,\dots,B_s)=\operatorname{diag}(A_1B_1,\dots,A_sB_s)$；
+② 行列式 $|A|=|A_1||A_2|\cdots|A_s|$；
+③ 求逆 $A^{-1}=\operatorname{diag}(A_1^{-1},\dots,A_s^{-1})$（各块可逆时）。</div>
+<div class="proof"><span class="label">说明（③）</span>按分块乘法直接验证：
+$$\operatorname{diag}(A_1,\dots,A_s)\,\operatorname{diag}(A_1^{-1},\dots,A_s^{-1})=\operatorname{diag}\left(A_1A_1^{-1},\dots,A_sA_s^{-1}\right)=\operatorname{diag}(E,\dots,E)=E\ ✓$$<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（分块对角求逆）.</b> 求 $M=\begin{pmatrix}1&2&0&0\\0&1&0&0\\0&0&2&0\\0&0&0&3\end{pmatrix}$ 的逆与行列式。<br>
+① 分块：$M=\operatorname{diag}(A_1,A_2)$，$A_1=\begin{pmatrix}1&2\\0&1\end{pmatrix}$，$A_2=\operatorname{diag}(2,3)$；<br>
+② 各块求逆：$A_1^{-1}=\begin{pmatrix}1&-2\\0&1\end{pmatrix}$（上三角：主对换、上元变号），$A_2^{-1}=\operatorname{diag}\left(\frac12,\frac13\right)$；<br>
+③ 拼装：
+$$M^{-1}=\begin{pmatrix}1&-2&0&0\\0&1&0&0\\0&0&\frac12&0\\0&0&0&\frac13\end{pmatrix}$$
+④ 行列式：$|M|=|A_1||A_2|=1\times6=6$。<br>
+<b>验算：</b>直接按三角行列式 $|M|=1\cdot1\cdot2\cdot3=6$ ✓；$MM^{-1}$ 抽两处：第 1 行第 2 列 $=1\cdot(-2)+2\cdot1=0$ ✓，第 4 行第 4 列 $=3\times\frac13=1$ ✓。
+</div>
+<div class="box tip"><b>分块三大用途：</b>① 证明题（如 $|AB|=|A||B|$ 的 $2n$ 阶技巧，§3 已用）；② 大矩阵求逆化为小块求逆；③ 方程组按块拆解（第三、五章反复出现）。</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>解题决策流程</h2>
+<pre class="flow">拿到矩阵题
+├─ 运算类
+│   ├─ 乘法：先查可乘（前列 = 后行）→ 逐个元素「左行右列」
+│   ├─ 幂：先算 A² 找规律（对角化技巧在第五章）
+│   └─ 转置 / 求逆：乘积一律倒序
+├─ 行列式类
+│   ├─ |kA| = k^n|A|；|AB| = |A||B|；|A⁻¹| = 1/|A|
+│   └─ 判断可逆：先算 |A| 是否为零
+├─ 逆矩阵 / 矩阵方程
+│   ├─ 2 阶：主对换、副变号、除行列式（口算）
+│   ├─ 3 阶及以上：伴随法（余子式 → 转置 → 除以 |A|）
+│   ├─ AX=B → X=A⁻¹B（左乘）；XA=B → X=BA⁻¹（右乘）
+│   └─ 有 kX 项先合并（如 (A−2E)X=A）再求逆
+└─ 分块
+    └─ 分块对角：分别求逆、行列式相乘；分块乘法查块匹配
+</pre>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>可乘条件：</b>左矩阵列数 = 右矩阵行数；结果尺寸「前几行 × 后几列」。</li>
+<li><b>不可交换是常态：</b>$AB\neq BA$；写等式时绝不能随意交换因子顺序。</li>
+<li><b>$AB=O$ 陷阱：</b>推不出 $A=O$ 或 $B=O$；也无消去律。</li>
+<li><b>倒序规律：</b>$(AB)^{T}=B^{T}A^{T}$、$(AB)^{-1}=B^{-1}A^{-1}$、$(A_1A_2A_3)^{-1}=A_3^{-1}A_2^{-1}A_1^{-1}$。</li>
+<li><b>$|kA|=k^{n}|A|$：</b>别丢 $n$ 次方；$|A+B|\neq|A|+|B|$（行列式既不保加法也不保数乘的「分配」）。</li>
+<li><b>求逆先算 $|A|$：</b>为零直接判不可逆（常常是题目陷阱）。</li>
+<li><b>伴随矩阵要转置：</b>$A^{*}=(A_{ji})$，第 $i$ 行放第 $i$ 列的代数余子式。</li>
+<li><b>矩阵方程左乘/右乘：</b>$AX=B$ 用 $A^{-1}B$，$XA=B$ 用 $BA^{-1}$，不可混。</li>
+<li><b>分块乘法匹配：</b>左矩阵列分法与右矩阵行分法必须一致。</li>
+<li><b>两个常考小结论：</b>反对称矩阵主对角元全为 $0$；数量矩阵 $kE$ 与任何同阶矩阵可交换。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>乘法</td><td>$\displaystyle c_{ij}=\sum_{k=1}^{s}a_{ik}b_{kj}$（前列 = 后行；左行右列）</td></tr>
+<tr><td>转置</td><td>$(AB)^{T}=B^{T}A^{T}$（倒序）</td></tr>
+<tr><td>幂</td><td>$A^{k}A^{m}=A^{k+m}$；一般 $(AB)^{k}\neq A^{k}B^{k}$；$AB=BA$ 时二项式可展</td></tr>
+<tr><td>行列式</td><td>$|A^{T}|=|A|$；$|kA|=k^{n}|A|$；$|AB|=|A||B|$；$|A^{-1}|=1/|A|$</td></tr>
+<tr><td>伴随矩阵</td><td>$AA^{*}=A^{*}A=|A|E$；$A^{*}=(A_{ji})$</td></tr>
+<tr><td>可逆判据与公式</td><td>$A$ 可逆 $\iff|A|\neq0$；$A^{-1}=\dfrac{A^{*}}{|A|}$</td></tr>
+<tr><td>二阶逆矩阵</td><td>$\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$</td></tr>
+<tr><td>逆的运算</td><td>$(AB)^{-1}=B^{-1}A^{-1}$；$(\lambda A)^{-1}=\lambda^{-1}A^{-1}$；$(A^{T})^{-1}=(A^{-1})^{T}$</td></tr>
+<tr><td>矩阵方程</td><td>$AX=B\Rightarrow X=A^{-1}B$；$XA=B\Rightarrow X=BA^{-1}$；$AXB=C\Rightarrow X=A^{-1}CB^{-1}$</td></tr>
+<tr><td>分块对角</td><td>$|A|=\prod|A_i|$；$A^{-1}=\operatorname{diag}(A_1^{-1},\dots)$</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>矩阵运算的全部「反常识」都来自<b>不可交换</b>——不行就倒序（转置、求逆）、要消元就左乘或右乘到位。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>会算（乘法/逆/行列式）→ 会认（可乘、可逆、分块）→ 会防（三大区别与倒序规律）。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 判断可乘与结果尺寸，熟练做「左行右列」乘法；<br>
+② 复述三条「与数的区别」并各举例；<br>
+③ 证明 $(AB)^{T}=B^{T}A^{T}$ 与 $(AB)^{-1}=B^{-1}A^{-1}$；<br>
+④ 用分块技巧理解 $|AB|=|A||B|$ 的证明；<br>
+⑤ 用伴随矩阵法求逆（含 2 阶速算、3 阶余子式转置），并用 $AA^{-1}=E$ 验算；<br>
+⑥ 解三类矩阵方程并说明左乘/右乘的道理；<br>
+⑦ 处理分块对角矩阵的求逆与行列式。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>判断 $AB$ 与 $BA$ 的关系</td><td>直接计算 + 反例意识</td><td>§2 例1</td></tr>
+<tr><td>矩阵多项式 / 幂</td><td>先因式分解或算 $A^2$ 找规律</td><td>§2 例2</td></tr>
+<tr><td>含 $|k A|$、$|A^2|$</td><td>行列式性质（注意 $k^n$）</td><td>§3 例1</td></tr>
+<tr><td>验证 $|AB|=|A||B|$</td><td>分别算三个行列式</td><td>§3 例2</td></tr>
+<tr><td>求 2 阶逆</td><td>速算公式</td><td>§4 例1</td></tr>
+<tr><td>求 3 阶逆</td><td>伴随法（余子式 → 转置 → 除）</td><td>§4 例2</td></tr>
+<tr><td>$AX=B$ / $XA=B$ / $AXB=C$</td><td>左乘 / 右乘 / 两边夹</td><td>§5 例1、2</td></tr>
+<tr><td>大矩阵（分块对角）</td><td>分块求逆 + 行列式相乘</td><td>§6 例</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 默写乘法定义与三条「与数的区别」，各配反例（§2）<br>
+☐ 复述 $|AB|=|A||B|$ 的 $2n$ 阶行列式证明思路（§3 三步）<br>
+☐ 独立完成 §4 例2（3 阶伴随法）并抽样验算 $AA^{*}=3E$<br>
+☐ 独立解一道 $AX=A+2X$ 型方程并回代（§5 例2 模式）<br>
+☐ 说明为什么 $(AB)^{-1}=B^{-1}A^{-1}$ 必须倒序（用定义验证一遍）<br>
+☐ 说出分块乘法「块匹配」条件（§6）
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>线性代数 · 第二章 矩阵及其运算 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

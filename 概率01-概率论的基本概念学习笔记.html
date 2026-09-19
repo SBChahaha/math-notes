@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>概率01 · 概率论的基本概念 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#faf5fc;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#c026d3;--accent2:#7c3aed;--soft:#fdf4ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#701a75,#c026d3 55%,#7c3aed);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#f5d0fe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#a21caf;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#701a75}
+.card h3{font-size:1.05rem;color:#a21caf;margin:24px 0 8px;padding-left:10px;border-left:4px solid #f0abfc}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#d946ef,#8b5cf6);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#fdf4ff;border-color:#d946ef}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #f5d0fe;border-left:4px solid #d946ef;background:#fdfaff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#a21caf;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#a21caf;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(192,38,211,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>概率论与数理统计 · 第一章 概率论的基本概念 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>样本空间</span><span>公理化概率</span><span>古典概型</span><span>条件概率</span><span>全概率与贝叶斯</span><span>独立性</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 样本空间与随机事件</a>
+<a href="#sec-2">02 · 频率与概率·公理化</a>
+<a href="#sec-3">03 · 古典概型与几何概型</a>
+<a href="#sec-4">04 · 条件概率·全概率·贝叶斯</a>
+<a href="#sec-5">05 · 独立性</a>
+<a href="#sec-6">06 · 解题决策流程</a>
+<a href="#sec-7">07 · 易错点清单</a>
+<a href="#sec-8">08 · 公式速查表</a>
+<a href="#sec-9">09 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>主线：</b>先用集合语言搭建舞台（样本空间、事件），再用公理定义概率、用计数/几何算概率，最后用「条件概率」链条（乘法 → 全概率 → 贝叶斯）与「独立性」处理依赖关系。<span style="color:#a21caf;font-weight:700">紫框=定义/定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题（步骤化）</span>，<span style="color:#dc2626;font-weight:700">红框=警示</span>。</div>
+<pre class="flow">第一章 概率论的基本概念
+├─ 舞台与语言（§1）
+│   ├─ 随机试验 E → 样本空间 S → 随机事件（S 的子集）
+│   └─ 事件运算：和、积、差、互斥、对立、德摩根律
+├─ 概率（§2–§3）
+│   ├─ 频率 → 公理化定义（非负、规范、可列可加）
+│   ├─ 由公理推出的性质（补、差、单调、加法公式）——全部证明
+│   └─ 古典概型（计数）与几何概型（测度比）
+├─ 条件与工具（§4）
+│   ├─ 条件概率 P(B|A) = P(AB)/P(A)
+│   ├─ 乘法公式 → 全概率公式 → 贝叶斯公式
+│   └─ 招牌题型：疾病检测（后验）、次品溯源
+└─ 独立性（§5）
+    ├─ P(AB) = P(A)P(B)；补事件仍独立
+    ├─ 两两独立 ≠ 相互独立（必会反例）
+    └─ 伯努利概型：n 重独立试验
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>样本空间与随机事件<span class="tag">基础</span></h2>
+<div class="box def">
+<b>随机试验 $E$：</b>满足① 可在相同条件下重复进行；② 结果不止一个且事先知道全部可能结果；③ 试验前不能确定哪个结果出现。<br>
+<b>样本空间 $S$：</b>全部可能结果构成的集合，元素称<b>样本点</b>。<br>
+<b>随机事件：</b>$S$ 的子集；单个样本点构成<b>基本事件</b>；$S$ 本身是<b>必然事件</b>，$\varnothing$ 是<b>不可能事件</b>。事件发生 ⇔ 试验结果属于对应子集。
+</div>
+<div class="box def">
+<b>关系：</b>包含 $A\subset B$（A 发生必导致 B）；相等 $A=B$；<b>互斥</b> $AB=\varnothing$（不同时发生）；<b>对立</b> $AB=\varnothing$ 且 $A\cup B=S$，记 $\bar A$。<br>
+<b>运算：</b>和 $A\cup B$（至少一个发生）、积 $AB$（同时发生）、差 $A-B=A\bar B$（A 发生而 B 不发生）。<br>
+<b>运算律：</b>交换、结合、分配 $A(B\cup C)=AB\cup AC$，以及<b>德摩根律</b>：
+$$\overline{A\cup B}=\bar A\,\bar B,\qquad \overline{AB}=\bar A\cup\bar B$$
+（口诀：横线进屋、符号互换。）
+</div>
+<div class="box example">
+<b>例 1（写样本空间）.</b> 写出下列试验的样本空间：<br>
+① 掷两枚硬币，观察正反面：$S=\{HH,\ HT,\ TH,\ TT\}$；<br>
+② 某射手射击直到命中为止，记录射击次数：$S=\{1,2,3,\dots\}$（可数无穷）；<br>
+③ 记录某电话总机一分钟内接到的呼叫次数：$S=\{0,1,2,\dots\}$。<br>
+<b>事件举例（①）:</b>「至少出现一次正面」$A=\{HH,HT,TH\}$——验算：$A$ 的对立事件是「两次均为反面」$\{TT\}$，恰为 $S-A$ ✓。
+</div>
+<div class="box example">
+<b>例 2（用符号翻译文字）.</b> 设 $A,B,C$ 为三个事件，用运算表示：① 恰有一个发生；② 至少两个发生；③ 不多于一个发生。<br>
+① 恰一个（三种情形互斥相加）：
+$$A\bar B\bar C\cup\bar AB\bar C\cup\bar A\bar BC$$
+② 至少两个（两两之交覆盖「≥2」的所有情形）：
+$$AB\cup AC\cup BC$$
+③ 不多于一个 = 没有两个同时发生 = $\overline{AB\cup AC\cup BC}$（也可展开为「零个 ∪ 恰一个」）。<br>
+<b>验算（取 $A,B,C$ 全发生）：</b>① 三项皆不成立 ⇒ 不发生 ✓；② $AB$ 成立 ✓；③ 其补事件中 $AB$ 成立 ⇒ ③ 不发生 ✓——与文字含义一致。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>频率与概率 · 公理化定义<span class="tag">核心</span></h2>
+<div class="box def">
+<b>频率：</b>$n$ 次重复试验中事件 $A$ 发生 $n_A$ 次，称 $f_n(A)=\dfrac{n_A}{n}$ 为 $A$ 的<b>频率</b>。性质：① 非负；② 规范性 $f_n(S)=1$；③ 有限可加性（互斥可加）。频率随 $n$ 增大稳定于某常数——这是概率的客观背景。
+</div>
+<div class="box def">
+<b>概率的公理化定义（柯尔莫哥洛夫）：</b>设 $P(\cdot)$ 定义在事件域上，满足<br>
+① <b>非负性</b> $P(A)\ge0$；② <b>规范性</b> $P(S)=1$；③ <b>可列可加性</b>：两两互斥的 $A_1,A_2,\dots$ 满足
+$$P\!\left(\bigcup_{i=1}^{\infty}A_i\right)=\sum_{i=1}^{\infty}P(A_i)$$
+则称 $P(A)$ 为事件 $A$ 的概率。
+</div>
+<div class="thm"><span class="label">性质（全部由公理推出）</span>
+① $P(\varnothing)=0$；② <b>有限可加性</b>：互斥的 $A_1,\dots,A_n$ 有 $P(\bigcup A_i)=\sum P(A_i)$；③ $P(\bar A)=1-P(A)$；④ 若 $A\subset B$：$P(B-A)=P(B)-P(A)$ 且 $P(A)\le P(B)$（单调性）；⑤ <b>加法公式</b>：$P(A\cup B)=P(A)+P(B)-P(AB)$；⑥ 三事件推广：
+$$P(A\cup B\cup C)=P(A)+P(B)+P(C)-P(AB)-P(BC)-P(AC)+P(ABC)$$</div>
+<div class="proof"><span class="label">证明（逐条从公理出发）</span>
+<b>①</b> 取 $A_i=\varnothing\ (i=1,2,\dots)$：由可列可加性 $P(\varnothing)=\sum_{i\ge1}P(\varnothing)$，收敛的常数列只能为 $0$ ⇒ $P(\varnothing)=0$ ✓。<br>
+<b>②</b> 补零：$A_1,\dots,A_n,\varnothing,\varnothing,\dots$ 仍两两互斥，用可列可加性与 ① ✓。<br>
+<b>③</b> $A\bar A=\varnothing$、$A\cup\bar A=S$，由 ②：$P(A)+P(\bar A)=P(S)=1$ ✓。<br>
+<b>④</b> $B=A\cup(B-A)$ 且 $A\cap(B-A)=\varnothing$，故 $P(B)=P(A)+P(B-A)$；非负性给出单调性 ✓。<br>
+<b>⑤</b> 分解：$A\cup B=A\cup(B-AB)$、$B=(B-AB)\cup AB$（两部分均互斥）：
+$$P(A\cup B)=P(A)+P(B-AB)=P(A)+P(B)-P(AB)\ ✓$$
+<b>⑥</b> 对 $A\cup B$ 与 $C$ 用 ⑤，注意 $(A\cup B)C=AC\cup BC$：
+$$P(A\cup B\cup C)=P(A\cup B)+P(C)-P(AC\cup BC)$$
+$$=\left[P(A)+P(B)-P(AB)\right]+P(C)-\left[P(AC)+P(BC)-P(ABC)\right]\ ✓$$<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（性质组合拳）.</b> 已知 $P(A)=0.5,\ P(B)=0.4,\ P(AB)=0.2$。求 $P(\bar A)$、$P(A\cup B)$、$P(A-B)$、$P(\bar A\bar B)$。<br>
+① $P(\bar A)=1-0.5=0.5$；<br>
+② $P(A\cup B)=0.5+0.4-0.2=0.7$；<br>
+③ $P(A-B)=P(A)-P(AB)=0.3$；<br>
+④ 德摩根：$P(\bar A\bar B)=P(\overline{A\cup B})=1-0.7=0.3$。<br>
+<b>验算（四区域分解）：</b>$P(A\bar B)=0.3$、$P(AB)=0.2$、$P(\bar AB)=0.2$、$P(\bar A\bar B)=0.3$，四块之和 $=1$ ✓。
+</div>
+<div class="box example">
+<b>例 2（三事件加法公式）.</b> 已知 $P(A)=P(B)=P(C)=\dfrac14$，$P(AB)=P(BC)=0$，$P(AC)=\dfrac18$，求 $P(A\cup B\cup C)$ 与 $P(\bar A\bar B\bar C)$。<br>
+① 代入 ⑥：
+$$P(A\cup B\cup C)=\frac14+\frac14+\frac14-0-0-\frac18+0=\frac58$$
+② $P(\bar A\bar B\bar C)=1-\dfrac58=\dfrac38$。<br>
+<b>验算（拆成 8 个区域）：</b>$P(AB)=0\Rightarrow P(ABC)=P(AB\bar C)=0$；$P(BC)=0\Rightarrow P(\bar ABC)=0$；逐块推出 $A\bar B C=\frac18$、$A\bar B\bar C=\frac18$、$\bar AB\bar C=\frac14$、$\bar A\bar BC=\frac18$、$\bar A\bar B\bar C=\frac38$。全部非负且总和为 $1$ ✓，与公式结果一致。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>古典概型与几何概型<span class="tag">核心</span></h2>
+<div class="box def">
+<b>古典概型：</b>样本空间有限、每个基本事件等可能：
+$$P(A)=\frac{A\ \text{所含基本事件数}}{\text{基本事件总数}}=\frac{k}{n}$$
+</div>
+<div class="box method">
+<b>计数四件套（排列组合复习）：</b><br>
+① <b>加法原理</b>分类相加；<b>乘法原理</b>分步相乘；<br>
+② 排列（不重复、计顺序）$A_n^k=\dfrac{n!}{(n-k)!}$，全排列 $n!$；<br>
+③ 组合（不重复、不计顺序）$C_n^k=\dfrac{n!}{k!\,(n-k)!}$，对称性 $C_n^k=C_n^{n-k}$；<br>
+④ 可重复：每个位置 $m$ 种选择的独立情形 ⇒ $m^n$（分房、号码问题常用）。
+</div>
+<div class="box example">
+<b>例 1（抽样问题）.</b> 袋中 $a$ 只白球、$b$ 只红球，一次取 $n$ 只，求恰有 $k$ 只白球的概率（$k\le a$，$n-k\le b$）。<br>
+① 总数：$C_{a+b}^{n}$；② 有利：$C_a^k\,C_b^{n-k}$；
+$$P=\frac{C_a^k\,C_b^{n-k}}{C_{a+b}^{n}}$$
+<b>验算（特例穷举）：</b>取 $a=b=2,\ n=2,\ k=1$：$P=\dfrac{C_2^1C_2^1}{C_4^2}=\dfrac46=\dfrac23$。直接枚举 6 种等可能组合：恰一白一红有 4 种，$4/6=2/3$ ✓。
+</div>
+<div class="box example">
+<b>例 2（生日问题）.</b> $n$ 人中至少两人生日相同的概率（一年按 365 天）。<br>
+① 对立事件「所有人生日互不相同」；<br>
+② 总数 $365^n$，互不相同数 $365\cdot364\cdots(365-n+1)$：
+$$P(\text{至少两人同生日})=1-\frac{365\times364\times\cdots\times(365-n+1)}{365^n}$$
+③ 数值感受：$n=23$ 时 $\approx0.507$（刚过半），$n=50$ 时 $\approx0.970$。<br>
+<b>验算（缩小模型）：</b>把「365 天」缩成「2 天、2 人」：$1-\dfrac{2\times1}{2^2}=\dfrac12$——两人同生日概率 $1/2$，直觉吻合 ✓。
+</div>
+<div class="box example">
+<b>例 3（几何概型·会面问题）.</b> 两人独立地在 0 到 60 分钟内等可能到达，先到者等 15 分钟便离开，求能会面概率。<br>
+① 设到达时刻 $x,y\in[0,60]$，样本区域面积 $60^2$；<br>
+② 会面条件 $|x-y|\le15$；<br>
+③ 有利区域 = 正方形挖去两个腰长 45 的等腰直角三角形：
+$$P=1-\frac{2\times\frac12\times45^2}{60^2}=1-\left(\frac{45}{60}\right)^2=1-\frac{9}{16}=\frac{7}{16}$$
+<b>验算：</b>$\dfrac{7}{16}=0.4375\in(0,1)$；若等待时间 $d\to0$ 概率 $\to0$、$d\to60$ 概率 $\to1$，公式在两端（$d\to0$、$d\to60$）的取值趋势正确 ✓。
+</div>
+<div class="box tip"><b>几何概型要诀：</b>「等可能」= 均匀分布 ⇒ 概率 = 目标测度 / 总测度。三步走：设变量 → 写条件不等式 → 画图算面积（体积/长度）。</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>条件概率 · 全概率 · 贝叶斯<span class="tag">核心</span></h2>
+<div class="box def">
+<b>条件概率：</b>设 $P(A)>0$，
+$$P(B|A)=\frac{P(AB)}{P(A)}$$
+「已知 $A$ 发生」下 $B$ 发生的概率（把 $A$ 当作新样本空间、用 $P(A)$ 归一化）。对固定 $A$，$P(\cdot|A)$ 仍满足概率三条公理。
+</div>
+<div class="thm"><span class="label">乘法公式</span>$P(A)>0$ 时 $P(AB)=P(B|A)P(A)$；对称形式 $P(AB)=P(A|B)P(B)$（$P(B)>0$ 时）；推广（各条件概率有意义时）：
+$$P(ABC)=P(A)\,P(B|A)\,P(C|AB)$$</div>
+<div class="proof"><span class="label">证明（推广式，设 $P(A)>0,\ P(AB)>0$）</span>两次使用条件概率定义（每步所需的分母为正，合法）：
+$$P(ABC)=P(AB)\cdot P(C|AB)=\left[P(A)P(B|A)\right]P(C|AB)\ ✓$$<span class="qed">∎</span></div>
+<div class="thm"><span class="label">全概率公式</span>设 $B_1,\dots,B_n$ 为样本空间的一个<b>划分</b>（两两互斥、并为 $S$，$P(B_i)>0$），则对任意事件 $A$：
+$$P(A)=\sum_{i=1}^{n}P(A|B_i)\,P(B_i)$$</div>
+<div class="proof"><span class="label">证明</span>分解 $A=AS=A(B_1\cup\cdots\cup B_n)=(AB_1)\cup\cdots\cup(AB_n)$，各 $AB_i$ 两两互斥（$B_i$ 互斥）。由有限可加性与乘法公式：
+$$P(A)=\sum_iP(AB_i)=\sum_iP(A|B_i)P(B_i)\ ✓$$<span class="qed">∎</span></div>
+<div class="thm"><span class="label">贝叶斯公式</span>条件同上且 $P(A)>0$：
+$$P(B_i|A)=\frac{P(A|B_i)P(B_i)}{\displaystyle\sum_{j=1}^{n}P(A|B_j)P(B_j)}$$
+（$P(B_i)$ 为<b>先验</b>概率，$P(B_i|A)$ 为<b>后验</b>概率——由果溯因。）</div>
+<div class="proof"><span class="label">证明</span>分子用乘法公式、分母用全概率公式：
+$$P(B_i|A)=\frac{P(AB_i)}{P(A)}=\frac{P(A|B_i)P(B_i)}{\sum_jP(A|B_j)P(B_j)}$$
+（分母即全概率展开。）<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（疾病检测：后验概率）.</b> 患病率 $1\%$；试剂对患者阳性率 $90\%$，对非患者误报率 $10\%$。某人阳性，求其患病概率。<br>
+① 记号：$A$=患病、$B$=阳性；$P(A)=0.01,\ P(B|A)=0.9,\ P(B|\bar A)=0.1$；<br>
+② 全概率：$P(B)=0.9\times0.01+0.1\times0.99=0.108$；<br>
+③ 贝叶斯：
+$$P(A|B)=\frac{0.009}{0.108}=\frac{1}{12}\approx8.3\%$$
+④ 意义：先验太低时，即使检测不差，阳性后的后验也只有 $8.3\%$。<br>
+<b>验算（频率法）：</b>10000 人中，患者 100、阳性 90；非患者 9900、阳性 990；阳性共 1080 人，其中真患者 $90/1080=1/12$ ✓。
+</div>
+<div class="box example">
+<b>例 2（次品溯源）.</b> 甲、乙、丙产量占比 $25\%,\ 35\%,\ 40\%$，次品率 $5\%,\ 4\%,\ 2\%$。任取一件为次品，求来自各机器的概率。<br>
+① 全概率（总次品率）：
+$$P(D)=0.25\times0.05+0.35\times0.04+0.40\times0.02=0.0345$$
+② 贝叶斯：
+$$P(\text{甲}|D)=\frac{0.0125}{0.0345}=\frac{25}{69},\qquad P(\text{乙}|D)=\frac{0.014}{0.0345}=\frac{28}{69},\qquad P(\text{丙}|D)=\frac{0.008}{0.0345}=\frac{16}{69}$$
+③ 解读：后验大小取决于「产量 × 次品率」的贡献——乙的贡献最大（$0.014$），故来自乙的后验最大；丙贡献最小（$0.008$），后验最小。<br>
+<b>验算：</b>$\dfrac{25+28+16}{69}=1$ ✓；注意甲次品率最高（$5\%$）但产量小（$25\%$），其贡献 $0.0125$ 小于乙的 $0.014$——贝叶斯自动把「先验产量」与「证据」一起权衡，这正是它的价值。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>独立性<span class="tag">核心</span></h2>
+<div class="box def">
+<b>两事件独立：</b>
+$$P(AB)=P(A)P(B)$$
+（直觉：一个发生与否不影响另一个的发生概率。当 $P(A)>0$ 时等价于 $P(B|A)=P(B)$。）
+</div>
+<div class="thm"><span class="label">性质</span>若 $A$ 与 $B$ 独立，则 $A$ 与 $\bar B$、$\bar A$ 与 $B$、$\bar A$ 与 $\bar B$ 均独立。</div>
+<div class="proof"><span class="label">证明（第一组）</span>
+$$P(A\bar B)=P(A)-P(AB)=P(A)-P(A)P(B)=P(A)\left[1-P(B)\right]=P(A)P(\bar B)\ ✓$$
+由独立性的对称性，对 $(B,A)$ 重用上述结论得 $\bar A$ 与 $B$ 独立；再对 $(\bar A,B)$ 用一次，得 $\bar A$ 与 $\bar B$ 独立 ✓。<span class="qed">∎</span></div>
+<div class="box warn">
+<b>互斥 ≠ 独立：</b>若 $A,B$ 互斥且 $P(A),P(B)>0$，则 $P(AB)=0\neq P(A)P(B)$ ⇒ <b>互斥必不独立</b>；反之在 $P(A),P(B)>0$ 时独立也<b>必不互斥</b>（独立时 $P(AB)=P(A)P(B)>0$）。
+</div>
+<div class="box def">
+<b>三个事件相互独立：</b>除两两独立外，还需
+$$P(ABC)=P(A)P(B)P(C)$$
+（$n$ 个事件相互独立：任意 $k\ge2$ 个事件之交的概率 = 各概率之积，共 $2^n-n-1$ 个等式。）
+</div>
+<div class="box example">
+<b>例 1（经典反例：两两独立 ≠ 相互独立）.</b> 取 $S=\{\omega_1,\omega_2,\omega_3,\omega_4\}$ 四个等可能样本点，
+$$A=\{\omega_1,\omega_2\},\qquad B=\{\omega_1,\omega_3\},\qquad C=\{\omega_1,\omega_4\}$$
+判断独立性。<br>
+① 两两：$P(AB)=P(\{\omega_1\})=\frac14=\frac12\cdot\frac12=P(A)P(B)$；同理 $P(AC)=P(BC)=\frac14$ ⇒ 两两独立；<br>
+② 三事件：$P(ABC)=P(\{\omega_1\})=\frac14\neq\frac12\cdot\frac12\cdot\frac12=\frac18$；<br>
+③ 结论：<b>两两独立但不相互独立</b>——「相互独立」是更强的条件。<br>
+<b>验算：</b>每个事件含 2 个样本点、概率 $1/2$；三者之交只含 $\omega_1$、概率 $1/4$，乘积为 $1/8$，确实不等 ✓。
+</div>
+<div class="box example">
+<b>例 2（系统可靠性）.</b> 元件独立工作、失效概率均为 $p$。求 ① 两元件串联（都工作才工作）；② 两元件并联（至少一个工作即可）的可靠度。<br>
+① 串联：两件都工作：
+$$R_1=(1-p)^2$$
+② 并联：对立事件「都失效」：
+$$R_2=1-p^2$$
+<b>验算（$p=0.1$）：</b>串联 $0.81<0.9$（比单件更差）、并联 $0.99>0.9$（比单件更好），且 $0<R_1<R_2<1$ ✓——与工程直觉一致。
+</div>
+<div class="box example">
+<b>例 3（伯努利概型）.</b> 射手命中率 $0.4$，独立射击 5 次，求 ① 恰命中 2 次；② 至少命中 1 次。<br>
+① 恰 2 次：
+$$P=C_5^2(0.4)^2(0.6)^3=10\times0.16\times0.216=0.3456$$
+② 至少 1 次（对立事件「全部脱靶」）：
+$$P=1-(0.6)^5=1-0.07776=0.92224$$
+<b>验算（分布全表）：</b>按 $B(5,0.4)$ 列出 $k=0,\dots,5$ 的概率：
+$$0.07776,\ 0.2592,\ 0.3456,\ 0.2304,\ 0.0768,\ 0.01024$$
+六项之和 $=1$ ✓——恰 2 次 $0.3456$ 与公式相符，且「至少 1 次」$=1-0.07776$ ✓。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>解题决策流程</h2>
+<pre class="flow">拿到概率题
+├─ 直接求概率？
+│   ├─ 有限等可能 → 古典概型：数有利 / 总数（组合计数）
+│   ├─ 连续等可能 → 几何概型：设变量 → 条件不等式 → 测度比
+│   ├─ 含「已知……求……」→ 条件概率 / 乘法公式
+│   ├─ 分阶段、多原因（先验信息）→ 全概率公式
+│   └─ 由果溯因（问「来自哪一类」）→ 贝叶斯公式
+├─ 独立性问题？
+│   ├─ 关键词：独立、互不影响、有放回抽取 → P(AB) = P(A)P(B)
+│   ├─ 可靠性：串联用「都工作」连乘；并联用「都失效」取补
+│   └─ n 重独立试验 → C(n,k) p^k q^(n−k)（伯努利）
+├─ 文字翻译题？
+│   └─ 至少 / 恰有 / 不多于 → 集合运算 + 德摩根 + 对立事件
+└─ 判断两两独立 / 相互独立
+    └─ 两两查 C(n,2) 个等式；相互独立还要查所有高阶交
+</pre>
+</section>
+
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>互斥 ≠ 独立：</b>$P(A),P(B)>0$ 且互斥时必不独立（$0\neq P(A)P(B)$）；反之独立时必不互斥。</li>
+<li><b>条件概率方向：</b>$P(B|A)$ 与 $P(A|B)$ 不同，别混用；分母必须 $P(A)>0$。</li>
+<li><b>全概率先检查划分：</b>$B_1,\dots,B_n$ 必须两两互斥、并为 $S$、且 $P(B_i)>0$——三条件缺一不可。</li>
+<li><b>「至少」优先用对立事件：</b>「至少一次」= $1-$「一次都没有」，往往比正面分类简单数倍。</li>
+<li><b>德摩根方向：</b>$\overline{A\cup B}=\bar A\bar B$、$\overline{AB}=\bar A\cup\bar B$（横线进屋、符号互换），写反必错。</li>
+<li><b>加法公式漏减交：</b>$P(A\cup B)=P(A)+P(B)-P(AB)$；三事件再补回 $P(ABC)$（容斥正负交替）。</li>
+<li><b>古典概型计数自洽：</b>分子分母必须同一套计数口径（都有序或都无序）；「一次取 $n$」与「逐个取」结果相同但要选一种口径算到底。</li>
+<li><b>几何概型唯一等可能假设：</b>同一题不能同时假设两种「等可能」（贝特朗悖论的教训）——按题意选均匀变量。</li>
+<li><b>两两独立推不出相互独立：</b>必须验证 $P(ABC)=P(A)P(B)P(C)$（记住 §5 例1 的四样本点反例）。</li>
+<li><b>伯努利概型两个前提：</b>独立 + 每次概率相同；缺一个就不能用 $C(n,k)p^kq^{n-k}$。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>样本空间 · 事件</td><td>$S$ 的子集；互斥 $AB=\varnothing$；对立 $A\bar A=\varnothing$ 且 $A\cup\bar A=S$</td></tr>
+<tr><td>德摩根律</td><td>$\overline{A\cup B}=\bar A\bar B$；$\overline{AB}=\bar A\cup\bar B$</td></tr>
+<tr><td>概率公理</td><td>非负、$P(S)=1$、互斥可列可加</td></tr>
+<tr><td>基本性质</td><td>$P(\varnothing)=0$；$P(\bar A)=1-P(A)$；$A\subset B\Rightarrow P(A)\le P(B)$；$P(B-A)=P(B)-P(A)$</td></tr>
+<tr><td>加法公式</td><td>$P(A\cup B)=P(A)+P(B)-P(AB)$；三事件容斥（$+P(ABC)$ 补回）</td></tr>
+<tr><td>古典概型</td><td>$P=k/n$；计数：$A_n^k$、$C_n^k$、可重复 $m^n$</td></tr>
+<tr><td>几何概型</td><td>测度比（长度/面积/体积）</td></tr>
+<tr><td>条件概率</td><td>$P(B|A)=\dfrac{P(AB)}{P(A)}\ (P(A)>0)$</td></tr>
+<tr><td>乘法公式</td><td>$P(AB)=P(A)P(B|A)$；$P(ABC)=P(A)P(B|A)P(C|AB)$</td></tr>
+<tr><td>全概率公式</td><td>$P(A)=\sum_i P(A|B_i)P(B_i)$（$B_i$ 为划分）</td></tr>
+<tr><td>贝叶斯公式</td><td>$P(B_i|A)=\dfrac{P(A|B_i)P(B_i)}{\sum_j P(A|B_j)P(B_j)}$</td></tr>
+<tr><td>独立性</td><td>$P(AB)=P(A)P(B)$；补事件保持独立；三事件 = 两两独立 + $P(ABC)=P(A)P(B)P(C)$</td></tr>
+<tr><td>伯努利概型</td><td>$P(\text{恰 }k\text{ 次})=C_n^kp^kq^{n-k}$</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>本章是给「随机」建立度量衡——<b>公理定底盘、计数与几何给算法、条件概率链（乘法→全概率→贝叶斯）处理信息、独立性刻画「互不影响」</b>；后面每一章都在这四个工具上生长。</div>
+</section>
+
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>会翻译（文字 ↔ 集合）→ 会计算（计数/几何）→ 会用链（条件概率三大公式）→ 会判断（独立性）。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 写出常见试验的样本空间，用事件运算翻译「至少/恰有/不多于」；<br>
+② 从三条公理出发证明全部基本性质（补、差、单调、加法公式与三事件容斥）；<br>
+③ 熟练使用排列组合计算古典概型，会做几何概型（设变量 → 不等式 → 面积）；<br>
+④ 推导并运用乘法公式、全概率公式、贝叶斯公式，能独立完成疾病检测、次品溯源两类招牌题；<br>
+⑤ 判断两事件与多事件的独立性，能构造「两两独立但不相互独立」的反例；<br>
+⑥ 用伯努利概型与对立事件处理 n 重试验与可靠性问题。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>「至少一个/恰有一个」</td><td>集合翻译 + 德摩根</td><td>§1 例2</td></tr>
+<tr><td>已知若干概率求组合</td><td>性质 + 加法公式</td><td>§2 例1、2</td></tr>
+<tr><td>抽样 / 抽球</td><td>古典概型计数</td><td>§3 例1</td></tr>
+<tr><td>「至少」型重复事件</td><td>对立事件（互不相同/全不发生）</td><td>§3 例2、§5 例3</td></tr>
+<tr><td>连续等可能（会面问题）</td><td>几何概型</td><td>§3 例3</td></tr>
+<tr><td>「已知……求……」</td><td>条件概率 / 乘法公式</td><td>§4 定义与乘法公式</td></tr>
+<tr><td>分阶段、多来源</td><td>全概率公式</td><td>§4 例1、2</td></tr>
+<tr><td>「结果来自哪一类」</td><td>贝叶斯公式</td><td>§4 例1、2</td></tr>
+<tr><td>系统可靠性</td><td>串联连乘 / 并联取补</td><td>§5 例2</td></tr>
+<tr><td>n 重独立试验</td><td>伯努利公式</td><td>§5 例3</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 从三条公理出发，独立证明 $P(\bar A)=1-P(A)$ 与加法公式（§2 证明）<br>
+☐ 默写德摩根律并各举一个应用的例子（§1、§2 例1）<br>
+☐ 独立完成一道古典概型（如抽球/生日类）与一道几何概型（§3 三例选二）<br>
+☐ 独立推导全概率与贝叶斯公式，并完整解一道「检测/溯源」题（§4 例1 模式）<br>
+☐ 现场构造「两两独立但不相互独立」的反例：逐个验证三个两两独立等式，并检验 $P(ABC)\neq P(A)P(B)P(C)$（§5 例1）<br>
+☐ 说出互斥与独立的区别，并解释为什么 $P(A),P(B)>0$ 时二者不能同时成立（§5 警示框）
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>概率论与数理统计 · 第一章 概率论的基本概念 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

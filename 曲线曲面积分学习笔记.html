@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>曲线积分与曲面积分 · 完全教程（下册第十一章 · 含全部证明）</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#2563eb;--accent2:#0891b2;--soft:#eff6ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#0891b2);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.5rem,4vw,2.2rem);letter-spacing:2px}
+.hero p{margin:0;color:#bfdbfe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#1d4ed8;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#1e3a8a}
+.card h3{font-size:1.05rem;color:#1d4ed8;margin:24px 0 8px;padding-left:10px;border-left:4px solid #93c5fd}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#eff6ff;border-color:#3b82f6}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #bfdbfe;border-left:4px solid #3b82f6;background:#f8faff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#1d4ed8;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#1e40af;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(37,99,235,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>曲线积分与曲面积分 · 完全教程</h1>
+<p>下册 第十一章 · 全部内容 + 全部定理证明 + 例题步骤化</p>
+<div class="chips"><span>两类曲线积分</span><span>两类曲面积分</span><span>Green 证明</span><span>Gauss 证明</span><span>Stokes 证明</span><span>路径无关</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 对弧长的曲线积分</a>
+<a href="#sec-2">02 · 对坐标的曲线积分</a>
+<a href="#sec-3">03 · 两类曲线积分的关系</a>
+<a href="#sec-4">04 · 格林公式（含证明）</a>
+<a href="#sec-5">05 · 路径无关与全微分求积</a>
+<a href="#sec-6">06 · 对面积的曲面积分</a>
+<a href="#sec-7">07 · 对坐标的曲面积分</a>
+<a href="#sec-8">08 · 两类曲面积分的关系</a>
+<a href="#sec-9">09 · 高斯公式·通量与散度</a>
+<a href="#sec-10">10 · 斯托克斯公式·环流量与旋度</a>
+<a href="#sec-11">11 · 解题决策流程</a>
+<a href="#sec-12">12 · 易错点清单</a>
+<a href="#sec-13">13 · 公式速查表</a>
+<a href="#sec-14">14 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>两条主线：</b>曲线积分（沿曲线）与曲面积分（沿曲面），各有「第一类（无方向）」与「第二类（有方向）」；三大工具：Green（平面闭曲线）、Gauss（闭曲面）、Stokes（空间闭曲线）。<span style="color:#1d4ed8;font-weight:700">蓝框=定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题（步骤化）</span>。</div>
+<pre class="flow">曲线积分与曲面积分
+├─ 曲线积分
+│   ├─ 第一类（对弧长 ds）：无方向，∫ f ds
+│   ├─ 第二类（对坐标 Pdx+Qdy）：有方向
+│   ├─ 关系：dx = cosα·ds，dy = cosβ·ds
+│   └─ 工具：Green（平面闭曲线）、Stokes（空间闭曲线）
+├─ 曲面积分
+│   ├─ 第一类（对面积 dS）：无侧，∬ f dS
+│   ├─ 第二类（对坐标 dxdy 等）：有侧
+│   ├─ 关系：dxdy = cosγ·dS
+│   └─ 工具：Gauss（闭曲面）
+└─ 统一思想：区域上的积分 = 其边界上的积分
+    （Green 是 Stokes 的平面特例；Gauss 对应「闭曲面 ↔ 空间区域」）
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>对弧长的曲线积分（第一类）<span class="tag">基础</span></h2>
+<div class="box def">
+<b>定义：</b>设 $L$ 是平面上可求长的曲线弧，$f(x,y)$ 在 $L$ 上有界。把 $L$ 任意分成 $n$ 小段，第 $i$ 段长为 $\Delta s_i$，在其上任取点 $(\xi_i,\eta_i)$ 作和 $\displaystyle\sum_{i=1}^{n}f(\xi_i,\eta_i)\,\Delta s_i$。若当各小段长度的最大值 $\lambda\to0$ 时该和总趋于同一个常数，则称此极限为 $f$ 在 $L$ 上<b>对弧长的曲线积分</b>：
+$$\int_L f(x,y)\,ds=\lim_{\lambda\to0}\sum_{i=1}^{n}f(\xi_i,\eta_i)\,\Delta s_i$$
+（$f$ 连续时积分存在。）
+</div>
+<div class="box def"><b>性质：</b>① 线性；② 可加性；③ <b>与方向无关</b>：$\displaystyle\int_{AB}f\,ds=\int_{BA}f\,ds$；④ $\displaystyle\left|\int_L f\,ds\right|\le\int_L|f|\,ds$。</div>
+<div class="thm"><span class="label">计算定理</span>
+① 参数式 $x=x(t),\ y=y(t)\ (\alpha\le t\le\beta)$：
+$$\int_L f\,ds=\int_{\alpha}^{\beta}f\!\left(x(t),y(t)\right)\sqrt{x'^2(t)+y'^2(t)}\,dt$$
+② 显式 $y=y(x)\ (a\le x\le b)$：
+$$\int_L f\,ds=\int_a^b f\!\left(x,y(x)\right)\sqrt{1+y'^2}\,dx$$
+③ 极坐标 $r=r(\theta)\ (\alpha\le\theta\le\beta)$：
+$$\int_L f\,ds=\int_{\alpha}^{\beta}f\!\left(r\cos\theta,\ r\sin\theta\right)\sqrt{r^2+r'^2}\,d\theta$$
+④ 空间曲线 $x=x(t),y=y(t),z=z(t)$：
+$$\int_L f\,ds=\int_{\alpha}^{\beta}f\!\left(x(t),y(t),z(t)\right)\sqrt{x'^2+y'^2+z'^2}\,dt$$
+</div>
+<div class="proof"><span class="label">证明（以①为例）</span>由弧微分公式 $ds=\sqrt{dx^2+dy^2}$，而 $dx=x'(t)\,dt,\ dy=y'(t)\,dt$，故
+$$ds=\sqrt{x'^2(t)+y'^2(t)}\,dt$$
+把这一关系代入定义中的和式，就把「对弧长 $s$ 的积分」化为「对参数 $t$ 的定积分」：
+$$\int_L f\,ds=\int_{\alpha}^{\beta}f\!\left(x(t),y(t)\right)\sqrt{x'^2+y'^2}\,dt$$
+②③ 是分别取 $x$、$\theta$ 为参数的特例；④ 同理，$ds$ 中多一项 $z'^2$。<span class="qed">∎</span></div>
+<div class="box method"><b>做题模板：</b>① 确认是 $ds$（第一类，无方向）；② 选参数式；③ 写出 $ds$ 与积分限（<b>下限 &lt; 上限</b>）；④ 化成定积分计算。</div>
+<div class="box example">
+<b>例 1.</b> 计算 $\displaystyle\int_L x\,ds$，$L$ 为抛物线 $y=x^2$ 从 $(0,0)$ 到 $(1,1)$ 的一段。<br>
+① 取 $x$ 为参数：$y'=2x$，$ds=\sqrt{1+4x^2}\,dx$，$x:0\to1$；<br>
+② 代入：
+$$\int_L x\,ds=\int_0^1 x\sqrt{1+4x^2}\,dx$$
+③ 注意 $d\left(1+4x^2\right)=8x\,dx$，凑微分：
+$$=\frac{1}{8}\cdot\frac{2}{3}\left(1+4x^2\right)^{3/2}\Bigg|_0^1=\frac{1}{12}\left(5\sqrt5-1\right)$$
+<b>验算（估界）：</b>在 $[0,1]$ 上 $x\le x\sqrt{1+4x^2}\le\sqrt5\,x$，故积分应介于 $\dfrac12$ 与 $\dfrac{\sqrt5}{2}\approx1.118$ 之间；所得 $\dfrac{5\sqrt5-1}{12}\approx0.848$ 落在区间内 ✓。
+</div>
+<div class="box example">
+<b>例 2（应用：曲线质量）.</b> 半圆 $x^2+y^2=a^2\ (y\ge0)$ 上线密度 $\rho=x^2$，求质量 $M$。<br>
+① 参数化：$x=a\cos t,\ y=a\sin t,\ t:0\to\pi$，
+$$ds=\sqrt{\left(-a\sin t\right)^2+\left(a\cos t\right)^2}\,dt=a\,dt$$
+② 代入：
+$$M=\int_L\rho\,ds=\int_0^{\pi}a^2\cos^2t\cdot a\,dt=a^3\int_0^{\pi}\cos^2t\,dt$$
+③ 用 $\cos^2t=\dfrac{1+\cos 2t}{2}$：
+$$\int_0^{\pi}\cos^2t\,dt=\frac{1}{2}\left[t+\frac{\sin 2t}{2}\right]_0^{\pi}=\frac{\pi}{2}\ \Longrightarrow\ M=\frac{\pi a^3}{2}$$
+<b>验算：</b>期望值应小于「以 $\rho$ 的最大值 $a^2$ 均匀分布」的质量 $a^2\cdot\pi a=\pi a^3$，而 $\pi a^3/2<\pi a^3$ ✓，量级合理。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>对坐标的曲线积分（第二类）<span class="tag">基础</span></h2>
+<div class="box def">
+<b>引例（变力做功）：</b>质点在力 $\boldsymbol F=(P,Q)$ 作用下沿有向曲线 $L$ 从 $A$ 到 $B$，功 $W=\displaystyle\int_L P\,dx+Q\,dy$。<br><br>
+<b>定义：</b>设 $L$ 为从 $A$ 到 $B$ 的<b>有向光滑</b>曲线弧，$P,Q$ 在 $L$ 上有界。把 $L$ 任意分成 $n$ 段，第 $i$ 段的坐标增量记 $\Delta x_i,\Delta y_i$，任取 $(\xi_i,\eta_i)$，若和的极限存在：
+$$\int_L P\,dx+Q\,dy=\lim_{\lambda\to0}\sum_{i=1}^{n}\left[P(\xi_i,\eta_i)\Delta x_i+Q(\xi_i,\eta_i)\Delta y_i\right]$$
+（<b>与方向有关</b>，$\lambda$ 为小弧段长度的最大值。）
+</div>
+<div class="box def"><b>性质：</b>① 线性；② 可加性；③ <b>反向变号</b>：$\displaystyle\int_{BA}P\,dx+Q\,dy=-\int_{AB}P\,dx+Q\,dy$。</div>
+<div class="thm"><span class="label">计算定理</span>
+① 参数式 $x=x(t),\ y=y(t)$，起点 $t=\alpha$、终点 $t=\beta$：
+$$\int_L P\,dx+Q\,dy=\int_{\alpha}^{\beta}\left[P\!\left(x(t),y(t)\right)x'(t)+Q\!\left(x(t),y(t)\right)y'(t)\right]dt$$
+② 空间曲线 $\Gamma:\ x=x(t),\ y=y(t),\ z=z(t)$（起点 $\alpha$，终点 $\beta$）：
+$$\int_\Gamma P\,dx+Q\,dy+R\,dz=\int_{\alpha}^{\beta}\left[Px'+Qy'+Rz'\right]dt$$
+</div>
+<div class="proof"><span class="label">证明（以①为例）</span>在微元层面上 $dx=x'(t)\,dt,\ dy=y'(t)\,dt$（一元微分），代入积分定义：
+$$\int_L P\,dx+Q\,dy=\int_{\alpha}^{\beta}\left[P\!\left(x(t),y(t)\right)x'(t)+Q\!\left(x(t),y(t)\right)y'(t)\right]dt$$
+注意<b>积分下限必须是起点、上限必须是终点</b>（与第一类不同），这正是「方向性」的体现。<span class="qed">∎</span></div>
+<div class="box method"><b>做题模板：</b>① 确认是 $dx,dy$（第二类）；② 参数化，明确起点/终点对应的参数；③ 代入 $dx=x'dt,\ dy=y'dt$；④ 计算（起点为下限、终点为上限，不需要换成「小到大」）。</div>
+<div class="box example">
+<b>例 1.</b> 计算 $\displaystyle\int_L\left(x^2+y^2\right)dx+xy\,dy$，$L$：抛物线 $y=x^2$ 从 $(0,0)$ 到 $(1,1)$。<br>
+① 取 $x=t,\ y=t^2$，$dx=dt,\ dy=2t\,dt$，$t:0\to1$；<br>
+② 代入：
+$$\int_0^1\left[\left(t^2+t^4\right)+t\cdot t^2\cdot 2t\right]dt=\int_0^1\left(t^2+3t^4\right)dt=\frac13+\frac35=\frac{14}{15}$$
+<b>验算（换参数验证）：</b>改用 $x=s^2,\ y=s^4\ (s:0\to1)$（同一条曲线、同方向），$dx=2s\,ds,\ dy=4s^3\,ds$：
+$$\int_0^1\left[\left(s^4+s^8\right)2s+s^2\cdot s^4\cdot 4s^3\right]ds=\int_0^1\left(2s^5+6s^9\right)ds=\frac13+\frac35=\frac{14}{15}\ ✓$$
+</div>
+<div class="box example">
+<b>例 2.</b> 计算 $\displaystyle\int_L x\,dy-y\,dx$，$L$：上半单位圆，从 $(1,0)$ 经 $(0,1)$ 到 $(-1,0)$（逆时针）。<br>
+① 参数化：$x=\cos t,\ y=\sin t$，起点 $t=0$、终点 $t=\pi$；<br>
+② $dx=-\sin t\,dt,\ dy=\cos t\,dt$，故
+$$x\,dy-y\,dx=\cos t\cdot\cos t\,dt-\sin t\cdot\left(-\sin t\right)dt=\left(\cos^2t+\sin^2t\right)dt=dt$$
+③ 代入：
+$$\int_L x\,dy-y\,dx=\int_0^{\pi}dt=\pi$$
+<b>验算（几何意义）：</b>沿逆时针转经上半圆，极角从 $0$ 增到 $\pi$；被积式恰是 $r^2d\theta$（这里 $r=1$），积分 $=\pi$ ✓。
+</div>
+</section>
+
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>两类曲线积分的关系</h2>
+<div class="thm"><span class="label">关系式</span>设有向曲线弧 $L$ 上<b>沿定向</b>的单位切向量为 $\boldsymbol e=(\cos\alpha,\cos\beta)$，则
+$$\int_L P\,dx+Q\,dy=\int_L\left(P\cos\alpha+Q\cos\beta\right)ds$$
+空间情形：$\displaystyle\int_\Gamma P\,dx+Q\,dy+R\,dz=\int_\Gamma\left(P\cos\alpha+Q\cos\beta+R\cos\gamma\right)ds$。
+</div>
+<div class="proof"><span class="label">说明</span>沿有向弧段，坐标增量与弧长的微元关系为
+$$dx=\cos\alpha\,ds,\qquad dy=\cos\beta\,ds$$
+（因为 $(dx,dy)$ 与切向量方向一致，长度为 $ds$。）代入第二类积分即得。<span class="qed">∎</span></div>
+<div class="box tip"><b>用途：</b>当被积式恰能写成「向量场 $\boldsymbol F=(P,Q)$ 点乘切向量」时，两类积分互相转化；Green 公式、Stokes 公式的向量形式都由此而来。</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>格林公式<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">格林公式</span>设闭区域 $D$ 由分段光滑闭曲线 $L$ 围成，$L$ 取<b>正向</b>（逆时针：沿 $L$ 走时 $D$ 在左侧），$P,Q$ 在 $D$ 上有一阶连续偏导，则
+$$\oint_L P\,dx+Q\,dy=\iint_D\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy$$
+</div>
+<div class="proof"><span class="label">证明（简单区域 → 一般区域）</span>
+<b>第一步：设 $D$ 既是 X 型又是 Y 型。</b><br><br>
+<b>① X 型区域</b> $D=\{(x,y)\mid a\le x\le b,\ \varphi_1(x)\le y\le\varphi_2(x)\}$，证明
+$$\oint_L P\,dx=-\iint_D\frac{\partial P}{\partial y}\,dx\,dy$$
+竖直边界上 $dx=0$ 不贡献；底边（$y=\varphi_1$，左→右）与顶边（$y=\varphi_2$，右→左）给出
+$$\oint_L P\,dx=\int_a^b P\!\left(x,\varphi_1(x)\right)dx+\int_b^a P\!\left(x,\varphi_2(x)\right)dx=\int_a^b\left[P\!\left(x,\varphi_1\right)-P\!\left(x,\varphi_2\right)\right]dx$$
+而
+$$-\iint_D\frac{\partial P}{\partial y}\,dx\,dy=-\int_a^b\left[\int_{\varphi_1(x)}^{\varphi_2(x)}\frac{\partial P}{\partial y}\,dy\right]dx=-\int_a^b\left[P\!\left(x,\varphi_2\right)-P\!\left(x,\varphi_1\right)\right]dx$$
+两者相等 ✓。<br><br>
+<b>② Y 型区域</b> $D=\{(x,y)\mid c\le y\le d,\ \psi_1(y)\le x\le\psi_2(y)\}$，证明
+$$\oint_L Q\,dy=\iint_D\frac{\partial Q}{\partial x}\,dx\,dy$$
+水平边界上 $dy=0$ 不贡献；右边（$x=\psi_2$，下→上）与左边（$x=\psi_1$，上→下）给出
+$$\oint_L Q\,dy=\int_c^d Q\!\left(\psi_2(y),y\right)dy+\int_d^c Q\!\left(\psi_1(y),y\right)dy=\int_c^d\left[Q\!\left(\psi_2\right)-Q\!\left(\psi_1\right)\right]dy$$
+而
+$$\iint_D\frac{\partial Q}{\partial x}\,dx\,dy=\int_c^d\left[\int_{\psi_1(y)}^{\psi_2(y)}\frac{\partial Q}{\partial x}\,dx\right]dy=\int_c^d\left[Q\!\left(\psi_2\right)-Q\!\left(\psi_1\right)\right]dy$$
+两者相等 ✓。<br><br>
+两式相加即得格林公式。<br><br>
+<b>第二步（一般区域）：</b>用辅助线把一般区域分割成有限个上述简单区域，公共边界被正、反方向各走一次，积分恰好抵消；复连通（带洞）区域用辅助线化为单连通后同理。<span class="qed">∎</span></div>
+<div class="box tip"><b>用法与面积公式：</b>格林公式把「闭曲线上的第二类曲线积分」化为「二重积分」。特别地：
+$$A=\frac12\oint_L x\,dy-y\,dx=\oint_L x\,dy=-\oint_L y\,dx\qquad(A\ \text{为}\ D\ \text{的面积})$$
+</div>
+<div class="box example">
+<b>例 1.</b> 计算 $\displaystyle\oint_L (2x-y+4)\,dx+(5y+3x-6)\,dy$，$L$ 为三角形 $D$ 的正向边界，顶点为 $(0,0),\ (3,0),\ (3,2)$。<br>
+① 取 $P=2x-y+4,\ Q=5y+3x-6$：
+$$\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}=3-(-1)=4$$
+② 由格林公式：
+$$\oint_L=\iint_D 4\,dx\,dy=4A_D=4\times 3=12$$
+（三角形面积 $=\frac12\times3\times2=3$。）<br>
+<b>验算（直接沿三边积分）：</b>$(0,0)\to(3,0)$：$y=0,\ dy=0$，$\int_0^3(2x+4)dx=21$；$(3,0)\to(3,2)$：$dx=0$，$\int_0^2(5y+3)dy=16$；$(3,2)\to(0,0)$：$y=\frac23x$，算得 $-25$。合计 $21+16-25=12$ ✓。
+</div>
+<div class="box example">
+<b>例 2（用曲线积分求面积）.</b> 求椭圆 $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$ 的面积。<br>
+① 参数化（正向）：$x=a\cos t,\ y=b\sin t,\ t:0\to2\pi$；<br>
+② $x\,dy-y\,dx=ab\cos^2t\,dt+ab\sin^2t\,dt=ab\,dt$；<br>
+③ 由面积公式：
+$$A=\frac12\oint_L x\,dy-y\,dx=\frac{1}{2}\int_0^{2\pi}ab\,dt=\pi ab$$
+<b>验算：</b>当 $a=b$ 时退化为圆面积 $\pi a^2$ ✓。
+</div>
+<div class="box example">
+<b>例 3（有奇点：挖洞法）.</b> 计算 $\displaystyle\oint_L\frac{x\,dy-y\,dx}{x^2+y^2}$，$L$ 为椭圆 $\dfrac{x^2}{4}+y^2=1$ 的正向。<br>
+① 记 $P=\dfrac{-y}{x^2+y^2},\ Q=\dfrac{x}{x^2+y^2}$，可算得
+$$\frac{\partial Q}{\partial x}=\frac{y^2-x^2}{\left(x^2+y^2\right)^2}=\frac{\partial P}{\partial y}\qquad(\text{除原点外处处成立})$$
+但原点在 $L$ 内部、偏导不存在，<b>不能对整个区域直接套格林公式</b>；<br>
+② 挖洞：取半径为 $R$ 的小圆周 $l:\ x=R\cos\theta,\ y=R\sin\theta$（取 $0<R<1$，保证严格落在椭圆内部），对椭圆与 $l$ 之间的环形区域 $D'$ 用格林公式（右边 $=0$）：
+$$\oint_L-\oint_l=\iint_{D'}\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy=0\ \Longrightarrow\ \oint_L=\oint_l$$
+③ 在小圆 $l$ 上：$x\,dy-y\,dx=R^2d\theta$、$x^2+y^2=R^2$，故
+$$\oint_L=\int_0^{2\pi}\frac{R^2}{R^2}\,d\theta=2\pi\qquad(\text{与 }R\text{ 无关})$$
+<b>补充：</b>若闭曲线不包围原点，由格林公式直接得 $0$；沿负向积分为 $-2\pi$；绕 $n$ 圈为 $2n\pi$。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>曲线积分与路径无关 · 全微分求积<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">等价命题</span>设 $D$ 是<b>单连通</b>开区域，$P,Q$ 在 $D$ 内有一阶连续偏导，则以下四命题等价：<br>
+① 对 $D$ 内任意闭曲线 $C$：$\displaystyle\oint_C P\,dx+Q\,dy=0$；<br>
+② 积分 $\displaystyle\int_L P\,dx+Q\,dy$ 与路径无关（只依赖起、终点）；<br>
+③ $\dfrac{\partial P}{\partial y}=\dfrac{\partial Q}{\partial x}$ 在 $D$ 内处处成立；<br>
+④ 存在可微函数 $u(x,y)$ 使 $du=P\,dx+Q\,dy$（全微分求积）。</div>
+<div class="proof"><span class="label">证明（①⇔②⇒③⇒④⇒①）</span>
+<b>①⇒②：</b>设 $L_1,L_2$ 为 $D$ 内从 $A$ 到 $B$ 的任意两条路径，则 $L_1+L_2^-$（$L_2^-$ 为 $L_2$ 反向）是闭曲线，
+$$0=\oint_{L_1+L_2^-}=\int_{L_1}-\int_{L_2}\ \Longrightarrow\ \int_{L_1}=\int_{L_2}$$
+<b>②⇒①：</b>在闭曲线 $C$ 上任取两点 $A,B$，把 $C$ 分成两段弧 $L_1:A\to B$ 与 $L_2:B\to A$。由路径无关，$A\to B$ 的积分与路径无关，而 $L_2$ 是反向的，故
+$$\oint_C=\int_{L_1}+\int_{L_2}=\int_{A\to B}-\int_{A\to B}=0$$<br><br>
+<b>②⇒③：</b>因路径无关，可定义
+$$u(x,y)=\int_{(x_0,y_0)}^{(x,y)}P\,dx+Q\,dy$$
+取「沿水平线从 $(x,y)$ 到 $(x+\Delta x,y)$」继续积分，由积分中值定理与 $P$ 的连续性：
+$$\frac{u(x+\Delta x,y)-u(x,y)}{\Delta x}=\frac{1}{\Delta x}\int_x^{x+\Delta x}P(t,y)\,dt\ \xrightarrow{\ \Delta x\to0\ }\ P(x,y)$$
+故 $u_x=P$；同理 $u_y=Q$。于是 $u_{xy}=P_y,\ u_{yx}=Q_x$；因 $P_y,Q_x$ 连续，$u_{xy}=u_{yx}$，得 $P_y=Q_x$，即 ③。<br><br>
+<b>③⇒④：</b>设 ③ 成立。任取 $D$ 内闭曲线 $C$，它围成的区域含于 $D$（单连通），由格林公式
+$$\oint_C P\,dx+Q\,dy=\iint_{D_C}\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy=0$$
+故积分与路径无关（由 ①⇒② 的论证），上面的 $u$ 定义有意义，且同样算得 $u_x=P,\ u_y=Q$，即 $du=P\,dx+Q\,dy$。<br><br>
+<b>④⇒①：</b>若 $du=P\,dx+Q\,dy$，沿闭曲线 $C$：
+$$\oint_C P\,dx+Q\,dy=\oint_C du=0$$
+（全微分沿闭合路径积分为零。）<span class="qed">∎</span></div>
+<div class="box method">
+<b>求原函数 $u(x,y)$ 的三种方法：</b><br>
+① <b>折线法</b>（横竖折线从 $(x_0,y_0)$ 到 $(x,y)$）：
+$$u(x,y)=\int_{x_0}^{x}P(t,y_0)\,dt+\int_{y_0}^{y}Q(x,s)\,ds$$
+② <b>偏积分法</b>：$u=\displaystyle\int P\,dx+\varphi(y)$，再由 $u_y=Q$ 得 $\varphi'(y)=Q-\dfrac{\partial}{\partial y}\displaystyle\int P\,dx$，最后对 $y$ 积分；<br>
+③ <b>凑微分法</b>：把 $P\,dx+Q\,dy$ 直接凑成 $d(\,\cdot\,)$。
+</div>
+<div class="box example">
+<b>例 1（凑微分法）.</b> 验证 $du=(3x^2y+y^2)dx+(x^3+2xy)dy$ 并求 $u$。<br>
+① 检验条件：$P_y=3x^2+2y,\ Q_x=3x^2+2y$，相等 ✓（区域为全平面，单连通）；<br>
+② 凑微分：$3x^2y\,dx+x^3\,dy=d(x^3y)$，$y^2\,dx+2xy\,dy=d(xy^2)$；<br>
+③ 相加：
+$$u(x,y)=x^3y+xy^2+C$$
+<b>验算：</b>$u_x=3x^2y+y^2$ ✓，$u_y=x^3+2xy$ ✓。
+</div>
+<div class="box example">
+<b>例 2（折线法）.</b> 求 $u$ 使 $du=(2x+y)dx+(x+2y)dy$。<br>
+① 检验：$P_y=1=Q_x$ ✓ 路径无关；<br>
+② 取 $(x_0,y_0)=(0,0)$，沿折线积分：
+$$u=\int_0^x 2t\,dt+\int_0^y(x+2s)\,ds=x^2+\left(xy+y^2\right)=x^2+xy+y^2+C$$
+（第一段 $y=0$，$Q$ 项无贡献；第二段 $x$ 固定，$P\,dx=0$。）<br>
+<b>验算：</b>$u_x=2x+y$ ✓，$u_y=x+2y$ ✓。
+</div>
+<div class="box example">
+<b>例 3（路径无关 → 挑最省事的路径）.</b> 计算 $\displaystyle\int_L(2xy)\,dx+\left(x^2-y^2\right)dy$，$L$ 为从 $(0,0)$ 到 $(1,1)$ 的任意路径。<br>
+① 检验：$P_y=2x=Q_x$，路径无关 ✓；<br>
+② 取折线 $(0,0)\to(1,0)\to(1,1)$：第一段 $y=0,\ dy=0$，贡献 $0$；第二段 $x=1,\ dx=0$：
+$$\int_0^1\left(1-y^2\right)dy=1-\frac13=\frac23$$
+③ 故原积分 $=\dfrac23$。<br>
+<b>验算（原函数法）：</b>$u=x^2y-\dfrac{y^3}{3}$ 满足 $u_x=2xy,\ u_y=x^2-y^2$ ✓，于是
+$$\int_L=u(1,1)-u(0,0)=1-\frac13=\frac23\ ✓$$
+</div>
+<div class="box warn">
+<b>单连通条件不能丢：</b>§4 例 3 中 $P=\dfrac{-y}{x^2+y^2},\ Q=\dfrac{x}{x^2+y^2}$ 满足 $P_y=Q_x$（除原点），但绕原点的闭曲线积分为 $2\pi\ne0$——原因是区域「全平面去掉原点」<b>不是单连通</b>，定理不适用。
+</div>
+<div class="box tip">
+<b>空间情形（$\Omega$ 单连通）：</b>
+$$\int_\Gamma P\,dx+Q\,dy+R\,dz\ \text{与路径无关}\iff\operatorname{rot}\boldsymbol A=\boldsymbol 0\iff P\,dx+Q\,dy+R\,dz=du$$
+（$\boldsymbol A=(P,Q,R)$。）求 $u$ 同理：沿三条平行坐标轴的折线积分。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>对面积的曲面积分（第一类）<span class="tag">基础</span></h2>
+<div class="box def">
+<b>定义：</b>设曲面 $\Sigma$ 光滑（或分片光滑），$f(x,y,z)$ 在 $\Sigma$ 上有界。把 $\Sigma$ 分成 $n$ 小块，第 $i$ 块面积 $\Delta S_i$，任取点 $(\xi_i,\eta_i,\zeta_i)$，若和式极限存在：
+$$\iint_\Sigma f(x,y,z)\,dS=\lim_{\lambda\to0}\sum_{i=1}^{n}f(\xi_i,\eta_i,\zeta_i)\,\Delta S_i$$
+（$\lambda$ 为小块直径最大值；<b>与曲面的侧无关</b>。）
+</div>
+<div class="box def"><b>性质：</b>线性、可加性、与侧无关；$\displaystyle\iint_\Sigma dS$ 就是曲面面积。</div>
+<div class="thm"><span class="label">计算定理（一投、二代、三换）</span>
+① 曲面 $\Sigma:\ z=z(x,y)$，投影区域 $D_{xy}$：
+$$\iint_\Sigma f\,dS=\iint_{D_{xy}}f\!\left(x,y,z(x,y)\right)\sqrt{1+z_x^2+z_y^2}\,dx\,dy$$
+② 曲面 $x=x(y,z)$（投影到 $yOz$ 面）：
+$$\iint_\Sigma f\,dS=\iint_{D_{yz}}f\!\left(x(y,z),y,z\right)\sqrt{1+x_y^2+x_z^2}\,dy\,dz$$
+（$y=y(z,x)$ 同理；<b>无正负号</b>。）
+</div>
+<div class="proof"><span class="label">说明（面积微元）</span>以 $z=z(x,y)$ 为例：在投影面上取小矩形 $\Delta\sigma=\Delta x\,\Delta y$，曲面上对应小块面积近似为
+$$\Delta S\approx\sqrt{1+z_x^2+z_y^2}\ \Delta\sigma$$
+因为曲面的法向量为 $\boldsymbol n=(-z_x,-z_y,1)$，其与 $z$ 轴夹角 $\gamma$ 满足 $\cos\gamma=\dfrac{1}{\sqrt{1+z_x^2+z_y^2}}$，而面积投影关系 $\Delta\sigma=\Delta S\cdot|\cos\gamma|$，即 $\Delta S=\dfrac{\Delta\sigma}{|\cos\gamma|}=\sqrt{1+z_x^2+z_y^2}\,\Delta\sigma$。代入定义即得公式。<span class="qed">∎</span></div>
+<div class="box method"><b>做题模板：</b>① 把曲面写成 $z=z(x,y)$（或 $x=x(y,z)$、$y=y(z,x)$）；② 确定投影区域；③ 算 $\sqrt{1+z_x^2+z_y^2}$；④ 代入 $f$（把 $z$ 也用曲面方程换掉）化二重积分。</div>
+<div class="box example">
+<b>例 1.</b> 计算 $\displaystyle\iint_\Sigma(x+y+z)\,dS$，$\Sigma$ 为平面 $x+y+z=1$ 在第一卦限的部分。<br>
+① 写出曲面：$z=1-x-y$，$z_x=z_y=-1$，故
+$$dS=\sqrt{1+1+1}\,dx\,dy=\sqrt{3}\,dx\,dy$$
+② 投影区域 $D_{xy}$：$x\ge0,\ y\ge0,\ x+y\le1$（三角形，面积 $=\frac12$）；<br>
+③ <b>关键：曲面上 $x+y+z\equiv1$</b>，代入被积函数：
+$$\iint_\Sigma(x+y+z)\,dS=\iint_{D_{xy}}1\cdot\sqrt{3}\,dx\,dy=\sqrt{3}\cdot\frac12=\frac{\sqrt{3}}{2}$$
+<b>验算：</b>三角形面积 $\frac12$、微元放大系数 $\sqrt3$，均为正值，结果合理 ✓。
+</div>
+<div class="box example">
+<b>例 2.</b> 计算 $\displaystyle\iint_\Sigma z\,dS$，$\Sigma$ 为上半球面 $z=\sqrt{a^2-x^2-y^2}$。<br>
+① 偏导：$z_x=-\dfrac{x}{z},\ z_y=-\dfrac{y}{z}$，故
+$$\sqrt{1+z_x^2+z_y^2}=\sqrt{1+\frac{x^2+y^2}{z^2}}=\frac{\sqrt{z^2+x^2+y^2}}{z}=\frac{a}{z}$$
+② 投影区域 $D$：$x^2+y^2\le a^2$；<br>
+③ 代入（$dS=\frac{a}{z}dxdy$，与 $z$ 恰好约掉）：
+$$\iint_\Sigma z\,dS=\iint_D z\cdot\frac{a}{z}\,dx\,dy=a\iint_D dx\,dy=a\cdot\pi a^2=\pi a^3$$
+<b>验算：</b>若把 $z$ 换成平均值估计：$z$ 在半球上介于 $0$ 与 $a$，$\pi a^3=a^2\cdot(\pi a)$，相当于「有效密度 $a$ × 曲面面积 $2\pi a^2$ 的一半」，量级合理 ✓。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>对坐标的曲面积分（第二类）<span class="tag">核心</span></h2>
+<div class="box def">
+<b>引例（流量）：</b>流体速度场 $\boldsymbol A=(P,Q,R)$ 穿过有向曲面 $\Sigma$（取定侧）的流量为
+$$\Phi=\iint_\Sigma P\,dy\,dz+Q\,dz\,dx+R\,dx\,dy$$
+<b>定义（以 $\iint_\Sigma R\,dx\,dy$ 为例）：</b>把 $\Sigma$ 分成小块并投影到 $xOy$ 面，面积 $\Delta\sigma_i=(\Delta S_i)_{xy}$ 带符号（上侧为正、下侧为负），任取点作和取极限：
+$$\iint_\Sigma R(x,y,z)\,dx\,dy=\lim_{\lambda\to0}\sum_{i=1}^{n}R(\xi_i,\eta_i,\zeta_i)\,\Delta\sigma_i$$
+（有向曲面：<b>上侧</b>指法向量与 $z$ 轴正向成锐角的一侧；其余两项同理：$dy\,dz$ 前侧为正，$dz\,dx$ 右侧为正。）
+</div>
+<div class="box def"><b>性质：</b>线性、可加性、<b>换侧变号</b>：$\displaystyle\iint_{\Sigma^-}R\,dx\,dy=-\iint_{\Sigma^+}R\,dx\,dy$。</div>
+<div class="thm"><span class="label">计算定理（一投、二代、三定号）</span>
+$$\iint_\Sigma R\,dx\,dy=\pm\iint_{D_{xy}}R\!\left(x,y,z(x,y)\right)dx\,dy\qquad(+\ \text{上侧},\ -\ \text{下侧})$$
+$$\iint_\Sigma P\,dy\,dz=\pm\iint_{D_{yz}}P\!\left(x(y,z),y,z\right)dy\,dz\qquad(+\ \text{前侧},\ -\ \text{后侧})$$
+$$\iint_\Sigma Q\,dz\,dx=\pm\iint_{D_{zx}}Q\!\left(x,y(z,x),z\right)dz\,dx\qquad(+\ \text{右侧},\ -\ \text{左侧})$$
+</div>
+<div class="proof"><span class="label">说明</span>投影时曲面小块的「有向投影面积」$\Delta\sigma_i$ 与面积微元关系为 $\Delta\sigma_i=\cos\gamma_i\,\Delta S_i$（$\cos\gamma$ 为法向量方向余弦）。当取上侧时 $\cos\gamma>0$，直接投影；取下侧时 $\cos\gamma<0$，投影取负号。把 $z=z(x,y)$ 代入被积函数即化为二重积分。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1.</b> 计算 $\displaystyle\iint_\Sigma z\,dx\,dy$，$\Sigma$：上半球面 $z=\sqrt{a^2-x^2-y^2}$ 取<b>上侧</b>。<br>
+① 上侧 → 取正号，投影 $D$：$x^2+y^2\le a^2$：
+$$\iint_\Sigma z\,dx\,dy=+\iint_D\sqrt{a^2-x^2-y^2}\,dx\,dy$$
+② 极坐标：$=\displaystyle\int_0^{2\pi}\int_0^a\sqrt{a^2-r^2}\,r\,dr\,d\theta$；<br>
+③ $\displaystyle\int_0^a r\sqrt{a^2-r^2}\,dr=-\frac{1}{3}\left(a^2-r^2\right)^{3/2}\Bigg|_0^a=\frac{a^3}{3}$，故
+$$\iint_\Sigma z\,dx\,dy=2\pi\cdot\frac{a^3}{3}=\frac{2\pi a^3}{3}$$
+<b>验算：</b>与 §6 例 2 对比：那里算的是 $\iint z\,dS=\pi a^3$，这里微元换成 $dxdy$（少了放大因子 $a/z$），结果变小，定性合理 ✓。
+</div>
+<div class="box example">
+<b>例 2（需要分片投影）.</b> 计算 $\displaystyle\iint_\Sigma x\,dy\,dz$，$\Sigma$：球面 $x^2+y^2+z^2=a^2$ 取<b>外侧</b>。<br>
+① 投影到 $yOz$ 面：$D_{yz}$：$y^2+z^2\le a^2$；球面分前后两片 $x=\pm\sqrt{a^2-y^2-z^2}$；<br>
+② 定号：前片（$x>0$）外侧指向 $+x$，取正；后片（$x<0$）外侧指向 $-x$，取负：
+$$\iint_\Sigma x\,dy\,dz=\iint_{D}\sqrt{a^2-y^2-z^2}\,dy\,dz-\iint_D\left(-\sqrt{a^2-y^2-z^2}\right)dy\,dz=2\iint_D\sqrt{a^2-y^2-z^2}\,dy\,dz$$
+③ 极坐标：
+$$=2\int_0^{2\pi}\int_0^a\sqrt{a^2-r^2}\,r\,dr\,d\theta=2\cdot2\pi\cdot\frac{a^3}{3}=\frac{4\pi a^3}{3}$$
+<b>验算（对称性总账）：</b>球面关于三个坐标面都对称，三个分量积分相等；而由 §9 例 1（高斯公式），总和 $\oiint x\,dydz+y\,dzdx+z\,dxdy=4\pi a^3$，故单项 $=\dfrac{4\pi a^3}{3}$ ✓。
+</div>
+<div class="box warn"><b>易错点：</b>第二类曲面积分必须<b>先定侧</b>再定号；曲面投影时若某一块的法向量与坐标轴垂直（投影退化为线），该项贡献为 $0$（如圆柱侧面在 $xOy$ 面上投影为曲线）。</div>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>两类曲面积分的关系</h2>
+<div class="thm"><span class="label">关系式</span>设 $\Sigma$ 取定侧，$(\cos\alpha,\cos\beta,\cos\gamma)$ 是该侧单位法向量的方向余弦，则
+$$\iint_\Sigma P\,dy\,dz+Q\,dz\,dx+R\,dx\,dy=\iint_\Sigma\left(P\cos\alpha+Q\cos\beta+R\cos\gamma\right)dS$$
+</div>
+<div class="proof"><span class="label">说明</span>有向面积微元与面积微元的关系为
+$$dy\,dz=\cos\alpha\,dS,\qquad dz\,dx=\cos\beta\,dS,\qquad dx\,dy=\cos\gamma\,dS$$
+（即 $d\boldsymbol S=\boldsymbol n\,dS=(\cos\alpha,\cos\beta,\cos\gamma)dS$。）代入即得。例如对 $z=z(x,y)$ 取上侧：$\cos\gamma=\dfrac{1}{\sqrt{1+z_x^2+z_y^2}}$，于是 $\cos\gamma\,dS=\dfrac{1}{\sqrt{\cdots}}\cdot\sqrt{\cdots}\,dxdy=dxdy$ ✓。<span class="qed">∎</span></div>
+<div class="box tip"><b>用途：</b>Gauss、Stokes 公式的向量形式都由这个关系得到；做题时若第二类积分难算、第一类好算（或反之），可用它互换。</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>高斯公式 · 通量与散度<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">高斯公式</span>设空间闭区域 $\Omega$ 由分片光滑闭曲面 $\Sigma$ 围成，$\Sigma$ 取<b>外侧</b>，$P,Q,R$ 在 $\Omega$ 上有一阶连续偏导，则
+$$\oiint_\Sigma P\,dy\,dz+Q\,dz\,dx+R\,dx\,dy=\iiint_\Omega\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\right)dv$$
+</div>
+<div class="proof"><span class="label">证明（与格林公式同思路：逐项拆开）</span>
+设 $\Omega$ 是简单区域：对 $z$ 方向由两张曲面夹成
+$$\Omega:\ (x,y)\in D_{xy},\quad z_1(x,y)\le z\le z_2(x,y)$$
+（其余两方向同理可作 $yz$ 型、$zx$ 型区域看待。）<br><br>
+<b>先证 $R$ 项：</b>$\displaystyle\iint_\Sigma R\,dx\,dy=\iiint_\Omega\frac{\partial R}{\partial z}\,dv$。
+右边：
+$$\iiint_\Omega R_z\,dv=\iint_{D_{xy}}\left[\int_{z_1(x,y)}^{z_2(x,y)}R_z\,dz\right]dx\,dy=\iint_{D_{xy}}\left[R(x,y,z_2)-R(x,y,z_1)\right]dx\,dy$$
+左边：$\Sigma$ 分为上盖 $z=z_2$（外侧即上侧，取正）、下底 $z=z_1$（外侧即下侧，取负）、侧面（法向量垂直于 $z$ 轴，$dxdy$ 分量 $0$，不贡献）：
+$$\iint_\Sigma R\,dx\,dy=\iint_{D_{xy}}R(x,y,z_2)\,dx\,dy-\iint_{D_{xy}}R(x,y,z_1)\,dx\,dy$$
+两边相等 ✓。<br><br>
+<b>同理</b>（把 $\Omega$ 分别看成 $yz$ 型、$zx$ 型区域）：
+$$\iint_\Sigma P\,dy\,dz=\iiint_\Omega\frac{\partial P}{\partial x}\,dv,\qquad \iint_\Sigma Q\,dz\,dx=\iiint_\Omega\frac{\partial Q}{\partial y}\,dv$$
+三式相加即得高斯公式；一般区域用辅助面分割成简单区域再累加（公共面被正反各穿一次，积分抵消）。<span class="qed">∎</span></div>
+<div class="box def">
+<b>通量与散度：</b>向量场 $\boldsymbol A=(P,Q,R)$ 穿过取定侧曲面 $\Sigma$ 的<b>通量</b>
+$$\Phi=\iint_\Sigma\boldsymbol A\cdot d\boldsymbol S=\iint_\Sigma P\,dy\,dz+Q\,dz\,dx+R\,dx\,dy$$
+<b>散度：</b>$\operatorname{div}\boldsymbol A=\dfrac{\partial P}{\partial x}+\dfrac{\partial Q}{\partial y}+\dfrac{\partial R}{\partial z}=\nabla\cdot\boldsymbol A$。高斯公式的向量形式：
+$$\oiint_\Sigma\boldsymbol A\cdot d\boldsymbol S=\iiint_\Omega\operatorname{div}\boldsymbol A\,dv$$
+（散度恒为 $0$ 的场称无源场。）
+</div>
+<div class="box example">
+<b>例 1（直接套公式）.</b> 计算 $\displaystyle\oiint_\Sigma x\,dy\,dz+y\,dz\,dx+z\,dx\,dy$，$\Sigma$ 为球面 $x^2+y^2+z^2=a^2$ 外侧。<br>
+① $P=x,\ Q=y,\ R=z$，$\operatorname{div}\boldsymbol A=1+1+1=3$；<br>
+② 高斯公式：
+$$\oiint_\Sigma=\iiint_\Omega 3\,dv=3V=3\cdot\frac{4}{3}\pi a^3=4\pi a^3$$
+<b>验算：</b>与 §7 例 2 对照——单独一项 $\iint x\,dy\,dz=\frac{4\pi a^3}{3}$，由对称性三项相等，总和 $=4\pi a^3$ ✓。
+</div>
+<div class="box example">
+<b>例 2（非闭曲面：补面法）.</b> 计算 $\displaystyle\iint_\Sigma z\,dx\,dy$，$\Sigma$ 为上半球面 $z=\sqrt{a^2-x^2-y^2}$ 取上侧（曲面本身不闭合）。<br>
+① 补面 $\Sigma_1$：圆盘 $z=0,\ x^2+y^2\le a^2$，取<b>下侧</b>，使 $\Sigma+\Sigma_1$ 构成半球体 $\Omega$ 的外侧；<br>
+② 高斯公式（$\operatorname{div}(0,0,z)=1$）：
+$$\oiint_{\Sigma+\Sigma_1}=\iiint_\Omega 1\,dv=\frac{2}{3}\pi a^3$$
+③ 在 $\Sigma_1$ 上 $z\equiv0$，故 $\displaystyle\iint_{\Sigma_1}z\,dx\,dy=0$；<br>
+④ 相减：
+$$\iint_\Sigma=\oiint_{\Sigma+\Sigma_1}-\iint_{\Sigma_1}=\frac{2\pi a^3}{3}$$
+<b>验算：</b>与 §7 例 1 的直接计算 $\frac{2\pi a^3}{3}$ 完全一致 ✓。
+</div>
+<div class="box example">
+<b>例 3（有奇点：挖球法）.</b> 计算 $\displaystyle\oiint_\Sigma\frac{x\,dy\,dz+y\,dz\,dx+z\,dx\,dy}{\left(x^2+y^2+z^2\right)^{3/2}}$，$\Sigma$ 为包围原点的任意闭曲面（外侧）。<br>
+① 记 $\boldsymbol A=\dfrac{(x,y,z)}{r^3}\ (r=\sqrt{x^2+y^2+z^2})$，除原点外可验证 $\operatorname{div}\boldsymbol A=0$，但原点在内部，不能对整个区域直接用高斯公式；<br>
+② 挖球：取小球面 $\Sigma_\varepsilon:\ x^2+y^2+z^2=\varepsilon^2$。对两球面之间的区域 $\Omega'$（不含原点，散度处处为 $0$）用高斯公式——$\Omega'$ 的外边界是 $\Sigma$（外侧），内边界是 $\Sigma_\varepsilon$ 的<b>内侧</b>：
+$$\oiint_\Sigma-\oiint_{\Sigma_\varepsilon}=0\ \Longrightarrow\ \oiint_\Sigma=\oiint_{\Sigma_\varepsilon}$$
+（第二个积分前的负号来自内边界取向与「外侧」相反；此后把 $\Sigma_\varepsilon$ 按<b>外侧</b>理解。）<br>
+③ 在 $\Sigma_\varepsilon$ 外侧上：外法向量 $\boldsymbol n=\dfrac{(x,y,z)}{\varepsilon}$，故 $(x,y,z)\cdot d\boldsymbol S=\varepsilon\,dS$，于是
+$$\oiint_{\Sigma_\varepsilon}=\frac{1}{\varepsilon^3}\oiint_{\Sigma_\varepsilon}(x,y,z)\cdot d\boldsymbol S=\frac{1}{\varepsilon^3}\cdot\varepsilon\cdot4\pi\varepsilon^2=4\pi$$
+<b>高频结论：</b>任意包围原点的闭曲面（外侧）上此积分都为 $4\pi$。
+<b>验算（单位球面直算）：</b>取 $\Sigma$ 为单位球面（$r=1$），即 $\oiint\left(x\,dydz+y\,dzdx+z\,dxdy\right)$，由 §9 例 1（$a=1$）等于 $4\pi$，与原积分一致 ✓。
+</div>
+<div class="box tip"><b>提示：</b>① 曲面落在坐标面（如 $z=0$）上时先代入简化；② 只给「部分曲面」时先想补面；③ 散度恒为 $0$ 时闭曲面通量为 $0$。</div>
+</section>
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>斯托克斯公式 · 环流量与旋度<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">斯托克斯公式</span>设 $\Gamma$ 为分段光滑空间闭曲线，$\Sigma$ 是以 $\Gamma$ 为边界的分片光滑曲面，$\Gamma$ 的正向与 $\Sigma$ 的侧符合<b>右手法则</b>，$P,Q,R$ 有一阶连续偏导，则
+$$\oint_\Gamma P\,dx+Q\,dy+R\,dz=\iint_\Sigma\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)dy\,dz+\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)dz\,dx+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy$$
+</div>
+<div class="proof"><span class="label">证明（证一个典型项，其余轮换）</span>设 $\Sigma:\ z=f(x,y)$，$(x,y)\in D_{xy}$，取<b>上侧</b>；$\Gamma$ 在 $xOy$ 面的投影是 $\partial D_{xy}$ 的正向。<br><br>
+<b>证含 $P$ 的项：</b>$\displaystyle\oint_\Gamma P\,dx=\iint_\Sigma\left(P_z\,dz\,dx-P_y\,dx\,dy\right)$。<br><br>
+左边：$\Gamma$ 上 $P\,dx$ 中的 $z=f(x,y)$ 可先代入，
+$$\oint_\Gamma P\,dx=\oint_{\partial D_{xy}}P\!\left(x,\ y,\ f(x,y)\right)dx$$
+对平面闭曲线用格林公式（取 $Q=0$ 的 $\oint Q\,dy+P\,dx$ 形式）：
+$$=-\iint_{D_{xy}}\left[P_y\!\left(x,y,f\right)+P_z\!\left(x,y,f\right)f_y\right]dx\,dy$$
+右边：上侧时 $dz\,dx=-f_y\,dx\,dy$、$dx\,dy=dx\,dy$（由 §8 关系式与法向量 $\propto(-f_x,-f_y,1)$），于是
+$$\iint_\Sigma\left(P_z\,dz\,dx-P_y\,dx\,dy\right)=\iint_{D_{xy}}\left(-P_zf_y-P_y\right)dx\,dy$$
+两边相等 ✓。<br><br>
+<b>其余两项：</b>把 $\Sigma$ 换投影方向（或对 $x,y,z$ 作轮换）同理得
+$$\oint_\Gamma Q\,dy=\iint_\Sigma\left(Q_x\,dx\,dy-Q_z\,dy\,dz\right),\qquad \oint_\Gamma R\,dz=\iint_\Sigma\left(R_y\,dy\,dz-R_x\,dz\,dx\right)$$
+三式相加、合并同类项，即得斯托克斯公式。<span class="qed">∎</span></div>
+<div class="box tip"><b>行列式记法（便于背）：</b>
+$$\oint_\Gamma P\,dx+Q\,dy+R\,dz=\iint_\Sigma\begin{vmatrix}dy\,dz&dz\,dx&dx\,dy\\[2pt]\dfrac{\partial}{\partial x}&\dfrac{\partial}{\partial y}&\dfrac{\partial}{\partial z}\\[4pt]P&Q&R\end{vmatrix}=\iint_\Sigma\begin{vmatrix}\cos\alpha&\cos\beta&\cos\gamma\\[2pt]\dfrac{\partial}{\partial x}&\dfrac{\partial}{\partial y}&\dfrac{\partial}{\partial z}\\[4pt]P&Q&R\end{vmatrix}dS$$
+（第二行的算符作用于第三行，按第一行展开、符号交替 $+,-,+$。）
+</div>
+<div class="box def"><b>旋度与环流量：</b>
+$$\operatorname{rot}\boldsymbol A=\nabla\times\boldsymbol A=\begin{vmatrix}\boldsymbol i&\boldsymbol j&\boldsymbol k\\[2pt]\dfrac{\partial}{\partial x}&\dfrac{\partial}{\partial y}&\dfrac{\partial}{\partial z}\\[4pt]P&Q&R\end{vmatrix}=\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z},\ \frac{\partial P}{\partial z}-\frac{\partial R}{\partial x},\ \frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)$$
+向量形式：$\displaystyle\oint_\Gamma\boldsymbol A\cdot d\boldsymbol r=\iint_\Sigma\operatorname{rot}\boldsymbol A\cdot d\boldsymbol S$。<b>环流量</b> $=\displaystyle\oint_\Gamma\boldsymbol A\cdot d\boldsymbol r$（$\boldsymbol A=(P,Q,R)$）。
+</div>
+<div class="box example">
+<b>例 1.</b> 计算 $\displaystyle\oint_\Gamma y\,dx+z\,dy+x\,dz$，$\Gamma$ 为平面 $x+y+z=1$ 与三个坐标面的交线（三角形边界），取使 $\Sigma$ 为上侧的定向（右手法则：法向量指向 $(1,1,1)$ 方向）。<br>
+① 取 $\Sigma$：平面 $x+y+z=1$ 在第一卦限部分，上侧，$\boldsymbol n=\dfrac{(1,1,1)}{\sqrt3}$，三角形面积 $=\dfrac{\sqrt3}{2}$；<br>
+② 旋度（$\boldsymbol A=(y,z,x)$）：
+$$\operatorname{rot}\boldsymbol A=\left(\frac{\partial x}{\partial y}-\frac{\partial z}{\partial z},\ \frac{\partial y}{\partial z}-\frac{\partial x}{\partial x},\ \frac{\partial z}{\partial x}-\frac{\partial y}{\partial y}\right)=(-1,-1,-1)$$
+③ 由斯托克斯公式：
+$$\oint_\Gamma=\iint_\Sigma(-1,-1,-1)\cdot\frac{(1,1,1)}{\sqrt3}\,dS=-\frac{3}{\sqrt3}\cdot\frac{\sqrt3}{2}=-\frac{3}{2}$$
+<b>验算（直接沿三条边积分）：</b>每条边参数化后都得到 $-\dfrac12$：边 $(1,0,0)\to(0,1,0)$ 上 $z=0$，只剩 $\int y\,dx=-\int_0^1t\,dt=-\frac12$；另两条边同理，合计 $-\dfrac32$ ✓。
+</div>
+<div class="box example">
+<b>例 2（旋度计算）.</b> 求 $\boldsymbol A=(xy,\ yz,\ zx)$ 的旋度。<br>
+① 写出行列式：
+$$\operatorname{rot}\boldsymbol A=\begin{vmatrix}\boldsymbol i&\boldsymbol j&\boldsymbol k\\[2pt]\dfrac{\partial}{\partial x}&\dfrac{\partial}{\partial y}&\dfrac{\partial}{\partial z}\\[4pt]xy&yz&zx\end{vmatrix}$$
+② 逐项求偏导：
+$$=\left(\frac{\partial(zx)}{\partial y}-\frac{\partial(yz)}{\partial z},\ \frac{\partial(xy)}{\partial z}-\frac{\partial(zx)}{\partial x},\ \frac{\partial(yz)}{\partial x}-\frac{\partial(xy)}{\partial y}\right)=(0-y,\ 0-z,\ 0-x)$$
+③ 结果：
+$$\operatorname{rot}\boldsymbol A=(-y,\ -z,\ -x)$$
+<b>验算（旋度场必无散）：</b>$\operatorname{div}\left(\operatorname{rot}\boldsymbol A\right)=\dfrac{\partial(-y)}{\partial x}+\dfrac{\partial(-z)}{\partial y}+\dfrac{\partial(-x)}{\partial z}=0$ ✓。
+</div>
+<div class="box tip"><b>退化关系：</b>当 $\Sigma$ 是平面区域（如 $xOy$ 面，$R\equiv0$）时，斯托克斯公式退化为<b>格林公式</b>；换句话说 Green 是 Stokes 的平面特例。</div>
+</section>
+<section class="card" id="sec-11">
+<h2><span class="num">11</span>解题决策流程</h2>
+<pre class="flow">拿到题
+├─ 曲线积分？
+│   ├─ ds（第一类）→ 参数化：ds = √(x'²+y'²) dt，无方向，下限<上限
+│   ├─ dx, dy（第二类）
+│   │   ├─ 曲线闭合？ → Green（平面）/ Stokes（空间，配右手方向）
+│   │   ├─ P_y = Q_x 且区域单连通？ → 路径无关：换直折线 或 求原函数 u
+│   │   └─ 否则 → 参数化直算（起点为下限、终点为上限）
+│   └─ 有奇点？ → 挖洞（内曲线取反向）
+├─ 曲面积分？
+│   ├─ dS（第一类）→ 投影：dS = √(1+z_x²+z_y²) dxdy，无侧
+│   ├─ dxdy / dydz / dzdx（第二类）
+│   │   ├─ 曲面闭合？ → Gauss
+│   │   ├─ 不闭合？ → 补面凑闭合再减掉 或 直接投影定号
+│   │   └─ 有奇点？ → 挖球（内曲面取内侧）
+│   └─ 两类互化：dxdy = cosγ·dS
+└─ 算完自查：方向/侧对吗？偏导连续吗？投影区域对吗？
+</pre>
+</section>
+
+<section class="card" id="sec-12">
+<h2><span class="num">12</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>第一类 vs 第二类的积分限：</b>第一类化定积分<b>下限 &lt; 上限</b>；第二类必须<b>起点为下限、终点为上限</b>（方向性就体现在这里）。</li>
+<li><b>Green 三查：</b>闭曲线？正向？$P,Q$ 在围成区域内有一阶连续偏导（无奇点）？缺一不可。</li>
+<li><b>挖洞的定向：</b>外边界逆时针、内边界顺时针（等价说法：内曲线取反向），符号别搞反。</li>
+<li><b>路径无关两查：</b>$P_y=Q_x$ 且区域<b>单连通</b>；绕原点那类奇点题（§4 例 3）就是反例。</li>
+<li><b>第二类曲面积分的符号：</b>上侧 $+$、下侧 $-$；前侧 $+$、后侧 $-$；右侧 $+$、左侧 $-$，投影前先定侧。</li>
+<li><b>Gauss 的补面：</b>补的面要与原曲面构成<b>同侧闭合</b>，最后别忘了<b>减去</b>补面上的积分；补面常取坐标面（其上被积函数常为 $0$）。</li>
+<li><b>挖球的定向：</b>内球面取<b>内侧</b>；挖球后积分换成小球面积分，再按外侧计算。</li>
+<li><b>Stokes 的方向：</b>右手法则——右手四指沿 $\Gamma$ 方向，拇指指向 $\Sigma$ 的法向量；方向反了差一个负号。</li>
+<li><b>代入简化：</b>在积分曲线上/曲面上成立的方程（如 $z=0$、$x+y+z=1$）可以直接代入被积函数，但<b>不能代入微元</b>（$dS$、$ds$ 要用放大因子）。</li>
+<li><b>投影退化：</b>曲面的某块在坐标面上的投影退化为曲线时，对应分量积分贡献为 $0$（如圆柱侧面贡献 $dxdy$ 为 $0$）。</li>
+<li><b>面积公式别忘 $\frac12$：</b>$A=\frac12\oint_L x\,dy-y\,dx$。</li>
+<li><b>对称性：</b>区域关于坐标轴对称时，先看被积函数的奇偶性，可以直接判 $0$，省大量计算。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-13">
+<h2><span class="num">13</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>第一类曲线积分</td><td>$\displaystyle\int_L f\,ds$；参数式 $ds=\sqrt{x'^2+y'^2}\,dt$；<b>无方向</b></td></tr>
+<tr><td>第二类曲线积分</td><td>$\displaystyle\int_L P\,dx+Q\,dy=\int_{\alpha}^{\beta}\left(Px'+Qy'\right)dt$；<b>反向变号</b></td></tr>
+<tr><td>两类曲线积分关系</td><td>$dx=\cos\alpha\,ds,\quad dy=\cos\beta\,ds,\quad dz=\cos\gamma\,ds$</td></tr>
+<tr><td>格林公式</td><td>$\displaystyle\oint_L P\,dx+Q\,dy=\iint_D\left(Q_x-P_y\right)dx\,dy$（$L$ 正向）；$A=\frac12\oint_L x\,dy-y\,dx$</td></tr>
+<tr><td>路径无关</td><td>$P_y=Q_x$（单连通）$\iff\oint_C=0\iff\exists u:\ du=P\,dx+Q\,dy$</td></tr>
+<tr><td>全微分求积（折线法）</td><td>$u(x,y)=\displaystyle\int_{x_0}^{x}P(t,y_0)\,dt+\int_{y_0}^{y}Q(x,s)\,ds$</td></tr>
+<tr><td>第一类曲面积分</td><td>$\displaystyle\iint_\Sigma f\,dS=\iint_{D_{xy}}f\sqrt{1+z_x^2+z_y^2}\,dx\,dy$；<b>无侧</b></td></tr>
+<tr><td>第二类曲面积分</td><td>$\displaystyle\iint_\Sigma R\,dx\,dy=\pm\iint_{D_{xy}}R\,dx\,dy$（上侧 $+$，下侧 $-$）</td></tr>
+<tr><td>两类曲面积分关系</td><td>$dy\,dz=\cos\alpha\,dS,\quad dz\,dx=\cos\beta\,dS,\quad dx\,dy=\cos\gamma\,dS$</td></tr>
+<tr><td>高斯公式</td><td>$\displaystyle\oiint_\Sigma P\,dy\,dz+Q\,dz\,dx+R\,dx\,dy=\iiint_\Omega\left(P_x+Q_y+R_z\right)dv$（外侧）</td></tr>
+<tr><td>散度</td><td>$\operatorname{div}\boldsymbol A=P_x+Q_y+R_z=\nabla\cdot\boldsymbol A$；$\displaystyle\oiint_\Sigma\boldsymbol A\cdot d\boldsymbol S=\iiint_\Omega\operatorname{div}\boldsymbol A\,dv$</td></tr>
+<tr><td>斯托克斯公式</td><td>$\displaystyle\oint_\Gamma P\,dx+Q\,dy+R\,dz=\iint_\Sigma\begin{vmatrix}dy\,dz&dz\,dx&dx\,dy\\ \partial_x&\partial_y&\partial_z\\ P&Q&R\end{vmatrix}$（右手法则）</td></tr>
+<tr><td>旋度</td><td>$\operatorname{rot}\boldsymbol A=\left(R_y-Q_z,\ P_z-R_x,\ Q_x-P_y\right)$；$\displaystyle\oint_\Gamma\boldsymbol A\cdot d\boldsymbol r=\iint_\Sigma\operatorname{rot}\boldsymbol A\cdot d\boldsymbol S$</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>两个高频特例：</b>
+$$\oint_L\frac{x\,dy-y\,dx}{x^2+y^2}=2\pi\ (\text{绕原点正向}),\qquad\oiint_\Sigma\frac{x\,dy\,dz+y\,dz\,dx+z\,dx\,dy}{\left(x^2+y^2+z^2\right)^{3/2}}=4\pi\ (\text{包围原点，外侧})$$
+</div>
+</section>
+
+<section class="card" id="sec-14">
+<h2><span class="num">14</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>能默写三大公式与定向 → 能在题面里认出「用哪类积分、选哪个定理」→ 能独立完成挖洞/补面/挖球。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 区分第一类/第二类曲线、曲面积分，说清方向性与侧的作用；<br>
+② 用参数化/投影公式计算四类积分，熟练两类关系换算；<br>
+③ 默写 Green/Gauss/Stokes 三公式，说清各自定向规则与使用条件；<br>
+④ 处理奇点：挖洞得 $2\pi$、挖球得 $4\pi$；非闭曲面用补面法；<br>
+⑤ 用四等价命题判断路径无关，并用折线法/偏积分/凑微分求原函数；<br>
+⑥ 用叉乘造切向量、用梯度造法向量，处理几何应用。
+</div>
+<h3>用法索引</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>$ds$ 型曲线积分</td><td>参数化 + $\sqrt{x'^2+y'^2}$</td><td>§1 例1、2</td></tr>
+<tr><td>闭曲线上的 $dx,dy$ 积分</td><td>Green 公式</td><td>§4 例1、2</td></tr>
+<tr><td>域内有奇点</td><td>挖洞（内曲线反向）</td><td>§4 例3</td></tr>
+<tr><td>$P_y=Q_x$ 且单连通</td><td>路径无关 / 求原函数</td><td>§5 例1–3</td></tr>
+<tr><td>$dS$ 型曲面积分</td><td>投影 + $\sqrt{1+z_x^2+z_y^2}$</td><td>§6 例1、2</td></tr>
+<tr><td>第二类曲面积分</td><td>一投二代三定号</td><td>§7 例1、2</td></tr>
+<tr><td>闭曲面</td><td>Gauss（外侧）</td><td>§9 例1</td></tr>
+<tr><td>曲面不闭合</td><td>补面再减</td><td>§9 例2</td></tr>
+<tr><td>奇点闭曲面</td><td>挖球（内曲面取内侧）</td><td>§9 例3</td></tr>
+<tr><td>空间闭曲线</td><td>Stokes（右手法则）</td><td>§10 例1</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 默写三大公式与各自定向，复述「内外定向」的记忆规则<br>
+☐ 复述挖洞的定向逻辑，说明为什么内曲线取反向（§4 例3）<br>
+☐ 独立完成 §9 例2（补面法），并说明补面为什么取下侧<br>
+☐ 用两类关系把一道第二类曲线积分改写成第一类（§3）<br>
+☐ 独立完成 §10 例1（Stokes）并与沿三边直算互验<br>
+☐ 推导 $dx\,dy=\cos\gamma\,dS$（§8）
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>高等数学（下册）· 第十一章 曲线积分与曲面积分 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

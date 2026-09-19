@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高等数学 · 线性代数 · 学习笔记库</title>
+<style>
+:root{--bg:#f4f5fb;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#4f46e5}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75}
+.hero{background:linear-gradient(135deg,#1e1b4b,#4f46e5 50%,#9333ea);color:#fff;padding:64px 24px 54px;text-align:center}
+.hero h1{margin:0 0 12px;font-size:clamp(1.6rem,4.5vw,2.4rem);letter-spacing:2px}
+.hero p{margin:0;color:#c7d2fe;font-size:1rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:22px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.wrap{max-width:1180px;margin:0 auto;padding:30px 20px 60px}
+.howto{background:#fff;border-radius:14px;padding:18px 22px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin:-34px auto 28px;position:relative;border-left:4px solid #4f46e5;max-width:1140px}
+.howto b{color:#4338ca}
+.sec-title{display:flex;align-items:center;gap:12px;margin:34px 0 16px;font-size:1.25rem;color:#1e1b4b}
+.sec-title .dot{width:14px;height:14px;border-radius:4px;background:linear-gradient(135deg,#6366f1,#a855f7)}
+.sec-title .sub{font-size:.82rem;color:var(--muted);font-weight:400;margin-left:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{--c:#4f46e5;display:block;background:var(--card);border-radius:14px;padding:20px 22px 18px;box-shadow:0 1px 3px rgba(15,23,42,.08);border-top:4px solid var(--c);text-decoration:none;color:inherit;transition:.18s;position:relative}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(15,23,42,.12)}
+.card .ch{font-size:.74rem;font-weight:700;letter-spacing:1px;color:var(--c)}
+.card h3{margin:6px 0 8px;font-size:1.12rem;color:#111827}
+.card p{margin:0 0 14px;font-size:.86rem;color:#475569;line-height:1.7}
+.card .go{font-size:.84rem;font-weight:600;color:var(--c)}
+footer{text-align:center;color:var(--muted);font-size:.84rem;padding:10px 20px 50px}
+@media (max-width:600px){.grid{grid-template-columns:1fr}.hero{padding:46px 18px 40px}.howto{margin:-24px 14px 20px}}
+</style>
+</head>
+<body>
+<header class="hero">
+<h1>高等数学 · 线性代数 · 学习笔记库</h1>
+<p>12 章完全教程 · 内容全 · 证明全 · 例题逐步验算 · 学习闭环</p>
+<div class="chips">
+<span>高数 6 章</span><span>线代 6 章</span><span>定理全证明</span><span>例题步骤化</span><span>能力自查</span>
+</div>
+</header>
+
+<div class="howto">
+<b>每份笔记的固定结构：</b>知识地图 → 定义与定理（含完整证明）→ 步骤化例题（①②③ + 验算）→ 解题决策流程 → 易错点清单 → 公式速查表 → <b>能力自查与用法索引</b>（学完怎么用、闭卷自查）。
+<b>复习建议：</b>第一遍顺读（定理跟着推导走一遍）；第二遍只看「决策流程 + 易错点 + 速查表」；考前用「闭卷自查」过一遍，卡住回对应小节。
+</div>
+
+<div class="wrap">
+<div class="sec-title"><span class="dot"></span>高等数学（同济版 · 上/下册）<span class="sub">6 章</span></div>
+<div class="grid">
+<a class="card" style="--c:#4f46e5" href="微分方程学习笔记.html">
+<span class="ch">上册 · 第七章</span>
+<h3>微分方程</h3>
+<p>可分离变量 / 齐次 / 一阶线性 / 伯努利 / 可降阶 / 高阶线性理论（含全部证明）/ 常系数齐次与非齐次 / 欧拉方程</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#7c3aed" href="向量代数与空间解析几何学习笔记.html">
+<span class="ch">下册 · 第八章</span>
+<h3>向量代数与空间解析几何</h3>
+<p>数量积 / 向量积 / 混合积 / 平面与直线方程 / 平面束 / 旋转曲面与二次曲面 / 空间曲线与投影</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#0f766e" href="多元函数微分法学习笔记.html">
+<span class="ch">下册 · 第九章</span>
+<h3>多元函数微分法及其应用</h3>
+<p>二重极限路径法 / 偏导与全微分 / 可微判定关系链 / 链式法则 / 隐函数 / 切平面与法线 / 方向导数与梯度 / 极值与拉格朗日 / 泰勒与最小二乘</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#059669" href="重积分学习笔记.html">
+<span class="ch">下册 · 第十章</span>
+<h3>重积分</h3>
+<p>二重积分（直角/极坐标/对称性）/ 三重积分（投影/截面/柱面/球面坐标）/ 曲面面积·质心·转动惯量 / 含参变量积分</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#2563eb" href="曲线曲面积分学习笔记.html">
+<span class="ch">下册 · 第十一章</span>
+<h3>曲线积分与曲面积分</h3>
+<p>两类曲线积分与关系 / 格林公式（含挖洞）/ 路径无关与全微分求积 / 两类曲面积分 / 高斯公式（补面·挖球）/ 斯托克斯 / 散度与旋度</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#ea580c" href="无穷级数学习笔记.html">
+<span class="ch">下册 · 第十二章</span>
+<h3>无穷级数</h3>
+<p>常数项级数 / 审敛法全家桶 / 交错与绝对收敛 / 幂级数收敛域与和函数 / 函数展开 / 一致收敛 / 傅里叶级数</p>
+<span class="go">打开笔记 →</span>
+</a>
+</div>
+
+<div class="sec-title"><span class="dot"></span>线性代数（同济版）<span class="sub">6 章</span></div>
+<div class="grid">
+<a class="card" style="--c:#be123c" href="线代01-行列式学习笔记.html">
+<span class="ch">线性代数 · 第一章</span>
+<h3>行列式</h3>
+<p>逆序数与 n 阶定义 / 七大性质（含证明）/ 展开定理 / 范德蒙德 / 递推法 / 克拉默法则</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#0e7490" href="线代02-矩阵及其运算学习笔记.html">
+<span class="ch">线性代数 · 第二章</span>
+<h3>矩阵及其运算</h3>
+<p>矩阵运算（左行右列）/ 不可交换与 AB=O 陷阱 / 转置与行列式（|AB|=|A||B| 证明）/ 逆矩阵与伴随 / 矩阵方程 / 分块矩阵</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#7e22ce" href="线代03-矩阵的初等变换与线性方程组学习笔记.html">
+<span class="ch">线性代数 · 第三章</span>
+<h3>矩阵的初等变换与线性方程组</h3>
+<p>三种初等变换 / 初等矩阵（左行右列）/ 行最简形与标准形 / 矩阵的秩（含参讨论）/ 解的存在判定与通解</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#15803d" href="线代04-向量组的线性相关性学习笔记.html">
+<span class="ch">线性代数 · 第四章</span>
+<h3>向量组的线性相关性</h3>
+<p>线性组合与表示 / 相关与无关 / 三大直觉定理 / 最大无关组 / 基础解系 / 解的结构 / 向量空间</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#4338ca" href="线代05-相似矩阵及二次型学习笔记.html">
+<span class="ch">线性代数 · 第五章</span>
+<h3>相似矩阵及二次型</h3>
+<p>内积与施密特正交化 / 特征值与特征向量 / 相似与对角化 / 实对称矩阵正交对角化 / 二次型标准形 / 配方与惯性定理 / 正定判定</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#9a3412" href="线代06-线性空间与线性变换学习笔记.html">
+<span class="ch">线性代数 · 第六章（选学）</span>
+<h3>线性空间与线性变换</h3>
+<p>八公理与基本性质 / 子空间 / 基与维数 / 过渡矩阵与坐标变换 / 线性变换与矩阵表示 / 换基相似（B=P⁻¹AP）</p>
+<span class="go">打开笔记 →</span>
+</a>
+</div>
+
+<div class="sec-title"><span class="dot"></span>概率论与数理统计（浙大版）<span class="sub">逐章更新中</span></div>
+<div class="grid">
+<a class="card" style="--c:#c026d3" href="概率01-概率论的基本概念学习笔记.html">
+<span class="ch">概率论 · 第一章</span>
+<h3>概率论的基本概念</h3>
+<p>样本空间与随机事件 / 公理化概率（性质全证明）/ 古典概型与几何概型 / 条件概率·全概率·贝叶斯 / 独立性</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#7c3aed" href="概率02-随机变量及其分布学习笔记.html">
+<span class="ch">概率论 · 第二章</span>
+<h3>随机变量及其分布</h3>
+<p>分布函数（性质全证明）/ 二项与泊松分布（含泊松定理）/ 概率密度 / 均匀·指数·正态 / 随机变量函数的分布</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#2563eb" href="概率03-多维随机变量及其分布学习笔记.html">
+<span class="ch">概率论 · 第三章</span>
+<h3>多维随机变量及其分布</h3>
+<p>联合分布（矩形公式全证明）/ 边缘与条件分布 / 相互独立性三招判定 / 卷积公式 / 正态可加性 / 最值分布</p>
+<span class="go">打开笔记 →</span>
+</a>
+<a class="card" style="--c:#0d9488" href="概率04-随机变量的数字特征学习笔记.html">
+<span class="ch">概率论 · 第四章</span>
+<h3>随机变量的数字特征</h3>
+<p>数学期望与方差全推导 / 五大分布 E 与 D 全家表 / 协方差与相关系数（Cauchy-Schwarz 证明）/ 不相关反例 / 协方差矩阵</p>
+<span class="go">打开笔记 →</span>
+</a>
+</div>
+</div>
+
+<footer>
+<p>共 12 份章节笔记 · 每份均含全部证明、步骤化例题（带验算）、决策流程、易错点与能力自查 · 公式由 MathJax 渲染（打开笔记需联网）</p>
+</footer>
+</body>
+</html>

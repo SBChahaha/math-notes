@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高等数学 · 微分方程完全教程（含全部证明）</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#4f46e5;--accent2:#7c3aed;--soft:#eef2ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#312e81,#5b21b6 55%,#7c3aed);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:2px}
+.hero p{margin:0;color:#ddd6fe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#4338ca;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#1e1b4b}
+.card h3{font-size:1.05rem;color:#3730a3;margin:24px 0 8px;padding-left:10px;border-left:4px solid #a5b4fc}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#eef2ff;border-color:#6366f1}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #ddd6fe;border-left:4px solid #8b5cf6;background:#faf5ff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#6d28d9;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#3730a3;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+details{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:12px 0;background:#fbfdff}
+details summary{cursor:pointer;font-weight:600;color:var(--accent)}
+details[open] summary{margin-bottom:10px;border-bottom:1px dashed var(--line);padding-bottom:8px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(79,70,229,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>高等数学 · 微分方程 · 完全教程</h1>
+<p>上册 第七章 · 全部内容 + 全部定理证明</p>
+<div class="chips"><span>完整知识体系</span><span>公式逐条推导</span><span>定理完整证明</span><span>Wronskian · 刘维尔公式</span><span>待定系数法原理</span><span>例题步骤化详解</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 基本概念</a>
+<a href="#sec-2">02 · 可分离变量</a>
+<a href="#sec-3">03 · 齐次方程</a>
+<a href="#sec-4">04 · 一阶线性方程</a>
+<a href="#sec-5">05 · 伯努利方程</a>
+<a href="#sec-6">06 · 可降阶的高阶方程</a>
+<a href="#sec-7">07 · 高阶线性理论</a>
+<a href="#sec-8">08 · 常系数齐次方程</a>
+<a href="#sec-9">09 · 常系数非齐次方程</a>
+<a href="#sec-10">10 · 欧拉方程</a>
+<a href="#sec-11">11 · 解题决策流程</a>
+<a href="#sec-12">12 · 易错点清单</a>
+<a href="#sec-13">13 · 公式速查表</a>
+<a href="#sec-14">14 · 附录A 存在唯一性定理</a>
+<a href="#sec-15">15 · 附录B 全微分方程</a>
+<a href="#sec-16">16 · 附录C 常系数方程组</a>
+<a href="#sec-17">17 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本页特点：</b>覆盖上册第七章全部知识点，方法都给出「为什么成立」的完整推导，定理都给出证明（<span style="color:#6d28d9;font-weight:700">紫框=定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>）。</div>
+<pre class="flow">微分方程
+├─ 一阶方程
+│   ├─ 可分离变量 ──── 分离后两边积分（§2）
+│   ├─ 齐次方程 ────── 换元 u = y/x（§3）
+│   ├─ 一阶线性方程 ── 常数变易法 / 积分因子（§4）
+│   └─ 伯努利方程 ──── 换元 z = y^(1-n)（§5）
+├─ 可降阶的高阶方程（§6）
+│   ├─ y^(n) = f(x) ────────── 逐次积分
+│   ├─ 缺 y：y'' = f(x,y') ─── 令 p = y'
+│   └─ 缺 x：y'' = f(y,y') ─── 令 p = y'，y'' = p·dp/dy
+└─ 高阶线性方程
+    ├─ 解的结构理论（§7，定理 1–5 全证明 + Wronskian + 刘维尔公式）
+    ├─ 常系数齐次：特征方程法（§8，三种根情形全证明）
+    ├─ 常系数非齐次：待定系数法（§9，移位引理 + 原理全证明）
+    └─ 欧拉方程：换元 x = e^t（§10，含指标方程推导）
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>基本概念<span class="tag">基础</span></h2>
+<div class="box def">
+<ul>
+<li><b>微分方程</b>：含有未知函数及其导数（或微分）的方程；只含一个自变量的称为<b>常微分方程</b>，未知函数导数的最高阶数称为方程的<b>阶</b>。</li>
+<li><b>线性方程</b>：关于未知函数及其各阶导数都是一次的方程，如 $y''+P(x)y'+Q(x)y=f(x)$；否则为<b>非线性方程</b>（如 $y'=y^2$、$y''+y\sin y=0$）。</li>
+<li><b>解</b>：在区间 $I$ 上代入方程后成为恒等式的函数 $y=\varphi(x)$。</li>
+<li><b>通解</b>：含 $n$ 个<b>相互独立</b>的任意常数（$n$ 为方程阶数）的解族。</li>
+<li><b>特解</b>：通解中常数取定后的解；用于定常数的条件 $y(x_0)=y_0,\ y'(x_0)=y_0',\dots$ 称为<b>初始条件</b>，连同方程构成<b>初值问题</b>。</li>
+<li><b>积分曲线</b>：解 $y=\varphi(x)$ 的图形（通解对应一族曲线）。</li>
+</ul>
+</div>
+<div class="thm"><span class="label">存在唯一性定理（陈述）</span>若 $f(x,y)$ 在点 $(x_0,y_0)$ 的某矩形邻域内连续，且关于 $y$ 满足 Lipschitz 条件（$|f(x,y_1)-f(x,y_2)|\le L|y_1-y_2|$），则初值问题 $y'=f(x,y),\ y(x_0)=y_0$ 在 $x_0$ 的某邻域内存在<b>唯一</b>解。（证明思想见附录 A）</div>
+<p>对 $n$ 阶线性方程 $y^{(n)}+a_1(x)y^{(n-1)}+\cdots+a_n(x)y=f(x)$，当系数与 $f$ 连续时，给定 $x_0$ 处的 $n$ 个初值，解存在且唯一——这正是「通解含 $n$ 个独立常数」的根据，也是 §7 中通解结构定理的关键工具。</p>
+<div class="box method">
+<b>验证一个函数是不是方程的解——三步法：</b>
+① <b>求导</b>：把函数求导到方程中出现的最高阶；<br>
+② <b>代入</b>：把函数与各阶导数全部代进方程；<br>
+③ <b>化简</b>：算到左右两边相同（恒等式）为止，即验证完成。
+</div>
+<div class="box example">
+<b>例 1.</b> 验证 $y=C_1\cos x+C_2\sin x$ 是 $y''+y=0$ 的通解。<br>
+① 求导：
+$$y'=-C_1\sin x+C_2\cos x,\qquad y''=-C_1\cos x-C_2\sin x$$
+② 代入：
+$$y''+y=\left(-C_1\cos x-C_2\sin x\right)+\left(C_1\cos x+C_2\sin x\right)=0$$
+③ 结论：对任意常数 $C_1,C_2$ 恒成立，且 $\dfrac{\sin x}{\cos x}=\tan x$ 不是常数（两常数独立），故是含两个独立常数的通解。
+</div>
+<div class="box example">
+<b>例 2.</b> 已知通解 $y=C_1\cos x+C_2\sin x$，求满足初值 $y(0)=2,\ y'(0)=1$ 的特解。<br>
+① 代 $x=0$ 入 $y$：$y(0)=C_1=2$；<br>
+② 代 $x=0$ 入 $y'$：$y'(0)=C_2=1$；<br>
+③ 特解 $y=2\cos x+\sin x$。<br>
+<b>验算：</b>$y''=-2\cos x-\sin x$，$y''+y=(-2\cos x-\sin x)+(2\cos x+\sin x)=0$ ✓，且 $y(0)=2,\ y'(0)=1$ ✓。
+</div>
+<div class="box warn"><b>注意：</b>非线性方程的通解可能遗漏个别解（「奇解」），例如 §2 中因除以 $g(y)$ 而丢掉的常数解；线性方程则不会发生这种情况（通解恰好包含全部解，见 §7 定理 3）。</div>
+</section>
+
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>可分离变量的微分方程<span class="tag">基础</span></h2>
+<div class="box def">
+<b>形式：</b>$\dfrac{dy}{dx}=f(x)g(y)$，或对称形式 $M_1(x)M_2(y)\,dx+N_1(x)N_2(y)\,dy=0$。
+</div>
+<div class="box method">
+<b>解法：</b>分离变量 → 两边分别积分
+$$\frac{dy}{g(y)}=f(x)\,dx\qquad\Longrightarrow\qquad \int\frac{dy}{g(y)}=\int f(x)\,dx$$
+得隐式通解 $G(y)=F(x)+C$。
+</div>
+<div class="thm"><span class="label">原理</span>分离变量法为什么合法？</div>
+<div class="proof">
+<span class="label">证明</span>设 $y=\varphi(x)$ 是方程在区间 $I$ 上的解，且 $g(\varphi(x))\neq 0$。则
+$$\varphi'(x)=f(x)\,g(\varphi(x))\ \Longrightarrow\ \frac{\varphi'(x)}{g(\varphi(x))}=f(x)$$
+两边对 $x$ 积分，左边换元 $t=\varphi(x)$（$dt=\varphi'(x)dx$）：
+$$\int\frac{\varphi'(x)}{g(\varphi(x))}\,dx=\int\frac{dt}{g(t)}=G(\varphi(x))$$
+于是 $G(\varphi(x))=\displaystyle\int f(x)\,dx=F(x)+C$，即解满足隐式关系 $G(y)=F(x)+C$。<br>
+反过来，设可微函数 $y=\varphi(x)$ 满足 $G(\varphi(x))=F(x)+C$，两边对 $x$ 求导（链式法则）：
+$$G'(\varphi(x))\varphi'(x)=F'(x)\ \Longrightarrow\ \frac{\varphi'(x)}{g(\varphi(x))}=f(x)\ \Longrightarrow\ \varphi'=f(x)g(\varphi)$$
+即 $\varphi$ 是解。故方程的解与隐式关系 $G(y)=F(x)+C$ 确定的函数在 $g\neq 0$ 的区间上<strong>完全等价</strong>。
+<span class="qed">∎</span>
+</div>
+<div class="box method">
+<b>解可分离变量方程——三步法：</b>
+① <b>分离</b>：把含 $y$ 的因子与 $dy$ 放一边、含 $x$ 的因子与 $dx$ 放另一边（同时检查 $g(y)=0$ 的常数解）；<br>
+② <b>积分</b>：两边分别积分，只需在一边加一个任意常数 $C$；<br>
+③ <b>整理</b>：能解出 $y$ 就写显式通解；有初值就代入定 $C$；最后求导验算一次。
+</div>
+<div class="box example">
+<b>例 1.</b> 解 $\dfrac{dy}{dx}=2xy$。<br>
+① 分离（当 $y\neq 0$ 时）：$\dfrac{dy}{y}=2x\,dx$；<br>
+② 积分：$\ln|y|=x^2+C_1$；<br>
+③ 整理：$|y|=e^{C_1}e^{x^2}$，去掉绝对值并把 $\pm e^{C_1}$ 记作 $C$，得通解
+$$y=Ce^{x^2}$$
+（$C=0$ 恰好对应解 $y\equiv 0$，所以没有丢解。）<br>
+<b>验算：</b>$y'=2xCe^{x^2}=2xy$ ✓。若给 $y(0)=1$：$Ce^{0}=1\Rightarrow C=1$，特解 $y=e^{x^2}$。
+</div>
+<div class="box example">
+<b>例 2.</b> 解 $\dfrac{dy}{dx}=e^{x-y}$。<br>
+① 分离：$e^{y}\,dy=e^{x}\,dx$（这里 $e^{x-y}=\dfrac{e^{x}}{e^{y}}$，分母恒不为零，无丢解）；<br>
+② 积分：$e^{y}=e^{x}+C$；<br>
+③ 整理：$y=\ln\left(e^{x}+C\right)$（要求 $C\ge 0$，保证对数有意义）。<br>
+<b>验算：</b>$y'=\dfrac{e^{x}}{e^{x}+C}$，而 $e^{x-y}=e^{x}\cdot e^{-y}=e^{x}\cdot\dfrac{1}{e^{x}+C}=\dfrac{e^{x}}{e^{x}+C}$ ✓。
+</div>
+<div class="box warn"><b>丢解问题（奇解）：</b>分离变量时除以 $g(y)$，若 $g(y_0)=0$，则 $y\equiv y_0$ 显然是解（两边都是 0），但它未必包含在通解中。例如 $y'=y^{2/3}$ 中 $y\equiv 0$ 是解，而分离变量得到的 $y=\left(\frac{x+C}{3}\right)^3$ 对任何 $C$ 都不恒为零——零解不在通解里，必须单独补上。</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>齐次方程<span class="tag">基础</span></h2>
+<div class="box def">
+<b>形式：</b>$\dfrac{dy}{dx}=\varphi\!\left(\dfrac{y}{x}\right)$，即右边可整理成只含 $\dfrac{y}{x}$ 的式子。（「齐次」指关于 $x,y$ 的<b>零次齐次</b>：用 $tx,ty$ 替换不变。）</div>
+<div class="box method">
+<b>解法：</b>令 $u=\dfrac{y}{x}$，即 $y=ux$。
+</div>
+<div class="thm"><span class="label">换元公式</span>若 $y=ux$，其中 $u=u(x)$，则 $\dfrac{dy}{dx}=u+x\dfrac{du}{dx}$。</div>
+<div class="proof"><span class="label">证明</span>由乘积求导法则：$y=ux\Rightarrow \dfrac{dy}{dx}=\dfrac{du}{dx}\cdot x+u\cdot 1=u+x\dfrac{du}{dx}$。代入方程得
+$$u+x\frac{du}{dx}=\varphi(u)\qquad\Longrightarrow\qquad x\frac{du}{dx}=\varphi(u)-u$$
+这是关于 $u$ 的<b>可分离变量方程</b>，分离积分后把 $u=\dfrac{y}{x}$ 换回即得原方程的解。
+<span class="qed">∎</span></div>
+<div class="box method">
+<b>解齐次方程——五步法：</b>
+① <b>辨认</b>：把右边分子、分母同除以 $x$ 的最高次幂，若能整理成只含 $\dfrac{y}{x}$ 的式子 $\varphi\!\left(\dfrac{y}{x}\right)$，就是齐次方程；<br>
+② <b>换元</b>：令 $u=\dfrac{y}{x}$（即 $y=ux$），记住 $y'=u+xu'$；<br>
+③ <b>化可分离</b>：代入得 $x\dfrac{du}{dx}=\varphi(u)-u$，分离变量（检查 $\varphi(u)-u=0$ 的常数解）；<br>
+④ <b>积分</b>：解出 $u$ 的表达式（隐式也可）；<br>
+⑤ <b>回代</b>：把 $u=\dfrac{y}{x}$ 换回，得原方程通解；有初值再定 $C$。
+</div>
+<div class="box example">
+<b>例 1.</b> 解 $\dfrac{dy}{dx}=\dfrac{y}{x}+\tan\dfrac{y}{x}$。<br>
+① 右边已是 $\varphi(u)=u+\tan u$ 的形式（$u=\dfrac{y}{x}$）；<br>
+② 令 $u=\dfrac{y}{x}$，则 $y'=u+xu'$；<br>
+③ 代入：$u+xu'=u+\tan u\Rightarrow x\dfrac{du}{dx}=\tan u$，分离：$\cot u\,du=\dfrac{dx}{x}$；<br>
+④ 积分：$\ln|\sin u|=\ln|x|+C_1$，两边取指数并把 $e^{C_1}$ 记作 $C$：$\sin u=Cx$；<br>
+⑤ 回代 $u=\dfrac{y}{x}$，通解：
+$$\sin\frac{y}{x}=Cx$$
+<b>验算：</b>对 $\sin\dfrac{y}{x}=Cx$ 两边求导，注意 $C=\dfrac{1}{x}\sin\dfrac{y}{x}$：
+$$\cos\frac{y}{x}\cdot\frac{xy'-y}{x^2}=C=\frac{1}{x}\sin\frac{y}{x}\ \Longrightarrow\ xy'-y=x\tan\frac{y}{x}\ \Longrightarrow\ y'=\frac{y}{x}+\tan\frac{y}{x}\ ✓$$
+</div>
+<div class="box example">
+<b>例 2.</b> 解 $\dfrac{dy}{dx}=\dfrac{x^2+y^2}{xy}$。<br>
+① 分子分母同除以 $x^2$：$\dfrac{dy}{dx}=\dfrac{1+\left(\frac{y}{x}\right)^2}{\frac{y}{x}}$，即 $\varphi(u)=\dfrac{1+u^2}{u}$；<br>
+② 令 $u=\dfrac{y}{x}$，则 $y'=u+xu'$；<br>
+③ 代入：$u+xu'=\dfrac{1+u^2}{u}$，移项得
+$$x\frac{du}{dx}=\frac{1+u^2}{u}-u=\frac{1+u^2-u^2}{u}=\frac{1}{u}$$
+分离：$u\,du=\dfrac{dx}{x}$；<br>
+④ 积分：$\dfrac{u^2}{2}=\ln|x|+C$，即 $u^2=2\ln|x|+2C$；<br>
+⑤ 回代 $u=\dfrac{y}{x}$：$\dfrac{y^2}{x^2}=2\ln|x|+2C$，即
+$$y^2=2x^2\ln|x|+C_1x^2\ \ (C_1=2C)$$
+<b>验算：</b>由 $y^2=2x^2\ln x+C_1x^2$（$x>0$）两边求导得 $2yy'=4x\ln x+2x+2C_1x$，故 $y'=\dfrac{x\left(2\ln x+1+C_1\right)}{y}$；而
+$$\frac{x^2+y^2}{xy}=\frac{x^2+2x^2\ln x+C_1x^2}{xy}=\frac{x\left(2\ln x+1+C_1\right)}{y}\ ✓$$
+</div>
+<div class="box tip">
+<b>进阶：可化为齐次的方程</b> $\dfrac{dy}{dx}=\dfrac{a_1x+b_1y+c_1}{a_2x+b_2y+c_2}$。<br>
+① 若 $c_1=c_2=0$，本身就是齐次方程。<br>
+② 若 $\begin{vmatrix}a_1&b_1\\a_2&b_2\end{vmatrix}\neq 0$：令 $x=X+h,\ y=Y+k$，其中 $(h,k)$ 是直线 $a_1x+b_1y+c_1=0$ 与 $a_2x+b_2y+c_2=0$ 的交点，则常数项被消去，方程化为齐次方程 $\dfrac{dY}{dX}=\dfrac{a_1X+b_1Y}{a_2X+b_2Y}$（因为 $dx=dX,\ dy=dY$）。<br>
+③ 若行列式 $=0$（两行成比例，设 $a_2=\lambda a_1,\ b_2=\lambda b_1$）：令 $v=a_1x+b_1y$，则 $\dfrac{dv}{dx}=a_1+b_1\dfrac{dy}{dx}=a_1+b_1\cdot\dfrac{v+c_1}{\lambda v+c_2}$，是可分离变量方程。
+</div>
+<div class="box example">
+<b>例 3（情形②，行列式 $\neq 0$）.</b> 解 $\dfrac{dy}{dx}=\dfrac{x+y-1}{x-y+3}$。<br>
+先算行列式：$\begin{vmatrix}1&1\\1&-1\end{vmatrix}=-2\neq 0$，属情形②。解两直线交点：
+$$\begin{cases}x+y-1=0\\ x-y+3=0\end{cases}\ \Longrightarrow\ h=-1,\ k=2$$
+令 $x=X-1,\ y=Y+2$（平移不改变微分，$dx=dX,\ dy=dY$），代入得齐次方程
+$$\frac{dY}{dX}=\frac{(X-1)+(Y+2)-1}{(X-1)-(Y+2)+3}=\frac{X+Y}{X-Y}$$
+再令 $u=\dfrac{Y}{X}$：
+$$X\frac{du}{dX}=\frac{1+u}{1-u}-u=\frac{1+u^2}{1-u}\ \Longrightarrow\ \frac{1-u}{1+u^2}\,du=\frac{dX}{X}$$
+两边积分：
+$$\arctan u-\frac{1}{2}\ln\left(1+u^2\right)=\ln|X|+C\ \Longrightarrow\ \arctan u=\frac{1}{2}\ln\left(X^2+Y^2\right)+C$$
+把 $u=\dfrac{Y}{X}$ 与 $X=x+1,\ Y=y-2$ 换回，得隐式通解
+$$\arctan\frac{y-2}{x+1}=\frac{1}{2}\ln\left[(x+1)^2+(y-2)^2\right]+C$$
+<b>验算：</b>记 $X=x+1,\ Y=y-2$，通解即 $\arctan\dfrac{Y}{X}=\dfrac{1}{2}\ln\left(X^2+Y^2\right)+C$。两边对 $x$ 求导（$Y'=y'$）：
+$$\frac{XY'-Y}{X^2+Y^2}=\frac{X+YY'}{X^2+Y^2}\ \Longrightarrow\ XY'-Y=X+YY'\ \Longrightarrow\ Y'=\frac{X+Y}{X-Y}$$
+即 $y'=\dfrac{(x+1)+(y-2)}{(x+1)-(y-2)}=\dfrac{x+y-1}{x-y+3}$ ✓，与原方程一致。
+</div>
+<div class="box example">
+<b>例 4（情形③，行列式 $=0$）.</b> 解 $\dfrac{dy}{dx}=\dfrac{x+y+1}{x+y-1}$。<br>
+两行系数成比例，属情形③。令 $v=x+y$，则
+$$\frac{dv}{dx}=1+\frac{dy}{dx}=1+\frac{v+1}{v-1}=\frac{2v}{v-1}$$
+分离变量：
+$$\frac{v-1}{2v}\,dv=dx\ \Longrightarrow\ \frac{1}{2}\left(v-\ln|v|\right)=x+C$$
+换回 $v=x+y$：
+$$x+y-\ln|x+y|=2x+C_1\ \Longrightarrow\ y-\ln|x+y|=x+C_1$$
+<b>验算：</b>对 $y-\ln|x+y|=x+C_1$ 两边关于 $x$ 求导：
+$$y'-\frac{1+y'}{x+y}=1\ \Longrightarrow\ y'(x+y-1)=x+y+1\ \Longrightarrow\ y'=\frac{x+y+1}{x+y-1}\ ✓$$
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>一阶线性微分方程<span class="tag">核心</span></h2>
+<div class="box def">
+<b>形式：</b>$\dfrac{dy}{dx}+P(x)y=Q(x)$，其中 $P,Q$ 在区间 $I$ 上连续。$Q\equiv 0$ 时称为<b>齐次线性方程</b>（与 §3 的「齐次方程」含义不同）。</div>
+
+<h3>4.1 齐次线性方程的通解</h3>
+<div class="proof"><span class="label">推导</span>$y'+Py=0$ 是可分离变量方程。当 $y\neq 0$ 时 $\dfrac{y'}{y}=-P(x)$，积分得
+$$\ln|y|=-\int P(x)\,dx+C_1\ \Longrightarrow\ y=Ce^{-\int P(x)dx}\ (C=\pm e^{C_1})$$
+$C=0$ 即零解，故齐次线性方程通解为 $y=Ce^{-\int P\,dx}$。<span class="qed">∎</span></div>
+
+<h3>4.2 常数变易法：非齐次通解公式的完整推导</h3>
+<div class="thm"><span class="label">定理</span>非齐次方程 $y'+P(x)y=Q(x)$ 的通解为
+$$y=e^{-\int P(x)dx}\left[\int Q(x)e^{\int P(x)dx}\,dx+C\right]$$</div>
+<div class="proof"><span class="label">证明（常数变易法）</span>受齐次解 $y=Ce^{-\int P dx}$ 的启发，<b>把常数 $C$ 变易为待定函数 $C(x)$</b>，设
+$$y=C(x)\,e^{-\int P(x)dx}$$
+求导（乘积法则）：
+$$y'=C'(x)e^{-\int P dx}+C(x)\cdot\left(-P(x)e^{-\int P dx}\right)$$
+代入 $y'+Py=Q$，注意 $C(x)Pe^{-\int P dx}$ 与 $P(x)y$ 恰好抵消：
+$$C'(x)e^{-\int P dx}\underbrace{-C(x)Pe^{-\int P dx}+P(x)C(x)e^{-\int P dx}}_{=0}=Q(x)$$
+故
+$$C'(x)=Q(x)\,e^{\int P(x)dx}\ \Longrightarrow\ C(x)=\int Q(x)e^{\int P(x)dx}\,dx+C$$
+代回 $y=C(x)e^{-\int P dx}$ 即得通解公式。<span class="qed">∎</span></div>
+<div class="proof"><span class="label">补证（公式确实含有全部解）</span>设 $y_1,y_2$ 是方程的任意两个解，则
+$$(y_1-y_2)'+P(y_1-y_2)=(y_1'+Py_1)-(y_2'+Py_2)=Q-Q=0$$
+即 $y_1-y_2$ 是齐次解，由 4.1 知 $y_1-y_2=Ce^{-\int P dx}$。取公式中 $C=0$ 对应的特解 $y^*=e^{-\int P dx}\int Qe^{\int P dx}dx$，则任意解 $=y^*+Ce^{-\int P dx}$，正是公式给出的形式。故公式是「通解」而不只是「一族解」。<span class="qed">∎</span></div>
+<div class="box tip"><b>结论：</b>非齐次线性方程的通解 = 一个特解 + 对应齐次方程的通解。这个结构在 §7 将被推广到高阶线性方程。</div>
+
+<h3>4.3 解题模板（拿到题先套这四步）</h3>
+<div class="box method">
+① <b>化标准形</b>：整理成 $y'+P(x)y=Q(x)$（把 $y'$ 的系数化为 1）；<br>
+② <b>求积分因子</b>：$\mu(x)=e^{\int P(x)dx}$（$\int P\,dx$ 取一个原函数即可，不加任意常数）；<br>
+③ <b>套公式</b>：$\displaystyle y=\frac{1}{\mu(x)}\left[\int \mu(x)Q(x)\,dx+C\right]$；<br>
+④ <b>有初值就代入定 $C$</b>，写出特解；最后可求导验算。<br><br>
+<b>为什么公式成立（30 秒看懂）：</b>把标准形两边同乘 $\mu$：
+$$\mu y'+\mu P y=\mu Q$$
+注意 $\mu'=\left(e^{\int P dx}\right)'=P\mu$，所以左边恰好是乘积的导数：
+$$\underbrace{\mu y'+\mu' y}_{=(\mu y)'}=\mu Q\qquad\Longrightarrow\qquad (\mu y)'=\mu Q$$
+两边积分得 $\mu y=\displaystyle\int \mu Q\,dx+C$，再除以 $\mu$ 即得公式③。<b>「乘积分因子」的全部目的，就是把左边凑成一个整体导数 $(\mu y)'$。</b>
+</div>
+
+<h3>4.4 例题</h3>
+<div class="box example">
+<b>例 1（最基础，严格按四步走）.</b> 解 $y'-2y=e^{x}$。<br>
+① 已是标准形：$P=-2$，$Q=e^{x}$。<br>
+② $\displaystyle\int P\,dx=-2x$，故 $\mu=e^{-2x}$。<br>
+③ 套公式：
+$$y=\frac{1}{e^{-2x}}\left[\int e^{-2x}\cdot e^{x}\,dx+C\right]=e^{2x}\left[\int e^{-x}\,dx+C\right]=e^{2x}\left[-e^{-x}+C\right]=Ce^{2x}-e^{x}$$
+④ 若加初值 $y(0)=1$：$C-1=1\Rightarrow C=2$，特解 $y=2e^{2x}-e^{x}$。<br>
+<b>验算：</b>$y'=4e^{2x}-e^{x}$，$y'-2y=\left(4e^{2x}-e^{x}\right)-2\left(2e^{2x}-e^{x}\right)=e^{x}$ ✓
+</div>
+<div class="box example">
+<b>例 2（搞懂「为什么乘 $x$」）.</b> 解 $y'+\dfrac{y}{x}=\dfrac{\sin x}{x}$，$y(\pi)=1$（$x>0$）。<br>
+① $P=\dfrac{1}{x}$，$Q=\dfrac{\sin x}{x}$。<br>
+② $\displaystyle\int P\,dx=\ln x$，所以
+$$\mu=e^{\int P dx}=e^{\ln x}=x$$
+<b>「两边乘 $x$」不是凭空技巧，而是积分因子算出来恰好等于 $x$。</b><br>
+③ 套公式：
+$$y=\frac{1}{x}\left[\int x\cdot\frac{\sin x}{x}\,dx+C\right]=\frac{1}{x}\left[\int \sin x\,dx+C\right]=\frac{C-\cos x}{x}$$
+（另一种写法：两边直接乘 $x$ 得 $xy'+y=\sin x$，左边正好合成 $(xy)'$，这就是模板里的 $(\mu y)'=\mu Q$，两种写法是一回事。）<br>
+④ 代入 $y(\pi)=1$：$\dfrac{C-\cos\pi}{\pi}=\dfrac{C+1}{\pi}=1\Rightarrow C=\pi-1$，特解
+$$y=\frac{\pi-1-\cos x}{x}$$
+<b>验算：</b>对 $y=\dfrac{C-\cos x}{x}$ 求导：
+$$y'=\frac{x\sin x-\left(C-\cos x\right)}{x^2}\ \Longrightarrow\ y'+\frac{y}{x}=\frac{x\sin x-\left(C-\cos x\right)+\left(C-\cos x\right)}{x^2}=\frac{\sin x}{x}\ ✓$$
+且 $y(\pi)=\dfrac{\pi-1+1}{\pi}=1$ ✓。
+</div>
+<div class="box example">
+<b>例 3（换角色：把 $x$ 当作未知函数）.</b> 解 $\dfrac{dy}{dx}=\dfrac{1}{x+y}$。<br>
+<b>为什么要换：</b>右边分母含 $y$，对未知函数 $y$ 来说不是线性方程；但把等式「倒过来」后，$x$ 变成未知函数，方程对 $x$ 就是线性的了。<br>
+① 两边取倒数（当 $x+y\neq 0$）：$\dfrac{dx}{dy}=x+y$，整理为标准形（自变量是 $y$）：
+$$\frac{dx}{dy}-x=y\qquad\Longrightarrow\qquad P(y)=-1,\quad Q(y)=y$$
+② $\displaystyle\int P\,dy=-y$，故 $\mu=e^{-y}$。<br>
+③ 套用同一公式（把公式中的 $x,y$ 对调）：
+$$x=\frac{1}{e^{-y}}\left[\int e^{-y}\cdot y\,dy+C\right]=e^{y}\left[-(y+1)e^{-y}+C\right]=Ce^{y}-y-1$$
+其中 $\displaystyle\int y e^{-y}dy$ 用分部积分：$\displaystyle\int y e^{-y}dy=-ye^{-y}+\int e^{-y}dy=-(y+1)e^{-y}$。<br>
+<b>验算：</b>$x'=Ce^{y}-1$，$x'-x=\left(Ce^{y}-1\right)-\left(Ce^{y}-y-1\right)=y$ ✓，原方程成立。<br>
+（通解 $x=Ce^{y}-y-1$ 中 $y$ 是隐式的，不需要解出 $y$。）
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>伯努利方程<span class="tag">核心</span></h2>
+<div class="box def">
+<b>形式：</b>$y'+P(x)y=Q(x)y^n\quad(n\neq 0,\,1)$，其中 $P,Q$ 连续。它是非线性方程（$n\neq 0,1$），但有固定解法。</div>
+<div class="thm"><span class="label">化线性定理</span>令 $z=y^{1-n}$，则伯努利方程化为线性方程
+$$z'+(1-n)P(x)\,z=(1-n)Q(x)$$</div>
+<div class="proof"><span class="label">证明</span>在 $y\neq 0$ 的区间上，方程两边除以 $y^n$：
+$$y^{-n}y'+P(x)\,y^{1-n}=Q(x)$$
+令 $z=y^{1-n}$，由复合函数求导法则：
+$$z'=(1-n)y^{-n}y'\qquad\Longrightarrow\qquad y^{-n}y'=\frac{z'}{1-n}$$
+代入得
+$$\frac{z'}{1-n}+Pz=Q\ \Longrightarrow\ z'+(1-n)Pz=(1-n)Q$$
+这是关于 $z$ 的一阶线性方程，解出 $z$ 后由 $y=z^{\frac{1}{1-n}}$ 换回即可。
+<span class="qed">∎</span></div>
+<div class="box warn"><b>注意：</b>当 $n>0$ 时，$y\equiv 0$ 显然也是解（两边为 0）。它可能不对应任何 $z$ 值，求解时不要遗漏这个常数解。</div>
+<div class="box method">
+<b>解伯努利方程——六步法：</b>
+① 化成标准形 $y'+P(x)y=Q(x)y^n$，读出 $n$（要求 $n\neq 0,1$）；<br>
+② 在 $y\neq 0$ 的区间上，两边除以 $y^n$；<br>
+③ 令 $z=y^{1-n}$，由复合函数求导 $z'=(1-n)y^{-n}y'$，即 $y^{-n}y'=\dfrac{z'}{1-n}$；<br>
+④ 代入整理成线性方程：$z'+(1-n)Pz=(1-n)Q$；<br>
+⑤ 用 §4 的四步法解出 $z$；<br>
+⑥ 回代 $y=z^{\frac{1}{1-n}}$；若 $n>0$ 补上 $y\equiv 0$；最后验算。
+</div>
+<div class="box example">
+<b>例 1.</b> 解 $y'+y=y^2$。<br>
+① 已是标准形：$P=1,\ Q=1,\ n=2$；<br>
+② 除以 $y^2$：$y^{-2}y'+y^{-1}=1$；<br>
+③ 令 $z=y^{-1}$，则 $z'=-y^{-2}y'$，即 $y^{-2}y'=-z'$；<br>
+④ 代入：$-z'+z=1$，即 $z'-z=-1$（线性，$P=-1,\ Q=-1$）；<br>
+⑤ 积分因子 $\mu=e^{-x}$：
+$$z=e^{x}\left[\int(-1)e^{-x}\,dx+C\right]=e^{x}\left(e^{-x}+C\right)=1+Ce^{x}$$
+⑥ $y=\dfrac{1}{z}=\dfrac{1}{1+Ce^{x}}$；因 $n=2>0$，补上常数解 $y\equiv 0$。<br>
+<b>验算：</b>$y'=-\dfrac{Ce^{x}}{\left(1+Ce^{x}\right)^2}$，故
+$$y'+y=\frac{-Ce^{x}+1+Ce^{x}}{\left(1+Ce^{x}\right)^2}=\frac{1}{\left(1+Ce^{x}\right)^2}=y^2\ ✓$$
+</div>
+<div class="box example">
+<b>例 2.</b> 解 $y'+\dfrac{y}{x}=\dfrac{y^2}{x}$。<br>
+① 标准形：$P=\dfrac{1}{x},\ Q=\dfrac{1}{x},\ n=2$；<br>
+② 除以 $y^2$：$y^{-2}y'+\dfrac{y^{-1}}{x}=\dfrac{1}{x}$；<br>
+③ 令 $z=y^{-1}$，则 $y^{-2}y'=-z'$；<br>
+④ 代入：$-z'+\dfrac{z}{x}=\dfrac{1}{x}$，即 $z'-\dfrac{z}{x}=-\dfrac{1}{x}$（线性，$P=-\dfrac{1}{x},\ Q=-\dfrac{1}{x}$）；<br>
+⑤ $\displaystyle\int P\,dx=-\ln x$，$\mu=e^{-\ln x}=\dfrac{1}{x}$，套公式：
+$$z=\frac{1}{\mu}\left[\int \mu Q\,dx+C\right]=x\left[\int\frac{1}{x}\cdot\left(-\frac{1}{x}\right)dx+C\right]=x\left[\int-\frac{1}{x^2}\,dx+C\right]=x\left(\frac{1}{x}+C\right)=1+Cx$$
+⑥ $y=\dfrac{1}{1+Cx}$，另有常数解 $y\equiv 0$。<br>
+<b>验算：</b>$y'=-\dfrac{C}{\left(1+Cx\right)^2}$，
+$$y'+\frac{y}{x}-\frac{y^2}{x}=\frac{-C}{\left(1+Cx\right)^2}+\frac{1}{x\left(1+Cx\right)}-\frac{1}{x\left(1+Cx\right)^2}=\frac{-Cx+1+Cx-1}{x\left(1+Cx\right)^2}=0\ ✓$$
+</div>
+</section>
+
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>可降阶的高阶微分方程<span class="tag">常考</span></h2>
+
+<h3>6.1 $y^{(n)}=f(x)$ 型</h3>
+<div class="box method">
+连续积分 $n$ 次，每积分一次出现一个任意常数。以 $y'''=\sin x$ 为例：
+① 第一次积分：$y''=\displaystyle\int\sin x\,dx=-\cos x+C_1$；<br>
+② 第二次积分：$y'=\displaystyle\int\left(-\cos x+C_1\right)dx=-\sin x+C_1x+C_2$；<br>
+③ 第三次积分：$y=\displaystyle\int\left(-\sin x+C_1x+C_2\right)dx=\cos x+\frac{C_1}{2}x^2+C_2x+C_3$。<br>
+检查：三阶方程的通解恰好含 $C_1,C_2,C_3$ 三个独立常数 ✓。<br>
+<b>验算（代回）：</b>由 $y$ 逐次求导得 $y'=-\sin x+C_1x+C_2$、$y''=-\cos x+C_1$、$y'''=\sin x$，与原方程一致 ✓。
+</div>
+
+<h3>6.2 $y''=f(x,y')$ 型（缺 $y$）</h3>
+<div class="thm"><span class="label">降阶原理</span>令 $p=y'$，则 $y''=\dfrac{dp}{dx}$，方程化为关于 $p$ 的一阶方程
+$$\frac{dp}{dx}=f(x,p)$$</div>
+<div class="proof"><span class="label">说明</span>令 $p(x)=y'(x)$，则 $p'(x)=y''(x)$，代入即得。解出 $p=p(x,C_1)$ 后，再由 $y'=p(x,C_1)$ 积分一次得
+$$y=\int p(x,C_1)\,dx+C_2$$
+通解含两个任意常数。$p$ 是 $x$ 的函数，故此法适用于方程中<b>不显含 $y$</b> 的情形。
+<span class="qed">∎</span></div>
+<div class="box example">
+<b>例.</b> 解 $(1+x^2)y''=2xy'$。<br>
+① 方程缺 $y$，令 $p=y'$，则 $p'=y''$；<br>
+② 代入：$(1+x^2)p'=2xp$；<br>
+③ 分离（$p\neq 0$）：$\dfrac{dp}{p}=\dfrac{2x}{1+x^2}\,dx$；<br>
+④ 积分：$\ln|p|=\ln(1+x^2)+C_1$，取指数并把 $e^{C_1}$ 记作 $C_1$，得 $p=C_1(1+x^2)$（$C_1=0$ 对应 $p\equiv 0$，即 $y\equiv$ 常数，已含在通解里）；<br>
+⑤ 再由 $y'=p$ 积分一次：$y=\displaystyle\int C_1(1+x^2)\,dx+C_2=C_1\!\left(x+\frac{x^3}{3}\right)+C_2$；<br>
+⑥ <b>验算：</b>$y'=C_1(1+x^2)$，$y''=2C_1x$，故 $(1+x^2)y''=(1+x^2)\cdot 2C_1x=2x\cdot C_1(1+x^2)=2xy'$ ✓。
+</div>
+
+<h3>6.3 $y''=f(y,y')$ 型（缺 $x$）</h3>
+<div class="thm"><span class="label">降阶原理</span>令 $p=y'$ 并把 $p$ 看作 $y$ 的函数，则
+$$y''=\frac{dp}{dx}=\frac{dp}{dy}\cdot\frac{dy}{dx}=p\,\frac{dp}{dy}$$
+方程化为关于 $p(y)$ 的一阶方程 $p\dfrac{dp}{dy}=f(y,p)$。</div>
+<div class="proof"><span class="label">证明</span>$y'=p$ 是 $x$ 的函数，但由 $p=p(y)$（假设 $y$ 单调时可反解）复合求导：
+$$y''=\frac{d}{dx}p(y(x))=p'(y)\cdot y'(x)=p\,\frac{dp}{dy}$$
+（链式法则）。方程中不显含 $x$ 时，$f(y,p)$ 只依赖 $y,p$，故化为以 $y$ 为自变量、$p$ 为未知函数的一阶方程。解出 $p=p(y,C_1)$ 后，再由 $\dfrac{dy}{dx}=p(y,C_1)$ 分离变量积分得通解。
+<span class="qed">∎</span></div>
+<div class="box example">
+<b>例.</b> 解 $y''=3\sqrt{y}$，$y(0)=1$，$y'(0)=2$。<br>
+① 方程缺 $x$，令 $p=y'$ 并看作 $y$ 的函数，则 $y''=p\dfrac{dp}{dy}$；<br>
+② 代入：$p\dfrac{dp}{dy}=3y^{1/2}$；<br>
+③ 分离积分：$p\,dp=3y^{1/2}\,dy\Rightarrow\dfrac{p^2}{2}=2y^{3/2}+C$；<br>
+④ <b>用初值定 $C$</b>：当 $x=0$ 时 $y=1$、$p=y'=2$，代入：$\dfrac{2^2}{2}=2\cdot 1^{3/2}+C\Rightarrow 2=2+C\Rightarrow C=0$；<br>
+⑤ 于是 $p^2=4y^{3/2}$，开方取哪一支？由 $p(0)=2>0$ 取正支：$p=2y^{3/4}$；<br>
+⑥ 回到 $p=\dfrac{dy}{dx}$：$\dfrac{dy}{dx}=2y^{3/4}$，分离 $y^{-3/4}dy=2\,dx$，积分得 $4y^{1/4}=2x+C_1$；<br>
+⑦ 再用 $y(0)=1$：$4=C_1$，故 $y^{1/4}=\dfrac{2x+4}{4}=\dfrac{x+2}{2}$，即
+$$y=\left(\frac{x+2}{2}\right)^4$$
+⑧ <b>验算：</b>$y'=4\left(\dfrac{x+2}{2}\right)^3\cdot\dfrac{1}{2}=2\left(\dfrac{x+2}{2}\right)^3$，故 $y'(0)=2$ ✓；$y''=3\left(\dfrac{x+2}{2}\right)^2=3\sqrt{y}$ ✓，且 $y(0)=1$ ✓。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>高阶线性微分方程（理论全证明）<span class="tag">核心</span></h2>
+<div class="box def">
+<b>二阶线性方程：</b>$y''+P(x)y'+Q(x)y=f(x)$，$f\equiv 0$ 时称为齐次，否则非齐次。记
+$$L[y]=y''+P(x)y'+Q(x)y$$
+$L$ 称为<b>线性微分算子</b>：由求导的线性性，对任意常数 $C_1,C_2$ 与函数 $y_1,y_2$，有
+$$L[C_1y_1+C_2y_2]=C_1L[y_1]+C_2L[y_2]$$
+（展开逐项求导即可验证）。以下 $P,Q$ 在区间 $I$ 上连续。</div>
+
+<h3>7.1 齐次方程解的结构</h3>
+<div class="thm"><span class="label">定理 1（叠加原理）</span>若 $y_1,y_2$ 都是 $L[y]=0$ 的解，$C_1,C_2$ 为任意常数，则 $C_1y_1+C_2y_2$ 也是 $L[y]=0$ 的解。</div>
+<div class="proof"><span class="label">证明</span>由算子线性性：$L[C_1y_1+C_2y_2]=C_1L[y_1]+C_2L[y_2]=C_1\cdot 0+C_2\cdot 0=0$，故 $C_1y_1+C_2y_2$ 是解。对有限多个解同理。
+<span class="qed">∎</span></div>
+
+<h3>7.2 函数的线性相关与线性无关</h3>
+<div class="box def"><b>定义：</b>函数组 $y_1,y_2$ 在区间 $I$ 上<b>线性相关</b>，若存在<b>不全为零</b>的常数 $k_1,k_2$，使
+$$k_1y_1(x)+k_2y_2(x)\equiv 0,\quad x\in I$$
+否则称<b>线性无关</b>。直观上，两个函数线性相关 ⇔ 它们之比为常数。</div>
+<div class="box def"><b>朗斯基（Wronskian）行列式：</b>
+$$W(x)=\begin{vmatrix}y_1&y_2\\[2pt]y_1'&y_2'\end{vmatrix}=y_1y_2'-y_1'y_2$$</div>
+
+<div class="thm"><span class="label">引理（刘维尔公式）</span>若 $y_1,y_2$ 是齐次方程 $L[y]=0$ 的解，则
+$$W'(x)=-P(x)W(x)\qquad\Longrightarrow\qquad W(x)=W(x_0)\,e^{-\int_{x_0}^{x}P(t)\,dt}$$
+特别地，$W(x)$ 要么恒等于零，要么处处不为零。</div>
+<div class="proof"><span class="label">证明</span>对 $W=y_1y_2'-y_1'y_2$ 求导（乘积法则，中间两项相消）：
+$$W'=y_1'y_2'+y_1y_2''-y_1''y_2-y_1'y_2'=y_1y_2''-y_1''y_2$$
+因 $y_1,y_2$ 是解：$y_1''=-Py_1'-Qy_1,\quad y_2''=-Py_2'-Qy_2$。代入：
+$$W'=y_1\!\left(-Py_2'-Qy_2\right)-\left(-Py_1'-Qy_1\right)y_2=-P\left(y_1y_2'-y_1'y_2\right)\underbrace{-Qy_1y_2+Qy_1y_2}_{=0}=-P(x)W$$
+这是一阶线性齐次方程，其解为 $W=W(x_0)e^{-\int_{x_0}^{x}P\,dt}$。指数因子恒不为零，故结论成立。<span class="qed">∎</span></div>
+
+<div class="thm"><span class="label">定理 2（线性无关的判别）</span>设 $y_1,y_2$ 是齐次方程 $L[y]=0$ 的两个解，则
+$$y_1,y_2\ \text{线性相关}\iff W(x)\equiv 0\iff W(x_0)=0\ (\text{对某个 }x_0)$$
+$$y_1,y_2\ \text{线性无关}\iff W(x)\neq 0\ (\text{对一切 }x\in I)$$</div>
+<div class="proof"><span class="label">证明（⇒ 线性相关 ⇒ W≡0）</span>存在不全为零的 $k_1,k_2$ 使 $k_1y_1+k_2y_2\equiv 0$，两边求导得 $k_1y_1'+k_2y_2'\equiv 0$。于是在每个 $x$ 处，$(k_1,k_2)$ 是齐次线性方程组
+$$\begin{cases}k_1y_1(x)+k_2y_2(x)=0\\ k_1y_1'(x)+k_2y_2'(x)=0\end{cases}$$
+的非零解，故系数行列式 $W(x)\equiv 0$。
+<span class="qed">∎</span></div>
+<div class="proof"><span class="label">证明（W(x₀)=0 ⇒ 线性相关）</span>设 $W(x_0)=0$，则上述方程组在 $x=x_0$ 处有非零解 $(k_1,k_2)$。令 $z=k_1y_1+k_2y_2$，由定理 1 知 $z$ 是解，且
+$$z(x_0)=0,\qquad z'(x_0)=0$$
+由解的存在唯一性定理，初值问题 $\begin{cases}L[y]=0\\ y(x_0)=0,\ y'(x_0)=0\end{cases}$ 的解唯一，而 $y\equiv 0$ 就是它的一个解，故 $z\equiv 0$，即 $y_1,y_2$ 线性相关。
+结合刘维尔公式（$W(x_0)=0\Rightarrow W\equiv 0$；$W(x_0)\neq 0\Rightarrow W$ 处处非零），定理全部得证。<span class="qed">∎</span></div>
+<h3>7.3 齐次方程的通解结构</h3>
+<div class="thm"><span class="label">定理 3（齐次通解结构）</span>若 $y_1,y_2$ 是 $L[y]=0$ 的两个线性无关解，则
+$$Y=C_1y_1+C_2y_2$$
+是齐次方程的<b>通解</b>——即方程的每一个解都可以表示成这个形式（且恰好含两个独立常数）。</div>
+<div class="proof"><span class="label">证明</span>由定理 1，$Y$ 是解。<br>
+反过来，设 $y=y(x)$ 是任一解。取定 $x_0\in I$。由定理 2，线性无关保证 $W(x_0)\neq 0$，因此关于 $C_1,C_2$ 的二元一次方程组
+$$\begin{cases}C_1y_1(x_0)+C_2y_2(x_0)=y(x_0)\\[2pt] C_1y_1'(x_0)+C_2y_2'(x_0)=y'(x_0)\end{cases}$$
+的系数行列式 $W(x_0)\neq 0$，由克莱姆法则存在<b>唯一</b>的一组解 $(C_1,C_2)$。<br>
+对这样取定的 $C_1,C_2$，令 $z=C_1y_1+C_2y_2$。则 $z$ 与 $y$ 都是 $L[y]=0$ 的解，且满足相同的初始条件
+$$z(x_0)=y(x_0),\qquad z'(x_0)=y'(x_0)$$
+由解的存在唯一性定理，$z\equiv y$，即 $y=C_1y_1+C_2y_2$。故一切解都可如此表示。<span class="qed">∎</span></div>
+
+<h3>7.4 非齐次方程的通解结构</h3>
+<div class="thm"><span class="label">定理 4（非齐次通解结构）</span>设 $y^*$ 是 $L[y]=f(x)$ 的一个特解，$Y=C_1y_1+C_2y_2$ 是对应齐次方程的通解，则非齐次方程的通解为
+$$y=Y+y^*=C_1y_1+C_2y_2+y^*$$</div>
+<div class="proof"><span class="label">证明</span><b>(i) $Y+y^*$ 是解：</b>由算子线性性，
+$$L[Y+y^*]=L[Y]+L[y^*]=0+f(x)=f(x)$$
+<b>(ii) 任意解都在其中：</b>设 $y$ 是 $L[y]=f$ 的任一解，则
+$$L[y-y^*]=L[y]-L[y^*]=f-f=0$$
+故 $y-y^*$ 是齐次解，由定理 3 知 $y-y^*=C_1y_1+C_2y_2$，即 $y=C_1y_1+C_2y_2+y^*$。<span class="qed">∎</span></div>
+
+<div class="thm"><span class="label">定理 5（叠加原理，非齐次）</span>若 $y_1^*$ 是 $L[y]=f_1$ 的解，$y_2^*$ 是 $L[y]=f_2$ 的解，则 $y_1^*+y_2^*$ 是 $L[y]=f_1+f_2$ 的解。</div>
+<div class="proof"><span class="label">证明</span>$L[y_1^*+y_2^*]=L[y_1^*]+L[y_2^*]=f_1+f_2$。<span class="qed">∎</span></div>
+<div class="box tip"><b>用途：</b>右端 $f=f_1+f_2$ 时，可分别求出 $f_1,f_2$ 的特解再相加——把复杂右端拆成简单右端逐个击破。</div>
+
+<h3>7.5 例子与推广</h3>
+<div class="box example">
+<b>例（用三步判定线性无关）.</b> 验证 $y_1=\cos x,\ y_2=\sin x$ 是 $y''+y=0$ 的两个线性无关解，并写出通解。<br>
+① 写 Wronskian 并代入：
+$$W=y_1y_2'-y_1'y_2=\cos x\cdot\cos x-(-\sin x)\cdot\sin x=\cos^2x+\sin^2x=1$$
+② 判断：$W\equiv 1\neq 0$，由定理 2 知二者线性无关；<br>
+③ 由定理 3，通解 $Y=C_1\cos x+C_2\sin x$。<br>
+再如 $y_1=x,\ y_2=x^2$（可验证它们是 $x^2y''-2xy'+2y=0$ 的解）：$W=x\cdot 2x-1\cdot x^2=x^2$，在 $x\neq 0$ 处非零，故在 $x>0$（或 $x<0$）上线性无关。
+</div>
+<div class="box tip"><b>推广到 $n$ 阶：</b>对 $y^{(n)}+a_1(x)y^{(n-1)}+\cdots+a_n(x)y=0$，若 $y_1,\dots,y_n$ 是 $n$ 个线性无关解，则通解为
+$$Y=C_1y_1+\cdots+C_ny_n$$
+Wronskian 改为 $n$ 阶行列式 $W=(y_i^{(j-1)})$，刘维尔公式相应为 $W'=-a_1(x)W$，因此同样「要么恒零、要么处处非零」。非齐次通解结构 $y=Y+y^*$ 完全类似。
+</div>
+</section>
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>常系数齐次线性微分方程（特征方程法全证明）<span class="tag">核心</span></h2>
+<div class="box def">
+<b>方程：</b>$y''+py'+qy=0$，其中 $p,q$ 是<b>实常数</b>，$L[y]=y''+py'+qy$。</div>
+
+<h3>8.1 特征方程</h3>
+<div class="thm"><span class="label">引理 1</span>对任意（实或复）常数 $r$：
+$$L\!\left[e^{rx}\right]=\left(r^2+pr+q\right)e^{rx}$$</div>
+<div class="proof"><span class="label">证明</span>$\left(e^{rx}\right)'=re^{rx},\ \left(e^{rx}\right)''=r^2e^{rx}$，代入：
+$$L[e^{rx}]=r^2e^{rx}+pre^{rx}+qe^{rx}=(r^2+pr+q)e^{rx}$$
+<span class="qed">∎</span></div>
+<div class="box tip"><b>思路来源：</b>一阶常系数方程 $y'+py=0$ 的解是 $y=Ce^{-px}$（指数函数），故对二阶方程也尝试 $y=e^{rx}$。引理 1 表明：$y=e^{rx}$ 是解 $\iff r^2+pr+q=0$。方程
+$$r^2+pr+q=0$$
+称为<b>特征方程</b>，其根称为<b>特征根</b>。按判别式 $\Delta=p^2-4q$ 分三种情形。</div>
+
+<h3>8.2 情形一：$\Delta>0$，两个不同实根 $r_1\neq r_2$</h3>
+<div class="proof"><span class="label">证明与通解</span>由引理 1，$y_1=e^{r_1x},\ y_2=e^{r_2x}$ 都是解。计算 Wronskian：
+$$W=e^{r_1x}\cdot r_2e^{r_2x}-r_1e^{r_1x}\cdot e^{r_2x}=(r_2-r_1)e^{(r_1+r_2)x}$$
+因 $r_1\neq r_2$，$W$ 处处不为零，故 $y_1,y_2$ 线性无关。由 §7 定理 3，通解为
+$$y=C_1e^{r_1x}+C_2e^{r_2x}$$
+<span class="qed">∎</span></div>
+
+<h3>8.3 情形二：$\Delta=0$，二重实根 $r=-\dfrac{p}{2}$</h3>
+<div class="thm"><span class="label">引理 2（移位公式，§9 也要用）</span>对任意常数 $s$（实或复）与二阶可导函数 $v(x)$：
+$$L\!\left[e^{sx}v(x)\right]=e^{sx}\left[v''+(2s+p)v'+(s^2+ps+q)v\right]$$</div>
+<div class="proof"><span class="label">证明</span>逐步求导：
+$$\left(e^{sx}v\right)'=e^{sx}\left(v'+sv\right)$$
+$$\left(e^{sx}v\right)''=e^{sx}\left(v''+2sv'+s^2v\right)$$
+代入 $L$：
+$$L[e^{sx}v]=e^{sx}\left(v''+2sv'+s^2v\right)+pe^{sx}\left(v'+sv\right)+qe^{sx}v=e^{sx}\left[v''+(2s+p)v'+(s^2+ps+q)v\right]$$
+<span class="qed">∎</span></div>
+<div class="proof"><span class="label">证明（通解形式）</span>设 $y=e^{rx}v(x)$。由移位公式（取 $s=r$）：
+$$L[y]=e^{rx}\left[v''+(2r+p)v'+(r^2+pr+q)v\right]$$
+因 $r$ 是特征根，$r^2+pr+q=0$；又因 $r$ 是二重根，$r=-\dfrac{p}{2}$，故 $2r+p=0$。于是
+$$L[y]=e^{rx}\,v''$$
+所以 $L[y]=0\iff v''=0\iff v=C_1+C_2x$。代入得
+$$y=(C_1+C_2x)e^{rx}$$
+其中 $e^{rx}$（取 $C_2=0$）与 $xe^{rx}$（取 $C_1=0$）是解，且比值 $\dfrac{xe^{rx}}{e^{rx}}=x$ 不是常数，线性无关，故上式即通解。<span class="qed">∎</span></div>
+<div class="box tip"><b>要点：</b>这个证明说明重根时「乘 $x$」不是技巧，而是解 $v''=0$ 的必然结果——$e^{rx}$ 与 $xe^{rx}$ 恰好构成两个线性无关解。</div>
+<h3>8.4 情形三：$\Delta<0$，共轭复根 $r=\alpha\pm\beta i\ (\beta>0)$</h3>
+<div class="thm"><span class="label">引理 3（实部与虚部分离）</span>设 $p,q$ 为实常数，复值函数 $y=u(x)+iv(x)$（$u,v$ 实值）满足 $L[y]=0$，则 $u,v$ 都满足 $L[y]=0$。</div>
+<div class="proof"><span class="label">证明</span>因为 $p,q$ 是实数，求导与取实部、虚部可交换，且实系数乘法不混合实虚部，所以
+$$L[y]=L[u]+i\,L[v]$$
+由 $L[y]=0$ 得实部、虚部均为零，即 $L[u]=0,\ L[v]=0$。<span class="qed">∎</span></div>
+<div class="proof"><span class="label">证明（通解形式）</span>设 $r=\alpha+\beta i$ 是特征根。由引理 1，复值函数 $Y=e^{(\alpha+\beta i)x}$ 满足 $L[Y]=0$。由欧拉公式
+$$e^{(\alpha+\beta i)x}=e^{\alpha x}\left(\cos\beta x+i\sin\beta x\right)$$
+取实部与虚部：$u=e^{\alpha x}\cos\beta x,\ v=e^{\alpha x}\sin\beta x$。由引理 3，两者都是实值解。<br>
+线性无关性（直接算 Wronskian）：
+$$W=uv'-u'v=e^{2\alpha x}\left[\cos\beta x\left(\alpha\sin\beta x+\beta\cos\beta x\right)-\left(\alpha\cos\beta x-\beta\sin\beta x\right)\sin\beta x\right]=\beta e^{2\alpha x}\neq 0$$
+故由定理 3，通解为
+$$y=e^{\alpha x}\left(C_1\cos\beta x+C_2\sin\beta x\right)$$
+（注：另一个根 $\alpha-\beta i$ 与它共轭，取实虚部得到的是同一对实解。）<span class="qed">∎</span></div>
+
+<h3>8.5 三种情形汇总与例题</h3>
+<table>
+<thead><tr><th>特征根情况</th><th>通解</th></tr></thead>
+<tbody>
+<tr><td>两个不等实根 $r_1,\ r_2$</td><td>$y=C_1e^{r_1x}+C_2e^{r_2x}$</td></tr>
+<tr><td>二重实根 $r$</td><td>$y=(C_1+C_2x)e^{rx}$</td></tr>
+<tr><td>共轭复根 $r=\alpha\pm\beta i$</td><td>$y=e^{\alpha x}\left(C_1\cos\beta x+C_2\sin\beta x\right)$</td></tr>
+</tbody>
+</table>
+<div class="box method">
+<b>解常系数齐次方程——四步法：</b>
+① 写特征方程 $r^2+pr+q=0$；<br>
+② 求根：先算判别式 $\Delta=p^2-4q$，判断属于哪种情形；<br>
+③ 对照上表直接写通解；<br>
+④ 有初值就代入（用 $y$ 与 $y'$ 两个条件）定 $C_1,C_2$，最后验算。
+</div>
+<div class="box example">
+<b>例 1（两实根）.</b> 解 $y''-2y'-3y=0$。<br>
+① 特征方程 $r^2-2r-3=0$；<br>
+② $\Delta=(-2)^2-4\times(-3)=16>0$，$r=\dfrac{2\pm 4}{2}=3,\ -1$；<br>
+③ 通解
+$$y=C_1e^{3x}+C_2e^{-x}$$
+④ 若给初值 $y(0)=1,\ y'(0)=1$：代入得 $C_1+C_2=1$，$3C_1-C_2=1$，两式相加得 $4C_1=2$，即 $C_1=C_2=\dfrac{1}{2}$，特解 $y=\dfrac{1}{2}e^{3x}+\dfrac{1}{2}e^{-x}$。<br>
+<b>验算：</b>代入原方程：$\left(9-6-3\right)\dfrac{1}{2}e^{3x}+\left(1+2-3\right)\dfrac{1}{2}e^{-x}=0$ ✓。
+</div>
+<div class="box example">
+<b>例 2（二重根）.</b> 解 $y''+4y'+4y=0$。<br>
+① 特征方程 $r^2+4r+4=0$；<br>
+② $\Delta=16-16=0$，二重根 $r=-\dfrac{4}{2}=-2$；<br>
+③ 通解
+$$y=\left(C_1+C_2x\right)e^{-2x}$$
+<b>验算：</b>由 8.3 的移位公式结论 $L\!\left[e^{rx}v\right]=e^{rx}\left[v''+(2r+p)v'+(r^2+pr+q)v\right]$，这里 $2r+p=-4+4=0$、$r^2+pr+q=4-8+4=0$，故 $L\!\left[e^{-2x}v\right]=e^{-2x}v''$。取 $v=C_1+C_2x$，$v''=0$，即得 $L[y]=0$ ✓；且 $e^{-2x}$ 与 $xe^{-2x}$ 之比为 $x$ 不是常数，线性无关，故是通解。
+</div>
+<div class="box example">
+<b>例 3（共轭复根）.</b> 解 $y''-2y'+5y=0$。<br>
+① 特征方程 $r^2-2r+5=0$；<br>
+② $\Delta=4-20=-16<0$，$r=\dfrac{2\pm 4i}{2}=1\pm 2i$，即 $\alpha=1,\ \beta=2$；<br>
+③ 通解
+$$y=e^{x}\left(C_1\cos 2x+C_2\sin 2x\right)$$
+<b>验算：</b>把 $r=1+2i$ 代入特征方程：
+$$(1+2i)^2-2(1+2i)+5=(-3+4i)+(-2-4i)+5=0\ ✓$$
+故由 8.4 引理 3，复值解 $e^{(1+2i)x}=e^{x}\left(\cos 2x+i\sin 2x\right)$ 的实部 $e^{x}\cos 2x$ 与虚部 $e^{x}\sin 2x$ 都是实解。
+</div>
+
+<h3>8.6 推广到 $n$ 阶</h3>
+<div class="box tip">
+特征方程 $r^n+p_1r^{n-1}+\cdots+p_n=0$ 有 $n$ 个根（计重数），每个根按如下规则贡献解：
+<ul>
+<li>单实根 $r$：贡献 $e^{rx}$；</li>
+<li>$k$ 重实根 $r$：贡献 $e^{rx},\ xe^{rx},\ \dots,\ x^{k-1}e^{rx}$；</li>
+<li>单复根 $\alpha\pm\beta i$：贡献 $e^{\alpha x}\cos\beta x,\ e^{\alpha x}\sin\beta x$；</li>
+<li>$k$ 重复根 $\alpha\pm\beta i$：贡献 $x^j e^{\alpha x}\cos\beta x,\ x^j e^{\alpha x}\sin\beta x\ (j=0,1,\dots,k-1)$。</li>
+</ul>
+共得 $n$ 个解，它们线性无关（同一根对应的解、不同根对应的解均无关），线性组合即通解。实系数方程复根成对出现，故通解仍为实值。
+</div>
+<div class="box example">
+<b>例（三阶）.</b> 解 $y'''-3y''+3y'-y=0$。<br>
+① 特征方程：$r^3-3r^2+3r-1=(r-1)^3=0$，三重复根 $r=1$；<br>
+② 三重根按规则给出三个基解：$e^x,\ xe^x,\ x^2e^x$；<br>
+③ 通解：
+$$y=\left(C_1+C_2x+C_3x^2\right)e^{x}$$
+<b>验算：</b>算子 $L=D^3-3D^2+3D-1=(D-1)^3$，对 $y=e^xv$ 有 $L[y]=e^xv'''$（移位引理）；取 $v=1,\ x,\ x^2$ 时 $v'''\equiv0$，故三个基解都满足方程 ✓。
+</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>常系数非齐次线性微分方程（待定系数法全证明）<span class="tag">核心</span></h2>
+<div class="box method">
+<b>总原则：</b>非齐次通解 $y=Y+y^*$（§7 定理 4）。先解特征方程求出齐次通解 $Y$，再按右端项 $f(x)$ 的形状用<b>待定系数法</b>求一个特解 $y^*$。核心工具是 §8 的移位公式：
+$$L\!\left[e^{sx}v\right]=e^{sx}\left[v''+(2s+p)v'+(s^2+ps+q)v\right]\qquad(\text{引理 2})$$
+</div>
+
+<h3>9.1 类型一：$f(x)=P_m(x)e^{\lambda x}$（$P_m$ 为 $m$ 次多项式）</h3>
+<div class="thm"><span class="label">定理（特解形式）</span>方程 $L[y]=P_m(x)e^{\lambda x}$ 有特解
+$$y^*=x^kQ_m(x)e^{\lambda x}$$
+其中 $Q_m(x)$ 是某个 $m$ 次多项式（系数待定），$k$ 是 $\lambda$ 作为特征根的<b>重数</b>：$\lambda$ 不是根取 $k=0$，是单根取 $k=1$，是二重根取 $k=2$。</div>
+<div class="proof"><span class="label">证明</span>设 $y=e^{\lambda x}u(x)$。由移位公式（取 $s=\lambda$），原方程等价于
+$$u''+(2\lambda+p)u'+\left(\lambda^2+p\lambda+q\right)u=P_m(x)\qquad(\star)$$
+按 $\lambda$ 与特征根的关系分三种情况。<br><br>
+<b>情况 A：$\lambda$ 不是特征根</b>（$\lambda^2+p\lambda+q\neq 0$）。设 $u=Q_m(x)=b_mx^m+\cdots+b_0$ 代入 $(\star)$。左边最高次项只可能来自 $(\lambda^2+p\lambda+q)b_mx^m$（$u',u''$ 的次数更低）。记 $P_m(x)=a_mx^m+\cdots$，比较 $x^m$ 项系数：
+$$(\lambda^2+p\lambda+q)\,b_m=a_m\ \Longrightarrow\ b_m=\frac{a_m}{\lambda^2+p\lambda+q}\ (\text{唯一})$$
+再比较 $x^{m-1}$ 项，其中只含已知的 $b_m$ 与未知的 $b_{m-1}$，可唯一解出 $b_{m-1}$；依次比较下去直到常数项，唯一确定全部系数。故 $(\star)$ 有 $m$ 次多项式解，$y^*=Q_m(x)e^{\lambda x}$，即 $k=0$。<br><br>
+<b>情况 B：$\lambda$ 是单根</b>（$\lambda^2+p\lambda+q=0$，$2\lambda+p\neq 0$）。此时 $(\star)$ 变为
+$$u''+(2\lambda+p)u'=P_m(x)$$
+令 $w=u'$，得 $w'+(2\lambda+p)w=P_m(x)$，是一阶线性方程。对积分 $\int P_m(x)e^{kx}dx$（$k=2\lambda+p\neq 0$）反复分部积分 $m$ 次，多项式次数逐步降低直至消失，故
+$$w=e^{-kx}\int P_m(x)e^{kx}dx=e^{-kx}\cdot e^{kx}Q_m(x)=Q_m(x)$$
+即 $w$ 可取为一个 $m$ 次多项式；再积分 $u=\int Q_m\,dx$（积分常数取 0，所得常数项无妨），得 $m+1$ 次多项式，可写成 $u=xQ_m(x)$ 的形式（$Q_m$ 仍为 $m$ 次多项式）。故 $y^*=xQ_m(x)e^{\lambda x}$，即 $k=1$。<br>
+（直接验证：设 $u=xQ_m$，则 $u'=Q_m+xQ_m',\ u''=2Q_m'+xQ_m''$，
+$$u''+(2\lambda+p)u'=x\left[Q_m''+(2\lambda+p)Q_m'\right]+\left[2Q_m'+(2\lambda+p)Q_m\right]$$
+$x^m$ 项系数为 $(2\lambda+p)(m+1)b_m\neq 0$，可逐次解出系数，证明 $m$ 次多项式待定是合理的。）<br><br>
+<b>情况 C：$\lambda$ 是二重根</b>（此时 $\lambda=-\dfrac{p}{2}$，故 $\lambda^2+p\lambda+q=0$ 且 $2\lambda+p=0$）。$(\star)$ 变为
+$$u''=P_m(x)$$
+连续积分两次（积分常数取 0）：
+$$u=\int\!\!\int P_m(x)\,dx\,dx=x^2Q_m(x)$$
+其中 $Q_m$ 是 $m$ 次多项式（最高次项系数为 $\dfrac{a_m}{(m+1)(m+2)}$）。故 $y^*=x^2Q_m(x)e^{\lambda x}$，即 $k=2$。<br><br>
+三种情况统一为 $y^*=x^kQ_m(x)e^{\lambda x}$，$k$ 为 $\lambda$ 的重数。<span class="qed">∎</span></div>
+<div class="box warn"><b>操作要点：</b>$Q_m$ 必须设成<b>完整的 $m$ 次多项式</b>（$b_mx^m+\cdots+b_0$，不能漏项）；$k$ 只看 $\lambda$ 是否为特征根及其重数，与右端其他部分无关。</div>
+<div class="box method">
+<b>解常系数非齐次方程——六步法：</b>
+① 解特征方程，写出齐次通解 $Y$；<br>
+② 判断右端 $f(x)$ 的类型（类型一 / 类型二 / 两者相加），读出 $m$、$\lambda$ 或 $m$、$\alpha$、$\beta$；<br>
+③ 查 $k$：$\lambda$（或 $\alpha+\beta i$）作为特征根的重数（0 / 1 / 2）；<br>
+④ 按公式设出 $y^*$（多项式写全，$\sin$ 与 $\cos$ 都要设）；<br>
+⑤ 代入原方程（共振时用移位引理更省力），比较系数解出全部待定常数；<br>
+⑥ 写出 $y=Y+y^*$；有初值再定常数；最后验算。
+</div>
+<div class="box example">
+<b>例 1（类型一，$k=0$）.</b> 解 $y''-2y'-3y=3x+1$。<br>
+① 特征方程 $r^2-2r-3=0\Rightarrow r=3,\ -1$，$Y=C_1e^{3x}+C_2e^{-x}$；<br>
+② 右端 $f=(3x+1)e^{0\cdot x}$ 属类型一：$m=1$（一次多项式），$\lambda=0$；<br>
+③ $\lambda=0$ 不是特征根，故 $k=0$；<br>
+④ 设 $y^*=ax+b$（一次多项式写全）；<br>
+⑤ 代入：$y^{*\prime}=a,\ y^{*\prime\prime}=0$，
+$$0-2a-3(ax+b)=-3ax-2a-3b=3x+1$$
+比较系数：$x$ 项 $-3a=3\Rightarrow a=-1$；常数项 $-2a-3b=1\Rightarrow 2-3b=1\Rightarrow b=\dfrac{1}{3}$；<br>
+⑥ 通解
+$$y=C_1e^{3x}+C_2e^{-x}-x+\frac{1}{3}$$
+<b>验算：</b>取 $y^*=-x+\dfrac{1}{3}$：$y^{*\prime}=-1,\ y^{*\prime\prime}=0$，
+$$y^{*\prime\prime}-2y^{*\prime}-3y^*=0+2-3\left(-x+\frac{1}{3}\right)=3x+1\ ✓$$
+</div>
+<div class="box example">
+<b>例 2（类型一，二重根 $k=2$）.</b> 解 $y''-2y'+y=e^{x}$。<br>
+① 特征方程 $r^2-2r+1=(r-1)^2=0$，二重根 $r=1$，$Y=(C_1+C_2x)e^{x}$；<br>
+② $f=e^{x}=1\cdot e^{x}$ 属类型一：$m=0$（零次多项式），$\lambda=1$；<br>
+③ $\lambda=1$ 是二重根，故 $k=2$；<br>
+④ 设 $y^*=ax^2e^{x}$；<br>
+⑤ 代入。用移位引理：$s=1,\ p=-2,\ q=1$，$2s+p=0$，$s^2+ps+q=0$，故 $L[e^{x}u]=e^{x}u''$。取 $u=ax^2$，$u''=2a$，于是
+$$L[y^*]=e^{x}\cdot 2a=e^{x}\ \Longrightarrow\ a=\frac{1}{2}$$
+⑥ 通解
+$$y=(C_1+C_2x)e^{x}+\frac{1}{2}x^2e^{x}$$
+<b>验算：</b>$L\left[\frac{1}{2}x^2e^{x}\right]=e^{x}\left(\frac{1}{2}x^2\right)''=e^{x}$ ✓。
+</div>
+<h3>9.2 类型二：$f(x)=e^{\alpha x}\left[P_l(x)\cos\beta x+P_n(x)\sin\beta x\right]$</h3>
+<div class="thm"><span class="label">定理（特解形式）</span>方程 $L[y]=f(x)$ 有特解
+$$y^*=x^ke^{\alpha x}\left[R_m(x)\cos\beta x+S_m(x)\sin\beta x\right],\qquad m=\max(l,\,n)$$
+其中 $R_m,S_m$ 是待定的 $m$ 次多项式；$k$ 是 $\alpha+\beta i$ 作为特征根的重数（二阶方程中只能是 0 或 1）。</div>
+<div class="proof"><span class="label">证明（复数法）</span>由叠加原理，只需分别处理 $f_1=e^{\alpha x}P_l(x)\cos\beta x$ 与 $f_2=e^{\alpha x}P_n(x)\sin\beta x$；再由欧拉公式，它们分别是
+$$e^{\alpha x}P(x)\cos\beta x=\mathrm{Re}\!\left[P(x)e^{(\alpha+i\beta)x}\right],\qquad e^{\alpha x}P(x)\sin\beta x=\mathrm{Im}\!\left[P(x)e^{(\alpha+i\beta)x}\right]$$
+（取 $P=P_l$ 或 $P_n$）。<br><br>
+考虑<b>复方程</b>
+$$L[y]=P(x)e^{sx},\qquad s=\alpha+\beta i$$
+9.1 的全部推导对复数 $s$、复系数多项式 $P$ 逐字成立（只用到求导与代数运算），得到复特解
+$$y_c=x^kQ_m(x)e^{sx}$$
+其中 $k$ 是 $s$ 的重数（不是根取 0；实系数方程若 $s$ 是根，则共轭 $\bar s$ 也是根，二重根只能是实根，故此时必为单根，$k=1$；对一般 $n$ 阶同此），$Q_m$ 是复系数 $m$ 次多项式。<br><br>
+由 §8 引理 3（实部虚部分离），$y_p=\mathrm{Re}[y_c]$ 是实方程 $L[y]=\mathrm{Re}\left[P e^{(\alpha+i\beta)x}\right]$ 的<b>实特解</b>。展开
+$$y_c=x^k\left[\mathrm{Re}\,Q_m+i\,\mathrm{Im}\,Q_m\right]e^{\alpha x}\left[\cos\beta x+i\sin\beta x\right]$$
+取实部，由 $\mathrm{Re}\left[(A+iB)(\cos\theta+i\sin\theta)\right]=A\cos\theta-B\sin\theta$，得
+$$y_p=x^ke^{\alpha x}\left[R_m(x)\cos\beta x+S_m(x)\sin\beta x\right],\quad R_m=\mathrm{Re}\,Q_m,\ S_m=-\mathrm{Im}\,Q_m$$
+对两项 $f_1,f_2$ 分别求出的实特解相加，即得原方程的特解（$R_m,S_m$ 可取同一次数，合并为 $\max(l,n)$ 次多项式）。<span class="qed">∎</span></div>
+<div class="box tip"><b>为什么「只有 cos」也要设 sin？</b>从证明可见：复特解 $Q_me^{(\alpha+i\beta)x}$ 取实部时，$Q_m$ 的实部与虚部各自贡献 $\cos$ 与 $\sin$ 项，两者天然耦合；从实方程看，$\cos\beta x$ 与 $\sin\beta x$ 求导后互相转化，比较系数时必然同时出现。只设 $\cos$ 项一般无解。</div>
+<div class="box example">
+<b>例 1（类型二，$k=1$）.</b> 解 $y''-2y'+2y=e^{x}\cos x$。<br>
+① 特征方程 $r^2-2r+2=0\Rightarrow r=1\pm i$，$Y=e^{x}\left(C_1\cos x+C_2\sin x\right)$；<br>
+② 右端属类型二：$\alpha=1,\ \beta=1$，$m=0$（无多项式因子）；<br>
+③ $\alpha+\beta i=1+i$ 恰是特征根，故 $k=1$；<br>
+④ 设 $y^*=xe^{x}\left(a\cos x+b\sin x\right)$；<br>
+⑤ 代入。令 $y=e^{x}u$，移位引理（$s=1,\ p=-2,\ q=2$）：$2s+p=0$，$s^2+ps+q=1$，故 $L[e^{x}u]=e^{x}\left[u''+u\right]$，方程化为
+$$u''+u=\cos x$$
+取 $u=x\left(a\cos x+b\sin x\right)=xv$。由 $u''=2v'+xv''$ 与 $v''=-v$ 得
+$$u''+u=2v'+x\left(v''+v\right)=2v'=2\left(-a\sin x+b\cos x\right)$$
+比较得 $-2a=0,\ 2b=1$，即 $a=0,\ b=\dfrac{1}{2}$；<br>
+⑥ 通解
+$$y=e^{x}\left(C_1\cos x+C_2\sin x\right)+\frac{x}{2}e^{x}\sin x$$
+<b>验算：</b>对 $y^*=\dfrac{x}{2}e^{x}\sin x$，其中 $u=\dfrac{x}{2}\sin x$ 给出 $u''+u=2\cdot\dfrac{1}{2}\cos x=\cos x$，故 $L[y^*]=e^{x}\cos x$ ✓。
+</div>
+<div class="box example">
+<b>例 2（类型二，$m=1$，$k=1$，多项式系数比较）.</b> 解 $y''+y=x\cos x$。<br>
+① $r^2+1=0\Rightarrow r=\pm i$，$Y=C_1\cos x+C_2\sin x$；<br>
+② 右端属类型二：$\alpha=0,\ \beta=1$，$m=1$（一次多项式因子）；<br>
+③ $\alpha+\beta i=i$ 是特征根，故 $k=1$；<br>
+④ 设
+$$y^*=x\left[(ax+b)\cos x+(cx+d)\sin x\right]\equiv x\,h(x)$$
+其中 $h=(ax+b)\cos x+(cx+d)\sin x$；<br>
+⑤ 代入。用两条准备工作：
+$$L[xh]=xL[h]+2h'\quad(\text{因为 }L=D^2+1)$$
+$$L\left[(ax+b)\cos x\right]=-2a\sin x,\qquad L\left[(cx+d)\sin x\right]=2c\cos x$$
+（把这两式各代入一次即可验证）。于是
+$$L[h]=-2a\sin x+2c\cos x$$
+$$h'=(a+cx+d)\cos x+(c-ax-b)\sin x$$
+$$L[y^*]=x\left(-2a\sin x+2c\cos x\right)+2\left[(a+cx+d)\cos x+(c-ax-b)\sin x\right]$$
+比较系数（右端为 $x\cos x$，无 $\sin x$ 项）：
+$$\cos x:\ 4cx+2a+2d=x,\qquad \sin x:\ -4ax+2c-2b=0$$
+由恒等式得 $4c=1\Rightarrow c=\dfrac{1}{4}$；$2a+2d=0\Rightarrow d=-a$；$-4a=0\Rightarrow a=0,\ d=0$；$2c-2b=0\Rightarrow b=c=\dfrac{1}{4}$；<br>
+⑥ 通解
+$$y=C_1\cos x+C_2\sin x+\frac{x}{4}\cos x+\frac{x^2}{4}\sin x$$
+<b>验算：</b>直接计算 $L\left[\dfrac{x}{4}\cos x+\dfrac{x^2}{4}\sin x\right]=x\cos x$（用上面的两条准备工作逐项代入即得）✓。
+</div>
+<div class="box tip"><b>附：类型一扩充到 $f=P_m(x)e^{\lambda x}$ 的「待定系数操作表」</b><br>
+① 分解出 $\lambda$（$f$ 中指数部分）与 $m$（多项式次数）；② 查 $\lambda$ 是特征根的重数得 $k$；③ 设 $y^*=x^k\left(b_mx^m+\cdots+b_0\right)e^{\lambda x}$；④ 代入原方程，比较同类项系数解出 $b_i$；⑤ 若右端是多项式与指数、三角的乘积之和，用叠加原理逐项处理再相加。
+</div>
+</section>
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>欧拉方程<span class="tag">进阶</span></h2>
+<div class="box def">
+<b>形式：</b>$x^2y''+pxy'+qy=f(x)$（$p,q$ 为常数，$x>0$；$x<0$ 时用 $|x|$ 或令 $x=-e^t$ 同法处理）。</div>
+<div class="proof"><span class="label">换元公式证明</span>令 $x=e^{t}$，即 $t=\ln x$，把 $y$ 看作 $t$ 的函数（记 $\dot y=\dfrac{dy}{dt}$）。由链式法则：
+$$\frac{dy}{dx}=\frac{dy}{dt}\cdot\frac{dt}{dx}=\dot y\cdot\frac{1}{x}\qquad\Longrightarrow\qquad xy'=\dot y$$
+再求二阶导：
+$$y''=\frac{d}{dx}\left(\frac{\dot y}{x}\right)=-\frac{\dot y}{x^2}+\frac{1}{x}\cdot\frac{d\dot y}{dx}=-\frac{\dot y}{x^2}+\frac{1}{x}\cdot\frac{\ddot y}{x}=\frac{\ddot y-\dot y}{x^2}\qquad\Longrightarrow\qquad x^2y''=\ddot y-\dot y$$
+代入原方程，得<b>常系数</b>线性方程
+$$\ddot y+(p-1)\dot y+qy=f(e^{t})$$
+解出后把 $t=\ln x$ 代回即可。<span class="qed">∎</span></div>
+<div class="proof"><span class="label">齐次情形：指标方程</span>设 $y=x^k$（$x>0$）代入齐次方程 $x^2y''+pxy'+qy=0$：
+$$y'=kx^{k-1},\quad y''=k(k-1)x^{k-2}$$
+$$x^2\cdot k(k-1)x^{k-2}+px\cdot kx^{k-1}+qx^k=x^k\left[k(k-1)+pk+q\right]$$
+故 $y=x^k$ 是解 $\iff$
+$$k(k-1)+pk+q=0\qquad(\text{指标方程})$$
+这与换元后常系数方程的特征方程 $\lambda^2+(p-1)\lambda+q=0$（令 $\lambda=k$ 即得）一致。<span class="qed">∎</span></div>
+<div class="box tip">
+<b>三种根情形</b>（与常系数方程一一对应，$t=\ln x$）：
+<table>
+<thead><tr><th>指标方程根</th><th>齐次通解</th></tr></thead>
+<tbody>
+<tr><td>两不同实根 $k_1,k_2$</td><td>$y=C_1x^{k_1}+C_2x^{k_2}$</td></tr>
+<tr><td>二重实根 $k$</td><td>$y=\left(C_1+C_2\ln x\right)x^{k}$</td></tr>
+<tr><td>共轭复根 $\alpha\pm\beta i$</td><td>$y=x^{\alpha}\left[C_1\cos(\beta\ln x)+C_2\sin(\beta\ln x)\right]$</td></tr>
+</tbody>
+</table>
+复根情形的来源：$x^{\alpha\pm\beta i}=x^{\alpha}e^{\pm i\beta\ln x}=x^{\alpha}\left[\cos(\beta\ln x)\pm i\sin(\beta\ln x)\right]$。
+</div>
+<div class="box method">
+<b>解欧拉方程——三步法：</b>
+① <b>确认形状</b>：每项是「$x$ 的幂 $\times$ $y$ 的相应阶导数」，且幂次与导数阶数相同（$x^2y''$、$xy'$、$y$）；<br>
+② <b>齐次方程</b>：直接设 $y=x^k$ 代入，得指标方程 $k(k-1)+pk+q=0$，按根的情形写通解（见表）；<br>
+③ <b>非齐次方程</b>：换元 $x=e^{t}$（用 $xy'=\dot y,\ x^2y''=\ddot y-\dot y$）化为常系数方程，解完把 $t=\ln x$ 换回；最后验算。
+</div>
+<div class="box example">
+<b>例 1（两实根）.</b> 解 $x^2y''+xy'-y=0$。<br>
+① 标准形：$p=1,\ q=-1$；<br>
+② 设 $y=x^k$：$y'=kx^{k-1},\ y''=k(k-1)x^{k-2}$，代入：
+$$x^2\cdot k(k-1)x^{k-2}+x\cdot kx^{k-1}-x^k=x^k\left[k(k-1)+k-1\right]=x^k\left(k^2-1\right)=0$$
+得指标方程 $k^2-1=0$，$k=\pm 1$；<br>
+③ 通解
+$$y=C_1x+\frac{C_2}{x}$$
+<b>验算：</b>$y_1=x$：$x^2\cdot 0+x\cdot 1-x=0$ ✓；$y_2=x^{-1}$：$y_2'=-x^{-2},\ y_2''=2x^{-3}$，$x^2\cdot 2x^{-3}+x\cdot(-x^{-2})-x^{-1}=2x^{-1}-x^{-1}-x^{-1}=0$ ✓。
+</div>
+<div class="box example">
+<b>例 2（二重根）.</b> 解 $x^2y''-3xy'+4y=0$。<br>
+① 标准形：$p=-3,\ q=4$；<br>
+② 指标方程 $k(k-1)-3k+4=k^2-4k+4=(k-2)^2=0$，二重根 $k=2$；<br>
+③ 通解（重根时第二解乘 $\ln x$，与常系数重根乘 $x$ 对应）
+$$y=\left(C_1+C_2\ln x\right)x^2$$
+<b>验算：</b>$y_1=x^2$：$x^2\cdot 2-3x\cdot 2x+4x^2=2x^2-6x^2+4x^2=0$ ✓；<br>
+$y_2=x^2\ln x$：$y_2'=2x\ln x+x,\ y_2''=2\ln x+3$，代入：
+$$x^2(2\ln x+3)-3x(2x\ln x+x)+4x^2\ln x=(2-6+4)x^2\ln x+(3-3)x^2=0\ ✓$$
+</div>
+<div class="box example">
+<b>例 3（非齐次，换元法）.</b> 解 $x^2y''+xy'-y=x$（$x>0$）。<br>
+① 令 $x=e^{t}$（$t=\ln x$），由 $xy'=\dot y,\ x^2y''=\ddot y-\dot y$ 代入：
+$$\left(\ddot y-\dot y\right)+\dot y-y=e^{t}\ \Longrightarrow\ \ddot y-y=e^{t}$$
+② 特征方程 $\lambda^2-1=0\Rightarrow\lambda=\pm 1$，齐次通解 $Y=C_1e^{t}+C_2e^{-t}$；<br>
+③ 右端 $e^{t}$：$\lambda=1$ 是单根，设 $y^*=ate^{t}$。用移位引理（$s=1,\ p=0,\ q=-1$）：$2s+p=2$，$s^2+ps+q=0$，故 $L[e^{t}v]=e^{t}\left[v''+2v'\right]$；取 $v=at$，$v''+2v'=2a$，得 $2ae^{t}=e^{t}\Rightarrow a=\dfrac{1}{2}$；<br>
+④ 换回 $t=\ln x$（$e^{t}=x$）：
+$$y=C_1x+\frac{C_2}{x}+\frac{x}{2}\ln x$$
+<b>验算：</b>对 $y^*=\dfrac{x}{2}\ln x$：$y^{*\prime}=\dfrac{1}{2}\left(\ln x+1\right)$，$y^{*\prime\prime}=\dfrac{1}{2x}$，代入
+$$x^2\cdot\frac{1}{2x}+x\cdot\frac{1}{2}\left(\ln x+1\right)-\frac{x}{2}\ln x=\frac{x}{2}+\frac{x}{2}\ln x+\frac{x}{2}-\frac{x}{2}\ln x=x\ ✓$$
+</div>
+</section>
+
+<section class="card" id="sec-11">
+<h2><span class="num">11</span>解题决策流程</h2>
+<pre class="flow">拿到方程
+├─ 一 阶？
+│   ├─ 可写成 g(y)dy = f(x)dx ······ 分离变量（§2）
+│   ├─ 右边只含 y/x ·············· 令 u = y/x（§3）
+│   ├─ y' + P(x)y = Q(x) ········ 一阶线性：常数变易 / 积分因子（§4）
+│   └─ y' + Py = Qy^n ··········· 伯努利：令 z = y^(1-n)（§5）
+├─ 高阶可降阶？
+│   ├─ 只含 x ··················· 逐次积分（§6.1）
+│   ├─ 缺 y ····················· 令 p = y'（§6.2）
+│   └─ 缺 x ····················· 令 p = y'，y'' = p·dp/dy（§6.3）
+└─ 线性方程？
+    ├─ 变系数 ··················· 或用已知线性无关解降阶 / 观察特解
+    ├─ 欧拉方程 x²y''+pxy'+qy=f(x) ·· 令 x = e^t（§10）
+    └─ 常系数 y''+py'+qy=f(x)
+        ├─ 齐次 ················· 特征方程三情形（§8）
+        └─ 非齐次 ··············· y = Y + y*，待定系数法（§9）
+            ├─ f = P_m(x)e^{λx} ···· y* = x^k Q_m(x)e^{λx}
+            ├─ f = e^{αx}(P_l cosβx + P_n sinβx) ·· y* = x^k e^{αx}(R_m cosβx + S_m sinβx)
+            └─ f = f1 + f2 ········· 叠加原理：y1* + y2*
+</pre>
+</section>
+<section class="card" id="sec-12">
+<h2><span class="num">12</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>常数个数：</b>通解中独立任意常数的个数必须等于方程的阶数；积分一次出现一个，别多别少。</li>
+<li><b>丢解：</b>分离变量除以 $g(y)$ 前，先检查 $g(y_0)=0$ 的常数解是否遗漏（奇解）；伯努利方程注意 $y\equiv 0$。</li>
+<li><b>绝对值与常数：</b>$\ln$ 的常数可写成 $\ln C$ 便于化简：$\ln|y|=\ln|x|+C\Rightarrow y=Cx$；严格写法应保留 $|x|$，最后可由初值确定符号。</li>
+<li><b>公式中的 $\int P\,dx$：</b>取一个原函数即可（不加任意常数），否则通解会出现冗余常数。</li>
+<li><b>$k$ 的重数：</b>非齐次方程先求齐次通解再定 $k$；$k$ 只看 $\lambda$（或 $\alpha+\beta i$）是否为特征根及重数，与多项式次数无关。</li>
+<li><b>类型二设解：</b>即使右端只有 $\cos$，也必须同时设 $\sin$ 项，否则比较系数时无解。</li>
+<li><b>复根：</b>别忘了 $e^{\alpha x}$ 因子；正弦、余弦前是两个独立常数。</li>
+<li><b>重根：</b>二重实根要乘 $x$：$(C_1+C_2x)e^{rx}$；欧拉方程二重根对应 $\ln x$。</li>
+<li><b>叠加原理：</b>$f=f_1+f_2$ 时分别求特解再相加，不要整体乱设一个形式。</li>
+<li><b>初值问题：</b>先求通解，再代初值定常数；代入过程注意 $y'$ 也要代。</li>
+<li><b>欧拉方程：</b>换元 $x=e^t$ 默认 $x>0$；若 $x<0$ 令 $x=-e^t$，结论中把 $x$ 作 $|x|$ 处理。</li>
+</ol>
+</div>
+</section>
+
+<section class="card" id="sec-13">
+<h2><span class="num">13</span>公式速查表</h2>
+<table>
+<thead><tr><th>类型</th><th>解法 / 通解</th></tr></thead>
+<tbody>
+<tr><td>可分离变量 $y'=f(x)g(y)$</td><td>$\displaystyle\int\frac{dy}{g(y)}=\int f(x)dx+C$</td></tr>
+<tr><td>齐次方程 $y'=\varphi(y/x)$</td><td>令 $u=y/x$，得 $xu'=\varphi(u)-u$，分离积分</td></tr>
+<tr><td>一阶线性 $y'+Py=Q$</td><td>$y=e^{-\int P dx}\left[\int Qe^{\int P dx}dx+C\right]$</td></tr>
+<tr><td>伯努利 $y'+Py=Qy^n$</td><td>令 $z=y^{1-n}$：$z'+(1-n)Pz=(1-n)Q$</td></tr>
+<tr><td>降阶：$y''=f(x,y')$（缺 $y$）</td><td>令 $p=y'$：$p'=f(x,p)$，再积分</td></tr>
+<tr><td>降阶：$y''=f(y,y')$（缺 $x$）</td><td>令 $p=y'$：$p\,dp/dy=f(y,p)$，再分离积分</td></tr>
+<tr><td>特征方程 $r^2+pr+q=0$ 两实根</td><td>$y=C_1e^{r_1x}+C_2e^{r_2x}$</td></tr>
+<tr><td>二重实根 $r$</td><td>$y=(C_1+C_2x)e^{rx}$</td></tr>
+<tr><td>复根 $\alpha\pm\beta i$</td><td>$y=e^{\alpha x}\left(C_1\cos\beta x+C_2\sin\beta x\right)$</td></tr>
+<tr><td>非齐次：$f=P_m(x)e^{\lambda x}$</td><td>$y^*=x^kQ_m(x)e^{\lambda x}$，$k$ 为 $\lambda$ 的重数</td></tr>
+<tr><td>非齐次：$f=e^{\alpha x}\left[P_l\cos\beta x+P_n\sin\beta x\right]$</td><td>$y^*=x^ke^{\alpha x}\left[R_m\cos\beta x+S_m\sin\beta x\right]$，$m=\max(l,n)$，$k$ 为 $\alpha+\beta i$ 的重数</td></tr>
+<tr><td>欧拉方程 $x^2y''+pxy'+qy=0$</td><td>设 $y=x^k$：$k(k-1)+pk+q=0$（重根乘 $\ln x$）</td></tr>
+</tbody>
+</table>
+</section>
+<section class="card" id="sec-14">
+<h2><span class="num">14</span>附录A：解的存在唯一性定理<span class="tag">拓展</span></h2>
+<div class="thm"><span class="label">定理（皮卡–林德勒夫）</span>设 $f(x,y)$ 在矩形区域 $D:\ |x-x_0|\le a,\ |y-y_0|\le b$ 上连续，且关于 $y$ 满足 Lipschitz 条件
+$$\left|f(x,y_1)-f(x,y_2)\right|\le L\left|y_1-y_2\right|\qquad(L>0\ \text{为常数})$$
+则初值问题 $y'=f(x,y),\ y(x_0)=y_0$ 在 $x_0$ 的某邻域内存在<b>唯一</b>解。</div>
+<div class="proof"><span class="label">证明思想（皮卡迭代法）</span>
+<b>第一步（等价转化）：</b>初值问题与积分方程
+$$y(x)=y_0+\int_{x_0}^{x}f\!\left(t,y(t)\right)dt\qquad(\ast)$$
+等价：对微分方程两边从 $x_0$ 到 $x$ 积分即得 $(\ast)$；反之对 $(\ast)$ 求导并取 $x=x_0$ 得方程与初值。<br><br>
+<b>第二步（构造迭代序列）：</b>令
+$$\varphi_0(x)\equiv y_0,\qquad \varphi_{n+1}(x)=y_0+\int_{x_0}^{x}f\!\left(t,\varphi_n(t)\right)dt\quad(n=0,1,2,\dots)$$
+可以证明 $\{\varphi_n\}$ 在充分小的区间 $|x-x_0|\le h$ 上一致收敛（用 Lipschitz 条件逐项估计：$\left|\varphi_{n+1}-\varphi_n\right|\le \dfrac{ML^{n}|x-x_0|^{n+1}}{(n+1)!}$，右端的级数被 $e^{L|x-x_0|}$ 控制）。<br><br>
+<b>第三步（极限是解）：</b>设 $\varphi_n\to\varphi$，在迭代式中取极限（$f$ 连续 + 一致收敛可交换极限与积分）得 $\varphi$ 满足 $(\ast)$，从而是解。<br><br>
+<b>第四步（唯一性）：</b>设 $\psi$ 是另一解，则
+$$\left|\varphi(x)-\psi(x)\right|\le L\left|\int_{x_0}^{x}\left|\varphi(t)-\psi(t)\right|dt\right|$$
+由 Gronwall（格朗沃尔）不等式得 $\left|\varphi(x)-\psi(x)\right|\equiv 0$，即 $\varphi=\psi$。<br><br>
+（完整细节属于《常微分方程》课程。注意 Lipschitz 条件不可去：$y'=3y^{2/3},\ y(0)=0$ 同时有解 $y\equiv 0$ 与 $y=x^3$，唯一性失效——缺少 Lipschitz 条件时「唯一」不成立。）
+<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（迭代过程长什么样）.</b> 对 $y'=y,\ y(0)=1$，按迭代公式逐步算：
+$$\varphi_0=1$$
+$$\varphi_1=1+\int_0^x 1\,dt=1+x$$
+$$\varphi_2=1+\int_0^x(1+t)\,dt=1+x+\frac{x^2}{2}$$
+$$\varphi_3=1+x+\frac{x^2}{2}+\frac{x^3}{6},\qquad\cdots$$
+可见 $\varphi_n$ 恰是 $e^{x}$ 泰勒展开的前 $n+1$ 项，故 $\varphi_n\to e^{x}$，而 $e^{x}$ 正是该初值问题的解——这就是「迭代序列收敛到解」的过程。
+</div>
+<div class="box tip"><b>本课程中的用途：</b>证明 §7 的定理 2、3（线性无关判别、通解结构）；说明「通解含 $n$ 个独立常数」以及初值问题解唯一，从而微分方程的特解由初值唯一确定。</div>
+</section>
+
+<section class="card" id="sec-15">
+<h2><span class="num">15</span>附录B：全微分方程（拓展选读）<span class="tag">拓展</span></h2>
+<div class="box def">
+<b>定义：</b>对一阶方程 $M(x,y)\,dx+N(x,y)\,dy=0$，若存在可微函数 $u(x,y)$ 使
+$$du=M\,dx+N\,dy$$
+（即 $\dfrac{\partial u}{\partial x}=M,\ \dfrac{\partial u}{\partial y}=N$），则称它是<b>全微分方程</b>（恰当方程），此时通解为
+$$u(x,y)=C$$
+</div>
+<div class="thm"><span class="label">判定定理</span>设 $M,N$ 在单连通区域 $D$ 内有连续一阶偏导，则 $M\,dx+N\,dy=0$ 是全微分方程
+$$\iff\qquad \frac{\partial M}{\partial y}=\frac{\partial N}{\partial x}\quad\text{在 }D\text{ 上恒成立}$$</div>
+<div class="proof"><span class="label">必要性</span>若存在 $u$ 使 $M=u_x,\ N=u_y$，则
+$$\frac{\partial M}{\partial y}=\frac{\partial^2 u}{\partial y\,\partial x}=\frac{\partial^2 u}{\partial x\,\partial y}=\frac{\partial N}{\partial x}$$
+（混合偏导连续时相等）。<span class="qed">∎</span></div>
+<div class="proof"><span class="label">充分性（构造 $u$）</span>取
+$$u(x,y)=\int_{x_0}^{x}M(t,y)\,dt+\varphi(y)$$
+则 $u_x=M$。再由条件求 $u_y$：
+$$u_y=\int_{x_0}^{x}\frac{\partial M}{\partial y}(t,y)\,dt+\varphi'(y)=\int_{x_0}^{x}\frac{\partial N}{\partial x}(t,y)\,dt+\varphi'(y)=N(x,y)-N(x_0,y)+\varphi'(y)$$
+令 $u_y=N$，只需 $\varphi'(y)=N(x_0,y)$，取 $\varphi(y)=\displaystyle\int_{y_0}^{y}N(x_0,s)\,ds$ 即可（右端只含 $y$，可行）。于是 $du=M\,dx+N\,dy$。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（三步求解）.</b> 解 $\left(3x^2+2y\right)dx+\left(2x-2y\right)dy=0$。<br>
+① <b>判定</b>：$M=3x^2+2y,\ N=2x-2y$，$M_y=2$，$N_x=2$，二者相等，是全微分方程；<br>
+② <b>求原函数 $u$</b>：先把 $y$ 当常数，对 $x$ 积分 $M$：
+$$u=\int\left(3x^2+2y\right)dx=x^3+2xy+\varphi(y)$$
+再由 $u_y=N$ 确定 $\varphi(y)$：$u_y=2x+\varphi'(y)=2x-2y\Rightarrow\varphi'(y)=-2y\Rightarrow\varphi(y)=-y^2$；<br>
+③ <b>写通解</b>：$u(x,y)=C$，即
+$$x^3+2xy-y^2=C$$
+<b>验算：</b>对 $x^3+2xy-y^2=C$ 两边求微分：$\left(3x^2+2y\right)dx+\left(2x-2y\right)dy=0$，与原方程一致 ✓。
+</div>
+<div class="box tip"><b>积分因子：</b>若 $M\,dx+N\,dy=0$ 不是全微分方程，但存在 $\mu(x,y)\neq 0$ 使
+$$\mu M\,dx+\mu N\,dy=0$$
+是全微分方程，则称 $\mu$ 为<b>积分因子</b>。§4 中一阶线性方程的 $e^{\int P dx}$ 正是积分因子的特例：乘上它后左边成为 $(ye^{\int P dx})'$ 的全微分。</div>
+</section>
+<section class="card" id="sec-16">
+<h2><span class="num">16</span>附录C：常系数线性微分方程组（选读）<span class="tag">拓展</span></h2>
+<div class="box def">
+<b>形式：</b>例如两个未知函数的常系数线性方程组
+$$\begin{cases}x'=a_{11}x+a_{12}y\\[2pt] y'=a_{21}x+a_{22}y\end{cases}$$
+</div>
+<div class="box method">
+<b>消元法步骤：</b>
+<ol>
+<li>对其中一个方程求导，利用另一个方程消去另一个未知函数，得到单个未知函数的<b>二阶常系数方程</b>；</li>
+<li>解这个二阶方程（§8 特征方程法）；</li>
+<li>回代求另一个未知函数（至多需要两个独立常数）。</li>
+</ol>
+</div>
+<div class="proof"><span class="label">例 1</span>解 $\begin{cases}x'=y\\ y'=x\end{cases}$。<br>
+由第一式 $x''=y'$，再由第二式 $x''=x$，即 $x''-x=0$。特征根 $r=\pm 1$：
+$$x=C_1e^{t}+C_2e^{-t}$$
+回代 $y=x'$：
+$$y=C_1e^{t}-C_2e^{-t}$$
+<span class="qed">∎</span></div>
+<div class="proof"><span class="label">例 2（一般情形）</span>解 $\begin{cases}x'=3x-2y\\ y'=4x-3y\end{cases}$。<br>
+由第一式解出 $y=\dfrac{3x-x'}{2}$，求导得 $y'=\dfrac{3x'-x''}{2}$，代入第二式：
+$$\frac{3x'-x''}{2}=4x-3\cdot\frac{3x-x'}{2}=\frac{8x-9x+3x'}{2}=\frac{3x'-x}{2}$$
+化简得 $x''=x$，故 $x=C_1e^{t}+C_2e^{-t}$。回代：
+$$y=\frac{3x-x'}{2}=\frac{3\left(C_1e^{t}+C_2e^{-t}\right)-\left(C_1e^{t}-C_2e^{-t}\right)}{2}=C_1e^{t}+2C_2e^{-t}$$
+验证：$x'=C_1e^{t}-C_2e^{-t}=3x-2y$\ ✓；$y'=C_1e^{t}-2C_2e^{-t}=4x-3y$\ ✓。<span class="qed">∎</span></div>
+<div class="box tip"><b>注：</b>若方程组非齐次（右端含已知函数），消元后得到非齐次二阶方程，按 §9 处理；给定 $t_0$ 处 $x,y$ 的初值即可定出两个常数。（本内容超出上册基本要求，属选读。）</div>
+</section>
+
+<section class="card" id="sec-17">
+<h2><span class="num">17</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环三步：</b>① 「能力清单」逐条自我检验（能讲出来才算会）；② 做题卡住时查「用法索引」定位方法；③ 复习收尾做「闭卷自查」，做不出的回对应小节重看。</div>
+<h3>能力清单（学完本章你应当能）</h3>
+<div class="box method">
+① 判断方程的阶与线性性，用「求导 → 代入 → 化简」验证一个函数是否为解；<br>
+② 识别并求解：可分离变量、齐次、一阶线性、伯努利、三类可降阶方程；<br>
+③ 复述并证明叠加原理、Wronskian 线性无关判别、齐次/非齐次通解结构定理；<br>
+④ 用特征方程解常系数方程（三种根情形），用待定系数法处理非齐次（会查 $k$ 重数）；<br>
+⑤ 用欧拉方程换元 $x=e^t$ 化常系数求解；<br>
+⑥ 把冷却、衰变、混合等实际问题翻译成微分方程并求解。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>可整理成 $g(y)\,dy=f(x)\,dx$</td><td>分离变量（查丢解）</td><td>§2 例1</td></tr>
+<tr><td>右边只含 $\dfrac{y}{x}$</td><td>令 $u=\dfrac yx$</td><td>§3 例1、3</td></tr>
+<tr><td>$y'+P(x)y=Q(x)$</td><td>积分因子公式</td><td>§4 例1、2</td></tr>
+<tr><td>出现 $y^n\ (n\neq0,1)$</td><td>伯努利 $z=y^{1-n}$</td><td>§5 例1</td></tr>
+<tr><td>缺 $y$ / 缺 $x$ 的二阶方程</td><td>降阶（$p=y'$ / $p(y)$）</td><td>§6.2、6.3 例</td></tr>
+<tr><td>常系数方程</td><td>特征方程三情形</td><td>§8 例1–3</td></tr>
+<tr><td>右端含 $e^{\lambda x}$、多项式、三角</td><td>待定系数 + 查 $k$ 重数</td><td>§9 例1、2</td></tr>
+<tr><td>$x^2y''+pxy'+qy=f(x)$</td><td>欧拉换元</td><td>§10 例1–3</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 不看笔记推导常数变易法公式，并解释「乘积分因子的目的」（§4.2–4.3）<br>
+☐ 默写特征根三种情形的通解表，并各编一道小题自测（§8.5）<br>
+☐ 独立做出 §9 例2（共振 $k=2$）并代回验算<br>
+☐ 解释「重根为什么要乘 $x$」（用移位引理，§8.3）<br>
+☐ 说清 §3 的「齐次方程」与 §4 的「齐次线性方程」的区别<br>
+☐ 独立完成一个应用题：从冷却/衰变情景建模 → 分离变量 → 定常数 → 验算（模式见 §2 例1）
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>高等数学（上册）· 第七章 微分方程 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

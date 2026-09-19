@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>无穷级数 · 完全教程（下册第十二章 · 含全部证明）</title>
+<style>
+:root{--bg:#f7f5f4;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#ea580c;--accent2:#e11d48;--soft:#fff7ed}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#7c2d12,#ea580c 55%,#e11d48);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.5rem,4vw,2.2rem);letter-spacing:2px}
+.hero p{margin:0;color:#fed7aa}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#c2410c;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#7c2d12}
+.card h3{font-size:1.05rem;color:#c2410c;margin:24px 0 8px;padding-left:10px;border-left:4px solid #fdba74}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#f97316,#e11d48);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#fff7ed;border-color:#f97316}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #fed7aa;border-left:4px solid #f97316;background:#fffaf5;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#c2410c;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#9a3412;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(234,88,12,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>高等数学 · 无穷级数 · 完全教程</h1>
+<p>下册 第十二章 · 全部内容 + 全部定理证明 + 例题步骤化</p>
+<div class="chips"><span>常数项级数</span><span>审敛法全家桶</span><span>幂级数与函数展开</span><span>一致收敛</span><span>傅里叶级数</span><span>例题验算</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 常数项级数的概念与性质</a>
+<a href="#sec-2">02 · 正项级数及其审敛法</a>
+<a href="#sec-3">03 · 交错级数·绝对收敛与条件收敛</a>
+<a href="#sec-4">04 · 幂级数：阿贝尔定理与收敛域</a>
+<a href="#sec-5">05 · 幂级数的运算性质与和函数</a>
+<a href="#sec-6">06 · 函数展开成幂级数</a>
+<a href="#sec-7">07 · 幂级数展开式的应用</a>
+<a href="#sec-8">08 · 函数项级数的一致收敛性</a>
+<a href="#sec-9">09 · 傅里叶级数</a>
+<a href="#sec-10">10 · 一般周期函数的傅里叶级数</a>
+<a href="#sec-11">11 · 解题决策流程</a>
+<a href="#sec-12">12 · 易错点清单</a>
+<a href="#sec-13">13 · 公式速查表</a>
+<a href="#sec-14">14 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章两条主线：</b>「常数项级数判敛散」与「把函数表示成幂级数/傅里叶级数」。<span style="color:#c2410c;font-weight:700">橙框=定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题（步骤化）</span>。</div>
+<pre class="flow">无穷级数
+├─ 常数项级数（§1–§3）
+│   ├─ 概念：部分和 s_n 的极限（收敛 ⇔ s_n 收敛）
+│   ├─ 性质：线性 / 加括号 / 必要条件 u_n → 0 / 柯西审敛原理
+│   └─ 审敛法
+│       ├─ 正项：部分和有界 / 比较 / 比值（d'Alembert）/ 根值（Cauchy）
+│       ├─ 交错：莱布尼茨判别法
+│       └─ 绝对收敛 ⇒ 收敛；条件收敛（交错调和）
+├─ 幂级数（§4–§5）
+│   ├─ 阿贝尔定理 → 收敛半径 R → 收敛域（端点单独判）
+│   └─ 运算：连续 / 逐项求导 / 逐项积分（R 不变）→ 求和函数
+├─ 函数展开（§6–§7）
+│   ├─ 泰勒级数可展条件（余项 → 0）
+│   ├─ 七个常用展开式 + 间接展开（代换/求导/积分）
+│   └─ 应用：近似计算、欧拉公式
+├─ 一致收敛（§8）
+│   └─ M 判别法；连续性 / 逐项积分 / 逐项求导
+└─ 傅里叶级数（§9–§10）
+    ├─ 三角函数系正交性 → 欧拉–傅里叶公式
+    ├─ 狄利克雷收敛定理；奇偶函数 → 正弦/余弦级数
+    └─ 一般周期（T=2l）：变量代换成 2π 情形
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>常数项级数的概念与性质<span class="tag">基础</span></h2>
+<div class="box def">
+<b>定义：</b>给定数列 $\{u_n\}$，称表达式 $\displaystyle\sum_{n=1}^{\infty}u_n=u_1+u_2+\cdots$ 为<b>常数项级数</b>，$u_n$ 为一般项。作<b>部分和</b> $s_n=u_1+\cdots+u_n$。<br>
+若 $\{s_n\}$ 收敛于 $s$，称级数<b>收敛</b>，$s$ 为级数的和，记 $\sum u_n=s$；否则称<b>发散</b>。收敛时 $r_n=s-s_n=\sum_{k=n+1}^{\infty}u_k$ 称为<b>余项</b>。
+</div>
+<div class="thm"><span class="label">几何级数（等比级数）</span>
+$$\sum_{n=0}^{\infty}aq^n=\begin{cases}\dfrac{a}{1-q},&|q|<1\\[6pt] \text{发散},&|q|\ge1\end{cases}\qquad(a\neq0)$$
+</div>
+<div class="proof"><span class="label">证明</span>$q\neq1$ 时部分和 $s_n=a\dfrac{1-q^n}{1-q}$。<br>
+① 若 $|q|<1$：$q^n\to0$，故 $s_n\to\dfrac{a}{1-q}$，收敛；<br>
+② 若 $|q|>1$：$q^n\to\infty$，$s_n$ 发散（无极限）；<br>
+③ $q=1$：$s_n=na\to\infty$ 发散；$q=-1$：$s_n$ 在 $a$ 与 $0$ 间跳动，发散。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">调和级数</span>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{n}=1+\frac12+\frac13+\cdots$ <b>发散</b>。</div>
+<div class="proof"><span class="label">证明（分组放缩）</span>把项按 $2$ 的幂分组：
+$$s_{2^n}=1+\frac12+\left(\frac13+\frac14\right)+\left(\frac15+\cdots+\frac18\right)+\cdots+\left(\frac{1}{2^{n-1}+1}+\cdots+\frac{1}{2^n}\right)$$
+从第二组起，每组 $2^k$ 项、每项 $\ge\dfrac{1}{2^{k+1}}$，故每组之和 $\ge\dfrac12$：
+$$s_{2^n}\ge1+\frac{n}{2}\ \longrightarrow\ \infty$$
+部分和无界，故发散。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">收敛级数的基本性质</span>
+<ol>
+<li><b>线性：</b>若 $\sum u_n=s,\ \sum v_n=t$，则 $\sum(au_n+bv_n)=as+bt$；</li>
+<li><b>加括号：</b>收敛级数任意加括号后仍收敛且和不变（发散级数加括号可能收敛：$1-1+1-1+\cdots$ 发散，而 $(1-1)+(1-1)+\cdots=0$ 收敛，故不能反推）；</li>
+<li><b>必要条件：</b>$\sum u_n$ 收敛 $\Longrightarrow \lim\limits_{n\to\infty}u_n=0$；</li>
+<li><b>柯西审敛原理：</b>$\sum u_n$ 收敛 $\iff\forall\varepsilon>0,\ \exists N$，当 $n>N$ 时对任意正整数 $p$ 有
+$$\left|u_{n+1}+u_{n+2}+\cdots+u_{n+p}\right|<\varepsilon$$
+</li>
+</ol>
+</div>
+<div class="proof"><span class="label">证明（3）（4）</span>
+<b>(3)</b> 由 $u_n=s_n-s_{n-1}$，令 $n\to\infty$：$u_n\to s-s=0$。<br>
+<b>(4)</b> 由数列收敛的柯西准则：$\{s_n\}$ 收敛 $\iff\forall\varepsilon>0,\exists N$，当 $n>N$ 时对任何 $p$ 有 $|s_{n+p}-s_n|<\varepsilon$；而 $s_{n+p}-s_n=u_{n+1}+\cdots+u_{n+p}$，即得。<span class="qed">∎</span></div>
+<div class="box warn"><b>注意：</b>$u_n\to0$ 只是<b>必要条件</b>！调和级数 $1/n\to0$ 但级数发散——「单项趋于零」不等于「级数收敛」。</div>
+<div class="box example">
+<b>例 1（裂项相消）.</b> 判定 $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n(n+1)}$ 的敛散性并求和。<br>
+① 裂项：$\dfrac{1}{n(n+1)}=\dfrac1n-\dfrac{1}{n+1}$；<br>
+② 部分和：
+$$s_n=\left(1-\frac12\right)+\left(\frac12-\frac13\right)+\cdots+\left(\frac1n-\frac{1}{n+1}\right)=1-\frac{1}{n+1}$$
+③ 令 $n\to\infty$：$s_n\to1$，故级数收敛，和为 $1$。<br>
+<b>验算：</b>$s_1=1/2$、$s_2=2/3$、$s_3=3/4$，与公式 $1-\frac1{n+1}$ 一致 ✓。
+</div>
+<div class="box example">
+<b>例 2（裂项发散）.</b> 判定 $\displaystyle\sum_{n=1}^{\infty}\ln\!\left(1+\frac1n\right)$。<br>
+① 一般项 $\ln\dfrac{n+1}{n}=\ln(n+1)-\ln n$；<br>
+② 部分和：
+$$s_n=\left(\ln2-\ln1\right)+\left(\ln3-\ln2\right)+\cdots+\left(\ln(n+1)-\ln n\right)=\ln(n+1)$$
+③ $s_n\to+\infty$，级数发散。<br>
+<b>验算：</b>虽然 $u_n=\ln(1+1/n)\to0$（必要条件满足），但发散——再次说明必要条件不充分 ✓。
+</div>
+<div class="box example">
+<b>例 3（用必要条件直接判发散）.</b> 判定 $\displaystyle\sum_{n=1}^{\infty}\frac{n}{2n+1}$。<br>
+① $\displaystyle\lim_{n\to\infty}\frac{n}{2n+1}=\frac12\neq0$；<br>
+② 由必要条件（逆否），级数<b>发散</b>。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>正项级数及其审敛法<span class="tag">核心</span></h2>
+<div class="box def"><b>正项级数：</b>各项 $u_n\ge0$ 的级数。</div>
+<div class="thm"><span class="label">收敛原理</span>正项级数 $\displaystyle\sum u_n$ 收敛 $\iff$ 部分和数列 $\{s_n\}$ <b>有界</b>。</div>
+<div class="proof"><span class="label">证明</span>因 $u_n\ge0$，$s_{n+1}=s_n+u_{n+1}\ge s_n$，$\{s_n\}$ 单调增加；由单调有界准则，单调数列收敛 $\iff$ 有界。<span class="qed">∎</span></div>
+<div class="box tip"><b>意义：</b>这是所有正项级数判别法的「根」——下面每个判别法的证明都要回到「部分和有界」。</div>
+<div class="thm"><span class="label">比较审敛法</span>设 $\sum u_n,\ \sum v_n$ 为正项级数，且 $u_n\le v_n\ (n\ge N)$：
+<ol>
+<li>$\sum v_n$ 收敛 $\Longrightarrow\ \sum u_n$ 收敛（<b>大收则小收</b>）；</li>
+<li>$\sum u_n$ 发散 $\Longrightarrow\ \sum v_n$ 发散（<b>小发则大发</b>）。</li>
+</ol></div>
+<div class="proof"><span class="label">证明（只证 (1)，(2) 为其逆否）</span>记部分和 $S_n=\sum_{k=1}^{n}u_k,\ T_n=\sum_{k=1}^{n}v_k$。当 $n\ge N$ 时
+$$S_n=\sum_{k=1}^{N-1}u_k+\sum_{k=N}^{n}u_k\le\sum_{k=1}^{N-1}u_k+\sum_{k=N}^{n}v_k\le\sum_{k=1}^{N-1}u_k+\sum_{k=1}^{\infty}v_k$$
+右边是常数 ⇒ $\{S_n\}$ 有界 ⇒ 收敛。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">极限形式</span>设 $u_n,v_n>0$，$\displaystyle\lim_{n\to\infty}\frac{u_n}{v_n}=l$，则：
+<ol>
+<li>$0<l<+\infty$：$\sum u_n$ 与 $\sum v_n$ <b>同敛散</b>；</li>
+<li>$l=0$：$\sum v_n$ 收敛 $\Rightarrow\sum u_n$ 收敛；</li>
+<li>$l=+\infty$：$\sum v_n$ 发散 $\Rightarrow\sum u_n$ 发散。</li>
+</ol>（证明：由极限定义，$l$ 有限正数时 $u_n$ 与 $v_n$ 被常数倍互相控制，再用比较法。）</div>
+<div class="thm"><span class="label">p 级数</span>
+$$\sum_{n=1}^{\infty}\frac{1}{n^p}\quad\begin{cases}\text{收敛},&p>1\\[2pt]\text{发散},&p\le1\end{cases}$$
+</div>
+<div class="proof"><span class="label">证明（积分放缩）</span>
+<b>$p>1$：</b>对 $k\ge2$，在区间 $[k-1,k]$ 上 $\dfrac{1}{x^p}\ge\dfrac{1}{k^p}$，故
+$$\frac{1}{k^p}\le\int_{k-1}^{k}\frac{dx}{x^p}\ \Longrightarrow\ s_n=1+\sum_{k=2}^{n}\frac{1}{k^p}\le1+\int_{1}^{n}\frac{dx}{x^p}=1+\frac{1}{p-1}\left(1-\frac{1}{n^{p-1}}\right)<1+\frac{1}{p-1}$$
+部分和有界 ⇒ 收敛。<br>
+<b>$p\le1$：</b>$\dfrac{1}{n^p}\ge\dfrac1n$，调和级数发散 ⇒ 由比较法发散。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">比值审敛法（d'Alembert）</span>设 $\sum u_n$ 为正项级数，$\displaystyle\lim_{n\to\infty}\frac{u_{n+1}}{u_n}=\rho$，则
+① $\rho<1$：收敛；② $\rho>1$（含 $+\infty$）：发散；③ $\rho=1$：<b>失效</b>，需另法。</div>
+<div class="proof"><span class="label">证明</span>
+<b>$\rho<1$：</b>取 $q$ 使 $\rho<q<1$。存在 $N$，当 $n\ge N$ 时 $\dfrac{u_{n+1}}{u_n}<q$，递推得
+$$u_{N+k}<q^k\,u_N$$
+而几何级数 $\sum q^k$ 收敛，由比较法 $\sum u_n$ 收敛。<br>
+<b>$\rho>1$：</b>存在 $N$，当 $n\ge N$ 时 $u_{n+1}>u_n>0$，$u_n$ 从某项起单调递增，故 $u_n\not\to0$，由必要条件发散。<br>
+<b>$\rho=1$ 失效：</b>$p$ 级数 $u_n=1/n^p$ 满足 $\dfrac{u_{n+1}}{u_n}=\left(\dfrac{n}{n+1}\right)^p\to1$，但 $p>1$ 收敛、$p\le1$ 发散——比值极限为 $1$ 时无法判定。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">根值审敛法（Cauchy）</span>设 $\sum u_n$ 为正项级数（$u_n\ge0$），$\displaystyle\lim_{n\to\infty}\sqrt[n]{u_n}=\rho$，则结论同比值法：$\rho<1$ 收敛；$\rho>1$ 发散；$\rho=1$ 失效。<br>
+（证明：$\rho<1$ 时取 $\rho<q<1$，从某项起 $u_n<q^n$，再用几何级数比较；$\rho>1$ 时 $u_n>1$ 从某项起成立，$u_n\not\to0$。）</div>
+<div class="box method"><b>选择策略：</b>含 $n!$、$a^n$、$n^k$ 的 → <b>比值法</b>；含 $\left[f(n)\right]^n$ 的 → <b>根值法</b>；与 $1/n^p$ 同阶（可用等价无穷小或泰勒展开找同阶量）的 → <b>比较法</b>。</div>
+<div class="box example">
+<b>例 1（比较法）.</b> 判定 $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^2+1}$。<br>
+① 找比较对象：$0<\dfrac{1}{n^2+1}<\dfrac{1}{n^2}$；<br>
+② $\displaystyle\sum\frac{1}{n^2}$ 是 $p=2>1$ 的 p 级数，收敛；<br>
+③ 由「大收则小收」，原级数<b>收敛</b>。<br>
+<b>验算：</b>原级数的和小于 $\displaystyle\sum\frac{1}{n^2}=\frac{\pi^2}{6}\approx1.64$，数值部分和 $s_{10}\approx0.98$ 远低于这个上界 ✓。
+</div>
+<div class="box example">
+<b>例 2（发散型比较）.</b> 判定 $\displaystyle\sum_{n=1}^{\infty}\frac{1}{2n-1}$。<br>
+① $\dfrac{1}{2n-1}>\dfrac{1}{2n}$；<br>
+② $\displaystyle\sum\frac{1}{2n}=\frac12\sum\frac1n$ 发散（调和级数）；<br>
+③ 由「小发则大发」，原级数<b>发散</b>。<br>
+<b>验算：</b>$s_{100}\approx3.28>\frac12H_{100}\approx2.59$，确实比调和的「一半」还大，发散趋势一致 ✓。
+</div>
+<div class="box example">
+<b>例 3（比值法）.</b> 判定 $\displaystyle\sum_{n=1}^{\infty}\frac{n!}{n^n}$。<br>
+① 比值：
+$$\frac{u_{n+1}}{u_n}=\frac{(n+1)!}{(n+1)^{n+1}}\cdot\frac{n^n}{n!}=\frac{n^n}{(n+1)^n}=\frac{1}{\left(1+\frac1n\right)^n}$$
+② 取极限：$\displaystyle\lim_{n\to\infty}\frac{u_{n+1}}{u_n}=\frac1e<1$；<br>
+③ 由比值法，级数<b>收敛</b>。<br>
+<b>验算：</b>$u_1=1,\ u_2=0.5,\ u_3\approx0.22,\ u_4\approx0.09$，衰减比几何级数还快，收敛合理 ✓。
+</div>
+<div class="box example">
+<b>例 4（根值法）.</b> 判定 $\displaystyle\sum_{n=1}^{\infty}\left(1-\frac1n\right)^{n^2}$。<br>
+① $\sqrt[n]{u_n}=\left(1-\dfrac1n\right)^{n}$；<br>
+② 取极限：$\displaystyle\lim_{n\to\infty}\left(1-\frac1n\right)^n=e^{-1}<1$（重要极限）；<br>
+③ 由根值法，级数<b>收敛</b>。<br>
+<b>验算（数值感受）：</b>前几项 $u_2=\frac{1}{16}=0.0625$、$u_3=\left(\frac23\right)^9\approx0.026$、$u_4=\left(\frac34\right)^{16}\approx0.010$，部分和 $\approx0.10$；又 $\left(1-\frac1n\right)^{n^2}=\left[\left(1-\frac1n\right)^n\right]^n<e^{-n}$，尾部被 $\sum\limits_{n\ge1}e^{-n}=\frac{1}{e-1}\approx0.58$ 控制，收敛无疑 ✓。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>交错级数 · 绝对收敛与条件收敛<span class="tag">核心</span></h2>
+<div class="box def"><b>交错级数：</b>形如 $\displaystyle\sum_{n=1}^{\infty}(-1)^{n-1}u_n=u_1-u_2+u_3-u_4+\cdots\ (u_n>0)$ 的级数。</div>
+<div class="thm"><span class="label">莱布尼茨判别法</span>若交错级数满足：<br>
+① $u_n\ge u_{n+1}\ (n=1,2,\dots)$（单调不增）；② $\displaystyle\lim_{n\to\infty}u_n=0$，<br>
+则级数收敛，且和 $s\le u_1$；用前 $n$ 项和 $s_n$ 近似时，余项满足
+$$|r_n|=|s-s_n|\le u_{n+1}$$
+</div>
+<div class="proof"><span class="label">证明</span>考察偶部分和
+$$s_{2m}=\left(u_1-u_2\right)+\left(u_3-u_4\right)+\cdots+\left(u_{2m-1}-u_{2m}\right)$$
+每个括号 $\ge0$（条件 ①），故 $\{s_{2m}\}$ 单调不减；又改写为
+$$s_{2m}=u_1-\left(u_2-u_3\right)-\left(u_4-u_5\right)-\cdots-u_{2m}\le u_1$$
+故 $\{s_{2m}\}$ 单调有界，$s_{2m}\to s\ (\text{某个 }0\le s\le u_1)$。<br>
+奇部分和 $s_{2m+1}=s_{2m}+u_{2m+1}\to s+0=s$（用条件 ②）。因此 $s_n\to s$，级数收敛。<br>
+余项 $r_n=(-1)^n\left(u_{n+1}-u_{n+2}+u_{n+3}-\cdots\right)$ 仍是一个交错级数型的和，其和介于 $0$ 与 $u_{n+1}$ 之间，故 $|r_n|\le u_{n+1}$。<span class="qed">∎</span></div>
+<div class="box def"><b>绝对收敛 / 条件收敛：</b>若 $\displaystyle\sum|u_n|$ 收敛，称 $\displaystyle\sum u_n$ <b>绝对收敛</b>；若 $\displaystyle\sum u_n$ 收敛而 $\displaystyle\sum|u_n|$ 发散，称<b>条件收敛</b>。</div>
+<div class="thm"><span class="label">定理</span>绝对收敛 $\Longrightarrow$ 收敛（反之不然：交错调和级数条件收敛）。</div>
+<div class="proof"><span class="label">证明（柯西审敛原理）</span>设 $\sum|u_n|$ 收敛。对任意正整数 $p$，
+$$\left|u_{n+1}+u_{n+2}+\cdots+u_{n+p}\right|\le\left|u_{n+1}\right|+\cdots+\left|u_{n+p}\right|$$
+由 $\sum|u_n|$ 收敛，右边当 $n$ 充分大时 $<\varepsilon$，故 $\sum u_n$ 也满足柯西准则，收敛。<span class="qed">∎</span></div>
+<div class="box method"><b>任意项级数判敛流程：</b>① 先看 $\sum|u_n|$（用正项级数全套方法）——收敛则绝对收敛（最强结论）；② 若 $\sum|u_n|$ 发散，再看是不是交错级数（莱布尼茨）或能否拆分成几个简单级数；③ 都不行时回到定义（部分和）或柯西准则。</div>
+<div class="box example">
+<b>例 1（条件收敛）.</b> 判定 $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{\sqrt{n}}$。<br>
+① 莱布尼茨：$u_n=\dfrac{1}{\sqrt n}$ 单调减、趋于 $0$ ✓ ⇒ 级数收敛；<br>
+② 取绝对值：$\displaystyle\sum\frac{1}{n^{1/2}}$ 是 $p=\dfrac12\le1$ 的 p 级数，发散；<br>
+③ 故原级数<b>条件收敛</b>。<br>
+<b>验算（摆动收窄）：</b>$s_1=1,\ s_2=1-0.707\approx0.293,\ s_3\approx0.870,\ s_4\approx0.370,\ s_5\approx0.817$——部分和在两个值之间摆动且摆幅收窄，正是交错收敛的形态 ✓。
+</div>
+<div class="box example">
+<b>例 2（用必要条件判发散）.</b> 判定 $\displaystyle\sum_{n=1}^{\infty}(-1)^{n}\frac{n}{2n+1}$。<br>
+① $u_n=\dfrac{n}{2n+1}\to\dfrac12\neq0$；<br>
+② 莱布尼茨条件 ② 不满足，且一般项不趋于零 ⇒ <b>发散</b>。
+</div>
+<div class="box example">
+<b>例 3（绝对收敛）.</b> 判定 $\displaystyle\sum_{n=1}^{\infty}\frac{\sin n}{n^2}$。<br>
+① $\left|\dfrac{\sin n}{n^2}\right|\le\dfrac{1}{n^2}$；<br>
+② $\displaystyle\sum\frac{1}{n^2}$ 收敛 ⇒ $\displaystyle\sum\left|\frac{\sin n}{n^2}\right|$ 收敛（绝对收敛）；<br>
+③ 故原级数收敛（且为绝对收敛）。
+</div>
+<div class="box tip"><b>记住这个结论：</b>交错调和级数
+$$\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{n}=1-\frac12+\frac13-\cdots=\ln 2\qquad(\text{条件收敛})$$
+§6 的 $\ln(1+x)$ 展开式中令 $x=1$ 也会得到它。</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>幂级数：阿贝尔定理与收敛域<span class="tag">核心</span></h2>
+<div class="box def">
+<b>函数项级数：</b>$\displaystyle\sum_{n=1}^{\infty}u_n(x)$，其收敛点的集合称<b>收敛域</b>，在收敛域上的和记为 $s(x)$（和函数）。<br>
+<b>幂级数：</b>$\displaystyle\sum_{n=0}^{\infty}a_nx^n=a_0+a_1x+a_2x^2+\cdots$（$a_n$ 为常数系数）。
+</div>
+<div class="thm"><span class="label">阿贝尔（Abel）定理</span>
+<ol>
+<li>若 $\sum a_nx_0^n$ 在 $x_0\neq0$ 处<b>收敛</b>，则对一切 $|x|<|x_0|$ 的 $x$，级数<b>绝对收敛</b>；</li>
+<li>若 $\sum a_nx_0^n$ 在 $x_0$ 处<b>发散</b>，则对一切 $|x|>|x_0|$ 的 $x$，级数<b>发散</b>。</li>
+</ol></div>
+<div class="proof"><span class="label">证明</span>
+<b>(1)</b> 设 $\sum a_nx_0^n$ 收敛，则由必要条件 $a_nx_0^n\to0$，存在常数 $M$ 使 $|a_nx_0^n|\le M$ 对一切 $n$ 成立。取 $|x|<|x_0|$，记 $q=\left|\dfrac{x}{x_0}\right|<1$，则
+$$|a_nx^n|=\left|a_nx_0^n\right|\cdot\left|\frac{x}{x_0}\right|^n\le Mq^n$$
+而 $\sum Mq^n$ 收敛，由比较审敛法，$\sum|a_nx^n|$ 收敛，即绝对收敛。<br>
+<b>(2)</b> 反证：若有 $|x_1|>|x_0|$ 使 $\sum a_nx_1^n$ 收敛，则把 (1) 用在 $x_1$ 上，得 $\sum a_nx_0^n$ 绝对收敛，与假设矛盾。故 $|x|>|x_0|$ 处必发散。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">收敛半径定理</span>对幂级数 $\displaystyle\sum a_nx^n$，必为以下三种情形之一：
+<ol>
+<li>只在 $x=0$ 收敛（记 $R=0$）；</li>
+<li>在全数轴收敛（记 $R=+\infty$）；</li>
+<li>存在唯一 $R>0$：$|x|<R$ 时绝对收敛，$|x|>R$ 时发散，$x=\pm R$ 单独判定。</li>
+</ol>
+$R$ 称<b>收敛半径</b>，$(-R,R)$ 称<b>收敛区间</b>。（证明：取 $R=\sup\{|x|:\ \sum a_nx^n\ \text{收敛}\}$，由阿贝尔定理即得三种情形。）</div>
+<div class="box method">
+<b>求收敛域五步：</b><br>
+① 求收敛半径：若 $\displaystyle\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|=\rho$，则 $R=\dfrac1\rho$（$\rho=0\Rightarrow R=+\infty$；$\rho=+\infty\Rightarrow R=0$）；也可用根值版 $R=1/\lim\sqrt[n]{|a_n|}$；<br>
+② 写出收敛区间 $(-R,R)$（或全轴、或仅 $x=0$）；<br>
+③ <b>端点单独判定</b>：把 $x=R$、$x=-R$ 分别代入化为常数项级数；<br>
+④ 写出收敛域（注意开闭）；<br>
+⑤ <b>缺项级数</b>（如 $\sum a_nx^{2n}$）不要硬套公式，直接对 $u_n(x)$ 作比值/根值，解关于 $x$ 的不等式。
+</div>
+<div class="box example">
+<b>例 1（R=∞）.</b> 求 $\displaystyle\sum_{n=0}^{\infty}\frac{x^n}{n!}$ 的收敛域。<br>
+① 对 $u_n=\dfrac{x^n}{n!}$ 直接作比值：
+$$\left|\frac{u_{n+1}}{u_n}\right|=\frac{|x|^{n+1}/(n+1)!}{|x|^{n}/n!}=\frac{|x|}{n+1}\ \xrightarrow{\ n\to\infty\ }\ 0<1\quad(\text{对一切 }x)$$
+② 故对一切 $x$ 收敛：$R=+\infty$，收敛域 $(-\infty,+\infty)$。<br>
+<b>验算：</b>该级数正是 $e^x$ 的展开式（§6），对任何实数都有定义 ✓。
+</div>
+<div class="box example">
+<b>例 2（R=1，端点分家）.</b> 求 $\displaystyle\sum_{n=1}^{\infty}\frac{x^n}{n}$ 的收敛域。<br>
+① $\left|\dfrac{a_{n+1}}{a_n}\right|=\dfrac{n}{n+1}\to1$，故 $R=1$，收敛区间 $(-1,1)$；<br>
+② 端点 $x=1$：$\displaystyle\sum\frac1n$ 发散（调和）；<br>
+③ 端点 $x=-1$：$\displaystyle\sum\frac{(-1)^n}{n}$ 收敛（交错调和）；<br>
+④ 收敛域为 $\boxed{[-1,\,1)}$。<br>
+<b>验算：</b>由 §5 知和函数为 $-\ln(1-x)$；令 $x\to-1^+$ 得 $-\ln 2$，与直接把 $x=-1$ 代入级数所得 $-\ln 2$ 一致 ✓。
+</div>
+<div class="box example">
+<b>例 3（缺项级数）.</b> 求 $\displaystyle\sum_{n=0}^{\infty}\frac{x^{2n}}{2^n}$ 的收敛域。<br>
+① 这是缺项幂级数，直接对 $u_n=\dfrac{x^{2n}}{2^n}$ 作根值：
+$$\sqrt[n]{|u_n|}=\frac{x^2}{2}\ \Longrightarrow\ \text{收敛}\iff\frac{x^2}{2}<1\iff|x|<\sqrt2$$
+② $|x|=\sqrt2$ 时 $u_n=1\not\to0$，发散；<br>
+③ 收敛域为 $\left(-\sqrt2,\ \sqrt2\right)$，且 $R=\sqrt2$。<br>
+<b>验算：</b>级数就是几何级数 $\displaystyle\sum_{n=0}^{\infty}\left(\frac{x^2}{2}\right)^n=\frac{1}{1-\frac{x^2}{2}}$，公比 $\left|\frac{x^2}{2}\right|<1$ 时收敛 ✓，与根值法结论一致。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>幂级数的运算性质与和函数<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">运算性质</span>设 $\sum a_nx^n$ 的收敛半径为 $R>0$，和函数为 $s(x)$：
+<ol>
+<li><b>连续性：</b>$s(x)$ 在 $(-R,R)$ 内连续；若端点 $x=R$ 处级数也收敛，则 $s(x)$ 在 $x=R$ 处左连续（阿贝尔第二定理）；</li>
+<li><b>逐项求导：</b>在 $(-R,R)$ 内
+$$s'(x)=\sum_{n=1}^{\infty}n\,a_n\,x^{n-1}$$
+且求导后收敛半径仍为 $R$；</li>
+<li><b>逐项积分：</b>在 $(-R,R)$ 内
+$$\int_0^x s(t)\,dt=\sum_{n=0}^{\infty}\frac{a_n}{n+1}x^{n+1}$$
+且积分后收敛半径仍为 $R$。</li>
+</ol>
+（证明用到幂级数在收敛区间内的内闭一致收敛性，见 §8。）</div>
+<div class="box method">
+<b>求和函数五步模板：</b>
+① 求收敛域（§4）；<br>
+② 观察系数：用<b>逐项求导</b>或<b>逐项积分</b>把系数 $a_n$ 化简（目标是 $a_n$ 变成常数）；<br>
+③ 求简化后的和（通常归结为几何级数或已知展开式）；<br>
+④ <b>逆运算还原</b>：先求导的要再积分（注意 $\int_0^x$、常数由 $s(0)$ 定），先积分的要再求导；<br>
+⑤ 端点的值由连续性/阿贝尔定理取极限得到。
+</div>
+<div class="box example">
+<b>例 1（逐项求导）.</b> 求 $\displaystyle s(x)=\sum_{n=1}^{\infty}n x^{n-1}\ (|x|<1)$。<br>
+① 已知几何级数 $\displaystyle\sum_{n=0}^{\infty}x^n=\frac{1}{1-x}$；<br>
+② 逐项求导（收敛半径不变）：
+$$s(x)=\frac{d}{dx}\left(\sum_{n=0}^{\infty}x^n\right)=\frac{d}{dx}\left(\frac{1}{1-x}\right)=\frac{1}{(1-x)^2}$$
+<b>验算：</b>取 $x=0.5$：级数部分和 $s_5=1+2(0.5)+3(0.25)+4(0.125)+5(0.0625)=3.5625$，趋向 $\dfrac{1}{0.25}=4$ ✓。
+</div>
+<div class="box example">
+<b>例 2（逐项积分）.</b> 求 $\displaystyle s(x)=\sum_{n=1}^{\infty}\frac{x^n}{n}\ (|x|<1)$。<br>
+① 对 $s$ 逐项求导：$s'(x)=\displaystyle\sum_{n=1}^{\infty}x^{n-1}=\frac{1}{1-x}$；<br>
+② 由 $s(0)=0$ 积分还原：
+$$s(x)=\int_0^x\frac{dt}{1-t}=-\ln(1-x)$$
+③ 收敛域为 $[-1,1)$（§4 例 2）；由左连续，$s(-1)=\lim\limits_{x\to-1^+}\left[-\ln(1-x)\right]=-\ln2$，恰等于代入级数所得 $\displaystyle\sum\frac{(-1)^n}{n}$ ✓。<br>
+<b>验算：</b>$x=0.5$ 时级数部分和 $\approx0.6885$，$-\ln0.5=\ln2\approx0.6931$ ✓。
+</div>
+<div class="box example">
+<b>例 3（先造 $x^{n+1}$ 再两次求导）.</b> 求 $\displaystyle s(x)=\sum_{n=1}^{\infty}n(n+1)x^n\ (|x|<1)$。<br>
+① 造级数：$\displaystyle\sum_{n=1}^{\infty}x^{n+1}=\frac{x^2}{1-x}$（几何级数，$|x|<1$）；<br>
+② 两边求二阶导：$\displaystyle\sum_{n=1}^{\infty}n(n+1)x^{n-1}=\left(\frac{x^2}{1-x}\right)''$；<br>
+③ 计算导数：$\dfrac{x^2}{1-x}=-x-1+\dfrac{1}{1-x}$，故
+$$\left(\frac{x^2}{1-x}\right)'=-1+\frac{1}{(1-x)^2},\qquad \left(\frac{x^2}{1-x}\right)''=\frac{2}{(1-x)^3}$$
+④ 两边再乘 $x$：
+$$s(x)=\frac{2x}{(1-x)^3}$$
+<b>验算：</b>$x=0.5$ 时公式给出 $8$；级数部分和 $s_{10}\approx7.85$ 正在逼近 $8$ ✓。
+</div>
+<div class="box tip"><b>常用导数/积分对照（求和函数时反复用）：</b>
+$$\frac{1}{1-x}\ \xrightarrow{\ \frac{d}{dx}\ }\ \frac{1}{(1-x)^2}\ \xrightarrow{\ \frac{d}{dx}\ }\ \frac{2}{(1-x)^3};\qquad \frac{1}{1+x}\ \xrightarrow{\ \int_0^x\ }\ \ln(1+x)$$
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>函数展开成幂级数<span class="tag">核心</span></h2>
+<div class="box def">
+<b>泰勒级数：</b>若 $f(x)$ 在 $x_0$ 处有任意阶导数，称形式幂级数 $\displaystyle\sum_{n=0}^{\infty}\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n$ 为 $f$ 在 $x_0$ 处的泰勒级数；$x_0=0$ 时称<b>麦克劳林级数</b>。
+</div>
+<div class="thm"><span class="label">可展条件</span>设 $f$ 在 $x_0$ 某邻域内有任意阶导数，则
+$$f(x)=\sum_{n=0}^{\infty}\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n\ \ (|x-x_0|<R)\iff R_n(x)\to0\ (n\to\infty)$$
+（$R_n$ 是泰勒公式的余项。级数收敛还不够，必须<b>收敛到 $f$ 本身</b>。）</div>
+<div class="proof"><span class="label">例证（$e^x$ 的展开式）</span>$f(x)=e^x$ 在 $0$ 处各阶导数均为 $1$，麦克劳林公式为
+$$e^x=1+x+\frac{x^2}{2!}+\cdots+\frac{x^n}{n!}+R_n(x),\qquad R_n(x)=\frac{e^{\theta x}}{(n+1)!}x^{n+1}\ (0<\theta<1)$$
+放缩：
+$$\left|R_n(x)\right|\le e^{|x|}\,\frac{|x|^{n+1}}{(n+1)!}\ \longrightarrow\ 0$$
+（因为 $\dfrac{|x|^{n+1}}{(n+1)!}$ 是收敛级数 $e^{|x|}$ 的通项，必趋于 $0$。）故 $R_n\to0$，展开成立：
+$$e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!}\qquad(-\infty<x<+\infty)$$
+$\sin x,\cos x$ 同理：各阶导数绝对值 $\le1$，余项被 $\dfrac{|x|^{n+1}}{(n+1)!}\to0$ 控制。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">常用展开式（必背七个）</span>
+$$\frac{1}{1-x}=\sum_{n=0}^{\infty}x^n\qquad(-1<x<1)$$
+$$\frac{1}{1+x}=\sum_{n=0}^{\infty}(-1)^n x^n\qquad(-1<x<1)$$
+$$e^{x}=\sum_{n=0}^{\infty}\frac{x^n}{n!}\qquad(-\infty<x<+\infty)$$
+$$\sin x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{(2n+1)!}\qquad(-\infty<x<+\infty)$$
+$$\cos x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{(2n)!}\qquad(-\infty<x<+\infty)$$
+$$\ln(1+x)=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}x^n}{n}\qquad(-1<x\le1)$$
+$$(1+x)^{\alpha}=1+\alpha x+\frac{\alpha(\alpha-1)}{2!}x^2+\cdots+\frac{\alpha(\alpha-1)\cdots(\alpha-n+1)}{n!}x^n+\cdots\quad(-1<x<1)$$
+<b>附（由逐项积分得到）：</b>$\displaystyle\arctan x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{2n+1}\quad(-1\le x\le1)$。
+</div>
+<div class="box method">
+<b>求展开式的两条路：</b><br>
+① <b>直接法</b>：按定义求 $f^{(n)}(x_0)$、写出泰勒级数、验证余项 $\to0$。适合结构简单的函数（如 $e^x$、$\sin x$）；<br>
+② <b>间接法（考试主力）</b>：从已知展开式出发，通过<b>变量代换、四则运算、逐项求导、逐项积分</b>得到新展开式，并注明收敛范围。
+</div>
+<div class="box example">
+<b>例 1（变量代换）.</b> 将 $f(x)=e^{-x^2}$ 展开成幂级数。<br>
+① 在 $e^t=\displaystyle\sum_{n=0}^{\infty}\frac{t^n}{n!}$ 中令 $t=-x^2$；<br>
+② 得
+$$e^{-x^2}=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{n!}=1-x^2+\frac{x^4}{2!}-\frac{x^6}{3!}+\cdots\qquad(-\infty<x<+\infty)$$
+<b>验算（两边求导）：</b>右端导数 $=\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n\,2n\,x^{2n-1}}{n!}=-2x\sum_{m=0}^{\infty}\frac{(-1)^m x^{2m}}{m!}=-2xe^{-x^2}$，与左端导数一致 ✓。
+</div>
+<div class="box example">
+<b>例 2（提公因子，化为几何级数）.</b> 将 $f(x)=\dfrac{1}{2-x}$ 展开成 $x$ 的幂级数。<br>
+① 提出 $2$：$\dfrac{1}{2-x}=\dfrac12\cdot\dfrac{1}{1-\frac{x}{2}}$；<br>
+② 用 $\dfrac{1}{1-t}=\displaystyle\sum_{n=0}^{\infty}t^n\ (|t|<1)$，令 $t=\dfrac{x}{2}$：
+$$\frac{1}{2-x}=\frac12\sum_{n=0}^{\infty}\left(\frac{x}{2}\right)^n=\sum_{n=0}^{\infty}\frac{x^n}{2^{n+1}}\qquad(|x|<2)$$
+<b>验算：</b>两边同乘 $(2-x)$：
+$$(2-x)\left(\frac12+\frac{x}{4}+\frac{x^2}{8}+\cdots\right)=1+\frac x2+\frac{x^2}4+\cdots-\frac x2-\frac{x^2}4-\cdots=1\ ✓$$
+</div>
+<div class="box example">
+<b>例 3（逐项积分推导 $\ln(1+x)$）.</b><br>
+① 起点：$\dfrac{1}{1+x}=\displaystyle\sum_{n=0}^{\infty}(-1)^nx^n\quad(|x|<1)$；<br>
+② 两边从 $0$ 到 $x$ 逐项积分：
+$$\ln(1+x)=\int_0^x\frac{dt}{1+t}=\sum_{n=0}^{\infty}(-1)^n\frac{x^{n+1}}{n+1}=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}x^n}{n}$$
+③ 端点：$x=1$ 时右端是交错调和级数，收敛于 $\ln 2$（左连续），故收敛范围为 $-1<x\le1$。<br>
+<b>验算：</b>对右端逐项求导回到 $\dfrac{1}{1+x}$ ✓；$x\to0$ 时右端 $\sim x$，与 $\ln(1+x)\sim x$ 一致 ✓。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>幂级数展开式的应用<span class="tag">进阶</span></h2>
+<h3>7.1 近似计算（交错级数的误差控制）</h3>
+<div class="box method"><b>误差控制模板：</b>用幂级数作近似时，如果级数是交错且满足莱布尼茨条件，则「用前 $n$ 项近似，误差不超过第一个被略去的项的绝对值」：$|r_n|\le u_{n+1}$——这是考试最常用的截断判据。</div>
+<div class="box example">
+<b>例 1.</b> 用级数计算 $\ln 1.2$，使误差不超过 $10^{-4}$。<br>
+① 展开：
+$$\ln1.2=\ln(1+0.2)=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}(0.2)^n}{n}$$
+② 逐项数值：
+$$0.2,\quad -0.02,\quad 0.002667,\quad -0.0004,\quad 0.000064,\quad -0.0000107,\ \dots$$
+③ 部分和：$s_1=0.2$，$s_2=0.18$，$s_3\approx0.182667$，$s_4\approx0.182267$，$s_5\approx0.182331$；<br>
+④ 定截断：取前 $4$ 项时，余项 $\le$ 第 $5$ 项 $=6.4\times10^{-5}<10^{-4}$ ✓（取前 $5$ 项更精确：余项 $\le1.07\times10^{-5}$）；<br>
+⑤ 结果：$\ln1.2\approx0.1823$（真值 $0.1823216\cdots$）。
+</div>
+<h3>7.2 欧拉公式</h3>
+<div class="box def">
+在 $e^z=\displaystyle\sum\frac{z^n}{n!}$ 中令 $z=ix$（$i^2=-1$），按实部虚部整理：
+$$e^{ix}=\sum_{n=0}^{\infty}\frac{(ix)^n}{n!}=\left(1-\frac{x^2}{2!}+\frac{x^4}{4!}-\cdots\right)+i\left(x-\frac{x^3}{3!}+\frac{x^5}{5!}-\cdots\right)=\cos x+i\sin x$$
+即<b>欧拉公式</b>：$\boxed{e^{ix}=\cos x+i\sin x}$；特例 $e^{i\pi}=-1$。
+</div>
+<h3>7.3 微分方程的幂级数解法（简介）</h3>
+<div class="box example">
+<b>例 2.</b> 用幂级数求初值问题 $y'-y=0,\ y(0)=1$。<br>
+① 设 $y=\displaystyle\sum_{n=0}^{\infty}a_nx^n$，则 $y'=\displaystyle\sum_{n=1}^{\infty}na_nx^{n-1}=\sum_{n=0}^{\infty}(n+1)a_{n+1}x^n$；<br>
+② 代入方程，比较系数：
+$$\sum_{n=0}^{\infty}\left[(n+1)a_{n+1}-a_n\right]x^n=0\ \Longrightarrow\ a_{n+1}=\frac{a_n}{n+1}$$
+③ 由 $a_0=y(0)=1$ 递推：$a_1=1,\ a_2=\dfrac12,\ a_3=\dfrac16,\ \dots,\ a_n=\dfrac{1}{n!}$；<br>
+④ 故 $y=\displaystyle\sum_{n=0}^{\infty}\frac{x^n}{n!}=e^x$，与直接求解一致。<br>
+<b>验算：</b>代回方程：$\left(e^x\right)'=e^x$ ✓，$y(0)=1$ ✓。
+</div>
+</section>
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>函数项级数的一致收敛性<span class="tag">进阶</span></h2>
+<div class="box def">
+<b>函数项级数：</b>$\displaystyle\sum_{n=1}^{\infty}u_n(x)$ 在收敛域上的和函数 $s(x)$，部分和 $s_n(x)$。<br>
+<b>一致收敛：</b>若 $\forall\varepsilon>0,\ \exists N$（<b>只依赖 $\varepsilon$、与 $x$ 无关</b>），当 $n>N$ 时对收敛域上<b>一切</b> $x$ 都有
+$$\left|s(x)-s_n(x)\right|<\varepsilon$$
+则称级数在收敛域上一致收敛。
+</div>
+<div class="thm"><span class="label">魏尔斯特拉斯 M 判别法</span>若存在收敛的常数项级数 $\sum M_n$，使对收敛域内一切 $x$ 都有
+$$|u_n(x)|\le M_n\qquad(n=1,2,\dots)$$
+则 $\sum u_n(x)$ 在该收敛域上一致收敛（且绝对收敛）。</div>
+<div class="proof"><span class="label">证明（柯西准则）</span>由 $\sum M_n$ 收敛，$\forall\varepsilon>0,\exists N$，当 $n>N$ 时对任意 $p$：
+$$\sum_{k=n+1}^{n+p}M_k<\varepsilon$$
+于是对收敛域上一切 $x$：
+$$\left|u_{n+1}(x)+\cdots+u_{n+p}(x)\right|\le\sum_{k=n+1}^{n+p}|u_k(x)|\le\sum_{k=n+1}^{n+p}M_k<\varepsilon$$
+满足一致收敛的柯西准则。等价地：$|s(x)-s_n(x)|\le\sum_{k>n}M_k\to0$，与 $x$ 无关。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">一致收敛的三大性质</span>设 $\sum u_n(x)$ 在区间 $I$ 上一致收敛：
+<ol>
+<li><b>连续性：</b>各项 $u_n(x)$ 在 $I$ 上连续 ⇒ 和函数 $s(x)$ 在 $I$ 上连续；</li>
+<li><b>逐项积分：</b>各项连续 ⇒ $\displaystyle\int_a^b s(x)\,dx=\sum_{n=1}^{\infty}\int_a^b u_n(x)\,dx$；</li>
+<li><b>逐项求导：</b>各项有连续导数且逐项求导后的级数一致收敛 ⇒ $\displaystyle s'(x)=\sum_{n=1}^{\infty}u_n'(x)$。</li>
+</ol>
+（证明用 $\varepsilon$–$N$ 估计，属《数学分析》范围；要点：一致收敛保证「求和」与「取极限/积分/求导」可以交换次序。反例 §8 例 2 说明仅「处处收敛」不够。）</div>
+<div class="box tip"><b>与幂级数的联系：</b>幂级数 $\sum a_nx^n$ 在 $(-R,R)$ 内的任何闭区间 $[-r,r]\ (0<r<R)$ 上一致收敛——用 M 判别法：$|a_nx^n|\le|a_n|r^n$，而 $\sum|a_n|r^n$ 收敛。这正是 §5 中「逐项求导、逐项积分」合法的依据；也提示端点 $x=\pm R$ 处要格外小心（一致收敛可能破坏）。</div>
+<div class="box example">
+<b>例 1（M 判别法）.</b> 证明 $\displaystyle\sum_{n=1}^{\infty}\frac{x^n}{n^2}$ 在 $[-1,1]$ 上一致收敛。<br>
+① 对一切 $x\in[-1,1]$：$\left|\dfrac{x^n}{n^2}\right|\le\dfrac{1}{n^2}$；<br>
+② $\displaystyle\sum\frac{1}{n^2}$ 收敛（$p=2$）；<br>
+③ 由 M 判别法，级数在 $[-1,1]$ 上一致收敛（从而和函数连续、可逐项积分）。<br>
+<b>验算：</b>余项 $\left|s-s_n\right|\le\displaystyle\sum_{k=n+1}^{\infty}\frac{1}{k^2}\to0$，这个界与 $x$ 无关——正是「一致」的含义 ✓。
+</div>
+<div class="box example">
+<b>例 2（不一致收敛的典型）.</b> $\displaystyle\sum_{n=0}^{\infty}x^n$ 在 $(-1,1)$ 上收敛，但<b>不一致收敛</b>。<br>
+① 部分和与余项：
+$$s_n(x)=\frac{1-x^{n+1}}{1-x},\qquad r_n(x)=s(x)-s_n(x)=\frac{x^{n+1}}{1-x}$$
+② 取点列 $x_n=\dfrac{n}{n+1}\in(-1,1)$：
+$$x_n^{\,n+1}=\left(1-\frac{1}{n+1}\right)^{n+1}\to e^{-1},\qquad 1-x_n=\frac{1}{n+1}$$
+故
+$$r_n(x_n)\approx e^{-1}(n+1)\ \longrightarrow\ \infty$$
+③ 无论 $n$ 多大，都存在点使余项不可控 ⇒ 不一致收敛。（数值：取 $n=10,\ x=\frac{10}{11}$，$r_{10}\approx e^{-1}\cdot11\approx4.0$——余项根本不随 $n$ 变小。）<br>
+<b>直观：</b>和函数 $\dfrac{1}{1-x}$ 在 $x\to1^-$ 处趋向 $\infty$，但在任何有限 $n$ 处部分和都是有界的多项式——「尾部一致地小」做不到 ✓。
+</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>傅里叶级数<span class="tag">核心</span></h2>
+<div class="box def">
+<b>三角级数：</b>形如 $\dfrac{a_0}{2}+\displaystyle\sum_{n=1}^{\infty}\left(a_n\cos nx+b_n\sin nx\right)$ 的函数项级数。
+</div>
+<div class="thm"><span class="label">三角函数系的正交性</span>函数系 $1,\ \cos x,\ \sin x,\ \cos 2x,\ \sin 2x,\ \dots$ 在 $[-\pi,\pi]$ 上正交：任意两个<b>不同</b>函数的乘积在 $[-\pi,\pi]$ 上积分为 $0$；且
+$$\int_{-\pi}^{\pi}\cos^2nx\,dx=\pi,\qquad \int_{-\pi}^{\pi}\sin^2nx\,dx=\pi\ (n\ge1),\qquad \int_{-\pi}^{\pi}1\,dx=2\pi$$</div>
+<div class="proof"><span class="label">证明（抽两个典型）</span>
+<b>① $\displaystyle\int_{-\pi}^{\pi}\sin mx\,dx=0$</b>（奇函数在对称区间上积分为零）。<br>
+<b>② 正交（$m\neq n$）：</b>用积化和差
+$$\sin mx\sin nx=\frac12\left[\cos(m-n)x-\cos(m+n)x\right]$$
+$$\int_{-\pi}^{\pi}\sin mx\sin nx\,dx=\frac12\left[\frac{\sin(m-n)x}{m-n}-\frac{\sin(m+n)x}{m+n}\right]_{-\pi}^{\pi}=0$$
+<b>③ 模长（$m=n$）：</b>$\sin^2nx=\dfrac{1-\cos2nx}{2}$，
+$$\int_{-\pi}^{\pi}\sin^2nx\,dx=\frac12\left[x-\frac{\sin2nx}{2n}\right]_{-\pi}^{\pi}=\pi$$
+其余组合（$\cos m\cos n$、$\sin m\cos n$）同法可得。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">欧拉–傅里叶公式</span>设 $f$ 以 $2\pi$ 为周期，在 $[-\pi,\pi]$ 上可积，且能展开为三角级数
+$$f(x)=\frac{a_0}{2}+\sum_{n=1}^{\infty}\left(a_n\cos nx+b_n\sin nx\right)$$
+则系数为
+$$a_n=\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\cos nx\,dx\qquad(n=0,1,2,\dots)$$
+$$b_n=\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\sin nx\,dx\qquad(n=1,2,\dots)$$</div>
+<div class="proof"><span class="label">推导（以 $a_n$ 为例，逐项积分 + 正交性）</span>两边乘 $\cos nx$ 后在 $[-\pi,\pi]$ 上积分：
+$$\int_{-\pi}^{\pi}f(x)\cos nx\,dx=\frac{a_0}{2}\underbrace{\int_{-\pi}^{\pi}\cos nx\,dx}_{=0}+\sum_{k=1}^{\infty}a_k\underbrace{\int_{-\pi}^{\pi}\cos kx\cos nx\,dx}_{=\pi\delta_{kn}}+\sum_{k=1}^{\infty}b_k\underbrace{\int_{-\pi}^{\pi}\sin kx\cos nx\,dx}_{=0}$$
+正交性使右边只剩 $k=n$ 的一项 $=a_n\pi$，故 $a_n=\dfrac1\pi\displaystyle\int_{-\pi}^{\pi}f(x)\cos nx\,dx$。乘 $\sin nx$ 积分同理得 $b_n$。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">狄利克雷收敛定理</span>设 $f$ 以 $2\pi$ 为周期，在 $[-\pi,\pi]$ 上连续或只有有限个第一类间断点，且只有有限个极值点（分段单调），则 $f$ 的傅里叶级数处处收敛，且和函数为
+$$\frac{a_0}{2}+\sum_{n=1}^{\infty}\left(a_n\cos nx+b_n\sin nx\right)=\frac{f(x^-)+f(x^+)}{2}$$
+即：连续点处收敛到 $f(x)$；间断点处收敛到左右极限的<b>平均值</b>；端点 $x=\pm\pi$ 按周期延拓理解。（证明属《数学分析》范围，此处从略。）</div>
+<div class="thm"><span class="label">奇偶函数的简化</span>
+<ol>
+<li>$f$ 为<b>奇函数</b>：$a_n=0\ (n=0,1,2,\dots)$，展开为<b>正弦级数</b>
+$$f(x)\sim\sum_{n=1}^{\infty}b_n\sin nx,\qquad b_n=\frac{2}{\pi}\int_0^{\pi}f(x)\sin nx\,dx$$
+</li>
+<li>$f$ 为<b>偶函数</b>：$b_n=0$，展开为<b>余弦级数</b>
+$$f(x)\sim\frac{a_0}{2}+\sum_{n=1}^{\infty}a_n\cos nx,\qquad a_n=\frac{2}{\pi}\int_0^{\pi}f(x)\cos nx\,dx$$
+</li>
+</ol>
+（理由：奇×偶=奇、积分为 $0$；奇×奇=偶、偶×偶=偶，对称区间积分 $=2\int_0^\pi$。）</div>
+<div class="box example">
+<b>例 1（奇函数：方波）.</b> 设 $f$ 以 $2\pi$ 为周期，在 $(-\pi,\pi)$ 上
+$$f(x)=\begin{cases}-1,&-\pi<x<0\\[2pt] 1,&0<x<\pi\end{cases}$$
+将 $f$ 展开成傅里叶级数。<br>
+① 奇偶性：$f(-x)=-f(x)$（奇函数）⇒ $a_n=0$，只有正弦项；<br>
+② 求 $b_n$：
+$$b_n=\frac{2}{\pi}\int_0^{\pi}1\cdot\sin nx\,dx=\frac{2}{\pi}\cdot\frac{1-\cos n\pi}{n}=\frac{2\left[1-(-1)^n\right]}{n\pi}$$
+故 $b_{2k}=0$，$b_{2k-1}=\dfrac{4}{(2k-1)\pi}$；<br>
+③ 级数（连续点处取等号）：
+$$f(x)=\frac{4}{\pi}\left(\sin x+\frac{\sin 3x}{3}+\frac{\sin 5x}{5}+\cdots\right)\qquad(x\neq0,\ \pm\pi)$$
+④ 间断点 $x=0,\pm\pi$ 处级数和为 $\dfrac{(-1)+1}{2}=0$（左右极限平均）。<br>
+<b>验算（取 $x=\dfrac\pi2$）：</b>右边 $=\dfrac4\pi\left(1-\dfrac13+\dfrac15-\cdots\right)$，左边 $f=1$，于是得到莱布尼茨级数
+$$1-\frac13+\frac15-\cdots=\frac{\pi}{4}\ ✓$$
+</div>
+<div class="box example">
+<b>例 2（偶函数：$x^2$）.</b> 将 $f(x)=x^2\ (-\pi\le x\le\pi)$ 展开成傅里叶级数。<br>
+① 偶函数 ⇒ $b_n=0$，余弦级数；<br>
+② 常数项：
+$$a_0=\frac{2}{\pi}\int_0^{\pi}x^2dx=\frac{2\pi^2}{3}$$
+③ 一般项（两次分部积分）：
+$$a_n=\frac{2}{\pi}\int_0^{\pi}x^2\cos nx\,dx=\frac{2}{\pi}\left[\underbrace{\frac{x^2\sin nx}{n}\Bigg|_0^{\pi}}_{=0}-\frac{2}{n}\int_0^{\pi}x\sin nx\,dx\right]$$
+其中 $\displaystyle\int_0^{\pi}x\sin nx\,dx=\frac{(-1)^{n+1}\pi}{n}$，故
+$$a_n=\frac{2}{\pi}\cdot\left(-\frac{2}{n}\right)\cdot\frac{(-1)^{n+1}\pi}{n}=-\frac{4}{n^2}(-1)^{n+1}=\frac{4(-1)^n}{n^2}$$
+④ 展开式：
+$$x^2=\frac{\pi^2}{3}+4\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}\cos nx\qquad(-\pi\le x\le\pi)$$
+<b>验算（两个著名结论）：</b>令 $x=0$：$0=\dfrac{\pi^2}{3}+4\displaystyle\sum\frac{(-1)^n}{n^2}\Rightarrow\sum_{n=1}^{\infty}\dfrac{(-1)^{n-1}}{n^2}=\dfrac{\pi^2}{12}$；令 $x=\pi$：$\pi^2=\dfrac{\pi^2}{3}+4\displaystyle\sum\frac1{n^2}\Rightarrow\sum\dfrac{1}{n^2}=\dfrac{\pi^2}{6}$ ✓。
+</div>
+</section>
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>一般周期函数的傅里叶级数<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">周期 $T=2l$ 的情形</span>设 $f$ 以 $2l$ 为周期，在 $[-l,l]$ 上满足狄利克雷条件，则
+$$f(x)\sim\frac{a_0}{2}+\sum_{n=1}^{\infty}\left(a_n\cos\frac{n\pi x}{l}+b_n\sin\frac{n\pi x}{l}\right)$$
+$$a_n=\frac{1}{l}\int_{-l}^{l}f(x)\cos\frac{n\pi x}{l}\,dx\quad(n=0,1,2,\dots),\qquad b_n=\frac{1}{l}\int_{-l}^{l}f(x)\sin\frac{n\pi x}{l}\,dx\quad(n=1,2,\dots)$$
+收敛和同样为 $\dfrac{f(x^-)+f(x^+)}{2}$。</div>
+<div class="proof"><span class="label">推导（换元化归 $2\pi$）</span>令 $x=\dfrac{lt}{\pi}$，即 $t=\dfrac{\pi x}{l}$。则 $F(t)=f\!\left(\dfrac{lt}{\pi}\right)$ 以 $2\pi$ 为周期，对 $F$ 用 §9 公式：
+$$a_n=\frac1\pi\int_{-\pi}^{\pi}F(t)\cos nt\,dt$$
+换回 $x$：$dt=\dfrac{\pi}{l}dx$，$\cos nt=\cos\dfrac{n\pi x}{l}$，于是
+$$a_n=\frac1\pi\int_{-l}^{l}f(x)\cos\frac{n\pi x}{l}\cdot\frac{\pi}{l}\,dx=\frac1l\int_{-l}^{l}f(x)\cos\frac{n\pi x}{l}\,dx$$
+$b_n$ 同理。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">奇、偶延拓（把 $[0,l]$ 上的函数展开）</span>设 $f$ 只定义在 $[0,l]$：
+<ol>
+<li><b>奇延拓 → 正弦级数：</b>$\displaystyle f(x)\sim\sum_{n=1}^{\infty}b_n\sin\frac{n\pi x}{l}$，$\displaystyle b_n=\frac{2}{l}\int_0^{l}f(x)\sin\frac{n\pi x}{l}\,dx$；</li>
+<li><b>偶延拓 → 余弦级数：</b>$\displaystyle f(x)\sim\frac{a_0}{2}+\sum_{n=1}^{\infty}a_n\cos\frac{n\pi x}{l}$，$\displaystyle a_n=\frac{2}{l}\int_0^{l}f(x)\cos\frac{n\pi x}{l}\,dx$。</li>
+</ol></div>
+<div class="box warn"><b>答题交代两件事：</b>① 用了哪种延拓；② 级数在哪些点等于 $f(x)$（连续点），间断点/端点处按左右极限平均值取值。</div>
+<div class="box example">
+<b>例 1（正弦 + 余弦两套）.</b> 将 $f(x)=x\ (0\le x\le\pi)$ 分别展开成正弦级数与余弦级数（$l=\pi$）。<br>
+<b>（一）正弦级数（奇延拓）：</b><br>
+①
+$$b_n=\frac{2}{\pi}\int_0^{\pi}x\sin nx\,dx=\frac{2}{\pi}\cdot\frac{(-1)^{n+1}\pi}{n}=\frac{2(-1)^{n+1}}{n}$$
+② 故
+$$x\sim 2\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}\sin nx\qquad(0<x<\pi)$$
+（奇延拓下，$x=0,\pm\pi$ 处级数和为 $\dfrac{f(0^+)+f(0^-)}{2}=\dfrac{0+0}{2}=0$。）<br>
+<b>（二）余弦级数（偶延拓，延拓后是 $|x|$）：</b><br>
+③
+$$a_0=\frac2\pi\int_0^{\pi}x\,dx=\pi,\qquad a_n=\frac2\pi\int_0^{\pi}x\cos nx\,dx=\frac{2\left[(-1)^n-1\right]}{\pi n^2}$$
+④ 故（只有奇数项）
+$$x=\frac{\pi}{2}-\frac{4}{\pi}\sum_{k=0}^{\infty}\frac{\cos(2k+1)x}{(2k+1)^2}\qquad(0\le x\le\pi)$$
+<b>验算（都取 $x=\dfrac\pi2$）：</b>正弦级数：$\dfrac\pi2=2\left(1-\dfrac13+\dfrac15-\cdots\right)$，即 $1-\dfrac13+\dfrac15-\cdots=\dfrac\pi4$ ✓（与 §9 例 1 互相印证）；余弦级数：$x=\dfrac\pi2$ 时 $\cos\dfrac{(2k+1)\pi}{2}\equiv0$，等式退化为恒等式 $\dfrac\pi2=\dfrac\pi2$ ✓。
+</div>
+</section>
+<section class="card" id="sec-11">
+<h2><span class="num">11</span>解题决策流程</h2>
+<pre class="flow">拿到级数题
+├─ 判敛散（常数项级数）？
+│   ├─ 第一步必查：u_n → 0？不趋于 0 → 直接判发散
+│   ├─ 正项级数？
+│   │   ├─ 与 1/n^p 同阶（等价无穷小/泰勒）→ 比较法
+│   │   ├─ 含 n!、a^n、n^k → 比值法
+│   │   ├─ 含 [f(n)]^n → 根值法
+│   │   └─ 通法：找几何级数 / p 级数当比较对象
+│   ├─ 交错级数？→ 莱布尼茨（单调 + 趋于 0）
+│   └─ 任意项：先试绝对值（正项法）→ 绝对收敛即结束；发散再上莱布尼茨
+├─ 幂级数？
+│   ├─ 求收敛域：系数比值求 R → 端点 ±R 单独代入判
+│   └─ 求和函数：逐项求导/积分把系数变常数 → 用已知展开式 → 逆运算还原
+├─ 展开函数？
+│   └─ 间接法：变量代换 / 四则拆分 / 逐项求导 / 逐项积分
+├─ 傅里叶？
+│   ├─ 周期 2π → 直接套公式；周期 2l → 用换元版公式
+│   ├─ 奇函数 → 正弦级数；偶函数 → 余弦级数
+│   └─ 答题交代：延拓方式 + 收敛点说明（连续点/间断点）
+└─ 近似计算？
+    └─ 交错级数：误差 ≤ 第一个未取的项的绝对值
+</pre>
+</section>
+
+<section class="card" id="sec-12">
+<h2><span class="num">12</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>$u_n\to0$ 只是必要条件：</b>不能用来证明收敛；只能用于「不趋于 0 ⇒ 发散」。</li>
+<li><b>比较方向别写反：</b>大收则小收、小发则大发；反过来都不成立。</li>
+<li><b>比值/根值的 $\rho=1$ 失效：</b>此时不能下任何结论，换比较法（以 p 级数为基准）。</li>
+<li><b>莱布尼茨两个条件缺一不可：</b>单调不增 + 趋于 0；由它得到的是「收敛」，是否绝对收敛要另判。</li>
+<li><b>幂级数端点必须单独判：</b>收敛域可能是 $[-R,R)$、$(-R,R]$ 等，开闭写错就是硬伤。</li>
+<li><b>逐项求导/积分：</b>收敛半径不变，但<b>端点处的敛散性可能改变</b>（例：$\sum x^n$ 与 $\sum x^{n+1}/(n+1)$ 在 $x=-1$ 处不同）。</li>
+<li><b>求和函数要「逆运算」：</b>先求导的要再积分（$\int_0^x$，常数由 $s(0)$ 定）；先积分的要再求导。</li>
+<li><b>展开式必须写收敛范围：</b>如 $\dfrac{1}{2-x}$ 是 $|x|<2$；含端点的展开要说明理由（连续性）。</li>
+<li><b>傅里叶在间断点：</b>级数和是 $\dfrac{f(x^-)+f(x^+)}{2}$，不是 $f$ 本身；端点按周期延拓理解。</li>
+<li><b>延拓类型要注明：</b>奇延拓出正弦级数、偶延拓出余弦级数，同一条函数两种答案都对，但要写清做了哪种延拓。</li>
+<li><b>加括号不能反推收敛：</b>发散级数加括号可能收敛；收敛级数加括号不变和。</li>
+<li><b>M 判别法：</b>$M_n$ 必须与 $x$ 无关、$\sum M_n$ 必须收敛，两个前提都要检查。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-13">
+<h2><span class="num">13</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>几何级数</td><td>$\displaystyle\sum_{n=0}^{\infty}aq^n=\frac{a}{1-q}\ (|q|<1)$；$|q|\ge1$ 发散</td></tr>
+<tr><td>p 级数</td><td>$\displaystyle\sum\frac{1}{n^p}$：$p>1$ 收敛，$p\le1$ 发散；调和级数发散</td></tr>
+<tr><td>必要条件</td><td>$\sum u_n$ 收敛 $\Rightarrow u_n\to0$（反之不成立）</td></tr>
+<tr><td>比较审敛法</td><td>$0\le u_n\le v_n$：大收则小收；小发则大发</td></tr>
+<tr><td>比值审敛法</td><td>$\dfrac{u_{n+1}}{u_n}\to\rho$：$\rho<1$ 收敛，$\rho>1$ 发散，$\rho=1$ 失效</td></tr>
+<tr><td>根值审敛法</td><td>$\sqrt[n]{u_n}\to\rho$：同上</td></tr>
+<tr><td>莱布尼茨判别法</td><td>交错级数 $u_n\downarrow0$ ⇒ 收敛；$|r_n|\le u_{n+1}$</td></tr>
+<tr><td>绝对收敛</td><td>$\sum|u_n|$ 收敛 ⇒ $\sum u_n$ 收敛；反例：交错调和（条件收敛于 $\ln2$）</td></tr>
+<tr><td>阿贝尔定理</td><td>收敛点「内绝对收敛、外必发散」⇒ 收敛半径 $R$ 结构</td></tr>
+<tr><td>收敛半径</td><td>$R=\dfrac{1}{\rho}$，$\rho=\lim\left|\dfrac{a_{n+1}}{a_n}\right|$；端点 $\pm R$ 单独判定</td></tr>
+<tr><td>幂级数运算</td><td>和函数连续；逐项求导、逐项积分（$R$ 不变，端点可变）</td></tr>
+<tr><td>七个展开式</td><td>$\dfrac{1}{1\pm x},\ e^x,\ \sin x,\ \cos x,\ \ln(1+x),\ (1+x)^\alpha$（加 $\arctan x$）——见 §6</td></tr>
+<tr><td>和函数两例</td><td>$\displaystyle\sum_{n\ge1}nx^{n-1}=\frac{1}{(1-x)^2}$；$\displaystyle\sum_{n\ge1}\frac{x^n}{n}=-\ln(1-x)$</td></tr>
+<tr><td>欧拉公式</td><td>$e^{ix}=\cos x+i\sin x$</td></tr>
+<tr><td>M 判别法</td><td>$|u_n(x)|\le M_n$ 且 $\sum M_n$ 收敛 ⇒ 一致收敛</td></tr>
+<tr><td>傅里叶系数（$2\pi$）</td><td>$a_n=\dfrac1\pi\displaystyle\int_{-\pi}^{\pi}f\cos nx\,dx$；$b_n=\dfrac1\pi\displaystyle\int_{-\pi}^{\pi}f\sin nx\,dx$</td></tr>
+<tr><td>傅里叶系数（$2l$）</td><td>$a_n=\dfrac1l\displaystyle\int_{-l}^{l}f\cos\frac{n\pi x}{l}dx$；$b_n=\dfrac1l\displaystyle\int_{-l}^{l}f\sin\frac{n\pi x}{l}dx$</td></tr>
+<tr><td>奇偶简化</td><td>奇函数 → 正弦级数；偶函数 → 余弦级数</td></tr>
+<tr><td>收敛点（狄利克雷）</td><td>连续点 → $f(x)$；间断点/端点 → 左右极限平均</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>两个纪念性结论（傅里叶顺带产出）：</b>
+$$\sum_{n=1}^{\infty}\frac{1}{n^2}=\frac{\pi^2}{6},\qquad 1-\frac13+\frac15-\cdots=\frac{\pi}{4}$$
+</div>
+</section>
+
+<section class="card" id="sec-14">
+<h2><span class="num">14</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>判敛会选法 → 幂级数会求域与和 → 展开会背会用 → 傅里叶会算会判。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 用部分和定义判断敛散，会用裂项求和控制项；<br>
+② 正项级数四大判别法（比较 / p 级数 / 比值 / 根值）自由切换；<br>
+③ 交错级数用莱布尼茨（含余项估计），任意项先判绝对收敛；<br>
+④ 求幂级数收敛半径与收敛域（端点单独判）；<br>
+⑤ 用逐项求导/积分求和函数；<br>
+⑥ 默写七个常用展开式，用代换/求导/积分做间接展开；<br>
+⑦ 用交错级数余项做近似计算；<br>
+⑧ 用 M 判别法判一致收敛，说清三大性质；<br>
+⑨ 求傅里叶系数、写傅里叶级数并按狄利克雷定理说明收敛点。
+</div>
+<h3>用法索引</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>$u_n\not\to0$</td><td>立即判发散</td><td>§1 例3</td></tr>
+<tr><td>与 $\dfrac{1}{n^p}$ 同阶</td><td>比较判别法</td><td>§2 例1、2</td></tr>
+<tr><td>含 $n!$、$a^n$、$n^k$</td><td>比值法</td><td>§2 例3</td></tr>
+<tr><td>含 $[f(n)]^n$</td><td>根值法</td><td>§2 例4</td></tr>
+<tr><td>交错级数</td><td>莱布尼茨</td><td>§3 例1</td></tr>
+<tr><td>任意项</td><td>先判绝对收敛</td><td>§3 例3</td></tr>
+<tr><td>求收敛域</td><td>$R$ + 端点单独判</td><td>§4 例2、3</td></tr>
+<tr><td>求和函数</td><td>逐项求导 / 积分</td><td>§5 例1–3</td></tr>
+<tr><td>展开函数</td><td>代换 / 求导 / 积分</td><td>§6 例1–3</td></tr>
+<tr><td>近似计算</td><td>余项 $\le$ 首个未取项</td><td>§7 例1</td></tr>
+<tr><td>一致收敛判定</td><td>M 判别法</td><td>§8 例1</td></tr>
+<tr><td>傅里叶展开</td><td>系数公式 + 狄利克雷</td><td>§9 例1、2</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 默写七个常用展开式及各自收敛范围（§6）<br>
+☐ 独立完成 §5 例3（$\sum n(n+1)x^n$ 的和函数）<br>
+☐ 重做 §9 例1（方波）并导出 $1-\frac13+\frac15-\cdots=\frac\pi4$<br>
+☐ 给 $\rho=1$ 失效各举一例（p 级数 $p=1$ 与 $p=2$，§2 定理）<br>
+☐ 复述「绝对收敛 ⇒ 收敛」的证明（柯西准则，§3）<br>
+☐ 解释 M 判别法与幂级数内闭一致收敛的联系（§8 提示框）
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>高等数学（下册）· 第十二章 无穷级数 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

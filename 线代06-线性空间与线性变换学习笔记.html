@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>线代06 · 线性空间与线性变换 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#faf7f4;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#9a3412;--accent2:#d97706;--soft:#fff7ed}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#431407,#9a3412 55%,#d97706);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#fed7aa}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#7c2d12;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#431407}
+.card h3{font-size:1.05rem;color:#7c2d12;margin:24px 0 8px;padding-left:10px;border-left:4px solid #fdba74}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#ea580c,#f59e0b);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#fff7ed;border-color:#fb923c}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #fed7aa;border-left:4px solid #f97316;background:#fffaf5;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#7c2d12;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#7c2d12;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(154,52,18,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>线性代数 · 第六章 线性空间与线性变换 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环（选学章）</p>
+<div class="chips"><span>线性空间八公理</span><span>基与维数</span><span>过渡矩阵</span><span>线性变换</span><span>矩阵表示</span><span>学习闭环</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 线性空间的定义与性质</a>
+<a href="#sec-2">02 · 维数·基与坐标</a>
+<a href="#sec-3">03 · 基变换与坐标变换</a>
+<a href="#sec-4">04 · 线性变换的定义与运算</a>
+<a href="#sec-5">05 · 线性变换的矩阵表示</a>
+<a href="#sec-6">06 · 线性变换的特征值（选读）</a>
+<a href="#sec-7">07 · 解题决策流程</a>
+<a href="#sec-8">08 · 易错点清单</a>
+<a href="#sec-9">09 · 公式速查表</a>
+<a href="#sec-10">10 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>主线：</b>把前五章的「向量」抽象为「线性空间」，把「矩阵」抽象为「线性变换」——最后用一句话封顶：<b>线性变换 ↔ 矩阵；换基后矩阵相似（B = P⁻¹AP）</b>，与第五章完全闭环。<span style="color:#7c2d12;font-weight:700">橙框=定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题（步骤化）</span>。</div>
+<pre class="flow">第六章 线性空间与线性变换
+├─ 线性空间（§1–§3）
+│   ├─ 八条公理（加法四条 + 数乘四条）→ 基本性质
+│   ├─ 子空间：对加法、数乘封闭（齐次解空间是标准例）
+│   ├─ 基与维数：线性无关 + 能表示全体；坐标唯一
+│   └─ 基变换：过渡矩阵 P；坐标变换 x = Px′
+└─ 线性变换（§4–§6）
+    ├─ 定义：T(α+β)=Tα+Tβ，T(λα)=λTα
+    ├─ 运算：和、数乘、复合、逆 ↔ 矩阵运算一一对应
+    ├─ 矩阵表示：(Tα₁,…,Tαₙ)=(α₁,…,αₙ)A；坐标 = Ax
+    └─ 换基后：B = P⁻¹AP（相似——与第五章接轨）
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>线性空间的定义与性质<span class="tag">基础</span></h2>
+<div class="box def">
+<b>线性空间：</b>非空集合 $V$ 上定义了<b>加法</b>与<b>数乘</b>，若满足八条公理，则称 $V$ 为（实）线性空间。<br>
+<b>加法公理：</b>① 交换律；② 结合律；③ 存在零元 $\boldsymbol0$：$\boldsymbol\alpha+\boldsymbol0=\boldsymbol\alpha$；④ 每个元素有负元：$\boldsymbol\alpha+(-\boldsymbol\alpha)=\boldsymbol0$。<br>
+<b>数乘公理：</b>⑤ $1\boldsymbol\alpha=\boldsymbol\alpha$；⑥ $\lambda(\mu\boldsymbol\alpha)=(\lambda\mu)\boldsymbol\alpha$；⑦ $(\lambda+\mu)\boldsymbol\alpha=\lambda\boldsymbol\alpha+\mu\boldsymbol\alpha$；⑧ $\lambda(\boldsymbol\alpha+\boldsymbol\beta)=\lambda\boldsymbol\alpha+\lambda\boldsymbol\beta$。<br>
+（线性空间中的元素统称<b>向量</b>——可以是数组、矩阵、多项式、函数等。）
+</div>
+<div class="thm"><span class="label">基本性质（由公理推出）</span>
+① 零元唯一；② 负元唯一；③ $0\,\boldsymbol\alpha=\boldsymbol0$；④ $\lambda\,\boldsymbol0=\boldsymbol0$；⑤ $(-1)\boldsymbol\alpha=-\boldsymbol\alpha$；⑥ 若 $\lambda\boldsymbol\alpha=\boldsymbol0$，则 $\lambda=0$ 或 $\boldsymbol\alpha=\boldsymbol0$。
+</div>
+<div class="proof"><span class="label">证明（抽证四条）</span>
+<b>零元唯一：</b>设 $\boldsymbol0_1,\boldsymbol0_2$ 均零元：$\boldsymbol0_1=\boldsymbol0_1+\boldsymbol0_2=\boldsymbol0_2$ ✓。<br>
+<b>③：</b>$0\boldsymbol\alpha=(0+0)\boldsymbol\alpha=0\boldsymbol\alpha+0\boldsymbol\alpha$，两边加 $-(0\boldsymbol\alpha)$：$\boldsymbol0=0\boldsymbol\alpha$ ✓。<br>
+<b>⑤：</b>$\boldsymbol\alpha+(-1)\boldsymbol\alpha=(1+(-1))\boldsymbol\alpha=0\boldsymbol\alpha=\boldsymbol0$，故 $(-1)\boldsymbol\alpha$ 正是 $-\boldsymbol\alpha$ ✓。<br>
+<b>⑥：</b>若 $\lambda\neq0$，则 $\boldsymbol\alpha=1\cdot\boldsymbol\alpha=(\lambda^{-1}\lambda)\boldsymbol\alpha=\lambda^{-1}(\lambda\boldsymbol\alpha)=\lambda^{-1}\boldsymbol0=\boldsymbol0$ ✓。<span class="qed">∎</span></div>
+<div class="box def">
+<b>子空间：</b>$W\subseteq V$ 非空，若对加法、数乘封闭（$\boldsymbol\alpha,\boldsymbol\beta\in W,\lambda\in\mathbb R\Rightarrow\boldsymbol\alpha+\boldsymbol\beta\in W,\ \lambda\boldsymbol\alpha\in W$），则 $W$ 本身构成线性空间，称为 $V$ 的<b>子空间</b>。<br>
+等价判据：$\lambda\boldsymbol\alpha+\mu\boldsymbol\beta\in W$ 对一切 $\boldsymbol\alpha,\boldsymbol\beta\in W$、$\lambda,\mu\in\mathbb R$ 成立。（其余公理自动继承，只需验证封闭性与非空性；$W$ 必含零元。）
+</div>
+<div class="box example">
+<b>例 1（经典线性空间全家福）.</b><br>
+① $\mathbb R^n$：$n$ 维数组按分量运算（标准模型）；<br>
+② $M_{m\times n}$：全体 $m\times n$ 实矩阵；<br>
+③ $P_n[x]$：次数不超过 $n$ 的多项式（含零多项式）；<br>
+④ $C[a,b]$：闭区间上全体连续函数；<br>
+⑤ $\mathbb R^{+}$（正实数集）：定义 $\boldsymbol\alpha\oplus\boldsymbol\beta=\boldsymbol\alpha\beta$、$\lambda\odot\boldsymbol\alpha=\boldsymbol\alpha^{\lambda}$——<b>也是线性空间</b>（零元是 $1$，负元是 $1/\boldsymbol\alpha$）。<br>
+<b>验算（⑤抽查）：</b>$(\lambda+\mu)\odot\boldsymbol\alpha=\boldsymbol\alpha^{\lambda+\mu}=\boldsymbol\alpha^{\lambda}\boldsymbol\alpha^{\mu}=(\lambda\odot\boldsymbol\alpha)\oplus(\mu\odot\boldsymbol\alpha)$ ✓。
+</div>
+<div class="box warn">
+<b>反例（不是线性空间 / 线性变换）：</b>① $\{(x,y)\mid x\ge0\}$：$(-1)\cdot(1,0)=(-1,0)$ 出界，数乘不封闭；② 平移 $T(\boldsymbol x)=\boldsymbol x+\boldsymbol a\ (\boldsymbol a\neq\boldsymbol0)$ 不是线性变换（$T(\boldsymbol0)\neq\boldsymbol0$）；③ 寻常加法但 $\lambda\odot(x,y)=(\lambda x,0)$：$1\odot(1,1)=(1,0)\neq(1,1)$，违反公理⑤。
+</div>
+<div class="box example">
+<b>例 2（子空间判断）.</b> 判断 $W=\{(x,y,z)^{T}\mid x+y+z=0\}$ 与 $W'=\{(x,y,z)^{T}\mid x+y+z=1\}$ 是否为 $\mathbb R^3$ 的子空间。<br>
+① $W$：任取 $\boldsymbol\alpha,\boldsymbol\beta\in W$：$\boldsymbol\alpha+\boldsymbol\beta$ 的各分量和 $=0+0=0$ ✓，$\lambda\boldsymbol\alpha$ 的分量和 $=\lambda\cdot0=0$ ✓ ⇒ 是子空间（即齐次方程组的解空间）；<br>
+② $W'$：不含零向量（$0+0+0\neq1$）⇒ 不是子空间。<br>
+<b>验算：</b>取 $W$ 中 $\boldsymbol\alpha=(-1,1,0),\boldsymbol\beta=(-1,0,1)$：和 $=(-2,1,1)$ 分量和 0 ✓；$3\boldsymbol\alpha=(-3,3,0)$ 分量和 0 ✓。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>维数 · 基与坐标<span class="tag">核心</span></h2>
+<div class="box def">
+<b>基：</b>线性空间 $V$ 中的向量组 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n$ 若① 线性无关；② $V$ 中任一向量都可由它线性表示，称为 $V$ 的一组<b>基</b>；$n$ 称 $V$ 的<b>维数</b>，记 $\dim V=n$（零空间维数为 $0$）。<br>
+<b>坐标：</b>表示系数 $\boldsymbol x=(x_1,\dots,x_n)^{T}$；因表示唯一，坐标也唯一。
+</div>
+<div class="proof"><span class="label">证明（坐标唯一）</span>若 $\boldsymbol\gamma=\sum x_i\boldsymbol\alpha_i=\sum y_i\boldsymbol\alpha_i$，相减得 $\sum(x_i-y_i)\boldsymbol\alpha_i=\boldsymbol0$；由基的线性无关性得 $x_i=y_i$ ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理</span>① 线性空间的不同基所含向量个数相同（维数唯一）；② $n$ 维空间中任意 $n$ 个线性无关向量都构成基；③ 任意线性无关组可扩充为基。</div>
+<div class="proof"><span class="label">证明（①）</span>设 $(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m)$ 与 $(\boldsymbol\beta_1,\dots,\boldsymbol\beta_s)$ 都是基。$\beta$ 组能由 $\alpha$ 组表示且无关；若 $s>m$，则存在矩阵 $K$（$m\times s$）使 $(\beta)=(\alpha)K$，齐次方程组 $K\boldsymbol y=\boldsymbol0$ 有非零解（未知数多于方程）⇒ $(\beta)\boldsymbol y=(\alpha)K\boldsymbol y=\boldsymbol0$ ⇒ $\beta$ 组相关，矛盾。故 $s\le m$；对称得 $m\le s$ ⇒ $m=s$ ✓。<span class="qed">∎</span></div>
+<div class="box method"><b>求基与坐标的模板：</b>① 解约束把主元变量用自由量表出（如 $x=-y-z$）；② 自由量依次取标准单位值 → 基（自动无关）；③ 解线性方程组求坐标；④ 代回验算。</div>
+<div class="box example">
+<b>例（基、维数与坐标）.</b> 在 $W=\{(x,y,z)^{T}\mid x+y+z=0\}$ 中求基与维数，并求 $\boldsymbol\gamma=(1,-2,1)^{T}$ 的坐标。<br>
+① 约束：$x=-y-z$，自由量 $y,z$；<br>
+② 取 $(y,z)=(1,0)$：$\boldsymbol\alpha_1=(-1,1,0)^{T}$；取 $(0,1)$：$\boldsymbol\alpha_2=(-1,0,1)^{T}$ ⇒ 基 $(\boldsymbol\alpha_1,\boldsymbol\alpha_2)$，$\dim W=2$；<br>
+③ 设 $\boldsymbol\gamma=c_1\boldsymbol\alpha_1+c_2\boldsymbol\alpha_2$：分量方程
+$$\begin{cases}-c_1-c_2=1\\ c_1=-2\\ c_2=1\end{cases}\quad\Longrightarrow\quad c_1=-2,\ c_2=1$$
+（代入第一式核对：$-(-2)-1=1$ ✓）；<br>
+④ 坐标 $\boldsymbol x=(-2,1)^{T}$。<br>
+<b>验算：</b>$-2\boldsymbol\alpha_1+\boldsymbol\alpha_2=(2,-2,0)+(-1,0,1)=(1,-2,1)=\boldsymbol\gamma$ ✓；$\boldsymbol\alpha_1,\boldsymbol\alpha_2$ 不成比例 ⇒ 无关 ✓。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>基变换与坐标变换<span class="tag">核心</span></h2>
+<div class="box def">
+<b>过渡矩阵：</b>设旧基 $(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)$、新基 $(\boldsymbol\beta_1,\dots,\boldsymbol\beta_n)$，把新基按旧基展开：
+$$(\boldsymbol\beta_1,\dots,\boldsymbol\beta_n)=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)P$$
+$P$ 称从旧基到新基的<b>过渡矩阵</b>（$P$ 的列 = 各新基向量在旧基下的坐标）。
+</div>
+<div class="thm"><span class="label">定理（过渡矩阵可逆）</span>$(\boldsymbol\beta_1,\dots,\boldsymbol\beta_n)$ 是一组基 $\iff$ $P$ 可逆。</div>
+<div class="proof"><span class="label">证明</span>由 $(\boldsymbol\beta)=(\boldsymbol\alpha)P$，$\beta$ 组的秩 $=r(P)$（$P$ 的列是 $\boldsymbol\beta_j$ 在 $\boldsymbol\alpha$ 下的坐标，列间的线性关系与 $\boldsymbol\beta$ 组一致——第四章「行秩=列秩」）。<br>
+$\beta$ 是基 ⇔ $n$ 个向量线性无关 ⇔ $r(P)=n$ ⇔ $P$ 可逆 ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">坐标变换公式</span>向量 $\boldsymbol\gamma$ 在新、旧基下的坐标分别为 $\boldsymbol x'$ 与 $\boldsymbol x$，则
+$$\boldsymbol x=P\boldsymbol x'\qquad\Longleftrightarrow\qquad \boldsymbol x'=P^{-1}\boldsymbol x$$</div>
+<div class="proof"><span class="label">证明</span>$\boldsymbol\gamma=(\boldsymbol\alpha)\boldsymbol x=(\boldsymbol\beta)\boldsymbol x'=(\boldsymbol\alpha)P\boldsymbol x'$；由坐标唯一性得 $\boldsymbol x=P\boldsymbol x'$ ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（坐标变换全过程）.</b> 旧基为标准基 $\boldsymbol e_1=(1,0)^{T},\ \boldsymbol e_2=(0,1)^{T}$；新基 $\boldsymbol\beta_1=(2,1)^{T},\ \boldsymbol\beta_2=(1,1)^{T}$。求 $\boldsymbol\gamma=(3,2)^{T}$ 的新坐标。<br>
+① 过渡矩阵（新基按旧基展开，系数直接成列）：
+$$P=\begin{pmatrix}2&1\\1&1\end{pmatrix}$$
+② 求逆（二阶速算）：
+$$P^{-1}=\frac{1}{2\times1-1\times1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix}=\begin{pmatrix}1&-1\\-1&2\end{pmatrix}$$
+③ 新坐标：
+$$\boldsymbol x'=P^{-1}\boldsymbol x=\begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}3\\2\end{pmatrix}=\begin{pmatrix}1\\1\end{pmatrix}$$
+<b>验算：</b>$1\cdot\boldsymbol\beta_1+1\cdot\boldsymbol\beta_2=(2,1)+(1,1)=(3,2)=\boldsymbol\gamma$ ✓。
+</div>
+<div class="box tip"><b>方向速记：</b>「<b>新基 = 旧基 P</b>」且「<b>旧坐标 = P 乘新坐标</b>」——同一个 $P$，记住这两句就不会乘反。</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>线性变换的定义与运算<span class="tag">核心</span></h2>
+<div class="box def">
+<b>线性变换：</b>映射 $T:V\to V$ 若满足<br>
+① <b>保加法</b> $T(\boldsymbol\alpha+\boldsymbol\beta)=T\boldsymbol\alpha+T\boldsymbol\beta$；② <b>保数乘</b> $T(\lambda\boldsymbol\alpha)=\lambda\,T\boldsymbol\alpha$，<br>
+则称 $T$ 为<b>线性变换</b>（等价写法：$T(\lambda\boldsymbol\alpha+\mu\boldsymbol\beta)=\lambda T\boldsymbol\alpha+\mu T\boldsymbol\beta$）。
+</div>
+<div class="thm"><span class="label">基本性质</span>① $T(\boldsymbol0)=\boldsymbol0$；② $T(-\boldsymbol\alpha)=-T\boldsymbol\alpha$；③ 保线性组合：$T\!\left(\sum k_i\boldsymbol\alpha_i\right)=\sum k_iT\boldsymbol\alpha_i$。</div>
+<div class="proof"><span class="label">证明</span>① $T(\boldsymbol0)=T(0\cdot\boldsymbol\alpha)=0\cdot T\boldsymbol\alpha=\boldsymbol0$；② $T(-\boldsymbol\alpha)=T((-1)\boldsymbol\alpha)=(-1)T\boldsymbol\alpha=-T\boldsymbol\alpha$；③ 反复使用保加法与保数乘即得 ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（线性变换全家福）.</b><br>
+① 恒等变换 $I$、零变换 $O$、数乘变换 $kI$；<br>
+② 矩阵变换 $T(\boldsymbol x)=A\boldsymbol x$：$A(\boldsymbol x+\boldsymbol y)=A\boldsymbol x+A\boldsymbol y$ ⇒ 线性；<br>
+③ 求导变换 $D(p)=p'$（$P_n[x]\to P_n[x]$）：线性；<br>
+④ 旋转（$\mathbb R^2$ 绕原点转 $\theta$）与投影 $T(x,y,z)=(x,y,0)$：线性。<br>
+<b>验算（旋转保加法抽查）：</b>$\theta=90°$ 时 $T(1,0)=(0,1)$、$T(0,1)=(-1,0)$，故 $T\big((1,0)+(0,1)\big)=T(1,1)=(-1,1)$，而 $T(1,0)+T(0,1)=(0,1)+(-1,0)=(-1,1)$ ✓。
+</div>
+<div class="box warn"><b>反例：</b>平移 $T(\boldsymbol x)=\boldsymbol x+\boldsymbol a\ (\boldsymbol a\neq\boldsymbol0)$ 不是线性变换（$T(\boldsymbol0)=\boldsymbol a\neq\boldsymbol0$）。</div>
+<div class="thm"><span class="label">线性变换的四种运算（结果仍是线性变换）</span>
+① 和 $(T+S)\boldsymbol\alpha=T\boldsymbol\alpha+S\boldsymbol\alpha$；
+② 数乘 $(kT)\boldsymbol\alpha=k\,T\boldsymbol\alpha$；
+③ 复合 $(TS)\boldsymbol\alpha=T(S\boldsymbol\alpha)$（<b>先 $S$ 后 $T$</b>）；
+④ 逆：可逆的线性变换其逆仍是线性变换。</div>
+<div class="box tip"><b>与矩阵运算对应（预演）：</b>选定基后 $T+S\leftrightarrow A+B$、$kT\leftrightarrow kA$、$TS\leftrightarrow AB$、$T^{-1}\leftrightarrow A^{-1}$——下一节证明。</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>线性变换的矩阵表示<span class="tag">核心</span></h2>
+<div class="box def">
+<b>定义：</b>设基 $(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)$，把各基向量的像按基展开：
+$$(T\boldsymbol\alpha_1,\ T\boldsymbol\alpha_2,\ \dots,\ T\boldsymbol\alpha_n)=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)A$$
+则称 $A$ 是 $T$ 在该基下的<b>矩阵</b>（第 $j$ 列 = $T\boldsymbol\alpha_j$ 的坐标）。
+</div>
+<div class="thm"><span class="label">定理 1（坐标公式）</span>若 $\boldsymbol\alpha=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)\boldsymbol x$，则
+$$T\boldsymbol\alpha=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)\,A\boldsymbol x$$
+即「<b>像的坐标 = A 乘原像的坐标</b>」。</div>
+<div class="proof"><span class="label">证明</span>$\boldsymbol\alpha=\sum x_i\boldsymbol\alpha_i$，由线性性：
+$$T\boldsymbol\alpha=\sum x_i\,T\boldsymbol\alpha_i=(T\boldsymbol\alpha_1,\dots,T\boldsymbol\alpha_n)\boldsymbol x=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)A\boldsymbol x\ ✓$$<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 2（运算对应）</span>同一基下 $T\leftrightarrow A$、$S\leftrightarrow B$，则
+$$T+S\leftrightarrow A+B,\qquad kT\leftrightarrow kA,\qquad TS\leftrightarrow AB,\qquad T^{-1}\leftrightarrow A^{-1}$$</div>
+<div class="proof"><span class="label">证明（以复合为例）</span>设 $S\boldsymbol\alpha_j=\sum_k b_{kj}\boldsymbol\alpha_k$、$T\boldsymbol\alpha_k=\sum_i a_{ik}\boldsymbol\alpha_i$，则
+$$(TS)\boldsymbol\alpha_j=T\!\left(\sum_kb_{kj}\boldsymbol\alpha_k\right)=\sum_kb_{kj}\sum_i a_{ik}\boldsymbol\alpha_i=\sum_i\left(\sum_k a_{ik}b_{kj}\right)\boldsymbol\alpha_i$$
+即 $TS$ 的矩阵第 $j$ 列 = $A\cdot$（$B$ 第 $j$ 列）⇒ 矩阵为 $AB$ ✓。（和、数乘逐项代入；$T^{-1}\leftrightarrow A^{-1}$ 由 $TT^{-1}=I\leftrightarrow E$。）<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 3（换基 → 相似）</span>同一变换在旧基、新基下的矩阵 $A,B$ 满足
+$$B=P^{-1}AP$$
+（$P$ 为旧基到新基的过渡矩阵）——线性变换的换基正是第五章的<b>相似变换</b>。</div>
+<div class="proof"><span class="label">证明</span>由 $(\boldsymbol\beta)=(\boldsymbol\alpha)P$：
+$$(T\boldsymbol\beta_1,\dots,T\boldsymbol\beta_n)=(T\boldsymbol\alpha_1,\dots,T\boldsymbol\alpha_n)P=(\boldsymbol\alpha)AP$$
+又按定义 $(T\boldsymbol\beta)=(\boldsymbol\beta)B=(\boldsymbol\alpha)PB$，故 $PB=AP$，即 $B=P^{-1}AP$ ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（求导变换的矩阵）.</b> 在 $P_2[x]$ 的基 $(1,x,x^2)$ 下求 $D$ 的矩阵，并求 $p=3-2x+x^2$ 的像。<br>
+① 基向量求导并按基展开：
+$$D(1)=0\Rightarrow(0,0,0)^{T};\quad D(x)=1\Rightarrow(1,0,0)^{T};\quad D(x^2)=2x\Rightarrow(0,2,0)^{T}$$
+② 按列拼装：
+$$A=\begin{pmatrix}0&1&0\\0&0&2\\0&0&0\end{pmatrix}$$
+③ $p$ 的坐标 $\boldsymbol x=(3,-2,1)^{T}$，像坐标 $A\boldsymbol x=(-2,2,0)^{T}$，即 $D(p)=-2+2x$。<br>
+<b>验算：</b>直接求导 $(3-2x+x^2)'=-2+2x$ ✓。
+</div>
+<div class="box example">
+<b>例 2（换基相似验收）.</b> 换基为 $(1,\ x+1,\ (x+1)^2)$，求 $D$ 的新矩阵 $B$ 并验证 $PB=AP$。<br>
+① 过渡矩阵（新基按旧基展开）：
+$$P=\begin{pmatrix}1&1&1\\0&1&2\\0&0&1\end{pmatrix}$$
+② 按定义：$D(\beta_1)=0$；$D(\beta_2)=1=\beta_1$；$D(\beta_3)=2(x+1)=2\beta_2$，故
+$$B=\begin{pmatrix}0&1&0\\0&0&2\\0&0&0\end{pmatrix}$$
+③ 验证：
+$$PB=\begin{pmatrix}0&1&2\\0&0&2\\0&0&0\end{pmatrix}=AP\ ✓$$
+（本例 $B=A$ 并非巧合：两组基都是 $(1,u,u^2)$ 型单项式链（$u=x$ 或 $u=x+1$），求导与平移可交换，故对任意平移基 $(1,\ x+c,\ (x+c)^2)$ 都有 $B=A$。）
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>线性变换的特征值（选读）<span class="tag">进阶</span></h2>
+<div class="box def">
+<b>定义：</b>若 $T\boldsymbol\alpha=\lambda\boldsymbol\alpha$（$\boldsymbol\alpha\neq\boldsymbol0$），称 $\lambda$ 为 $T$ 的<b>特征值</b>，$\boldsymbol\alpha$ 为<b>特征向量</b>。<br>
+<b>基本事实：</b>选定基后，$T$ 的特征值就是其矩阵的特征值（§5 定理 1：像坐标 $=A\boldsymbol x$，故 $T\boldsymbol\alpha=\lambda\boldsymbol\alpha\iff A\boldsymbol x=\lambda\boldsymbol x$）。又由 §5 定理 3（换基相似）与「相似保持特征值」，<b>特征值与基的选择无关</b>——是变换自身的固有属性。
+</div>
+<div class="box example">
+<b>例（求导变换的特征值）.</b> 求 §5 例 1 中 $D$ 的特征值。<br>
+① $A$ 是上三角，特征值 = 对角元：$\lambda=0$（三重）；<br>
+② 解 $A\boldsymbol x=\boldsymbol0$：$x_2=x_3=0$，特征向量 $(1,0,0)^{T}$——即常数多项式；<br>
+③ 几何意义：常数的导数为零（$D(1)=0$），特征值 0 对应「变换不可逆」。<br>
+<b>验算：</b>$D(5)=0=0\cdot5$ ✓；非常数多项式求导后次数降低，不可能等于 $\lambda p$ ✓。
+</div>
+<div class="box tip"><b>意义：</b>本节把第五章的谱理论翻译成「变换的不变量语言」，为后续《矩阵论》《泛函分析》的算子谱理论埋线。考研不作要求，理解即可。</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>解题决策流程</h2>
+<pre class="flow">拿到线性空间 / 变换题
+├─ 是否线性空间 / 子空间？
+│   ├─ 线性空间：验证八公理（先查零元在不在、数乘是否跑出集合）
+│   └─ 子空间：非空 + 对加法、数乘封闭（两步即可）
+├─ 求基与维数？
+│   ├─ 解约束 → 自由量表出主元变量
+│   └─ 自由量取标准单位值 → 基；维数 = 自由量个数
+├─ 求坐标？
+│   └─ 解线性方程组表示目标向量 → 回代验算
+├─ 基变换 / 坐标变换？
+│   ├─ 过渡矩阵：新基按旧基展开，系数按列拼
+│   └─ 坐标：x = Px′（旧 = P × 新），别把方向乘反
+└─ 线性变换？
+    ├─ 验证线性：保加法 + 保数乘（反例常查 T(0) ≠ 0）
+    ├─ 求矩阵：逐列计算 Tαⱼ 的坐标
+    └─ 换基：B = P⁻¹AP（或验 PB = AP，免求逆）
+</pre>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>验证空间要全查八条</b>（或直接用反例淘汰：零元不在、数乘出界）。</li>
+<li><b>子空间必含零元：</b>不过原点的直线/平面不是子空间；验证先看 $\boldsymbol0\in W$。</li>
+<li><b>基的两个条件缺一不可：</b>无关 + 能表示全体；$\mathbb R^3$ 中两个无关向量只有 2 维。</li>
+<li><b>坐标唯一依赖无关性：</b>基底不无关时坐标可能不唯一。</li>
+<li><b>过渡矩阵方向：</b>「新基 = 旧基 × P」（新基按旧基展开的系数按列写）；不要把 $P$ 写反。</li>
+<li><b>坐标公式方向：</b>旧坐标 $\boldsymbol x=P\boldsymbol x'$（新坐标 $\boldsymbol x'=P^{-1}\boldsymbol x$），别乘反。</li>
+<li><b>线性变换两个条件都要查：</b>$T(\boldsymbol0)\neq\boldsymbol0$ 可直接判否；只查一个条件不够。</li>
+<li><b>变换矩阵的列 = 基向量像的坐标：</b>当基不是标准基时，「坐标」需要按基展开，不能直接填像的分量。</li>
+<li><b>复合顺序：</b>$(TS)\boldsymbol\alpha=T(S\boldsymbol\alpha)$，矩阵对应 $AB$——写在右边的先作用。</li>
+<li><b>换基公式：</b>$B=P^{-1}AP$（相似）；考试常用等价验收 $PB=AP$，比求逆快。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>八条公理</td><td>加法：交换、结合、零元、负元；数乘：$1\alpha=\alpha$、$\lambda(\mu\alpha)=(\lambda\mu)\alpha$、两条分配律</td></tr>
+<tr><td>基本性质</td><td>$0\alpha=0$；$\lambda0=0$；$(-1)\alpha=-\alpha$；$\lambda\alpha=0\Rightarrow\lambda=0$ 或 $\alpha=0$</td></tr>
+<tr><td>子空间判据</td><td>非空 + 对加法、数乘封闭（$\lambda\alpha+\mu\beta\in W$）</td></tr>
+<tr><td>基与维数</td><td>线性无关 + 能表示全体；维数唯一；$n$ 个无关向量即基</td></tr>
+<tr><td>坐标</td><td>表示唯一 $\Rightarrow$ 坐标唯一</td></tr>
+<tr><td>过渡矩阵</td><td>$(\boldsymbol\beta_1,\dots,\boldsymbol\beta_n)=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)P$；$P$ 可逆 $\iff$ 新组是基</td></tr>
+<tr><td>坐标变换</td><td>$\boldsymbol x=P\boldsymbol x'$；$\boldsymbol x'=P^{-1}\boldsymbol x$</td></tr>
+<tr><td>线性变换</td><td>$T(\boldsymbol\alpha+\boldsymbol\beta)=T\boldsymbol\alpha+T\boldsymbol\beta$；$T(\lambda\boldsymbol\alpha)=\lambda T\boldsymbol\alpha$；$T(0)=0$</td></tr>
+<tr><td>矩阵表示</td><td>$(T\boldsymbol\alpha_1,\dots,T\boldsymbol\alpha_n)=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_n)A$；像坐标 $=A\boldsymbol x$</td></tr>
+<tr><td>运算对应</td><td>$T+S\leftrightarrow A+B$；$kT\leftrightarrow kA$；$TS\leftrightarrow AB$；$T^{-1}\leftrightarrow A^{-1}$</td></tr>
+<tr><td>换基公式</td><td>$B=P^{-1}AP$（相似）；验收用 $PB=AP$</td></tr>
+<tr><td>特征值（选读）</td><td>$T\alpha=\lambda\alpha$；与基无关（相似不变量）</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>本章是全书抽象的顶点——<b>线性空间</b>把向量一般化，<b>线性变换</b>把矩阵一般化；而「换基 = 相似、运算 = 矩阵运算」两句话，把第六章与第二、五章焊成了一体。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环（选学章）：</b>会验证（八公理/封闭）→ 会构造（基、坐标、过渡矩阵）→ 会翻译（变换 ↔ 矩阵）。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 背诵八公理，并用公理证明基本性质（$0\alpha=0$、$(-1)\alpha=-\alpha$、$\lambda\alpha=0$ 的讨论）；<br>
+② 用「非空 + 封闭」判断子空间，并能举出三个反例（不过原点平面、$x\ge0$、$\lambda\odot(x,y)=(\lambda x,0)$）；<br>
+③ 用自由量法求基与维数，求坐标并回代验算；<br>
+④ 求过渡矩阵（新基按旧基展开、系数按列），做坐标变换且方向不乘反；<br>
+⑤ 验证线性变换、逐列求变换矩阵、换基验收 $PB=AP$；<br>
+⑥ 说清「线性变换 ↔ 矩阵 ↔ 相似」的闭环与特征值的不变性。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>判断是否线性空间 / 子空间</td><td>八公理 / 封闭性</td><td>§1 例1、2</td></tr>
+<tr><td>求基与维数（约束集合）</td><td>自由量取单位值</td><td>§2 例</td></tr>
+<tr><td>求某向量的坐标</td><td>解线性方程组 + 回代</td><td>§2 例</td></tr>
+<tr><td>换基求坐标</td><td>过渡矩阵 + 求逆（$x=Px'$）</td><td>§3 例</td></tr>
+<tr><td>验证线性变换</td><td>保加法 + 保数乘（查 $T(0)$）</td><td>§4 例1</td></tr>
+<tr><td>求变换的矩阵</td><td>逐列算 $T\alpha_j$ 的坐标</td><td>§5 例1</td></tr>
+<tr><td>换基后求新矩阵</td><td>$B=P^{-1}AP$ 或验 $PB=AP$</td><td>§5 例2</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 不看笔记说出八条公理，并证明其中三条基本性质（§1）<br>
+☐ 举出两个「看起来像但不是」线性空间的例子并说明违反哪条公理<br>
+☐ 独立完成「约束集合求基 + 坐标」全过程（§2 例模型）并验算<br>
+☐ 独立完成一次坐标变换并复述「新基 = 旧基 P、旧坐标 = P × 新坐标」<br>
+☐ 独立求一个具体变换（如投影 $T(x,y,z)=(x,y,0)$ 在标准基下）的矩阵，并写出坐标公式验证<br>
+☐ 说明「换基后矩阵相似」的证明链（§5 定理 3 的 $PB=AP$ 推导）
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>线性代数 · 第六章 线性空间与线性变换 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

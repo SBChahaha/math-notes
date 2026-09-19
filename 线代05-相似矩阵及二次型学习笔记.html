@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>线代05 · 相似矩阵及二次型 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#f5f6fd;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#4338ca;--accent2:#0ea5e9;--soft:#eef2ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#312e81,#4338ca 55%,#0ea5e9);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#c7d2fe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#3730a3;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#312e81}
+.card h3{font-size:1.05rem;color:#3730a3;margin:24px 0 8px;padding-left:10px;border-left:4px solid #a5b4fc}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#0ea5e9);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#eef2ff;border-color:#818cf8}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #c7d2fe;border-left:4px solid #6366f1;background:#f8f9ff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#3730a3;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#3730a3;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(67,56,202,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>线性代数 · 第五章 相似矩阵及二次型 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>特征值与特征向量</span><span>相似对角化</span><span>实对称矩阵</span><span>正交变换</span><span>正定二次型</span><span>学习闭环</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 内积·正交性·施密特正交化</a>
+<a href="#sec-2">02 · 特征值与特征向量</a>
+<a href="#sec-3">03 · 相似矩阵与可对角化条件</a>
+<a href="#sec-4">04 · 实对称矩阵的对角化</a>
+<a href="#sec-5">05 · 二次型与正交变换法</a>
+<a href="#sec-6">06 · 配方法与惯性定理</a>
+<a href="#sec-7">07 · 正定二次型</a>
+<a href="#sec-8">08 · 解题决策流程</a>
+<a href="#sec-9">09 · 易错点清单</a>
+<a href="#sec-10">10 · 公式速查表</a>
+<a href="#sec-11">11 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>主线：</b>先从「几何」入手（内积、正交），再进入特征值理论（相似对角化），最后把二者合流到<b>二次型</b>（正交变换化标准形、正定判定）。<span style="color:#3730a3;font-weight:700">蓝框=定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题（步骤化）</span>。</div>
+<pre class="flow">第五章 相似矩阵及二次型
+├─ 内积与正交（§1）
+│   ├─ 内积、长度、夹角、正交（[α,β]=0）
+│   ├─ 施密特正交化：无关组 → 正交组
+│   └─ 正交矩阵：AᵀA = E；正交变换保内积
+├─ 特征值理论（§2–§4）
+│   ├─ Aα = λα；特征方程 |A−λE| = 0
+│   ├─ 相似：相同的特征值、迹、行列式、秩
+│   ├─ 可对角化 ⇔ 有 n 个线性无关特征向量
+│   └─ 实对称：特征值全实、特征向量正交、必可正交对角化
+└─ 二次型（§5–§7）
+    ├─ f = xᵀAx（A 对称；A 与 f 一一对应）
+    ├─ 正交变换法：f = Σλᵢyᵢ²（系数是特征值！）
+    ├─ 配方法 + 惯性定理（正负惯性指数唯一）
+    └─ 正定：特征值全正 ⇔ 顺序主子式全正
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>内积 · 正交性 · 施密特正交化<span class="tag">基础</span></h2>
+<div class="box def">
+<b>内积：</b>$[\boldsymbol\alpha,\boldsymbol\beta]=\boldsymbol\alpha^{T}\boldsymbol\beta=\displaystyle\sum_{i=1}^{n}a_ib_i$。性质：① 对称；② 双线性（对每个位置线性）；③ 正定：$[\boldsymbol\alpha,\boldsymbol\alpha]\ge0$，$=0\iff\boldsymbol\alpha=\boldsymbol0$。<br>
+<b>长度（范数）：</b>$\|\boldsymbol\alpha\|=\sqrt{[\boldsymbol\alpha,\boldsymbol\alpha]}$；单位化 $\dfrac{\boldsymbol\alpha}{\|\boldsymbol\alpha\|}$。<br>
+<b>正交：</b>$[\boldsymbol\alpha,\boldsymbol\beta]=0$（记 $\boldsymbol\alpha\perp\boldsymbol\beta$）；夹角 $\cos\theta=\dfrac{[\boldsymbol\alpha,\boldsymbol\beta]}{\|\boldsymbol\alpha\|\|\boldsymbol\beta\|}$。
+</div>
+<div class="thm"><span class="label">柯西–施瓦茨不等式</span>$\left|[\boldsymbol\alpha,\boldsymbol\beta]\right|\le\|\boldsymbol\alpha\|\,\|\boldsymbol\beta\|$（等号 $\iff$ 两向量线性相关）。</div>
+<div class="proof"><span class="label">证明</span>对任意实数 $t$：
+$$0\le\|\boldsymbol\alpha+t\boldsymbol\beta\|^{2}=[\boldsymbol\alpha,\boldsymbol\alpha]+2t[\boldsymbol\alpha,\boldsymbol\beta]+t^{2}[\boldsymbol\beta,\boldsymbol\beta]$$
+若 $\boldsymbol\beta\neq\boldsymbol0$，取 $t=-\dfrac{[\boldsymbol\alpha,\boldsymbol\beta]}{[\boldsymbol\beta,\boldsymbol\beta]}$ 代入得
+$$0\le[\boldsymbol\alpha,\boldsymbol\alpha]-\frac{[\boldsymbol\alpha,\boldsymbol\beta]^{2}}{[\boldsymbol\beta,\boldsymbol\beta]}\ \Longrightarrow\ [\boldsymbol\alpha,\boldsymbol\beta]^{2}\le[\boldsymbol\alpha,\boldsymbol\alpha]\,[\boldsymbol\beta,\boldsymbol\beta]\ ✓$$
+（$\boldsymbol\beta=\boldsymbol0$ 时不等式显然。）<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理（正交的非零组必无关）</span>两两正交的非零向量组线性无关。</div>
+<div class="proof"><span class="label">证明</span>设 $k_1\boldsymbol\alpha_1+\cdots+k_s\boldsymbol\alpha_s=\boldsymbol0$。两边与 $\boldsymbol\alpha_j$ 作内积：由正交性左边只剩
+$$k_j\,[\boldsymbol\alpha_j,\boldsymbol\alpha_j]=k_j\|\boldsymbol\alpha_j\|^{2}=0\ \Longrightarrow\ k_j=0\quad(j=1,\dots,s)\ ✓$$<span class="qed">∎</span></div>
+<div class="thm"><span class="label">施密特（Schmidt）正交化</span>设 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_s$ 线性无关，令
+$$\boldsymbol\beta_1=\boldsymbol\alpha_1,\qquad \boldsymbol\beta_k=\boldsymbol\alpha_k-\sum_{i=1}^{k-1}\frac{[\boldsymbol\alpha_k,\boldsymbol\beta_i]}{[\boldsymbol\beta_i,\boldsymbol\beta_i]}\,\boldsymbol\beta_i\qquad(k=2,\dots,s)$$
+则 $\boldsymbol\beta_1,\dots,\boldsymbol\beta_s$ 两两正交且非零，并与原组等价（张成同一子空间）。</div>
+<div class="proof"><span class="label">证明（归纳）</span>设 $\boldsymbol\beta_1,\dots,\boldsymbol\beta_{k-1}$ 已两两正交非零。对 $j<k$，用内积的线性：
+$$[\boldsymbol\beta_k,\boldsymbol\beta_j]=[\boldsymbol\alpha_k,\boldsymbol\beta_j]-\sum_{i=1}^{k-1}\frac{[\boldsymbol\alpha_k,\boldsymbol\beta_i]}{[\boldsymbol\beta_i,\boldsymbol\beta_i]}[\boldsymbol\beta_i,\boldsymbol\beta_j]=[\boldsymbol\alpha_k,\boldsymbol\beta_j]-\frac{[\boldsymbol\alpha_k,\boldsymbol\beta_j]}{[\boldsymbol\beta_j,\boldsymbol\beta_j]}[\boldsymbol\beta_j,\boldsymbol\beta_j]=0\ ✓$$
+<b>非零性：</b>若某 $\boldsymbol\beta_k=\boldsymbol0$，则 $\boldsymbol\alpha_k$ 可由 $\boldsymbol\beta_1,\dots,\boldsymbol\beta_{k-1}$ 表示，而后者又可由 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_{k-1}$ 表示 ⇒ 前 $k$ 个 α 相关，矛盾 ✓。等价性显然（每步都是 α、β 的互相线性表示）✓。<span class="qed">∎</span></div>
+<div class="box def">
+<b>正交矩阵：</b>满足 $A^{T}A=E$（即 $A^{-1}=A^{T}$）的方阵。等价刻画：列向量组为标准正交组 $\iff$ 行向量组为标准正交组。<br>
+性质：$|A|=\pm1$；正交矩阵之积仍正交；正交变换保持内积与长度：
+$$[A\boldsymbol x,A\boldsymbol y]=\boldsymbol x^{T}A^{T}A\boldsymbol y=\boldsymbol x^{T}\boldsymbol y=[\boldsymbol x,\boldsymbol y]$$
+</div>
+<div class="box example">
+<b>例（施密特正交化 + 单位化）.</b> 把 $\boldsymbol\alpha_1=(1,1,1)^{T}$，$\boldsymbol\alpha_2=(1,0,1)^{T}$ 正交化、单位化。<br>
+① $\boldsymbol\beta_1=\boldsymbol\alpha_1=(1,1,1)^{T}$；<br>
+② $[\boldsymbol\alpha_2,\boldsymbol\beta_1]=1+0+1=2$，$[\boldsymbol\beta_1,\boldsymbol\beta_1]=3$：
+$$\boldsymbol\beta_2=\boldsymbol\alpha_2-\frac{2}{3}\boldsymbol\beta_1=\left(1,0,1\right)^{T}-\left(\frac23,\frac23,\frac23\right)^{T}=\left(\frac13,-\frac23,\frac13\right)^{T}\sim(1,-2,1)^{T}$$
+③ 单位化：
+$$\boldsymbol e_1=\frac{1}{\sqrt3}(1,1,1)^{T},\qquad \boldsymbol e_2=\frac{1}{\sqrt6}(1,-2,1)^{T}$$
+<b>验算：</b>$[\boldsymbol\beta_1,\boldsymbol\beta_2]=1-2+1=0$ ✓；$\|\boldsymbol e_1\|=1$、$\|\boldsymbol e_2\|=\dfrac{\sqrt{1+4+1}}{\sqrt6}=1$ ✓。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>特征值与特征向量<span class="tag">核心</span></h2>
+<div class="box def">
+<b>定义：</b>若存在数 $\lambda$ 与<b>非零</b>向量 $\boldsymbol\alpha$ 使
+$$A\boldsymbol\alpha=\lambda\boldsymbol\alpha$$
+则称 $\lambda$ 为 $A$ 的<b>特征值</b>，$\boldsymbol\alpha$ 为属于 $\lambda$ 的<b>特征向量</b>。<br>
+<b>求法：</b>① 解<b>特征方程</b> $|A-\lambda E|=0$ 得全部特征值；② 对每个 $\lambda$ 解 $(A-\lambda E)\boldsymbol x=\boldsymbol0$，其<b>非零解</b>即特征向量。
+</div>
+<div class="proof"><span class="label">说明（公式的来源）</span>$A\boldsymbol\alpha=\lambda\boldsymbol\alpha\iff(A-\lambda E)\boldsymbol\alpha=\boldsymbol0$。要求非零解，由第四章推论必须 $|A-\lambda E|=0$；反之满足特征方程的 $\lambda$ 使 $(A-\lambda E)\boldsymbol x=\boldsymbol0$ 有非零解 ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">性质</span>设 $\lambda_1,\dots,\lambda_n$ 为全部特征值（计重数）：
+① $\displaystyle\sum_{i=1}^{n}\lambda_i=\operatorname{tr}(A)=a_{11}+\cdots+a_{nn}$；
+② $\displaystyle\prod_{i=1}^{n}\lambda_i=|A|$（故 $A$ 可逆 $\iff$ 无零特征值）；
+③ 属于<b>互不相同</b>特征值的特征向量组线性无关。</div>
+<div class="proof"><span class="label">证明（③）</span>设 $\lambda_1,\dots,\lambda_s$ 互异，$\boldsymbol\alpha_i$ 是对应特征向量。反证：取<b>最小相关组</b>（前 $s-1$ 个无关、整体相关）：存在不全为零的 $k_i$ 使
+$$k_1\boldsymbol\alpha_1+\cdots+k_s\boldsymbol\alpha_s=\boldsymbol0\qquad(\ast)$$
+① 两边左乘 $A$（用 $A\boldsymbol\alpha_i=\lambda_i\boldsymbol\alpha_i$）：$k_1\lambda_1\boldsymbol\alpha_1+\cdots+k_s\lambda_s\boldsymbol\alpha_s=\boldsymbol0$；<br>
+② 减去 $\lambda_s\times(\ast)$，消去 $\boldsymbol\alpha_s$：
+$$k_1(\lambda_1-\lambda_s)\boldsymbol\alpha_1+\cdots+k_{s-1}(\lambda_{s-1}-\lambda_s)\boldsymbol\alpha_{s-1}=\boldsymbol0$$
+由前 $s-1$ 个无关、$\lambda_i\neq\lambda_s$，得 $k_1=\cdots=k_{s-1}=0$；代回 $(\ast)$ 又得 $k_s=0$——矛盾 ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（求特征值与特征向量）.</b> 求 $A=\begin{pmatrix}2&1\\1&2\end{pmatrix}$ 的特征值与特征向量。<br>
+① 特征方程：
+$$|A-\lambda E|=(2-\lambda)^2-1=\lambda^2-4\lambda+3=0\ \Longrightarrow\ \lambda_1=1,\ \lambda_2=3$$
+② $\lambda=1$：$(A-E)\boldsymbol x=\boldsymbol0$ 即 $\begin{pmatrix}1&1\\1&1\end{pmatrix}\boldsymbol x=\boldsymbol0\Rightarrow x_1+x_2=0$，基础解系 $\boldsymbol\alpha_1=(1,-1)^{T}$；<br>
+③ $\lambda=3$：$(A-3E)=\begin{pmatrix}-1&1\\1&-1\end{pmatrix}\Rightarrow x_1=x_2$，基础解系 $\boldsymbol\alpha_2=(1,1)^{T}$；<br>
+④ 结论：$\lambda=1$ 对应 $k(1,-1)^{T}$，$\lambda=3$ 对应 $k(1,1)^{T}$（$k\neq0$）。<br>
+<b>验算：</b>$A(1,-1)^{T}=(1,-1)^{T}$ ✓；$A(1,1)^{T}=(3,3)^{T}$ ✓；$\lambda_1+\lambda_2=4=\operatorname{tr}A$、$\lambda_1\lambda_2=3=|A|$ ✓。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>相似矩阵与可对角化条件<span class="tag">核心</span></h2>
+<div class="box def"><b>相似：</b>若存在可逆矩阵 $P$ 使 $P^{-1}AP=B$，称 $A$ 与 $B$ <b>相似</b>，记 $A\sim B$。（相似是等价关系。）</div>
+<div class="thm"><span class="label">相似不变量</span>相似矩阵有：相同的特征多项式（从而相同的特征值）、相同的迹、相同的行列式、相同的秩、相同的可逆性。</div>
+<div class="proof"><span class="label">证明（特征多项式）</span>
+$$|B-\lambda E|=\left|P^{-1}AP-\lambda E\right|=\left|P^{-1}(A-\lambda E)P\right|=|P^{-1}|\,|A-\lambda E|\,|P|=|A-\lambda E|\ ✓$$
+（特征值相同 ⇒ 迹（和）、行列式（积）相同；秩与可逆性由可逆矩阵乘法不改变秩得出。）<span class="qed">∎</span></div>
+<div class="thm"><span class="label">可对角化判据</span>$n$ 阶方阵 $A$ 可对角化 $\iff$ $A$ 有 $n$ 个线性无关的特征向量。此时
+$$P^{-1}AP=\Lambda=\operatorname{diag}(\lambda_1,\dots,\lambda_n)$$
+且 $P$ 的各列恰是相应的特征向量。</div>
+<div class="proof"><span class="label">证明（双向）</span>
+<b>(⇒)</b> 设 $AP=P\Lambda$。比较第 $i$ 列：$A\boldsymbol p_i=\lambda_i\boldsymbol p_i$——$P$ 的列都是特征向量；$P$ 可逆 ⇒ 它们线性无关 ✓。<br>
+<b>(⇐)</b> 取 $n$ 个无关特征向量为列构造 $P$，则 $AP=P\Lambda$ 逐列成立，左乘 $P^{-1}$ 得 $P^{-1}AP=\Lambda$ ✓。<span class="qed">∎</span></div>
+<div class="box tip"><b>两个推论：</b>① $n$ 个特征值互异 ⇒ 必可对角化（§2 性质③）；② 若某特征值的「无关特征向量个数」小于它的重数，则不可对角化（几何重数 < 代数重数）。</div>
+<div class="box example">
+<b>例 1（对角化）.</b> 把 $A=\begin{pmatrix}2&1\\1&2\end{pmatrix}$ 对角化。<br>
+① 特征向量（§2 例）：$\lambda=1\Rightarrow(1,-1)^{T}$，$\lambda=3\Rightarrow(1,1)^{T}$；<br>
+② 拼装：
+$$P=\begin{pmatrix}1&1\\-1&1\end{pmatrix},\qquad \Lambda=\begin{pmatrix}1&0\\0&3\end{pmatrix}$$
+③ 验证 $AP=P\Lambda$：
+$$AP=\begin{pmatrix}2&1\\1&2\end{pmatrix}\begin{pmatrix}1&1\\-1&1\end{pmatrix}=\begin{pmatrix}1&3\\-1&3\end{pmatrix}=P\Lambda\ ✓$$
+（$AP=P\Lambda$ 等价于 $P^{-1}AP=\Lambda$，是标准验收方式。）
+</div>
+<div class="box example">
+<b>例 2（不可对角化）.</b> 说明 $A=\begin{pmatrix}1&1\\0&1\end{pmatrix}$ 不可对角化。<br>
+① 特征值：$(1-\lambda)^2=0\Rightarrow\lambda=1$（二重）；<br>
+② $(A-E)=\begin{pmatrix}0&1\\0&0\end{pmatrix}\Rightarrow x_2=0$，基础解系只有 $(1,0)^{T}$；<br>
+③ 无关特征向量只有 1 个 $<2$ ⇒ 不可对角化。<br>
+<b>验算：</b>所有特征向量形如 $k(1,0)^{T}$，凑不出两个无关向量 ✓。
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>实对称矩阵的对角化<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">实对称矩阵的三条性质</span>设 $A^{T}=A$（实对称）：
+① 特征值全为<b>实数</b>；
+② 属于不同特征值的特征向量相互<b>正交</b>；
+③ 必存在<b>正交矩阵</b> $P$，使
+$$P^{-1}AP=P^{T}AP=\operatorname{diag}(\lambda_1,\dots,\lambda_n)$$</div>
+<div class="proof"><span class="label">证明</span>
+<b>①</b> 设 $A\boldsymbol\alpha=\lambda\boldsymbol\alpha$（$\boldsymbol\alpha$ 为复向量，$\boldsymbol\alpha^{*}=\bar{\boldsymbol\alpha}^{T}$）。则
+$$\lambda\,\boldsymbol\alpha^{*}\boldsymbol\alpha=\boldsymbol\alpha^{*}A\boldsymbol\alpha$$
+而 $\left(\boldsymbol\alpha^{*}A\boldsymbol\alpha\right)^{*}=\boldsymbol\alpha^{*}A^{T}\boldsymbol\alpha=\boldsymbol\alpha^{*}A\boldsymbol\alpha$ ⇒ 这个 $1\times1$ 矩阵是实数；又 $\boldsymbol\alpha^{*}\boldsymbol\alpha>0$ ⇒ $\lambda$ 必为实数 ✓。<br>
+<b>②</b> 设 $A\boldsymbol\alpha_1=\lambda_1\boldsymbol\alpha_1$，$A\boldsymbol\alpha_2=\lambda_2\boldsymbol\alpha_2$，$\lambda_1\neq\lambda_2$。由对称性 $[A\boldsymbol x,\boldsymbol y]=[\boldsymbol x,A\boldsymbol y]$：
+$$\lambda_1[\boldsymbol\alpha_1,\boldsymbol\alpha_2]=[A\boldsymbol\alpha_1,\boldsymbol\alpha_2]=[\boldsymbol\alpha_1,A\boldsymbol\alpha_2]=\lambda_2[\boldsymbol\alpha_1,\boldsymbol\alpha_2]$$
+$$(\lambda_1-\lambda_2)[\boldsymbol\alpha_1,\boldsymbol\alpha_2]=0\ \Longrightarrow\ [\boldsymbol\alpha_1,\boldsymbol\alpha_2]=0\ ✓$$
+<b>③（归纳）</b> 取单位特征向量 $\boldsymbol p_1$，扩充为标准正交基 $(\boldsymbol p_1,P_1)$。则
+$$P^{T}AP=\begin{pmatrix}\lambda_1&\boldsymbol0^{T}\\\boldsymbol0&A_1\end{pmatrix}$$
+（第一列由 $A\boldsymbol p_1=\lambda_1\boldsymbol p_1$ 与正交性确定为 $(\lambda_1,\boldsymbol0^{T})^{T}$；第一行由对称性同为零。）$A_1$ 仍实对称，对 $n-1$ 阶用归纳假设即得 ✓。<span class="qed">∎</span></div>
+<div class="box method"><b>正交对角化四步：</b>① 求全部特征值；② 对每个特征值求基础解系（同一特征值下的多个向量若不正交，先做施密特正交化）；③ 逐个单位化；④ 按列拼成正交矩阵 $P$，按列序写 $\Lambda=\operatorname{diag}(\lambda_1,\dots)$。</div>
+<div class="box example">
+<b>例（完整正交对角化）.</b> 将 $A=\begin{pmatrix}2&0&0\\0&3&1\\0&1&3\end{pmatrix}$ 正交对角化。<br>
+① 特征方程：
+$$|A-\lambda E|=(2-\lambda)\left[(3-\lambda)^2-1\right]=(2-\lambda)^2(4-\lambda)=0\Rightarrow\lambda=2\ (\text{二重}),\ 4$$
+② $\lambda=2$：$(A-2E)\boldsymbol x=\boldsymbol0\Rightarrow x_2+x_3=0$。取基础解系 $\boldsymbol\alpha_1=(1,1,-1)^{T}$，$\boldsymbol\alpha_2=(0,1,-1)^{T}$（<b>验证不正交</b>：内积 $=0+1+1=2\neq0$，需正交化）；<br>
+③ 施密特：
+$$\boldsymbol\beta_1=(1,1,-1)^{T},\qquad \boldsymbol\beta_2=\boldsymbol\alpha_2-\frac{2}{3}\boldsymbol\beta_1=\frac13(-2,1,-1)^{T}$$
+④ $\lambda=4$：$(A-4E)\boldsymbol x=\boldsymbol0\Rightarrow x_1=0,\ x_2=x_3$，取 $\boldsymbol\alpha_3=(0,1,1)^{T}$；<br>
+⑤ 单位化拼装：
+$$P=\begin{pmatrix}\frac{1}{\sqrt3}&-\frac{2}{\sqrt6}&0\\[2pt]\frac{1}{\sqrt3}&\frac{1}{\sqrt6}&\frac{1}{\sqrt2}\\[2pt]-\frac{1}{\sqrt3}&-\frac{1}{\sqrt6}&\frac{1}{\sqrt2}\end{pmatrix},\qquad \Lambda=\operatorname{diag}(2,2,4)$$
+<b>验算：</b>$A(1,1,-1)^{T}=(2,2,-2)^{T}$（$2$ 倍）✓；$A(-2,1,-1)^{T}=(-4,2,-2)^{T}$（$2$ 倍）✓；$A(0,1,1)^{T}=(0,4,4)^{T}$（$4$ 倍）✓；三向量两两正交（逐对点乘均为 $0$）✓。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>二次型与正交变换法<span class="tag">核心</span></h2>
+<div class="box def">
+<b>二次型：</b>关于 $x_1,\dots,x_n$ 的二次齐次多项式
+$$f=\sum_{i=1}^{n}\sum_{j=1}^{n}a_{ij}x_ix_j\quad(a_{ij}=a_{ji})\ \Longleftrightarrow\ f=\boldsymbol x^{T}A\boldsymbol x\qquad(A^{T}=A)$$
+$A$ 称二次型的<b>矩阵</b>（二次型与实对称矩阵一一对应），$r(A)$ 称二次型的<b>秩</b>。<br>
+<b>标准形</b>：只含平方项 $d_1y_1^2+\cdots+d_ny_n^2$；系数为 $\pm1,0$ 时称<b>规范形</b>。<br>
+<b>合同：</b>存在可逆 $C$ 使 $C^{T}AC=B$，则称 $A$ 与 $B$ 合同（保持对称性与秩）。可逆变换 $\boldsymbol x=C\boldsymbol y$ 把 $f$ 变为 $\boldsymbol y^{T}(C^{T}AC)\boldsymbol y$。
+</div>
+<div class="thm"><span class="label">定理（正交变换化标准形）</span>任一二次型 $f=\boldsymbol x^{T}A\boldsymbol x$ 都可经正交变换 $\boldsymbol x=P\boldsymbol y$ 化为
+$$f=\lambda_1y_1^2+\lambda_2y_2^2+\cdots+\lambda_ny_n^2$$
+其中 $\lambda_1,\dots,\lambda_n$ 恰为 $A$ 的全部特征值。</div>
+<div class="proof"><span class="label">证明</span>由 §4，存在正交矩阵 $P$ 使 $P^{T}AP=\Lambda=\operatorname{diag}(\lambda_1,\dots,\lambda_n)$。令 $\boldsymbol x=P\boldsymbol y$：
+$$f=\boldsymbol x^{T}A\boldsymbol x=(P\boldsymbol y)^{T}A(P\boldsymbol y)=\boldsymbol y^{T}\left(P^{T}AP\right)\boldsymbol y=\boldsymbol y^{T}\Lambda\boldsymbol y=\sum_i\lambda_iy_i^2\ ✓$$<span class="qed">∎</span></div>
+<div class="box method"><b>正交变换法四步：</b>① 写矩阵 $A$（对角线放平方项系数；交叉项 $x_ix_j$ 的系数「对半分」给 $a_{ij}=a_{ji}$）；② 求特征值；③ 求正交单位特征向量组；④ 写 $P$ 与标准形（系数即特征值）。</div>
+<div class="box example">
+<b>例（正交变换化标准形）.</b> 化 $f=2x_1^2+3x_2^2+3x_3^2+2x_2x_3$ 为标准形。<br>
+① 写矩阵（$2x_2x_3$ 对半 ⇒ $a_{23}=a_{32}=1$）：
+$$A=\begin{pmatrix}2&0&0\\0&3&1\\0&1&3\end{pmatrix}$$
+② 这正是 §4 例的矩阵：$\lambda=2,2,4$，标准正交特征向量组（§4 已求出）：$\boldsymbol p_1,\boldsymbol p_2,\boldsymbol p_3$；<br>
+③ 令 $\boldsymbol x=P\boldsymbol y$，得
+$$f=2y_1^2+2y_2^2+4y_3^2$$
+<b>验算（用相似不变量交叉检验）：</b>系数和 $2+2+4=8=\operatorname{tr}A=2+3+3$ ✓；系数积 $2\times2\times4=16=|A|=2\times(9-1)$ ✓——标准形系数是特征值，必满足这两条。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>配方法与惯性定理<span class="tag">核心</span></h2>
+<div class="box method"><b>配方法步骤：</b>① 有平方项（如 $x_1^2$）：把所有含 $x_1$ 的项聚起来配成完全平方，剩余部分递归处理；② 若无平方项（全是交叉项）：先作用可逆变换（如 $x_1=y_1+y_2,\ x_2=y_1-y_2$）造出平方项再配方；③ 每步变换都必须可逆（写成矩阵 $C$ 验证）。</div>
+<div class="box example">
+<b>例（配方法配方）.</b> 化 $f=x_1^2+2x_1x_2+2x_2^2+4x_2x_3+x_3^2$ 为标准形。<br>
+① 配 $x_1$：
+$$f=\left(x_1+x_2\right)^2+x_2^2+4x_2x_3+x_3^2$$
+② 再配 $x_2$：
+$$x_2^2+4x_2x_3+x_3^2=\left(x_2+2x_3\right)^2-3x_3^2\ \Longrightarrow\ f=\left(x_1+x_2\right)^2+\left(x_2+2x_3\right)^2-3x_3^2$$
+③ 作可逆变换 $y_1=x_1+x_2,\ y_2=x_2+2x_3,\ y_3=x_3$（下三角、主对角全 1，必可逆）：
+$$f=y_1^2+y_2^2-3y_3^2$$
+正惯性指数 $2$，负惯性指数 $1$，秩 $3$。<br>
+<b>验算（展开回原式）：</b>$(x_1+x_2)^2+(x_2+2x_3)^2-3x_3^2=x_1^2+2x_1x_2+2x_2^2+4x_2x_3+x_3^2$ ✓（逐项核对）。
+</div>
+<div class="box warn"><b>关键区别：</b>配方法得到的标准形系数<b>一般不是特征值</b>（所用变换不是正交变换）；正交变换法得到的系数才是特征值。两者标准形可以不同，但<b>正、负项个数相同</b>——这就是惯性定理。</div>
+<div class="thm"><span class="label">惯性定理</span>二次型标准形中正平方项个数 $p$、负平方项个数 $q$ 由二次型<b>唯一确定</b>（与变换选择无关）：$p$ 称<b>正惯性指数</b>，$q$ 称<b>负惯性指数</b>，且 $p+q=r(A)$。</div>
+<div class="proof"><span class="label">证明（反证 + 子空间维数碰撞）</span>设同一二次型经两个可逆变换化得两个标准形，正项个数分别为 $p>p'$。<br>
+记 $f$ 在两组变量下为 $f=\sum_{i\le p}d_iy_i^2-\cdots\ (d_i>0)$ 与 $f=\sum_{i\le p'}e_iz_i^2-\cdots\ (e_i>0)$。<br>
+取子空间
+$$W=\{\boldsymbol x:\ y_{p+1}=\cdots=y_n=0\},\qquad U=\{\boldsymbol x:\ z_1=\cdots=z_{p'}=0\}$$
+$\dim W=p$、$\dim U\ge n-p'$，而 $p+(n-p')=n+(p-p')>n$ ⇒ $W\cap U$ 含非零向量 $\boldsymbol x$。<br>
+在 $W$ 上 $f=\sum_{i\le p}d_iy_i^2>0$（$\boldsymbol x\neq0$）；在 $U$ 上 $f=-\sum_{i>p'}e_iz_i^2\le0$。矛盾 ✓。故 $p$ 唯一；$q$ 同理（或由 $p+q=r$）✓。<span class="qed">∎</span></div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>正定二次型<span class="tag">核心</span></h2>
+<div class="box def"><b>正定：</b>若对任意 $\boldsymbol x\neq\boldsymbol0$ 都有 $f(\boldsymbol x)=\boldsymbol x^{T}A\boldsymbol x>0$，称 $f$（及矩阵 $A$）<b>正定</b>。（类似可定义半正定、负定。）</div>
+<div class="thm"><span class="label">正定的三种等价刻画</span>对实对称矩阵 $A$：
+① $f=\boldsymbol x^{T}A\boldsymbol x$ 正定；
+② $A$ 的<b>特征值全为正</b>；
+③ $A$ 的<b>各阶顺序主子式全正</b>：
+$$D_1=a_{11}>0,\quad D_2=\begin{vmatrix}a_{11}&a_{12}\\ a_{21}&a_{22}\end{vmatrix}>0,\quad\dots,\quad D_n=|A|>0$$</div>
+<div class="proof"><span class="label">证明</span>
+<b>①⇔②：</b>经正交变换 $f=\sum\lambda_iy_i^2$（$\boldsymbol x\leftrightarrow\boldsymbol y$ 一一对应）。若全 $\lambda_i>0$：对 $\boldsymbol x\neq0$ 有 $\boldsymbol y\neq0$，$f>0$ ⇒ 正定；反之若某 $\lambda_k\le0$，取对应 $\boldsymbol y=\boldsymbol e_k$（即某非零 $\boldsymbol x$）得 $f=\lambda_k\le0$，不正定 ✓。<br>
+<b>①⇒③：</b>正定限制在前 $k$ 个变量（其余取 0）上仍正定，其矩阵是 $k$ 阶顺序主子块；由 ② 其特征值全正 ⇒ 行列式 $D_k>0$ ✓。<br>
+<b>③⇒①（归纳）</b>：把 $A$ 分块 $A=\begin{pmatrix}A_{n-1}&\boldsymbol b\\ \boldsymbol b^{T}&a_{nn}\end{pmatrix}$，作可逆合同变换
+$$C^{T}AC=\begin{pmatrix}A_{n-1}&O\\ O&s\end{pmatrix},\qquad C=\begin{pmatrix}E&-A_{n-1}^{-1}\boldsymbol b\\ O&1\end{pmatrix},\quad s=a_{nn}-\boldsymbol b^{T}A_{n-1}^{-1}\boldsymbol b$$
+（可验算：$AC=\begin{pmatrix}A_{n-1}&\boldsymbol0\\ \boldsymbol b^{T}&s\end{pmatrix}$，再左乘 $C^{T}$ 即得对角分块。）由分块行列式 $|A|=|A_{n-1}|\cdot s$ 得 $s=D_n/D_{n-1}>0$。$A_{n-1}$ 各阶顺序主子式也全正，归纳假设其正定；于是对 $\boldsymbol y\neq0$：$\boldsymbol y^{T}C^{T}AC\boldsymbol y=\boldsymbol y_{n-1}^{T}A_{n-1}\boldsymbol y_{n-1}+s\,y_n^2>0$，即合同矩阵正定，从而 $A$ 正定 ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 1（判正定）.</b> 判断 $A=\begin{pmatrix}2&-1&0\\-1&2&-1\\0&-1&2\end{pmatrix}$ 是否正定。<br>
+① $D_1=2>0$；<br>
+② $D_2=2\times2-1=3>0$；<br>
+③ $D_3=2(4-1)-(-1)(-2-0)=6-2=4>0$；<br>
+④ 顺序主子式全正 ⇒ <b>正定</b>。<br>
+<b>验算（特征值侧）：</b>该三对角矩阵的特征值为 $2-\sqrt2\approx0.59$、$2$、$2+\sqrt2\approx3.41$，全正 ✓（与判据一致）。
+</div>
+<div class="box example">
+<b>例 2（含参正定）.</b> 求 $t$ 使 $A=\begin{pmatrix}1&t&0\\ t&2&0\\0&0&3\end{pmatrix}$ 正定。<br>
+① $D_1=1>0$；② $D_2=2-t^2>0$；③ $D_3=3(2-t^2)>0$；<br>
+④ 条件归结为 $2-t^2>0$，即
+$$|t|<\sqrt2$$
+<b>验算（特征值侧）：</b>块 $\begin{pmatrix}1&t\\ t&2\end{pmatrix}$ 的特征值为 $\dfrac{3\pm\sqrt{1+4t^2}}{2}$，全正 $\iff$ 乘积 $2-t^2>0\iff|t|<\sqrt2$ ✓。
+</div>
+</section>
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>解题决策流程</h2>
+<pre class="flow">拿到特征值 / 二次型题
+├─ 求特征值与特征向量？
+│   └─ 解 |A−λE| = 0 → 对每个 λ 解 (A−λE)x = 0 取非零解
+├─ 判断可对角化 / 求 P？
+│   ├─ n 个互异特征值 → 必可对角化
+│   ├─ 重根：数「无关特征向量个数是否等于重数」
+│   └─ 拼 P（列 = 特征向量），验 AP = PΛ
+├─ 实对称矩阵？
+│   └─ 正交对角化：重根内 Schmidt 正交化 → 全部单位化 → P 正交
+├─ 二次型化标准形？
+│   ├─ 要求「正交变换」→ 特征值法（标准形系数 = 特征值）
+│   └─ 只要求「可逆变换」→ 配方法（更省事，系数不必是特征值）
+├─ 求惯性指数？
+│   └─ 配方法数正负项；或看特征值符号个数
+└─ 正定判断？
+    ├─ 顺序主子式全正？（计算首选）
+    ├─ 特征值全正？（小题/证明）
+    └─ 定义 f(x) = xᵀAx > 0？（证明题）
+</pre>
+</section>
+
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>特征向量必须非零：</b>$(A-\lambda E)\boldsymbol x=\boldsymbol0$ 的零解不算；$k\boldsymbol\alpha\ (k\neq0)$ 都是同一特征值的特征向量。</li>
+<li><b>特征值速验：</b>算完用 $\sum\lambda_i=\operatorname{tr}A$、$\prod\lambda_i=|A|$ 复核，能在考场上救命。</li>
+<li><b>相似只保证不变量相同，反之不成立：</b>两个矩阵特征值相同<b>不能</b>推出相似（还要看特征向量个数）。</li>
+<li><b>可对角化看「个数」：</b>每个特征值的无关特征向量个数合计必须等于 $n$；重根处最容易缺。</li>
+<li><b>列序对应：</b>$P$ 的第 $i$ 列配 $\Lambda$ 的第 $i$ 个对角元，顺序错则全错。</li>
+<li><b>验收用 $AP=P\Lambda$：</b>比求 $P^{-1}$ 快得多，且等价。</li>
+<li><b>正交 $P$ 是实对称特权：</b>一般矩阵的相似变换矩阵 $P$ 不正交，$P^{-1}\neq P^{T}$。</li>
+<li><b>同一特征值下的向量要 Schmidt：</b>不同特征值（实对称）自动正交，但同一重根内的基础解系可能不正交。</li>
+<li><b>二次型矩阵交叉项对半分：</b>$f$ 中 $x_ix_j$ 的系数 $c$ ⇒ $a_{ij}=a_{ji}=c/2$——最高频错误。</li>
+<li><b>配方法的系数不是特征值：</b>只有正交变换法的标准形系数才是特征值；惯性指数才是共有的不变量。</li>
+<li><b>正定要全部顺序主子式：</b>从 $D_1$ 到 $D_n$，缺一不可；含参题先列 $D_1>0$ 往往直接淘汰错误区间。</li>
+<li><b>$|A|>0$ 不能推出正定：</b>特征值 $2,-1,-1$ 时 $|A|=2>0$ 但不定；必须逐项查顺序主子式或特征值。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>内积 · 长度 · 正交</td><td>$[\boldsymbol\alpha,\boldsymbol\beta]=\boldsymbol\alpha^{T}\boldsymbol\beta$；$\|\boldsymbol\alpha\|=\sqrt{[\boldsymbol\alpha,\boldsymbol\alpha]}$；$[\boldsymbol\alpha,\boldsymbol\beta]=0$ 即正交</td></tr>
+<tr><td>柯西–施瓦茨</td><td>$|[\boldsymbol\alpha,\boldsymbol\beta]|\le\|\boldsymbol\alpha\|\|\boldsymbol\beta\|$</td></tr>
+<tr><td>施密特正交化</td><td>$\boldsymbol\beta_k=\boldsymbol\alpha_k-\sum_{i<k}\dfrac{[\boldsymbol\alpha_k,\boldsymbol\beta_i]}{[\boldsymbol\beta_i,\boldsymbol\beta_i]}\boldsymbol\beta_i$</td></tr>
+<tr><td>正交矩阵</td><td>$A^{T}A=E\iff A^{-1}=A^{T}$；$|A|=\pm1$；正交变换保内积</td></tr>
+<tr><td>特征值定义与求法</td><td>$A\boldsymbol\alpha=\lambda\boldsymbol\alpha$；$|A-\lambda E|=0$，$(A-\lambda E)\boldsymbol x=\boldsymbol0$ 的非零解</td></tr>
+<tr><td>特征值性质</td><td>$\sum\lambda_i=\operatorname{tr}A$；$\prod\lambda_i=|A|$；不同特征值的特征向量线性无关</td></tr>
+<tr><td>相似不变量</td><td>特征多项式、特征值、迹、行列式、秩、可逆性</td></tr>
+<tr><td>可对角化</td><td>$P^{-1}AP=\Lambda\iff$ $A$ 有 $n$ 个线性无关特征向量</td></tr>
+<tr><td>实对称矩阵</td><td>特征值全实；不同特征值的向量正交；$P^{T}AP=\Lambda$（$P$ 正交）</td></tr>
+<tr><td>二次型与矩阵</td><td>$f=\boldsymbol x^{T}A\boldsymbol x$（$A$ 对称，交叉项系数对半）</td></tr>
+<tr><td>正交变换法</td><td>$f=\sum\lambda_iy_i^2$（系数 $=$ 特征值）</td></tr>
+<tr><td>惯性定理</td><td>正惯性指数 $p$、负惯性指数 $q$ 唯一；$p+q=r(A)$</td></tr>
+<tr><td>合同</td><td>$C^{T}AC=B$（$C$ 可逆）：保持对称性与秩</td></tr>
+<tr><td>正定判定</td><td>特征值全正 $\iff$ 顺序主子式全正（$D_1,\dots,D_n>0$）</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>本章的核心引擎是<b>特征值</b>：相似对角化是它的几何化、二次型标准形是它的代数化、正定判定是它的符号化。</div>
+</section>
+
+<section class="card" id="sec-11">
+<h2><span class="num">11</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>会算（特征值/向量）→ 会化（对角化/标准形）→ 会判（可对角化/正定）。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 熟练计算内积、长度，会施密特正交化与单位化；说明正交矩阵的等价刻画；<br>
+② 求特征值与特征向量，并用「迹/行列式」自查；证明「不同特征值的特征向量无关」；<br>
+③ 判断可对角化（含重根情形）并完成对角化（$AP=P\Lambda$ 验收）；<br>
+④ 对实对称矩阵做正交对角化（重根内 Schmidt + 单位化）；<br>
+⑤ 用正交变换法把二次型化为标准形（系数 = 特征值）；用配方法化标准形（系数≠特征值但惯性指数一致）；<br>
+⑥ 用顺序主子式判定正定（含参数问题）。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>把向量组正交化</td><td>Schmidt + 单位化</td><td>§1 例</td></tr>
+<tr><td>求特征值 / 特征向量</td><td>特征方程 + 齐次解</td><td>§2 例</td></tr>
+<tr><td>判断可对角化</td><td>数无关特征向量个数</td><td>§3 例2</td></tr>
+<tr><td>求可逆 $P$ 使对角化</td><td>拼特征向量，验 $AP=P\Lambda$</td><td>§3 例1</td></tr>
+<tr><td>实对称正交对角化</td><td>重根 Schmidt + 单位化</td><td>§4 例</td></tr>
+<tr><td>二次型化标准形（正交）</td><td>特征值法</td><td>§5 例</td></tr>
+<tr><td>二次型化标准形（可逆）</td><td>配方法</td><td>§6 例</td></tr>
+<tr><td>正定判断 / 含参</td><td>顺序主子式全正</td><td>§7 例1、2</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 复述柯西–施瓦茨与「正交非零组必无关」的证明（§1）<br>
+☐ 独立完成 §2 例并说出每一步依据；用迹与行列式自查特征值<br>
+☐ 复述可对角化判据的双向证明（§3）<br>
+☐ 独立完成 §4 例（含 Schmidt 与单位化），验证 $A\boldsymbol p_i=\lambda_i\boldsymbol p_i$ 与两两正交<br>
+☐ 说明「配方法的系数为什么不是特征值」并举一个数值反例（§6）<br>
+☐ 独立完成一道含参正定题（列全部顺序主子式）并解释 $D_2>0$ 的意义
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>线性代数 · 第五章 相似矩阵及二次型 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>概率03 · 多维随机变量及其分布 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#f4f7fd;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#2563eb;--accent2:#06b6d4;--soft:#eff6ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#06b6d4);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#bfdbfe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#1d4ed8;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#1e3a8a}
+.card h3{font-size:1.05rem;color:#1d4ed8;margin:24px 0 8px;padding-left:10px;border-left:4px solid #93c5fd}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#eff6ff;border-color:#60a5fa}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #bfdbfe;border-left:4px solid #3b82f6;background:#fafcff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#1d4ed8;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#1d4ed8;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.flow{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(37,99,235,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>概率论与数理统计 · 第三章 多维随机变量及其分布 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>联合分布</span><span>边缘分布</span><span>条件分布</span><span>独立性</span><span>卷积公式</span><span>最值分布</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 二维随机变量与联合分布</a>
+<a href="#sec-2">02 · 边缘分布</a>
+<a href="#sec-3">03 · 条件分布</a>
+<a href="#sec-4">04 · 相互独立性</a>
+<a href="#sec-5">05 · 两个随机变量函数的分布</a>
+<a href="#sec-6">06 · 解题决策流程</a>
+<a href="#sec-7">07 · 易错点清单</a>
+<a href="#sec-8">08 · 公式速查表</a>
+<a href="#sec-9">09 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>主线：</b>二维随机变量 = 两个一维变量的「打包」；先给联合分布（F/分布律/密度），再从中拆出边缘与条件，用「独立性」判断能否相乘，最后研究两变量之和、最值等函数的分布。<span style="color:#1d4ed8;font-weight:700">蓝框=定义/定理</span>，<span style="color:#475569;font-weight:700">灰框=证明</span>，<span style="color:#b45309;font-weight:700">黄框=例题</span>。</div>
+<pre class="flow">第三章 多维随机变量及其分布
+├─ 联合分布（§1）
+│   ├─ F(x,y)=P{X≤x, Y≤y}：边界值、单调、右连续、矩形公式
+│   ├─ 离散：联合分布律 p_ij（ΣΣ=1）
+│   └─ 连续：联合密度 f（∫∫=1；区域概率 = 二重积分）
+├─ 从联合到个体（§2–§3）
+│   ├─ 边缘分布：离散按行/列求和；连续对另一变量积分
+│   └─ 条件分布：除以被条件变量的边缘（p_ij/p_·j；f/f_Y）
+├─ 独立性（§4）
+│   ├─ F=F_XF_Y ⇔ f=f_Xf_Y ⇔ p_ij=p_i·p_·j
+│   └─ 支撑域「非直积形」（如三角形）一定不独立
+└─ 函数的分布（§5）
+    ├─ Z=X+Y：卷积 f_Z(z)=∫f(x,z−x)dx
+    ├─ 正态可加：N(μ₁,σ₁²)+N(μ₂,σ₂²)=N(μ₁+μ₂, σ₁²+σ₂²)（独立）
+    └─ max/min：F_max=F_XF_Y；F_min=1−(1−F_X)(1−F_Y)（独立）
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>二维随机变量与联合分布<span class="tag">基础</span></h2>
+<div class="box def">
+<b>二维随机变量 $(X,Y)$：</b>联合分布函数
+$$F(x,y)=P\{X\le x,\ Y\le y\},\qquad -\infty<x,y<+\infty$$
+</div>
+<div class="thm"><span class="label">联合分布函数的性质</span>
+① $0\le F(x,y)\le1$；② 关于 $x$、关于 $y$ 均单调不减；③ 边界值
+$$F(-\infty,y)=F(x,-\infty)=F(-\infty,-\infty)=0,\qquad F(+\infty,+\infty)=1$$
+④ 关于每个变量右连续；⑤ <b>矩形公式</b>：
+$$P\{x_1<X\le x_2,\ y_1<Y\le y_2\}=F(x_2,y_2)-F(x_1,y_2)-F(x_2,y_1)+F(x_1,y_1)\ \ge0$$</div>
+<div class="proof"><span class="label">证明（矩形公式）</span>记 $D=(x_1,x_2]\times(y_1,y_2]$。两次「大减小」：
+$$\{X\le x_2,Y\le y_2\}=\{X\le x_1,Y\le y_2\}\cup\{x_1<X\le x_2,\ Y\le y_2\}$$
+$$\{x_1<X\le x_2,\ Y\le y_2\}=\{x_1<X\le x_2,\ Y\le y_1\}\cup D$$
+对两个互斥分解用有限可加性：
+$$P\{x_1<X\le x_2,\ Y\le y_2\}=F(x_2,y_2)-F(x_1,y_2)$$
+$$P\{x_1<X\le x_2,\ Y\le y_1\}=F(x_2,y_1)-F(x_1,y_1)$$
+两式相减即得；非负性由概率定义给出 ✓。<span class="qed">∎</span></div>
+<div class="box def">
+<b>离散型：</b>联合分布律 $p_{ij}=P\{X=x_i,\ Y=y_j\}$，满足 $p_{ij}\ge0$、$\displaystyle\sum_i\sum_j p_{ij}=1$。<br>
+<b>连续型：</b>存在联合密度 $f(x,y)\ge0$：
+$$F(x,y)=\int_{-\infty}^{x}\!\!\int_{-\infty}^{y}f(u,v)\,dv\,du,\qquad P\{(X,Y)\in D\}=\iint_D f(x,y)\,dx\,dy$$
+（连续点处 $\dfrac{\partial^2F}{\partial x\,\partial y}=f$；连续型随机变量落在单点、单线上概率为 0。）
+</div>
+<div class="box example">
+<b>例 1（离散联合分布表）.</b> 两封信随机投入编号 1,2,3,4 的四个邮筒（每封信独立等可能选筒）。$X$=第 1 筒信数，$Y$=第 2 筒信数。求联合分布律与 $P\{X=1,\ Y\le1\}$。<br>
+① 样本总数：$4^2=16$ 种等可能；<br>
+② 按 $(X,Y)$ 分类计数：<br>
+&nbsp;&nbsp;• $(0,0)$：两封都在 3、4 筒：$2^2=4$ 种 ⇒ $\dfrac4{16}=\dfrac14$；<br>
+&nbsp;&nbsp;• $(1,0)$：一封进 1 筒、另一封进 3/4 筒：$2\times2=4$ 种 ⇒ $\dfrac14$；<br>
+&nbsp;&nbsp;• $(2,0)$：两封都进 1 筒：1 种 ⇒ $\dfrac1{16}$；<br>
+&nbsp;&nbsp;• $(0,1)$：对称 ⇒ $\dfrac14$；$(0,2)$：$\dfrac1{16}$；<br>
+&nbsp;&nbsp;• $(1,1)$：一封进 1 筒、一封进 2 筒：$2!=2$ 种 ⇒ $\dfrac18$；<br>
+&nbsp;&nbsp;• 其余 $(2,1),(1,2),(2,2)$：共 2 封信不可能 ⇒ $0$。<br>
+③ 归一校验：$\dfrac{4+4+1+4+1+2}{16}=1$ ✓；<br>
+④ $P\{X=1,\ Y\le1\}=p_{10}+p_{11}=\dfrac14+\dfrac18=\dfrac38$。<br>
+<b>验算（枚举）：</b>16 种等可能投法中，「第 1 筒恰 1 封且第 2 筒至多 1 封」有 6 种（先定哪封信进 1 筒：2 种；另一封进 2/3/4：3 种），$6/16=3/8$ ✓。
+</div>
+<div class="box example">
+<b>例 2（连续联合密度）.</b> 设 $f(x,y)=Axy$（$0<x<1,\ 0<y<2$），其余为 0。求 $A$ 与 $P\{X+Y\le1\}$。<br>
+① 归一：
+$$\int_0^1\!\!\int_0^2Axy\,dy\,dx=A\cdot\frac12\cdot\frac{4}{2}=A=1\ \Longrightarrow\ A=1$$
+② 积分区域 $0<x<1,\ 0<y\le1-x$：
+$$P\{\!X+Y\le1\!\}=\int_0^1x\left[\int_0^{1-x}y\,dy\right]dx=\frac12\int_0^1x(1-x)^2dx$$
+③ $\displaystyle\int_0^1\left(x-2x^2+x^3\right)dx=\frac12-\frac23+\frac14=\frac1{12}$，故
+$$P\{X+Y\le1\}=\frac{1}{24}$$<br>
+<b>验算（区域占比直觉）：</b>该区域只占支撑域 $\{0<x<1,0<y<2\}$ 的一角，概率 $\approx0.042$ 远小于一半，量级合理 ✓。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>边缘分布<span class="tag">核心</span></h2>
+<div class="box def">
+<b>边缘分布函数：</b>
+$$F_X(x)=P\{X\le x\}=P\{X\le x,\ Y<+\infty\}=F(x,+\infty)$$
+（对联合分布函数令 $y\to+\infty$ 即得；对称地 $F_Y(y)=F(+\infty,y)$。）<br>
+<b>离散型（按行/列求和）：</b>
+$$p_{i\cdot}=P\{X=x_i\}=\sum_j p_{ij},\qquad p_{\cdot j}=P\{Y=y_j\}=\sum_i p_{ij}$$
+<b>连续型（对另一个变量积分）：</b>
+$$f_X(x)=\int_{-\infty}^{+\infty}f(x,y)\,dy,\qquad f_Y(y)=\int_{-\infty}^{+\infty}f(x,y)\,dx$$
+</div>
+<div class="box example">
+<b>例 1（离散：邮筒例的边缘）.</b> 沿用 §1 例 1 的联合分布律，求 $X$ 的边缘分布。<br>
+① 按 $Y$ 求和：
+$$P\{X=0\}=p_{00}+p_{01}+p_{02}=\frac{4+4+1}{16}=\frac{9}{16}$$
+$$P\{X=1\}=p_{10}+p_{11}+p_{12}=\frac{4+2+0}{16}=\frac{6}{16}=\frac38$$
+$$P\{X=2\}=p_{20}+p_{21}+p_{22}=\frac{1+0+0}{16}=\frac1{16}$$
+② 归一校验：$\dfrac{9+6+1}{16}=1$ ✓。由对称性，$Y$ 的边缘分布与 $X$ 完全相同。<br>
+<b>验算（另一种数法）：</b>$X=0$ 即「两封信都不进 1 筒」：$(3/4)^2=9/16$ ✓；$X\ge1$ 用组合逻辑亦得 $6/16,1/16$ ✓。
+</div>
+<div class="box example">
+<b>例 2（连续：$f=xy$ 的边缘）.</b> $f(x,y)=xy\ (0<x<1,\ 0<y<2)$。求 $f_X,\ f_Y$。<br>
+① 对 $y$ 积分：
+$$f_X(x)=\int_0^2xy\,dy=x\cdot\frac{4}{2}=2x,\qquad 0<x<1$$
+② 对 $x$ 积分：
+$$f_Y(y)=\int_0^1xy\,dx=\frac{y}{2},\qquad 0<y<2$$
+③ 归一性校验：$\displaystyle\int_0^12x\,dx=1$ ✓，$\displaystyle\int_0^2\frac y2dy=1$ ✓。<br>
+<b>观察：</b>$f(x,y)=xy=(2x)\cdot\left(\dfrac y2\right)=f_X(x)f_Y(y)$——说明 $X$ 与 $Y$ 独立（§4 展开）。
+</div>
+<div class="box example">
+<b>例 3（二维均匀分布：边缘可以不同分布）.</b> $(X,Y)$ 在三角形 $D=\{x>0,\ y>0,\ x+y<1\}$ 上均匀分布（$f=1/S_D=2$，区域内）。求 $f_X$。<br>
+① 固定 $x\in(0,1)$，$y$ 从 0 到 $1-x$：
+$$f_X(x)=\int_0^{1-x}2\,dy=2(1-x),\qquad 0<x<1$$
+② 校验：$\displaystyle\int_0^12(1-x)dx=2\cdot\frac12=1$ ✓。<br>
+<b>观察：</b>$f_X(x)=2(1-x)$ 不是均匀分布——均匀分布只在「矩形」情形下边缘也均匀（如 $x^2+y^2\le1$ 的圆域边缘也不是均匀的）✓。
+</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>条件分布<span class="tag">核心</span></h2>
+<div class="box def">
+<b>离散型：</b>对固定的 $y_j$（$p_{\cdot j}>0$）：
+$$P\{X=x_i\mid Y=y_j\}=\frac{P\{X=x_i,\ Y=y_j\}}{P\{Y=y_j\}}=\frac{p_{ij}}{p_{\cdot j}}$$
+（对 $i$ 求和为 1，是 $X$ 的一个分布律。）<br>
+<b>连续型：</b>对固定的 $y$（$f_Y(y)>0$）：
+$$f_{X|Y}(x\mid y)=\frac{f(x,y)}{f_Y(y)}$$
+（对 $x$ 积分为 1；条件分布函数 $F_{X|Y}(x\mid y)=\displaystyle\int_{-\infty}^{x}f_{X|Y}(t\mid y)dt$。）
+</div>
+<div class="box example">
+<b>例 1（离散条件分布）.</b> 用 §1 例 1 的邮筒数据，求在 $Y=0$ 条件下 $X$ 的条件分布。<br>
+① 先算边缘：$P\{Y=0\}=\dfrac{4+4+1}{16}=\dfrac{9}{16}$；<br>
+② 逐个除：
+$$P\{X=0\mid Y=0\}=\frac{4/16}{9/16}=\frac49,\qquad P\{X=1\mid Y=0\}=\frac{4/16}{9/16}=\frac49,\qquad P\{X=2\mid Y=0\}=\frac{1/16}{9/16}=\frac19$$
+③ 归一校验：$\dfrac{4+4+1}{9}=1$ ✓。<br>
+<b>解读：</b>「第 2 筒没有信」拉高了「第 1 筒有信」的概率（从边缘的 $\frac9{16},\frac38,\frac1{16}$ 变为 $\frac49,\frac49,\frac19$）——条件分布携带信息。
+</div>
+<div class="box example">
+<b>例 2（连续条件密度）.</b> $f(x,y)=xy\ (0<x<1,\ 0<y<2)$，求 $f_{X|Y}(x\mid y)$。<br>
+① 边缘（§2 例 2）：$f_Y(y)=\dfrac y2$；<br>
+② 相除：
+$$f_{X|Y}(x\mid y)=\frac{xy}{y/2}=2x,\qquad 0<x<1$$
+③ 校验：$\displaystyle\int_0^1 2x\,dx=1$ ✓。<br>
+<b>观察：</b>条件密度 $2x$ 与 $y$ 无关，且恰等于边缘 $f_X(x)$——「知道 $Y$ 不改变 $X$ 的分布」⇒ 独立性信号 ✓。<br>
+（对照 §2 例 3 三角形均匀分布：$f_{X|Y}(x\mid y)=\dfrac{2}{2(1-y)}=\dfrac{1}{1-y}$（$0<x<1-y$）——依赖 $y$，不独立。）
+</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>相互独立性<span class="tag">核心</span></h2>
+<div class="box def"><b>定义：</b>若对一切 $x,y$ 有
+$$F(x,y)=F_X(x)\,F_Y(y)$$
+则称 $X$ 与 $Y$ <b>相互独立</b>。等价刻画：离散型 $p_{ij}=p_{i\cdot}\,p_{\cdot j}$（对所有 $i,j$）；连续型 $f(x,y)=f_X(x)f_Y(y)$（几乎处处）。</div>
+<div class="proof"><span class="label">证明（连续型等价刻画）</span>
+<b>(⇐)</b> 若 $f=f_Xf_Y$：
+$$F(x,y)=\int_{-\infty}^{x}\!\!\int_{-\infty}^{y}f_X(u)f_Y(v)\,dv\,du=\left[\int_{-\infty}^{x}f_X\right]\left[\int_{-\infty}^{y}f_Y\right]=F_X(x)F_Y(y)\ ✓$$
+<b>(⇒)</b> 若 $F=F_XF_Y$，在连续点求混合偏导：左边 $=\dfrac{\partial^2F}{\partial x\,\partial y}=f(x,y)$，右边 $=\dfrac{dF_X}{dx}\cdot\dfrac{dF_Y}{dy}=f_X(x)f_Y(y)$ ✓。<span class="qed">∎</span></div>
+<div class="box method">
+<b>判断独立三板斧（由快到慢）：</b><br>
+① <b>看支撑域：</b>若 $f>0$ 的区域不是「$x$ 范围 × $y$ 范围」的直积形（三角形、圆盘等），一定<b>不独立</b>；<br>
+② <b>分离变量：</b>能把 $f(x,y)$ 写成 $g(x)\cdot h(y)$（非负函数相乘），则独立——不必算边缘；<br>
+③ <b>老实算：</b>求 $f_X,f_Y$ 检验 $f=f_Xf_Y$；离散则逐格检验 $p_{ij}=p_{i\cdot}p_{\cdot j}$。
+</div>
+<div class="box example">
+<b>例 1（独立）.</b> $f(x,y)=xy\ (0<x<1,\ 0<y<2)$，判断独立性。<br>
+① 支撑域为矩形 ⇒ 过第一关；<br>
+② 分离变量 $f=x\cdot y$ ⇒ 独立；<br>
+③ 复核：$f_Xf_Y=2x\cdot\dfrac y2=xy=f$ ✓。<br>
+<b>验算（取点）：</b>$(0.5,1)$ 处：$f=0.5$，$f_X(0.5)\cdot f_Y(1)=1\times0.5=0.5$ ✓。
+</div>
+<div class="box example">
+<b>例 2（不独立）.</b> 三角形均匀：$f=2$（$x>0,\ y>0,\ x+y<1$），判断独立性。<br>
+① 支撑域为三角形（非直积）⇒ <b>不独立</b>；<br>
+② 复核：$f_X=2(1-x)$、$f_Y=2(1-y)$，乘积 $4(1-x)(1-y)\neq2$；<br>
+③ 数值抽检：$P\{X\le0.5\}=P\{Y\le0.5\}=\displaystyle\int_0^{0.5}2(1-t)dt=0.75$，乘积 $0.5625$；而
+$$P\{X\le0.5,\ Y\le0.5\}=2\times\left(\frac12-2\times\frac{0.5^2}{2}\right)=2\times0.25=0.5\neq0.5625$$
+⇒ 确实不独立 ✓。
+</div>
+<div class="thm"><span class="label">定理（独立保持函数）</span>若 $X,Y$ 独立，$g,h$ 为任意（可测）函数，则 $g(X)$ 与 $h(Y)$ 也独立。（证明思路：CDF 层面 $\{g(X)\le u\}$ 与 $\{h(Y)\le v\}$ 分别只涉及 $X$、$Y$，由独立性的乘积定义直接传递。）</div>
+<div class="box tip"><b>重要推论：</b>「独立」是比「不相关」更强得多的条件（第四章将看到：独立 ⇒ 不相关，反之不然）。本章所有「和/最值分布」公式都假设独立。</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>两个随机变量函数的分布<span class="tag">核心</span></h2>
+<h3>5.1 离散型：列表合并</h3>
+<div class="box method">把 $(X,Y)$ 的每个取值组合代入 $g$，<b>相同函数值合并概率</b>，最后校验 $\sum=1$。</div>
+<div class="box example">
+<b>例 1（离散和）.</b> 已知 $P\{X=0,Y=0\}=P\{X=0,Y=1\}=P\{X=1,Y=0\}=P\{X=1,Y=1\}=\dfrac14$，求 $Z=X+Y$ 的分布律。<br>
+① 逐个组合：$Z$ 取 $0,1,2$：
+$$P\{Z=0\}=\frac14\ (\text{组合}(0,0)),\qquad P\{Z=1\}=\frac14+\frac14=\frac12\ ((0,1),(1,0)),\qquad P\{Z=2\}=\frac14\ ((1,1))$$
+② 校验：$\frac14+\frac12+\frac14=1$ ✓。<br>
+（规律：$Z=X+Y$ 的分布律 = 联合表沿「斜对角线」求和。）
+</div>
+<h3>5.2 连续型：卷积公式</h3>
+<div class="thm"><span class="label">定理（$Z=X+Y$）</span>若 $(X,Y)$ 有联合密度 $f$，则
+$$f_Z(z)=\int_{-\infty}^{+\infty}f(x,\ z-x)\,dx=\int_{-\infty}^{+\infty}f(z-y,\ y)\,dy$$
+特别地，$X,Y$ <b>独立</b>时（卷积公式）：
+$$f_Z(z)=\int_{-\infty}^{+\infty}f_X(x)\,f_Y(z-x)\,dx$$</div>
+<div class="proof"><span class="label">证明</span>
+$$F_Z(z)=P\{X+Y\le z\}=\int_{-\infty}^{+\infty}\left[\int_{-\infty}^{z-x}f(x,y)\,dy\right]dx$$
+对 $z$ 求导（内层是变上限积分，莱布尼茨法则）：
+$$f_Z(z)=\int_{-\infty}^{+\infty}\frac{\partial}{\partial z}\left[\int_{-\infty}^{z-x}f(x,y)dy\right]dx=\int_{-\infty}^{+\infty}f(x,\ z-x)\,dx\ ✓$$
+独立时被积函数为 $f_X(x)f_Y(z-x)$ ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">正态可加性</span>若 $X\sim N(\mu_1,\sigma_1^2)$ 与 $Y\sim N(\mu_2,\sigma_2^2)$ 相互独立，则
+$$X+Y\sim N\!\left(\mu_1+\mu_2,\ \sigma_1^2+\sigma_2^2\right)$$</div>
+<div class="proof"><span class="label">证明（卷积 + 配方）</span>记 $s^2=\sigma_1^2+\sigma_2^2$，$\mu=\mu_1+\mu_2$。卷积：
+$$f_Z(z)=\int_{-\infty}^{+\infty}\frac{1}{2\pi\sigma_1\sigma_2}\exp\left\{-\frac{(x-\mu_1)^2}{2\sigma_1^2}-\frac{(z-x-\mu_2)^2}{2\sigma_2^2}\right\}dx$$
+对 $x$ 完成平方，指数化为
+$$-\frac{(x-c)^2}{2\tau^2}-\frac{(z-\mu)^2}{2s^2},\qquad \tau^2=\frac{\sigma_1^2\sigma_2^2}{s^2}$$
+（$c$ 为某个与 $x$ 无关的常数。）对 $x$ 积分（高斯积分 $=\tau\sqrt{2\pi}$）：
+$$f_Z(z)=\frac{1}{2\pi\sigma_1\sigma_2}\cdot\tau\sqrt{2\pi}\cdot e^{-\frac{(z-\mu)^2}{2s^2}}=\frac{1}{\sqrt{2\pi}\,s}e^{-\frac{(z-\mu)^2}{2s^2}}$$
+（最后用了 $\sigma_1\sigma_2/\tau=s$）——正是 $N(\mu_1+\mu_2,\ \sigma_1^2+\sigma_2^2)$ 的密度 ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 2（两均匀之和：三角分布）.</b> $X,Y$ 独立同 $U(0,1)$，求 $Z=X+Y$ 的密度。<br>
+① 被积函数非零条件：
+$$0<x<1\quad\text{且}\quad 0<z-x<1\iff z-1<x<z$$
+② 分段计算：
+&nbsp;&nbsp;• $z\le0$ 或 $z\ge2$：区间无交集 ⇒ $f_Z=0$；<br>
+&nbsp;&nbsp;• $0<z\le1$：$x\in(0,z)$，$f_Z=\displaystyle\int_0^z1\,dx=z$；<br>
+&nbsp;&nbsp;• $1<z<2$：$x\in(z-1,1)$，$f_Z=\displaystyle\int_{z-1}^1 1\,dx=2-z$；<br>
+③ 即
+$$f_Z(z)=\begin{cases}z,&0<z\le1\\ 2-z,&1<z<2\\ 0,&\text{其他}\end{cases}$$
+<b>验算（归一 + 衔接）：</b>$\displaystyle\int_0^1z\,dz+\int_1^2(2-z)dz=\frac12+\frac12=1$ ✓；在 $z=1$ 处两侧值均为 $1$，连续 ✓。
+</div>
+<h3>5.3 最值函数 $M=\max(X,Y)$、$N=\min(X,Y)$</h3>
+<div class="thm"><span class="label">定理（独立时的最值分布）</span>若 $X,Y$ 相互独立：
+$$F_{\max}(z)=F_X(z)\,F_Y(z),\qquad F_{\min}(w)=1-\left[1-F_X(w)\right]\left[1-F_Y(w)\right]$$</div>
+<div class="proof"><span class="label">证明</span>
+最大值：$\{\max(X,Y)\le z\}\iff\{X\le z\}\cap\{Y\le z\}$，由独立：
+$$F_{\max}(z)=F_X(z)F_Y(z)\ ✓$$
+最小值：$\{\min(X,Y)>w\}\iff\{X>w\}\cap\{Y>w\}$，故
+$$1-F_{\min}(w)=P\{X>w\}P\{Y>w\}=\left[1-F_X(w)\right]\left[1-F_Y(w)\right]\ ✓$$<span class="qed">∎</span></div>
+<div class="box example">
+<b>例 3（均匀最值）.</b> $X,Y$ 独立同 $U(0,1)$，求 $M=\max(X,Y)$、$N=\min(X,Y)$ 的密度。<br>
+① $F_X(z)=z\ (0<z<1)$ ⇒ $F_M=z^2$，$f_M=2z\ (0<z<1)$；<br>
+② $F_N=1-(1-z)^2$，$f_N=2(1-z)\ (0<z<1)$；<br>
+③ 校验：$\displaystyle\int_0^12z\,dz=1$、$\displaystyle\int_0^12(1-z)dz=1$ ✓。<br>
+<b>直觉验算：</b>$f_M$ 递增、$f_N$ 递减——「两数取大偏大、取小偏小」，符合直觉 ✓。
+</div>
+<div class="box example">
+<b>例 4（串联系统寿命）.</b> 两元件寿命 $X,Y$ 独立同 $E(\lambda)$，串联系统寿命 $N=\min(X,Y)$，求分布。<br>
+① $F_X(w)=1-e^{-\lambda w}$；<br>
+② $F_N=1-\left[e^{-\lambda w}\right]^{2}=1-e^{-2\lambda w}$；<br>
+③ 即 $N\sim E(2\lambda)$（失效率翻倍）。<br>
+<b>验算（独立乘积直推）：</b>系统存活到 $w$ ⇔ 两元件都存活：$e^{-\lambda w}\cdot e^{-\lambda w}=e^{-2\lambda w}$ ✓。
+</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>解题决策流程</h2>
+<pre class="flow">拿到二维 / 函数分布题
+├─ 联合分布？
+│   ├─ 离散：列表（按题目计数）→ 归一校验 ΣΣp = 1
+│   └─ 连续：∫∫f = 1 定参数；区域概率画图定限做二重积分
+├─ 边缘？
+│   └─ 离散按行或列求和；连续对另一变量积分（注意分段与定义域）
+├─ 条件？
+│   └─ 除以被条件变量的边缘：p_ij/p_·j 或 f(x,y)/f_Y(y)
+├─ 独立判断？
+│   ├─ 支撑域非直积形（三角/圆）→ 不独立（秒杀）
+│   ├─ f 能分离成 g(x)·h(y) → 独立
+│   └─ 否则老实算边缘对照 f = f_X f_Y
+└─ 函数分布？
+    ├─ Z=X+Y → 卷积：联立非零条件，分段积分
+    ├─ 正态之和 → 直接套 N(μ₁+μ₂, σ₁²+σ₂²)
+    ├─ max / min → 先写 F（独立时乘积公式）再求导
+    └─ 离散 → 沿对角线合并概率
+</pre>
+</section>
+
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>矩形公式四项符号：</b>$+F(x_2,y_2)-F(x_1,y_2)-F(x_2,y_1)+F(x_1,y_1)$，最后一项是「加」。</li>
+<li><b>边缘推不出联合：</b>同一对边缘可以对应不同的联合分布；只有「独立」时才能由边缘相乘还原联合。</li>
+<li><b>条件密度分母：</b>是「被条件变量」的边缘 $f_Y(y)$，不是 $f_X$，也不是联合。</li>
+<li><b>独立两查：</b>支撑域必须是直积形（否则必不独立）；且 $f=f_Xf_Y$ 需在整个平面成立。</li>
+<li><b>卷积积分限：</b>由 $x$ 的范围与 $z-x$ 的范围联立成 $x$ 区间——必须按 $z$ 分段讨论。</li>
+<li><b>公式只认「和」：</b>卷积给的是 $X+Y$ 的密度；$X-Y$ 要做换元 $f_{X-Y}(z)=\int f(x,\ x-z)dx$，别硬套。</li>
+<li><b>正态可加性要独立：</b>不独立时均值仍可加，但方差不保证可加（$\operatorname{Var}(X+Y)=\operatorname{Var}X+\operatorname{Var}Y+2\operatorname{Cov}(X,Y)$，需不相关才能相加；独立 ⇒ 不相关），且分布未必正态。</li>
+<li><b>max/min 公式要独立：</b>$F_{\max}=F_XF_Y$ 依赖独立性；非独立时按定义做。</li>
+<li><b>二维均匀：</b>密度 $=1/\text{面积}$，只在区域内非零；边缘一般不是均匀分布。</li>
+<li><b>连续型单点/单线概率为 0：</b>概率必须在区域上二重积分，不能拿某点密度当概率。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>联合分布函数</td><td>$F(x,y)=P\{X\le x,Y\le y\}$；边界 $0$ / $1$；矩形公式（四项）；右连续</td></tr>
+<tr><td>离散联合律</td><td>$p_{ij}\ge0$，$\sum\sum p_{ij}=1$</td></tr>
+<tr><td>连续联合密度</td><td>$f\ge0$，$\iint f=1$，$P\{(X,Y)\in D\}=\iint_Df$</td></tr>
+<tr><td>边缘分布</td><td>$F_X(x)=F(x,+\infty)$；$p_{i\cdot}=\sum_jp_{ij}$；$f_X(x)=\int f(x,y)dy$</td></tr>
+<tr><td>条件分布</td><td>$P\{X=x_i|Y=y_j\}=\dfrac{p_{ij}}{p_{\cdot j}}$；$f_{X|Y}(x|y)=\dfrac{f(x,y)}{f_Y(y)}$</td></tr>
+<tr><td>独立性</td><td>$F=F_XF_Y\iff f=f_Xf_Y\iff p_{ij}=p_{i\cdot}p_{\cdot j}$；支撑非直积 ⇒ 不独立</td></tr>
+<tr><td>卷积公式</td><td>$f_{X+Y}(z)=\int f(x,z-x)dx$；独立 $\int f_X(x)f_Y(z-x)dx$</td></tr>
+<tr><td>正态可加性</td><td>独立时 $N(\mu_1,\sigma_1^2)+N(\mu_2,\sigma_2^2)=N(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2)$</td></tr>
+<tr><td>最值分布</td><td>独立时 $F_{\max}=F_XF_Y$；$F_{\min}=1-(1-F_X)(1-F_Y)$</td></tr>
+<tr><td>二维均匀分布</td><td>$f=1/S_D$（区域内），其余为 0</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>本章的推理链只有一条——<b>联合（全貌）→ 边缘与条件（切片）→ 独立（能否相乘）→ 函数分布（变换）</b>；每一步都用「求和/积分」与「除法」两个动作实现。</div>
+</section>
+
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>会写联合（表/密度）→ 会求边缘与条件 → 会判独立 → 会做卷积与最值。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 根据题意列出离散联合分布表（归一校验）或由 $\iint f=1$ 定参数；<br>
+② 求边缘分布（求和/积分）并验证归一性；<br>
+③ 求条件分布（除法）并验证归一性；<br>
+④ 用「支撑域—分离变量—算边缘」三板斧判断独立性，并能举出正反例；<br>
+⑤ 证明并使用卷积公式（含分段）与正态可加性；<br>
+⑥ 用 max/min 公式求分布（含串联/并联系统寿命解释）。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>投信 / 抽球 / 双变量表格</td><td>联合分布律 + 归一校验</td><td>§1 例1</td></tr>
+<tr><td>含参数联合密度</td><td>$\iint f=1$ 定参数；区域概率二重积分</td><td>§1 例2</td></tr>
+<tr><td>求单个变量的分布</td><td>边缘（求和/积分）</td><td>§2 例1–3</td></tr>
+<tr><td>「已知 Y=y 下 X 的分布」</td><td>条件分布（除法）</td><td>§3 例1、2</td></tr>
+<tr><td>判断独立</td><td>支撑域 / 分离变量 / 算边缘</td><td>§4 例1、2</td></tr>
+<tr><td>$Z=X+Y$ 的分布</td><td>卷积（分段）</td><td>§5 例2</td></tr>
+<tr><td>正态之和</td><td>可加性定理</td><td>§5 定理</td></tr>
+<tr><td>max / min / 系统寿命</td><td>最值公式 + 求导</td><td>§5 例3、4</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ 独立证明矩形公式（两次互斥分解）（§1）<br>
+☐ 独立完成邮筒联合表并双验（归一 + 枚举）（§1 例1）<br>
+☐ 默写边缘与条件公式，说明「条件 = 联合 ÷ 边缘」（§2–§3）<br>
+☐ 完整证明连续型的独立等价刻画（两个方向）（§4）<br>
+☐ 独立推导卷积公式，并完成两均匀之和的分段计算（§5 例2）<br>
+☐ 复述正态可加性证明的配方思路；用 $X\sim N(0,1),Y\sim N(1,1)$ 验证 $P\{X+Y\le1\}=1/2$（§5）
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>概率论与数理统计 · 第三章 多维随机变量及其分布 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
