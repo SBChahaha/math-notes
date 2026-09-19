@@ -46,7 +46,9 @@ th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-ali
 tbody tr:nth-child(even){background:#fffbf7}
 pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
 pre.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:16px 20px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.86rem;line-height:1.75;white-space:pre}
-pre.mermaid{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:12px;overflow-x:auto;text-align:center;color:#94a3b8;font-size:.85rem}
+pre.mermaid{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:12px;overflow-x:auto;text-align:center;color:#94a3b8;font-size:.85rem;-webkit-overflow-scrolling:touch}
+pre.mermaid svg{max-width:none !important}
+.mermaid-hint{margin:2px 0 14px;text-align:right;font-size:.78rem;color:#94a3b8}
 footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
 #btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(234,88,12,.35)}
 #btt.show{opacity:1;pointer-events:auto}
@@ -514,7 +516,7 @@ graph TD
     if(i>=murls.length){return;}
     var s=document.createElement("script");
     s.src=murls[i];s.async=true;
-    s.onload=function(){try{mermaid.initialize({startOnLoad:false,theme:"neutral",securityLevel:"loose"});mermaid.run({querySelector:".mermaid"});}catch(e){}};
+    s.onload=function(){try{mermaid.initialize({startOnLoad:false,theme:"neutral",securityLevel:"loose",themeVariables:{fontSize:"18px"},flowchart:{useMaxWidth:false,htmlLabels:true,nodeSpacing:30,rankSpacing:40},sequence:{useMaxWidth:false}});mermaid.run({querySelector:".mermaid"}).then(function(){document.querySelectorAll("pre.mermaid").forEach(function(p){if(p.scrollWidth>p.clientWidth+8){var d=document.createElement("div");d.className="mermaid-hint";d.textContent="↔ 图较宽，可左右滑动查看完整内容";p.insertAdjacentElement("afterend",d);}});});}catch(e){}};
     s.onerror=function(){mload(i+1);};
     document.head.appendChild(s);
   }
