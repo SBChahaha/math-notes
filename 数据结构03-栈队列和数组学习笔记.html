@@ -86,22 +86,24 @@ window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$
 <section class="card" id="sec-0">
 <h2><span class="num">00</span>知识地图</h2>
 <div class="box tip"><b>本章地位：</b>两种「操作受限的线性表」——栈（后进先出）与队列（先进先出），加上数组的存储与矩阵压缩。408 的考查方式：<b>出栈序列判断、循环队列判空判满、地址与压缩公式计算</b>是三大计算题型。</div>
-<pre class="flow">第三章 栈、队列和数组
-├─ 栈（LIFO）（§1–§2）
-│   ├─ 顺序栈：top 指针 + 数组（共享栈两端生长）
-│   ├─ 链栈：头插即入栈，永不满
-│   └─ 考点：出栈序列合法性（模拟 + 卡特兰数计数）
-├─ 队列（FIFO）（§3–§4）
-│   ├─ 循环队列：判空判满三方案（牺牲单元 / size / tag）
-│   ├─ 链式队列：front 头结点 + rear 尾结点（出空要改 rear）
-│   └─ 双端队列：两端进出（输入/输出受限变体）
-├─ 应用（§5）
-│   ├─ 括号匹配（栈）
-│   ├─ 表达式：中缀 → 后缀（栈）→ 求值（栈）
-│   └─ 递归：每个调用压一个栈帧
-└─ 数组与压缩（§6–§7）
-    ├─ 地址计算：行优先 / 列优先公式
-    └─ 特殊矩阵：对称 / 三角 / 三对角 / 稀疏
+<pre class="mermaid">
+graph TD
+  R["第三章 栈、队列和数组"]
+  R --> A["§1–§2 栈（LIFO）"]
+  A --> A1["顺序栈：top + 数组；共享栈两端生长"]
+  A --> A2["链栈：头插即入栈，永不满"]
+  A --> A3["考点：出栈序列（模拟 + 卡特兰数）"]
+  R --> B["§3–§4 队列（FIFO）"]
+  B --> B1["循环队列：判空判满三方案"]
+  B --> B2["链式队列：出空要改 rear"]
+  B --> B3["双端队列：两端进出"]
+  R --> C["§5 应用"]
+  C --> C1["括号匹配"]
+  C --> C2["中缀 → 后缀 → 求值"]
+  C --> C3["递归 = 栈帧"]
+  R --> D["§6–§7 数组与压缩"]
+  D --> D1["地址计算：行优先 / 列优先"]
+  D --> D2["特殊矩阵：对称 / 三角 / 三对角 / 稀疏"]
 </pre>
 </section>
 
@@ -187,14 +189,11 @@ bool Pop(LiStack &L, ElemType &x) {       // 出栈
 <h2><span class="num">03</span>循环队列<span class="tag">判空判满必考</span></h2>
 <div class="box def"><b>队列：</b>只允许在一端（队尾 rear）插入、另一端（队头 front）删除的线性表——<b>先进先出（FIFO）</b>。<br>
 <b>顺序队列的假溢出：</b>front、rear 只增不减，出队后的空间无法复用——即使数组没满也「看似满了」。解决办法：把数组在逻辑上「掰弯」成环——<b>循环队列</b>（指针移动用取模）。</div>
-<pre class="flow">循环队列示意（MaxSize = 6，牺牲单元法）
- 下标:   0     1     2     3     4     5
-       [ a ] [ b ] [ c ] [   ] [   ] [   ]
-         ↑front            ↑rear
- 入队：Q.rear = (Q.rear + 1) % MaxSize
- 出队：Q.front = (Q.front + 1) % MaxSize
- 元素数 = (Q.rear − Q.front + MaxSize) % MaxSize
- 注：入队先存 data[rear] 再移 rear；出队先取 data[front] 再移 front。</pre>
+<table>
+<thead><tr><th>下标</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+<tbody><tr><td>内容</td><td><b>a</b> ← front</td><td>b</td><td>c</td><td><b>rear</b>（下次入队处）</td><td>空</td><td>空</td></tr></tbody>
+</table>
+<b>入队：</b><code>Q.rear = (Q.rear + 1) % MaxSize</code>（先存 data[rear] 再移）；<b>出队：</b><code>Q.front = (Q.front + 1) % MaxSize</code>（先取再移）；<b>元素数</b> $=(Q.rear-Q.front+M)\%M$。
 <div class="thm"><span class="label">判空判满三方案（必背对比）</span>
 <table>
 <thead><tr><th>方案</th><th>队空条件</th><th>队满条件</th><th>元素个数</th><th>最大容量</th></tr></thead>
@@ -423,22 +422,21 @@ $$\text{结果：}\ A\ B\ +\ C\ *\ D\ -$$
 
 <section class="card" id="sec-9">
 <h2><span class="num">09</span>决策流程与易错点</h2>
-<pre class="flow">栈、队列与数组题
-├─ 栈
-│   ├─ 判空 top==−1 / L->next==NULL；判满 top==MaxSize−1 / 共享栈 top0+1==top1
-│   └─ 出栈序列：模拟法逐步推演（卡特兰数只算「有多少种」）
-├─ 循环队列
-│   ├─ 先认准判满方案：牺牲单元 / size / tag
-│   ├─ 元素数 = (rear − front + M) % M
-│   └─ 指针移动：一律 (p + 1) % M
-├─ 链式队列
-│   └─ 出队删到空时：rear 回指 front（头结点）
-├─ 表达式
-│   ├─ 中缀→后缀：栈顶 ≥ 当前就弹出；括号特殊处理
-│   └─ 后缀求值：先弹出的是右操作数
-└─ 数组与矩阵
-    ├─ 地址：行优先 × 列数 n；列优先 × 行数 m（注意下标起点）
-    └─ 压缩：判断矩阵类型 → 套映射公式 → 验证首个元素 k=0
+<pre class="mermaid">
+graph TD
+  Q["栈、队列与数组题"] --> C1["栈"]
+  C1 --> C1a["判空/判满：top==−1 与 MaxSize−1；共享栈 top0+1==top1"]
+  C1 --> C1b["出栈序列：模拟推演（卡特兰数只算种数）"]
+  Q --> C2["循环队列"]
+  C2 --> C2a["先认判满方案：牺牲单元 / size / tag"]
+  C2 --> C2b["元素数 = (rear − front + M) % M"]
+  Q --> C3["链式队列：删到空时 rear 回指 front"]
+  Q --> C4["表达式"]
+  C4 --> C4a["中缀→后缀：栈顶 ≥ 当前就弹；括号特殊"]
+  C4 --> C4b["后缀求值：先弹右操作数"]
+  Q --> C5["数组与矩阵"]
+  C5 --> C5a["地址：行优先 × 列数；列优先 × 行数"]
+  C5 --> C5b["压缩：判类型 → 套公式 → 验首个元素 k=0"]
 </pre>
 <h3>易错点清单</h3>
 <div class="box warn">

@@ -86,19 +86,17 @@ window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$
 <section class="card" id="sec-0">
 <h2><span class="num">00</span>知识地图</h2>
 <div class="box tip"><b>本章地位：</b>串的操作以「模式匹配」为核心——从朴素的暴力匹配（BF，最坏 $O(nm)$）到 KMP（$O(n+m)$）。<b>next 与 nextval 数组的手算</b>是 408 选择题与大题的高频区域，务必练到条件反射。</div>
-<pre class="flow">第四章 串
-├─ 基本概念与存储（§1）
-│   ├─ 串 / 子串 / 主串 / 模式串；空串 vs 空格串
-│   └─ 三种存储：定长顺序 / 堆分配 / 块链
-├─ 朴素模式匹配 BF（§2）
-│   └─ 主串指针回溯：最坏 O(nm)
-├─ KMP（§3–§6，全章核心）
-│   ├─ 原理：失配时 i 不回溯，用「最长公共前后缀」定 j 的新位置
-│   ├─ next 数组：定义手算 + 递推算法（get_next）
-│   ├─ 匹配过程：主串只进不退 O(n+m)
-│   └─ nextval：消除「同字符重复失配」的无效比较
-└─ 手算训练（§7）
-    └─ 给定模式串 → 求 next / nextval → 模拟匹配轨迹
+<pre class="mermaid">
+graph TD
+  R["第四章 串"]
+  R --> A["§1 基本概念与存储<br/>串/子串/主串；定长·堆分配·块链"]
+  R --> B["§2 朴素匹配 BF<br/>主串指针回溯：最坏 O(nm)"]
+  R --> C["§3–§6 KMP（全章核心）"]
+  C --> C1["原理：i 不回溯，最长公共前后缀定 j"]
+  C --> C2["next：定义手算 + 递推算法"]
+  C --> C3["匹配：主串只进不退 O(n+m)"]
+  C --> C4["nextval：消除同字符重复失配"]
+  R --> D["§7 手算训练<br/>求 next / nextval → 模拟轨迹"]
 </pre>
 </section>
 
@@ -372,19 +370,17 @@ nextval = {0, 1, 0, 1, 0, 4}。<br>
 
 <section class="card" id="sec-8">
 <h2><span class="num">08</span>决策流程与易错点</h2>
-<pre class="flow">串匹配题
-├─ 手算 next / nextval
-│   ├─ next：next[1]=0；next[j] = T[1..j−1] 最长公共前后缀长度 + 1
-│   ├─ 递推验证：k=next[j]，比 T[j] 与 T[k]（失配则 k=next[k] 再比）
-│   ├─ nextval：比 T[j] 与 T[next[j]]——同 ⇒ 继承 nextval[next[j]]；异 ⇒ 取 next[j]
-│   └─ 必查固定值：next[2]=1；nextval[1]=0
-├─ 模拟 KMP
-│   ├─ 主串指针 i 永不回退
-│   ├─ 失配：j = next[j]（或 nextval[j]）
-│   └─ j==0 特殊：i++、j=1
-└─ 复杂度回答
-    ├─ BF：最坏 O(nm)
-    └─ KMP：O(n+m)，空间 O(m)
+<pre class="mermaid">
+graph TD
+  Q["串匹配题"] --> C1["手算 next / nextval"]
+  C1 --> C1a["next[1]=0；next[j] = 最长公共前后缀 + 1"]
+  C1 --> C1b["递推：比 T[j] 与 T[k]，失配 k=next[k]"]
+  C1 --> C1c["nextval：同字符继承 nextval[next[j]]"]
+  C1 --> C1d["必查：next[2]=1；nextval[1]=0"]
+  Q --> C2["模拟 KMP"]
+  C2 --> C2a["主串指针 i 永不回退；失配 j=next[j]"]
+  C2 --> C2b["j==0 特殊：i++、j=1"]
+  Q --> C3["复杂度：BF 最坏 O(nm)；KMP O(n+m)、空间 O(m)"]
 </pre>
 <h3>易错点清单</h3>
 <div class="box warn">

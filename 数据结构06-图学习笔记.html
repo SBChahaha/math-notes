@@ -87,22 +87,23 @@ window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$
 <section class="card" id="sec-0">
 <h2><span class="num">00</span>知识地图</h2>
 <div class="box tip"><b>本章地位：</b>408 图论部分——存储结构四件套 + 遍历（BFS/DFS）+ 四大应用算法（最小生成树、最短路径、拓扑排序、关键路径）。<b>每个算法都要能口述流程、手推轨迹、答复杂度</b>，是大题的重灾区也是大题的机会区。</div>
-<pre class="flow">第六章 图
-├─ 基本概念（§1）
-│   └─ 度与边、完全图、连通/强连通、生成树
-├─ 存储结构（§2）
-│   ├─ 邻接矩阵（稠密、O(n²)、随机判边）
-│   ├─ 邻接表（稀疏、O(n+e)、出度易/入度难）
-│   ├─ 十字链表（有向图：出入边一网打尽）
-│   └─ 邻接多重表（无向图：每条边只存一个结点）
-├─ 遍历（§3–§4）
-│   ├─ BFS：队列分层（无权图最短路！）
-│   └─ DFS：栈/递归（生成森林）
-└─ 四大应用（§5–§8）
-    ├─ 最小生成树：Prim（加点 O(n²)）/ Kruskal（加边 O(e log e)）
-    ├─ 最短路径：Dijkstra（单源贪心）/ Floyd（全源 DP）
-    ├─ 拓扑排序：入度为 0 出栈删边（AOV 网）
-    └─ 关键路径：ve/vl/e/l（AOE 网）
+<pre class="mermaid">
+graph TD
+  R["第六章 图"]
+  R --> A["§1 基本概念：度与边、完全图、连通/强连通、生成树"]
+  R --> B["§2 存储结构"]
+  B --> B1["邻接矩阵（稠密、O(n²)、随机判边）"]
+  B --> B2["邻接表（稀疏、O(n+e)、出度易入度难）"]
+  B --> B3["十字链表（有向图：出入边一次搞定）"]
+  B --> B4["邻接多重表（无向图：每条边只存一个结点）"]
+  R --> C["§3–§4 遍历"]
+  C --> C1["BFS：队列分层（无权图最短路）"]
+  C --> C2["DFS：栈/递归（生成森林）"]
+  R --> D["§5–§8 四大应用"]
+  D --> D1["最小生成树：Prim 加点 O(n²) / Kruskal 加边 O(e log e)"]
+  D --> D2["最短路径：Dijkstra 单源贪心 / Floyd 全源 DP"]
+  D --> D3["拓扑排序：入度为 0 出栈删边（AOV 网）"]
+  D --> D4["关键路径：ve / vl / e / l（AOE 网）"]
 </pre>
 </section>
 
@@ -218,7 +219,10 @@ void BFS(Graph G, int v) {          // 从顶点 v 出发，一次连通分量
 <b>层数视角：</b>入队次序恰好是「距离不降」的——队列天然保证了分层。</div>
 <div class="box example">
 <b>例（对贯穿示例图从 1 出发的 BFS，邻接次序升序）.</b>
-<pre class="flow">邻接表：1:2,3  2:1,4,5  3:1,6,7  4:2,8  5:2,8  6:3,8  7:3,8  8:4,5,6,7</pre>
+<table>
+<thead><tr><th>顶点</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr></thead>
+<tbody><tr><td>邻接点（升序）</td><td>2, 3</td><td>1, 4, 5</td><td>1, 6, 7</td><td>2, 8</td><td>2, 8</td><td>3, 8</td><td>3, 8</td><td>4, 5, 6, 7</td></tr></tbody>
+</table>
 <table>
 <thead><tr><th>出队</th><th>新访问的邻接点</th><th>队列（入队后）</th><th>访问序列</th></tr></thead>
 <tbody>
@@ -255,16 +259,16 @@ void BFS(Graph G, int v) {          // 从顶点 v 出发，一次连通分量
 <b>非递归版（显式栈）：</b>入栈即访问的变体——把「Push 未访问邻居」循环替代递归（注意与递归顺序的细微差别，考试以递归版为主）。</div>
 <div class="box example">
 <b>例（对贯穿示例图从 1 出发的 DFS 递归轨迹）.</b>
-<pre class="flow">DFS(1)→访问1→邻居2未访问→DFS(2)
-  DFS(2)：邻居1已访→4未访→DFS(4)
-    DFS(4)：邻居2已访→8未访→DFS(8)
-      DFS(8)：邻居4已访→5未访→DFS(5)
-        DFS(5)：邻居2、8都已访→回退
-      DFS(8)续：6未访→DFS(6)
-        DFS(6)：邻居3未访→DFS(3)
-          DFS(3)：邻居1已访→6已访→7未访→DFS(7)
-            DFS(7)：邻居3、8都已访→回退
-      （全部回退，遍历结束）</pre>
+<div class="box method"><b>DFS 轨迹（从 1 出发，邻接表升序）：</b><br>
+DFS(1) → 访问 1 → 邻居 2 未访 → 深入 DFS(2)<br>
+&nbsp;&nbsp;DFS(2)：1 已访 → 4 未访 → 深入 DFS(4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;DFS(4)：2 已访 → 8 未访 → 深入 DFS(8)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DFS(8)：4 已访 → 5 未访 → 深入 DFS(5)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DFS(5)：2、8 都已访 → 回退<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DFS(8) 续：6 未访 → 深入 DFS(6)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DFS(6)：3 未访 → 深入 DFS(3)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DFS(3)：1、6 已访 → 7 未访 → 深入 DFS(7)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DFS(7)：3、8 都已访 → 回退（全部回退，遍历结束）</div>
 <b>DFS 序列：1, 2, 4, 8, 5, 6, 3, 7</b>；<b>DFS 生成树边</b>：$(1,2),(2,4),(4,8),(8,5),(8,6),(6,3),(3,7)$ 共 7 条 ✓。<br>
 <b>观察：</b>与 BFS 序列（1,2,3,4,5,6,7,8）截然不同——但两种都是合法遍历，起点、邻接次序一变序列就变。</div>
 <div class="thm"><span class="label">DFS 复杂度与性质</span>
@@ -278,9 +282,19 @@ void BFS(Graph G, int v) {          // 从顶点 v 出发，一次连通分量
 <div class="box def"><b>最小生成树（MST）：</b>连通网中边权总和最小的生成树。两大算法都是贪心——先记结论：<b>MST 的边数 = $n-1$；等权时 MST 可能不唯一，但最小权值总和唯一。</b></div>
 <div class="box example">
 <b>贯穿示例（6 顶点带权图）.</b>
-<pre class="flow">顶点 1–6，边与权：
-(1,2)=6  (1,3)=1  (1,4)=5  (2,3)=5  (2,5)=3
-(3,4)=5  (3,5)=6  (3,6)=4  (4,6)=2  (5,6)=6</pre></div>
+<pre class="mermaid">
+graph LR
+  N1((1)) ---|6| N2((2))
+  N1 ---|1| N3((3))
+  N1 ---|5| N4((4))
+  N2 ---|5| N3
+  N2 ---|3| N5((5))
+  N3 ---|5| N4
+  N3 ---|6| N5
+  N3 ---|4| N6((6))
+  N4 ---|2| N6
+  N5 ---|6| N6
+</pre></div>
 <h3>（1）Prim：加点法（从任一顶点开始「向集合外生长」）</h3>
 <div class="box method"><b>流程：</b>把起点放进集合 $U$；每次从「一端在 $U$、另一端不在 $U$」的边中选<b>权最小</b>的，把新顶点拉进 $U$；重复 $n-1$ 次。</div>
 <div class="box example">
@@ -364,11 +378,15 @@ void BFS(Graph G, int v) {          // 从顶点 v 出发，一次连通分量
 <b>递推含义：</b>$A^{(k)}[i][j]=\min\left(A^{(k-1)}[i][j],\ A^{(k-1)}[i][k]+A^{(k-1)}[k][j]\right)$——「只允许用前 $k$ 个点中转」的最短路。三重循环 ⇒ $O(n^3)$；允许负权，但<b>不能有负环</b>。</div>
 <div class="box example">
 <b>例（三顶点小例：1→2=6、1→3=3、3→2=2）.</b>
-<pre class="flow">初始矩阵 D⁰：         k=3 时发现更短：
-     1   2   3              d[1][2] = min(6, d[1][3]+d[3][2])
- 1  [ 0   6   3 ]                      = min(6, 3+2) = 5  ⇒ 更新 ✓
- 2  [ ∞   0   ∞ ]        路径：1 → 3 → 2（长度 5 < 6）
- 3  [ ∞   2   0 ]</pre>
+<table>
+<thead><tr><th>D⁰</th><th>1</th><th>2</th><th>3</th></tr></thead>
+<tbody>
+<tr><th>1</th><td>0</td><td>6</td><td>3</td></tr>
+<tr><th>2</th><td>∞</td><td>0</td><td>∞</td></tr>
+<tr><th>3</th><td>∞</td><td>2</td><td>0</td></tr>
+</tbody>
+</table>
+<b>k=3 时发现更短：</b>$d[1][2]=\min(6,\ d[1][3]+d[3][2])=\min(6,\ 3+2)=5$ ⇒ 更新 ✓（路径 1 → 3 → 2，长度 $5 \lt 6$）。
 <b>验算：</b>$k=1,2$ 轮无更新（无更多中转可能）；最终 $d(1,2)=5$ ✓。</div>
 <div class="box tip"><b>Dijkstra vs Floyd 对答表：</b>
 <table>
@@ -480,25 +498,24 @@ $$e(a)=ve(i),\qquad l(a)=vl(j)-w(i,j)$$
 
 <section class="card" id="sec-10">
 <h2><span class="num">10</span>决策流程与易错点</h2>
-<pre class="flow">图论题
-├─ 概念计算
-│   ├─ Σdeg=2e；有向 Σ入=Σ出=e
-│   ├─ 完全图 n(n−1)/2；非连通最多 (n−1)(n−2)/2
-│   └─ 连通最少 n−1 边；强连通有向最少 n 弧
-├─ 存储选择
-│   ├─ 稠密 / 随机判边 → 邻接矩阵 O(n²)
-│   ├─ 稀疏 → 邻接表 O(n+e)（出度易、入度难）
-│   ├─ 有向 + 出入度都要 → 十字链表
-│   └─ 无向 + 频繁删边 → 邻接多重表
-├─ 遍历
-│   ├─ BFS：队列分层；无权图最短路
-│   └─ DFS：递归深钻；连通性/判环
-├─ 四大应用
-│   ├─ MST：Prim 稠密 O(n²) / Kruskal 稀疏 O(e log e)
-│   ├─ 最短路：Dijkstra 单源非负 O(n²) / Floyd 全源 O(n³)
-│   ├─ 拓扑排序：入度 0 出栈；count&lt;n 判环
-│   └─ 关键路径：ve 正推 / vl 逆推 / 余量为 0
-└─ 收尾：邻接次序是否给定（决定序列唯一性）
+<pre class="mermaid">
+graph TD
+  Q["图论题"] --> C1["概念计算"]
+  C1 --> C1a["Σdeg=2e；有向 Σ入=Σ出=e"]
+  C1 --> C1b["完全图 n(n−1)/2；非连通最多 (n−1)(n−2)/2"]
+  C1 --> C1c["连通最少 n−1 边；强连通有向最少 n 弧"]
+  Q --> C2["存储选择"]
+  C2 --> C2a["稠密 / 随机判边 → 邻接矩阵 O(n²)"]
+  C2 --> C2b["稀疏 → 邻接表 O(n+e)（出度易、入度难）"]
+  C2 --> C2c["有向 + 出入度都要 → 十字链表"]
+  C2 --> C2d["无向 + 频繁删边 → 邻接多重表"]
+  Q --> C3["遍历：BFS 分层（无权最短路）；DFS 深钻（连通/判环）"]
+  Q --> C4["四大应用"]
+  C4 --> C4a["MST：Prim 稠密 O(n²) / Kruskal 稀疏 O(e log e)"]
+  C4 --> C4b["最短路：Dijkstra 单源非负 O(n²) / Floyd 全源 O(n³)"]
+  C4 --> C4c["拓扑排序：入度 0 出栈；count 不足 n 判环"]
+  C4 --> C4d["关键路径：ve 正推 / vl 逆推 / 余量为 0"]
+  Q --> C5["收尾：邻接次序是否给定（决定序列唯一性）"]
 </pre>
 <h3>易错点清单</h3>
 <div class="box warn">
