@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据结构04 · 串 · 完全教程（王道体系）</title>
+<style>
+:root{--bg:#f2fbf8;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#0d9488;--accent2:#5eead4;--soft:#f0fdfa}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#134e4a,#0d9488 55%,#5eead4);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#ccfbf1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#0f766e;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#134e4a}
+.card h3{font-size:1.05rem;color:#0f766e;margin:24px 0 8px;padding-left:10px;border-left:4px solid #5eead4}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#2dd4bf,#14b8a6);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#f0fdfa;border-color:#5eead4}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #99f6e4;border-left:4px solid #2dd4bf;background:#fbfefd;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#0f766e;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#0f766e;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f6fdfb}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+pre.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:16px 20px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.86rem;line-height:1.75;white-space:pre}
+pre.mermaid{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:12px;overflow-x:auto;text-align:center;color:#94a3b8;font-size:.85rem}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(13,148,136,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>数据结构 · 第四章 串 · 完全教程</h1>
+<p>王道体系 · KMP 原理讲透 + next/nextval 全套手算 + 伪代码</p>
+<div class="chips"><span>串与存储</span><span>朴素匹配 BF</span><span>KMP 原理</span><span>next 数组</span><span>nextval 优化</span><span>复杂度对比</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 串的基本概念与存储结构</a>
+<a href="#sec-2">02 · 朴素模式匹配（BF）</a>
+<a href="#sec-3">03 · KMP 原理：最长公共前后缀</a>
+<a href="#sec-4">04 · next 数组的求法</a>
+<a href="#sec-5">05 · KMP 匹配过程与代码</a>
+<a href="#sec-6">06 · nextval：KMP 的优化</a>
+<a href="#sec-7">07 · 典型例题</a>
+<a href="#sec-8">08 · 决策流程与易错点</a>
+<a href="#sec-9">09 · 速查表</a>
+<a href="#sec-10">10 · 能力自查</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章地位：</b>串的操作以「模式匹配」为核心——从朴素的暴力匹配（BF，最坏 $O(nm)$）到 KMP（$O(n+m)$）。<b>next 与 nextval 数组的手算</b>是 408 选择题与大题的高频区域，务必练到条件反射。</div>
+<pre class="flow">第四章 串
+├─ 基本概念与存储（§1）
+│   ├─ 串 / 子串 / 主串 / 模式串；空串 vs 空格串
+│   └─ 三种存储：定长顺序 / 堆分配 / 块链
+├─ 朴素模式匹配 BF（§2）
+│   └─ 主串指针回溯：最坏 O(nm)
+├─ KMP（§3–§6，全章核心）
+│   ├─ 原理：失配时 i 不回溯，用「最长公共前后缀」定 j 的新位置
+│   ├─ next 数组：定义手算 + 递推算法（get_next）
+│   ├─ 匹配过程：主串只进不退 O(n+m)
+│   └─ nextval：消除「同字符重复失配」的无效比较
+└─ 手算训练（§7）
+    └─ 给定模式串 → 求 next / nextval → 模拟匹配轨迹
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>串的基本概念与存储结构<span class="tag">概念</span></h2>
+<div class="box def"><b>串（字符串）：</b>由零个或多个字符组成的<b>有限序列</b>，记 $S="a_1a_2\cdots a_n"$；$n$ 为串长，$n=0$ 时是<b>空串</b>。<br>
+· <b>子串</b>：串中任意个<b>连续</b>字符组成的子序列；<b>主串</b>：包含子串的串；<br>
+· 字符在串中的位置从 <b>1</b> 开始计；子串出现在主串中的位置 = 其第一个字符在主串中的位置；<br>
+· <b>串相等</b>：长度相同且各位字符一一相同；<br>
+· 辨析：<b>空串</b>（长度 0）与<b>空格串</b>（由空格组成，长度 ≥ 1）完全不同——「空串是任意串的子串」。</div>
+<div class="box def"><b>三种存储结构：</b><br>
+① <b>定长顺序存储：</b>
+<pre class="code">#define MAXLEN 255
+typedef struct {
+    char ch[MAXLEN];      // 每个分量存一个字符（下标 0 不用，从 1 开始）
+    int length;           // 串长
+} SString;</pre>
+超出 MAXLEN 时「截断」——这是与顺序表一样的固有问题；<br>
+② <b>堆分配存储：</b>起始地址 + 长度，用 <code>malloc</code> 按需分配（长串更合适）；<br>
+③ <b>块链存储：</b>每个结点存<b>多个字符</b>（结点大小可调）——存储密度高，但操作与链表一样繁琐。</div>
+</section>
+
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>朴素模式匹配（BF）<span class="tag">暴力对照</span></h2>
+<div class="box method"><b>BF（Brute-Force）思想：</b>把模式串 T 与主串 S 从左到右逐字符比较——失配时<b>主串指针回溯</b>：从本趟起点的下一个位置重新开始（i 退到 $i-j+2$），j 回到 1。</div>
+<div class="box example">
+<b>例（BF 代码，定长顺序存储）.</b>
+<pre class="code">int Index_BF(SString S, SString T) {
+    int i = 1, j = 1;
+    while (i <= S.length && j <= T.length) {
+        if (S.ch[i] == T.ch[j]) { i++; j++; }   // 当前字符相同：齐步走
+        else { i = i - j + 2; j = 1; }          // 【回退】模式串右滑一位
+    }
+    if (j > T.length) return i - T.length;      // 匹配成功，返回起始位置
+    else return 0;                              // 失败
+}</pre>
+<b>回退公式解读：</b>本趟从 $i-j+1$ 开始比较，失配后从它的下一个位置 $i-j+2$ 重启——<b>主串指针往回走就是 BF 慢的根源</b>。</div>
+<div class="box example">
+<b>例（BF 的最坏情形）.</b> 主串 $S="00000000001"$（9 个 0 + 1），模式串 $T="00001"$。<br>
+① 每趟都要比较到 T 的第 5 位才失配 ⇒ 每趟 5 次比较；<br>
+② 需要 $(n-m+1)$ 趟 ⇒ 总比较约 $5(n-4)$ 次；<br>
+③ 一般化：$S$ 形如 $0\cdots01$、$T$ 形如 $0\cdots01$（前面全 0）时，每趟几乎比完整个 T ⇒
+$$T_{\text{worst}}(n,m)=O(nm)$$
+<b>对照：</b>一般乱序文本下平均接近 $O(n+m)$，但 408 问「最坏」时必须答 $O(nm)$。</div>
+<div class="box tip"><b>BF 的两个结论（选择题原话）：</b>① 最坏时间复杂度 $O(nm)$（$n,m$ 为主串、模式串长度）；② 每趟失配后模式串只<b>右移一位</b>——「笨」在不肯多滑，KMP 就是让它「按自己的规律多滑几步」。</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>KMP 原理：最长公共前后缀<span class="tag">思想核心</span></h2>
+<div class="box def"><b>KMP 的目标：</b>让<b>主串指针 i 永不回溯</b>——失配时只把模式串向右「按自己的规律」滑动，j 退到一个合适的位置继续比。<br>
+<b>为什么能做到：</b>失配前已有 T[1..j−1] 与主串（以 i 结尾的一段）<b>完全相等</b>；于是「T 的前缀」与「主串已匹配段的后缀」中相同的部分可以直接复用——只需研究<b>模式串自身</b>的前后缀重合情况。</div>
+<div class="box def"><b>三个术语（以 T = "abaab" 为例）：</b><br>
+· <b>前缀：</b>从第一个字符开始、不包含最后一位的连续子串：a、ab、aba、abaa；<br>
+· <b>后缀：</b>以最后一个字符结尾、不包含第一位的连续子串：b、ab、aab、baab；<br>
+· <b>最长公共前后缀：</b>两边都出现且长相等的最大者——这里 "ab"（长度 2）。<br>
+<b>约定：</b>前后缀必须是<b>真</b>前缀/真后缀（不能取整个串）。</div>
+<div class="thm"><span class="label">next 数组的含义（王道约定）</span>
+$$\text{next}[j]=1+\big(T[1..j-1]\ \text{的最长公共前后缀长度}\big)$$
+即：当 T 的<b>第 j 位</b>与主串失配时，下一步用 T 的第 next[j] 位与主串当前位继续比较。<br>
+<b>两个必背特例：</b>next[1] = <b>0</b>（第一位就失配 ⇒ 特殊处理：主串右移一位、j 复位）；next[2] = <b>1</b>（前串只有一个字符，无真公共前后缀）。</div>
+<pre class="mermaid">
+graph LR
+  A["T[j] 与主串失配<br/>已匹配 T[1..j−1]"] --> B["找 T[1..j−1] 的<br/>最长公共前后缀（长 k−1）"]
+  B --> C["主串指针 i 不动<br/>j 滑到 next[j] = k"]
+  C --> D["继续比较 T[j] 与主串当前位"]
+</pre>
+<div class="box example">
+<b>例（直观理解滑动）.</b> T = "abaabc"，在主串某处已匹配前 3 位 "aba"、第 4 位失配：<br>
+① "aba" 的最长公共前后缀是 "a"（长 1）⇒ next[4] = 2；<br>
+② 于是直接把 T 滑到让 T 的第 2 位对齐主串当前位置——因为模式串前 3 位 "aba" 与主串匹配段相同，滑 1 位后 T[2..3]="ba" 与主串尾部 "ba" 天然对上，<b>无需回头重比</b>；<br>
+③ 对照 BF：BF 会把主串指针退回、从 T[1] 重新比——这正是被省下的浪费 ✓。</div>
+</section>
+
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>next 数组的求法<span class="tag">手算必过关</span></h2>
+<div class="box method"><b>方法一：定义法（稳，推荐先掌握）</b>——对每个 j 独立计算：<br>
+① next[1] = 0；<br>
+② 对 $j\ge2$：写出 T[1..j−1]，找其最长公共前后缀长度 $L$，则 next[j] = $L+1$。</div>
+<div class="box example">
+<b>例 1（定义法全过程：T = "abaabc"）.</b>
+<table>
+<thead><tr><th>$j$</th><th>考察串 T[1..j−1]</th><th>最长公共前后缀</th><th>长度</th><th>next[j]</th><th></th></tr></thead>
+<tbody>
+<tr><td>1</td><td>（无前串）</td><td>—</td><td>—</td><td><b>0</b></td><td>固定</td></tr>
+<tr><td>2</td><td>a</td><td>无（真前后缀不存在）</td><td>0</td><td><b>1</b></td><td>固定</td></tr>
+<tr><td>3</td><td>ab</td><td>无</td><td>0</td><td><b>1</b></td><td></td></tr>
+<tr><td>4</td><td>aba</td><td>a</td><td>1</td><td><b>2</b></td><td></td></tr>
+<tr><td>5</td><td>abaa</td><td>a</td><td>1</td><td><b>2</b></td><td></td></tr>
+<tr><td>6</td><td>abaab</td><td>ab</td><td>2</td><td><b>3</b></td><td></td></tr>
+</tbody>
+</table>
+<b>结论：</b>next = $\{0,\ 1,\ 1,\ 2,\ 2,\ 3\}$（j = 1…6）✓。</div>
+<div class="box method"><b>方法二：递推法（快，会流程图思想）</b>——已知 next[j] = k，求 next[j+1]：<br>
+① 比较 $T[j]$ 与 $T[k]$：<b>相等</b> ⇒ next[j+1] = k+1；<br>
+② <b>不等</b> ⇒ 令 $k = \text{next}[k]$ 继续比较（不断往前跳）；<br>
+③ 若 $k$ 退到 <b>0</b> ⇒ next[j+1] = 1。</div>
+<div class="box example">
+<b>例 2（递推法验证「abaabc」）.</b> 已知 next[1]=0、next[2]=1：<br>
+· 求 next[3]（j=2, k=next[2]=1）：T[2]=b vs T[1]=a ✗ ⇒ k=next[1]=0 ⇒ next[3]=1 ✓；<br>
+· 求 next[4]（j=3, k=next[3]=1）：T[3]=a vs T[1]=a ✓ ⇒ next[4]=1+1=2 ✓；<br>
+· 求 next[5]（j=4, k=next[4]=2）：T[4]=a vs T[2]=b ✗ ⇒ k=next[2]=1：T[4]=a vs T[1]=a ✓ ⇒ next[5]=2 ✓；<br>
+· 求 next[6]（j=5, k=next[5]=2）：T[5]=b vs T[2]=b ✓ ⇒ next[6]=3 ✓。<br>
+<b>与定义法结果完全一致</b>——两种方法互为验算。</div>
+<div class="box def"><b>get_next 递推代码（王道标准）：</b>
+<pre class="code">void get_next(SString T, int next[]) {
+    int i = 1, j = 0;
+    next[1] = 0;
+    while (i < T.length) {
+        if (j == 0 || T.ch[i] == T.ch[j]) {
+            i++;  j++;
+            next[i] = j;          // 递推核心：next[i] = j+1 的位置
+        } else {
+            j = next[j];          // 失配：j 往前跳
+        }
+    }
+}</pre>
+<b>轨迹表（T = "abaabc"，逐步执行）：</b>
+<table>
+<thead><tr><th>步</th><th>i</th><th>j</th><th>判断</th><th>动作</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>1</td><td>0</td><td>初始化</td><td>next[1] = 0</td></tr>
+<tr><td>2</td><td>1</td><td>0</td><td>j==0</td><td>i=2, j=1, next[2]=1</td></tr>
+<tr><td>3</td><td>2</td><td>1</td><td>T[2]=b vs T[1]=a ✗</td><td>j = next[1] = 0</td></tr>
+<tr><td>4</td><td>2</td><td>0</td><td>j==0</td><td>i=3, j=1, next[3]=1</td></tr>
+<tr><td>5</td><td>3</td><td>1</td><td>a vs a ✓</td><td>i=4, j=2, next[4]=2</td></tr>
+<tr><td>6</td><td>4</td><td>2</td><td>a vs b ✗</td><td>j = next[2] = 1</td></tr>
+<tr><td>7</td><td>4</td><td>1</td><td>a vs a ✓</td><td>i=5, j=2, next[5]=2</td></tr>
+<tr><td>8</td><td>5</td><td>2</td><td>b vs b ✓</td><td>i=6, j=3, next[6]=3</td></tr>
+<tr><td>9</td><td>6</td><td>3</td><td>c vs a ✗</td><td>j = next[3] = 1</td></tr>
+<tr><td>10</td><td>6</td><td>1</td><td>c vs a ✗</td><td>j = next[1] = 0</td></tr>
+<tr><td>11</td><td>6</td><td>0</td><td>j==0</td><td>i=7 > 6，循环结束</td></tr>
+</tbody>
+</table>
+<b>得 next = {0,1,1,2,2,3} ✓</b>。注意第 8 步之后 next[6]=3 已经写入——<b>next[i] 是在「i 前进」时顺带记录 j</b>。</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>KMP 匹配过程与代码<span class="tag">主串不回溯</span></h2>
+<div class="box def"><b>匹配代码（与 BF 的差别只有一行）：</b>
+<pre class="code">int Index_KMP(SString S, SString T, int next[]) {
+    int i = 1, j = 1;
+    while (i <= S.length && j <= T.length) {
+        if (j == 0 || S.ch[i] == T.ch[j]) { i++; j++; }
+        else j = next[j];        // 【KMP 核心】i 不动，j 按 next 滑
+    }
+    if (j > T.length) return i - T.length;
+    else return 0;
+}
+/* 用法：get_next(T, next); Index_KMP(S, T, next); */</pre>
+<b>与 BF 对比：</b>BF 失配执行 <code>i = i-j+2; j = 1</code>（主串回退）；KMP 只执行 <code>j = next[j]</code>——<b>主串指针只进不退</b>，这是全部性能优势的来源。</div>
+<div class="box example">
+<b>例（KMP 全程轨迹）.</b> 主串 $S=$"abacabaabc"（长 10），模式 $T=$"abaabc"，next = {0,1,1,2,2,3}。
+<table>
+<thead><tr><th>步</th><th>比较</th><th>结果</th><th>i</th><th>j</th><th>动作</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>S1=a vs T1=a</td><td>✓</td><td>2</td><td>2</td><td>齐步走</td></tr>
+<tr><td>2</td><td>S2=b vs T2=b</td><td>✓</td><td>3</td><td>3</td><td>齐步走</td></tr>
+<tr><td>3</td><td>S3=a vs T3=a</td><td>✓</td><td>4</td><td>4</td><td>齐步走</td></tr>
+<tr><td>4</td><td>S4=c vs T4=a</td><td>✗</td><td>4</td><td>2</td><td>j=next[4]=2（<b>i 不动</b>）</td></tr>
+<tr><td>5</td><td>S4=c vs T2=b</td><td>✗</td><td>4</td><td>1</td><td>j=next[2]=1</td></tr>
+<tr><td>6</td><td>S4=c vs T1=a</td><td>✗</td><td>4</td><td>0</td><td>j=next[1]=0</td></tr>
+<tr><td>7</td><td>（j==0 特殊）</td><td>—</td><td>5</td><td>1</td><td>主串右移一位，j 复位</td></tr>
+<tr><td>8</td><td>S5=a vs T1=a</td><td>✓</td><td>6</td><td>2</td><td>齐步走</td></tr>
+<tr><td>9</td><td>S6=b vs T2=b</td><td>✓</td><td>7</td><td>3</td><td>齐步走</td></tr>
+<tr><td>10</td><td>S7=a vs T3=a</td><td>✓</td><td>8</td><td>4</td><td>齐步走</td></tr>
+<tr><td>11</td><td>S8=a vs T4=a</td><td>✓</td><td>9</td><td>5</td><td>齐步走</td></tr>
+<tr><td>12</td><td>S9=b vs T5=b</td><td>✓</td><td>10</td><td>6</td><td>齐步走</td></tr>
+<tr><td>13</td><td>S10=c vs T6=c</td><td>✓</td><td>11</td><td>7</td><td>j > 6，循环结束</td></tr>
+</tbody>
+</table>
+<b>结果：</b>返回 $i-\text{length}(T)=11-6=5$，即模式串在主串第 <b>5</b> 个位置首次匹配 ✓。<br>
+<b>观察：</b>第 4–6 步主串指针一直停在 4——「滑了 3 次」全在模式串内部完成，这就是「不回溯」的样子。</div>
+<div class="thm"><span class="label">复杂度对比（必背）</span>
+<table>
+<thead><tr><th>算法</th><th>主串指针</th><th>最坏时间</th><th>额外空间</th></tr></thead>
+<tbody>
+<tr><td>BF（朴素）</td><td>回溯</td><td>$O(nm)$</td><td>$O(1)$</td></tr>
+<tr><td>KMP</td><td><b>不回溯</b></td><td><b>$O(n+m)$</b></td><td>$O(m)$（next 数组）</td></tr>
+</tbody>
+</table>
+<b>理解要点：</b>i 从 1 增到 n，总增量 $O(n)$；j 的每次回退都「消耗」此前累积的匹配长度，均摊 $O(1)$——所以匹配是 $O(n)$，求 next 是 $O(m)$。</div>
+</section>
+
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>nextval：KMP 的优化<span class="tag">消除无效比对</span></h2>
+<div class="box def"><b>为什么还要优化：</b>若 $T[j]=T[\text{next}[j]]$，那么按 next 滑过去后，与主串当前位置比较的还是<b>同一个字符</b>——必然再次失配、白比一次。把这类「字符重复」直接继承，得到 <b>nextval</b>（优化的 next）。</div>
+<div class="box method"><b>nextval 求法：</b><br>
+① nextval[1] = 0；<br>
+② 对 $j\ge2$：比较 $T[j]$ 与 $T[\text{next}[j]]$——<b>相同</b> ⇒ nextval[j] = nextval[next[j]]；<b>不同</b> ⇒ nextval[j] = next[j]。</div>
+<div class="box example">
+<b>例 1（T = "abaabc"）.</b> 已知 next = {0,1,1,2,2,3}：
+<table>
+<thead><tr><th>j</th><th>T[j]</th><th>next[j]</th><th>T[next[j]]</th><th>比较</th><th>nextval[j]</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>a</td><td>0</td><td>—</td><td>—</td><td><b>0</b></td></tr>
+<tr><td>2</td><td>b</td><td>1</td><td>a</td><td>≠</td><td><b>1</b>（取 next）</td></tr>
+<tr><td>3</td><td>a</td><td>1</td><td>a</td><td><b>=</b></td><td><b>0</b>（继承 nextval[1]）</td></tr>
+<tr><td>4</td><td>a</td><td>2</td><td>b</td><td>≠</td><td><b>2</b></td></tr>
+<tr><td>5</td><td>b</td><td>2</td><td>b</td><td><b>=</b></td><td><b>1</b>（继承 nextval[2]）</td></tr>
+<tr><td>6</td><td>c</td><td>3</td><td>a</td><td>≠</td><td><b>3</b></td></tr>
+</tbody>
+</table>
+<b>结论：</b>nextval = {0, 1, 0, 2, 1, 3}。</div>
+<div class="box example">
+<b>例 2（T = "aaaab"：重复字符的极端情形）.</b> next = {0,1,2,3,4}：
+· j=2：a vs T[1]=a 相等 ⇒ 继承 ⇒ 0；<br>
+· j=3：a vs T[2]=a 相等 ⇒ 继承 nextval[2] = 0；<br>
+· j=4：a vs T[3]=a 相等 ⇒ 继承 = 0；<br>
+· j=5：b vs T[4]=a 不等 ⇒ 取 next = 4。<br>
+<b>结论：</b>nextval = {0, 0, 0, 0, 4}——失配时一步滑到底，避免了「aaaa」连续四次无效比较 ✓（这正是优化的价值）。</div>
+<div class="box def"><b>get_nextval 递推代码：</b>
+<pre class="code">void get_nextval(SString T, int nextval[]) {
+    int i = 1, j = 0;
+    nextval[1] = 0;
+    while (i < T.length) {
+        if (j == 0 || T.ch[i] == T.ch[j]) {
+            i++;  j++;
+            if (T.ch[i] != T.ch[j])
+                nextval[i] = j;          // 不同：与 next 相同
+            else
+                nextval[i] = nextval[j]; // 相同：继承
+        } else
+            j = nextval[j];
+    }
+}</pre>
+<b>轨迹（"abaabc"）：</b>i=1→…→ 依次写入 nextval[2]=1、nextval[3]=nextval[1]=0、nextval[4]=2、nextval[5]=nextval[2]=1、nextval[6]=3 ⇒ {0,1,0,2,1,3} ✓ 与手算一致。</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>典型例题<span class="tag">手算实战</span></h2>
+<div class="box example">
+<b>例 1（求 T = "ababaa" 的 next 与 nextval）.</b><br>
+<b>第一步：next（定义法）</b>
+<table>
+<thead><tr><th>$j$</th><th>前串 T[1..j−1]</th><th>最长公共前后缀</th><th>next[j]</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>—</td><td>—</td><td>0</td></tr>
+<tr><td>2</td><td>a</td><td>无</td><td>1</td></tr>
+<tr><td>3</td><td>ab</td><td>无</td><td>1</td></tr>
+<tr><td>4</td><td>aba</td><td>a</td><td>2</td></tr>
+<tr><td>5</td><td>abab</td><td>ab</td><td>3</td></tr>
+<tr><td>6</td><td>ababa</td><td>aba</td><td>4</td></tr>
+</tbody>
+</table>
+next = {0, 1, 1, 2, 3, 4}。<br>
+<b>第二步：nextval</b>（比较 T[j] 与 T[next[j]]）
+<table>
+<thead><tr><th>j</th><th>T[j]</th><th>next[j]</th><th>T[next[j]]</th><th>关系</th><th>nextval[j]</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>a</td><td>0</td><td>—</td><td>—</td><td>0</td></tr>
+<tr><td>2</td><td>b</td><td>1</td><td>a</td><td>≠</td><td>1</td></tr>
+<tr><td>3</td><td>a</td><td>1</td><td>a</td><td><b>=</b></td><td>nextval[1]=<b>0</b></td></tr>
+<tr><td>4</td><td>b</td><td>2</td><td>b</td><td><b>=</b></td><td>nextval[2]=<b>1</b></td></tr>
+<tr><td>5</td><td>a</td><td>3</td><td>a</td><td><b>=</b></td><td>nextval[3]=<b>0</b></td></tr>
+<tr><td>6</td><td>a</td><td>4</td><td>b</td><td>≠</td><td>4</td></tr>
+</tbody>
+</table>
+nextval = {0, 1, 0, 1, 0, 4}。<br>
+<b>验算（交叉检查 j=5）：</b>nextval[5] = nextval[3] = nextval[1] = 0——沿「同字符」链一路继承，链条闭合 ✓。</div>
+<div class="box example">
+<b>例 2（小规模 KMP 轨迹：S="aaab"，T="aab"）.</b><br>
+① 求 next：T="aab" ⇒ next = {0, 1, 2}（$j=3$：前串 "aa" 最长公共前后缀 "a" ⇒ 2）；<br>
+② 匹配轨迹：
+<table>
+<thead><tr><th>步</th><th>比较</th><th>i</th><th>j</th><th>动作</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>S1=a vs T1=a ✓</td><td>2</td><td>2</td><td>齐步</td></tr>
+<tr><td>2</td><td>S2=a vs T2=a ✓</td><td>3</td><td>3</td><td>齐步</td></tr>
+<tr><td>3</td><td>S3=a vs T3=b ✗</td><td>3</td><td>2</td><td>j=next[3]=2（i 不动）</td></tr>
+<tr><td>4</td><td>S3=a vs T2=a ✓</td><td>4</td><td>3</td><td>齐步</td></tr>
+<tr><td>5</td><td>S4=b vs T3=b ✓</td><td>5</td><td>4</td><td>j>3 结束</td></tr>
+</tbody>
+</table>
+③ 返回 $i-3=5-3=2$：模式串在主串第 2 位匹配 ✓（"aaab" 的第 2–4 位正是 "aab"）。<br>
+<b>观察：</b>第 3 步失配后没有把 i 退回去重比——「利用已匹配的 "aa"」直接跳到 T2 ✓。</div>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>决策流程与易错点</h2>
+<pre class="flow">串匹配题
+├─ 手算 next / nextval
+│   ├─ next：next[1]=0；next[j] = T[1..j−1] 最长公共前后缀长度 + 1
+│   ├─ 递推验证：k=next[j]，比 T[j] 与 T[k]（失配则 k=next[k] 再比）
+│   ├─ nextval：比 T[j] 与 T[next[j]]——同 ⇒ 继承 nextval[next[j]]；异 ⇒ 取 next[j]
+│   └─ 必查固定值：next[2]=1；nextval[1]=0
+├─ 模拟 KMP
+│   ├─ 主串指针 i 永不回退
+│   ├─ 失配：j = next[j]（或 nextval[j]）
+│   └─ j==0 特殊：i++、j=1
+└─ 复杂度回答
+    ├─ BF：最坏 O(nm)
+    └─ KMP：O(n+m)，空间 O(m)
+</pre>
+<h3>易错点清单</h3>
+<div class="box warn">
+<ol>
+<li><b>「真」前后缀：</b>不能取整个串——「abab」的公共前后缀里，"abab" 自己不算。</li>
+<li><b>固定值先写：</b>next[1]=0、next[2]=1；nextval[1]=0——开题先落笔，防止连锁算错。</li>
+<li><b>「最长」公共前后缀：</b>有多个重合时取最长（"ababa" 取 "aba" 不是 "a"）。</li>
+<li><b>nextval 比较对象：</b>T[j] 与 T[next[j]]（拿 next 值<b>当索引</b>去取字符），不是与 T[j−1] 比。</li>
+<li><b>两种求法互验：</b>定义法结果 = 递推法结果；只对了一个说明过程有误。</li>
+<li><b>模拟时 i 不动：</b>失配后主串指针停在原地——写轨迹表时最容易「手滑回退」。</li>
+<li><b>j==0 是特殊分支：</b>意味着「模式串第一位都匹配不上」，处理为 i++、j=1（此时主串前进一位）。</li>
+<li><b>复杂度问「最坏」：</b>BF 答 O(nm) 不是 O(n+m)；KMP 稳定 O(n+m)。</li>
+<li><b>返回位置公式：</b>王道 1-indexed 代码返回 $i-\text{len}(T)$（成功时 i 已多走一格）；下标从 0 的自拟代码要相应减 1。</li>
+<li><b>next 数组下标从 1 开始：</b>next[0] 不用；与前面章节「下标从 0」的习惯不同，别混。</li>
+</ol>
+</div>
+</section>
+
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>结论</th></tr></thead>
+<tbody>
+<tr><td>串的基本量</td><td>空串（长 0）≠ 空格串；子串连续；位置从 1 起</td></tr>
+<tr><td>BF 复杂度</td><td>最坏 $O(nm)$；失配时 i 回退到 $i-j+2$、j=1</td></tr>
+<tr><td>next 定义</td><td>next[j] = 1 + T[1..j−1] 的最长公共前后缀长度；next[1]=0、next[2]=1</td></tr>
+<tr><td>next 递推（已知 next[j]=k 求 next[j+1]）</td><td>比 T[j] 与 T[k]：同 ⇒ k+1；异 ⇒ k=next[k] 再比；k 到 0 ⇒ 1</td></tr>
+<tr><td>nextval</td><td>T[j]==T[next[j]] ⇒ nextval[j]=nextval[next[j]]；否则 = next[j]；nextval[1]=0</td></tr>
+<tr><td>KMP 复杂度</td><td>匹配 $O(n)$ + 求 next $O(m)$ ⇒ 总 $O(n+m)$，空间 $O(m)$</td></tr>
+<tr><td>经典算例 ①</td><td>"abaabc"：next = {0,1,1,2,2,3}；nextval = {0,1,0,2,1,3}</td></tr>
+<tr><td>经典算例 ②</td><td>"aaaab"：next = {0,1,2,3,4}；nextval = {0,0,0,0,4}</td></tr>
+<tr><td>经典算例 ③</td><td>"ababaa"：next = {0,1,1,2,3,4}；nextval = {0,1,0,1,0,4}</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>KMP 的全部秘密藏在「模式串自己的最长公共前后缀」里——next 决定「失配后 j 退到哪」，nextval 顺手消掉「同字符白比」；模拟时牢记<b>主串指针只进不退</b>。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>能力自查</h2>
+<div class="box tip"><b>学习闭环：</b>串概念与存储 → BF（回退公式与最坏情形）→ KMP 原理 → next 双求法 → nextval → 手算与模拟。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 辨析空串/空格串/子串/主串/模式串，说出三种存储结构；<br>
+② 写出 BF 代码与回退公式，解释最坏 $O(nm)$ 的构造；<br>
+③ 解释 KMP「i 不回溯」的原理与公共前后缀的作用；<br>
+④ 用定义法与递推法求 next，并能相互验证；<br>
+⑤ 求 nextval（含继承链），说明优化的意义；<br>
+⑥ 独立模拟一段 KMP 匹配轨迹并给出返回位置与复杂度。
+</div>
+<h3>闭卷操作清单</h3>
+<div class="box method">
+☐ BF 回退公式 $i=i-j+2$ 的推导含义 (§2)<br>
+☐ 构造 BF 最坏情形（0…01 vs 0…01）并说明每趟比较次数 (§2)<br>
+☐ "abaabc" 的 next 定义法全过程（六行表）(§4)<br>
+☐ "abaabc" 的递推法验证（四步）(§4)<br>
+☐ get_next 代码 + 11 步轨迹表 (§4)<br>
+☐ "abacabaabc" × "abaabc" 的 13 步 KMP 轨迹（i 不动）(§5)<br>
+☐ "abaabc" 与 "aaaab" 两个 nextval 手算 (§6)<br>
+☐ "ababaa" 的 next/nextval 独立重算 (§7 例1)<br>
+☐ BF 与 KMP 复杂度对答（$O(nm)$ vs $O(n+m)$）(§5)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax、图表由 Mermaid 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>数据结构（408 · 王道体系） · 第四章 串 · 内容完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var murls=[
+    "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://registry.npmmirror.com/mermaid/10.9.1/files/dist/mermaid.min.js"
+  ];
+  function mload(i){
+    if(i>=murls.length){return;}
+    var s=document.createElement("script");
+    s.src=murls[i];s.async=true;
+    s.onload=function(){try{mermaid.initialize({startOnLoad:false,theme:"neutral",securityLevel:"loose"});mermaid.run({querySelector:".mermaid"});}catch(e){}};
+    s.onerror=function(){mload(i+1);};
+    document.head.appendChild(s);
+  }
+  mload(0);
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
