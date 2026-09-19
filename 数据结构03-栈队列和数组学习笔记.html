@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据结构03 · 栈、队列和数组 · 完全教程（王道体系）</title>
+<style>
+:root{--bg:#f2fbfd;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#0891b2;--accent2:#67e8f9;--soft:#ecfeff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#164e63,#0891b2 55%,#67e8f9);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#cffafe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#155e75;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#164e63}
+.card h3{font-size:1.05rem;color:#155e75;margin:24px 0 8px;padding-left:10px;border-left:4px solid #67e8f9}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#22d3ee,#06b6d4);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#ecfeff;border-color:#67e8f9}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #a5f3fc;border-left:4px solid #22d3ee;background:#fbfeff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#155e75;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#155e75;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f6fcfe}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+pre.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:16px 20px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.86rem;line-height:1.75;white-space:pre}
+pre.mermaid{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:12px;overflow-x:auto;text-align:center;color:#94a3b8;font-size:.85rem}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(8,145,178,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>数据结构 · 第三章 栈、队列和数组 · 完全教程</h1>
+<p>王道体系 · 全部机制讲透 + 伪代码步骤化 + 计算题全解</p>
+<div class="chips"><span>顺序栈</span><span>链栈</span><span>循环队列</span><span>双端队列</span><span>表达式求值</span><span>矩阵压缩</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 栈与顺序栈</a>
+<a href="#sec-2">02 · 链栈与共享栈</a>
+<a href="#sec-3">03 · 循环队列</a>
+<a href="#sec-4">04 · 链式队列与双端队列</a>
+<a href="#sec-5">05 · 栈和队列的应用</a>
+<a href="#sec-6">06 · 数组与地址计算</a>
+<a href="#sec-7">07 · 特殊矩阵的压缩存储</a>
+<a href="#sec-8">08 · 典型例题</a>
+<a href="#sec-9">09 · 决策流程与易错点</a>
+<a href="#sec-10">10 · 速查表与能力自查</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章地位：</b>两种「操作受限的线性表」——栈（后进先出）与队列（先进先出），加上数组的存储与矩阵压缩。408 的考查方式：<b>出栈序列判断、循环队列判空判满、地址与压缩公式计算</b>是三大计算题型。</div>
+<pre class="flow">第三章 栈、队列和数组
+├─ 栈（LIFO）（§1–§2）
+│   ├─ 顺序栈：top 指针 + 数组（共享栈两端生长）
+│   ├─ 链栈：头插即入栈，永不满
+│   └─ 考点：出栈序列合法性（模拟 + 卡特兰数计数）
+├─ 队列（FIFO）（§3–§4）
+│   ├─ 循环队列：判空判满三方案（牺牲单元 / size / tag）
+│   ├─ 链式队列：front 头结点 + rear 尾结点（出空要改 rear）
+│   └─ 双端队列：两端进出（输入/输出受限变体）
+├─ 应用（§5）
+│   ├─ 括号匹配（栈）
+│   ├─ 表达式：中缀 → 后缀（栈）→ 求值（栈）
+│   └─ 递归：每个调用压一个栈帧
+└─ 数组与压缩（§6–§7）
+    ├─ 地址计算：行优先 / 列优先公式
+    └─ 特殊矩阵：对称 / 三角 / 三对角 / 稀疏
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>栈与顺序栈<span class="tag">LIFO</span></h2>
+<div class="box def"><b>栈：</b>只允许在<b>一端</b>（栈顶 top）进行插入和删除的线性表——<b>后进先出（LIFO）</b>。插入称<b>入栈</b>（push），删除称<b>出栈</b>（pop）；另一端称栈底（固定不动）。<br>
+<b>数学性质：</b>$n$ 个元素依次入栈，可能的出栈序列共有<b>卡特兰数</b> $\dfrac{1}{n+1}C_{2n}^{n}$ 种（$n=3$ 时 5 种、$n=4$ 时 14 种）——实际序列是否可达要<b>用栈模拟</b>判断。</div>
+<pre class="mermaid">
+graph LR
+  B["栈底 a₁<br/>（固定）"] --> C["a₂"] --> D["a₃ 栈顶 top<br/>push / pop 都在此端"]
+</pre>
+<div class="box def"><b>顺序栈类型定义（王道约定：top 指向栈顶元素）：</b>
+<pre class="code">#define MaxSize 50
+typedef struct {
+    ElemType data[MaxSize];   // 存放栈中元素
+    int top;                  // 栈顶指针（下标）
+} SqStack;
+/* 初始化：S.top = -1  ⇒  空栈判据 top == -1
+   栈满判据：top == MaxSize - 1            */</pre>
+<b>另一种约定：</b>top 指向「栈顶元素的下一个位置」（初始 0）——判据全部随之平移（空 top==0、满 top==MaxSize）。<b>读题代码先确认约定</b>，这是 408 最爱设的细节坑。</div>
+<div class="box method"><b>入栈 / 出栈（先判越界，再动指针）：</b>
+<pre class="code">bool Push(SqStack &S, ElemType x) {
+    if (S.top == MaxSize - 1) return false;   // 栈满
+    S.data[++S.top] = x;                      // 先加指针，再存
+    return true;
+}
+bool Pop(SqStack &S, ElemType &x) {
+    if (S.top == -1) return false;            // 栈空
+    x = S.data[S.top--];                      // 先取值，再减指针
+    return true;
+}</pre>
+① 入栈是「先 ++ 后存」、出栈是「先取后 --」——顺序记牢；② 两者时间都是 $O(1)$；③ 取栈顶（不出栈）：`x = S.data[S.top];`。</div>
+<div class="box example">
+<b>例（出栈序列模拟演示）.</b> 依次入栈 1、2、3、4，判断出栈序列「2, 4, 3, 1」是否可能：<br>
+① 入 1、入 2、出 2（栈：1）；② 入 3、入 4、出 4（栈：1, 3）；③ 出 3（栈：1）；④ 出 1 —— 可行 ✓。<br>
+<b>方法核心：</b>用「栈内容 + 下一个待入元素」逐步推演；<b>凡是需要「越过栈顶」的输出都不可行</b>——如「3, 1, 2」：出 3 后栈为 (1,2)，栈顶是 2，1 无法先出 ⇒ 不可行 ✓。</div>
+</section>
+
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>链栈与共享栈<span class="tag">两种变体</span></h2>
+<h3>（1）链栈（头插法即入栈）</h3>
+<div class="box def">
+<pre class="code">typedef struct LNode {
+    ElemType data;
+    struct LNode *next;
+} LNode, *LiStack;        // 链栈（通常带头结点）</pre>
+· <b>栈顶</b> = 第一个数据结点（`L->next`）；<br>
+· <b>入栈</b> = 在头结点之后头插；<b>出栈</b> = 删除第一个数据结点；<br>
+· 所有操作 $O(1)$，且<b>不存在栈满</b>（除非内存耗尽）——与顺序栈相比无需预先估计容量。</div>
+<div class="box example">
+<b>例（链栈代码）.</b>
+<pre class="code">bool Push(LiStack &L, ElemType x) {       // 入栈
+    LNode *s = (LNode *) malloc(sizeof(LNode));
+    if (s == NULL) return false;          // 内存耗尽
+    s->data = x;  s->next = L->next;      // 头插
+    L->next = s;
+    return true;
+}
+bool Pop(LiStack &L, ElemType &x) {       // 出栈
+    if (L->next == NULL) return false;    // 空栈
+    LNode *p = L->next;
+    x = p->data;  L->next = p->next;      // 摘链
+    free(p);
+    return true;
+}</pre>
+<b>与单链表头插/删除首结点完全同构</b>——链栈没有发明新机制，只是「限定操作端」。
+</div>
+<h3>（2）共享栈（两端向中间生长）</h3>
+<div class="box def">
+<pre class="code">typedef struct {
+    ElemType data[MaxSize];
+    int top0;    // 栈 0 的栈顶：从 −1 向上长
+    int top1;    // 栈 1 的栈顶：从 MaxSize 向下长
+} ShStack;
+/* 初始化：top0 = -1, top1 = MaxSize
+   栈 0 满进：data[++top0]      栈 1 满进：data[--top1]
+   栈空：top0 == -1 / top1 == MaxSize
+   共享栈满（核心！）：top0 + 1 == top1        */</pre>
+· 两个栈共用一段空间、从两端向中间生长——只有当整片空间耗尽（相遇）才算满：<b>空间利用率更高</b>；<br>
+· 满条件 $top_0+1==top_1$：不是 $\ge$、不是 $-$，判据写错即丢分。</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>循环队列<span class="tag">判空判满必考</span></h2>
+<div class="box def"><b>队列：</b>只允许在一端（队尾 rear）插入、另一端（队头 front）删除的线性表——<b>先进先出（FIFO）</b>。<br>
+<b>顺序队列的假溢出：</b>front、rear 只增不减，出队后的空间无法复用——即使数组没满也「看似满了」。解决办法：把数组在逻辑上「掰弯」成环——<b>循环队列</b>（指针移动用取模）。</div>
+<pre class="flow">循环队列示意（MaxSize = 6，牺牲单元法）
+ 下标:   0     1     2     3     4     5
+       [ a ] [ b ] [ c ] [   ] [   ] [   ]
+         ↑front                     ↑rear
+ 入队：Q.rear = (Q.rear + 1) % MaxSize
+ 出队：Q.front = (Q.front + 1) % MaxSize
+ 元素数 = (Q.rear − Q.front + MaxSize) % MaxSize</pre>
+<div class="thm"><span class="label">判空判满三方案（必背对比）</span>
+<table>
+<thead><tr><th>方案</th><th>队空条件</th><th>队满条件</th><th>元素个数</th><th>最大容量</th></tr></thead>
+<tbody>
+<tr><td>① 牺牲一个单元</td><td>front == rear</td><td>(rear+1)%M == front</td><td>(rear−front+M)%M</td><td>M−1</td></tr>
+<tr><td>② 增设 size 变量</td><td>size == 0</td><td>size == M</td><td>size</td><td>M</td></tr>
+<tr><td>③ 增设 tag 标记</td><td>front==rear 且 tag==0</td><td>front==rear 且 tag==1</td><td>按 front/rear 推算</td><td>M</td></tr>
+</tbody>
+</table>
+<b>方案③ 的 tag 含义：</b>每次<b>删除</b>成功后置 tag=0，每次<b>插入</b>成功后置 tag=1——只有 front==rear 时才需要靠 tag 区分「空还是满」。</div>
+<div class="box example">
+<b>例（循环队列代码，牺牲单元法）.</b>
+<pre class="code">#define MaxSize 50
+typedef struct {
+    ElemType data[MaxSize];
+    int front, rear;              // 队头、队尾（rear 指向队尾元素的下一个位置）
+} SqQueue;
+
+void InitQueue(SqQueue &Q) { Q.front = Q.rear = 0; }
+bool EnQueue(SqQueue &Q, ElemType x) {
+    if ((Q.rear + 1) % MaxSize == Q.front) return false;  // 队满
+    Q.data[Q.rear] = x;                                   // 存到 rear 处
+    Q.rear = (Q.rear + 1) % MaxSize;                      // 循环后移
+    return true;
+}
+bool DeQueue(SqQueue &Q, ElemType &x) {
+    if (Q.front == Q.rear) return false;                  // 队空
+    x = Q.data[Q.front];
+    Q.front = (Q.front + 1) % MaxSize;                    // 循环后移
+    return true;
+}</pre>
+① 初始化 front=rear=0（<b>不设 −1</b>——这是循环队列与顺序栈初始化的区别）；② 所有操作 $O(1)$；③ 「rear 指向队尾元素」还是「队尾的下一个位置」两种约定同样要按题面确认。<br>
+<b>数值演练：</b>M=8，初始 front=rear=0；入队 5 个 ⇒ rear=5；出队 2 个 ⇒ front=2；元素数 $=(5-2+8)\%8=3$ ✓。
+</div>
+</section>
+
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>链式队列与双端队列<span class="tag">变体</span></h2>
+<h3>（1）链式队列（带头结点）</h3>
+<div class="box def">
+<pre class="code">typedef struct LinkNode {     // 队列结点
+    ElemType data;
+    struct LinkNode *next;
+} LinkNode;
+typedef struct {              // 链式队列
+    LinkNode *front, *rear;   // 队头指针 + 队尾指针
+} LinkQueue;</pre>
+· 初始（带头结点）：front 与 rear 都指向<b>头结点</b>，<b>队空判据 front == rear</b>；<br>
+· 入队 = 尾插后移 rear；出队 = 删除 front 的后继结点；<br>
+· <b>最易错的一步：</b>当出队删掉的是<b>最后一个结点</b>时，必须把 <code>rear</code> 重新指回 <code>front</code>（否则 rear 悬空，下次入队断链）。</div>
+<div class="box example">
+<b>例（链队入队 / 出队）. </b>
+<pre class="code">void EnQueue(LinkQueue &Q, ElemType x) {
+    LinkNode *s = (LinkNode *) malloc(sizeof(LinkNode));
+    s->data = x;  s->next = NULL;      // 新结点必为尾
+    Q.rear->next = s;                  // 接到队尾
+    Q.rear = s;                        // 更新尾指针
+}
+bool DeQueue(LinkQueue &Q, ElemType &x) {
+    if (Q.front == Q.rear) return false;   // 队空
+    LinkNode *p = Q.front->next;           // 第一个数据结点
+    x = p->data;
+    Q.front->next = p->next;               // 摘链
+    if (Q.rear == p) Q.rear = Q.front;     // 【关键】删到空时回指头结点
+    free(p);
+    return true;
+}</pre>
+<b>不带头结点的版本：</b>队空是 `front == NULL`；出队删除的是首结点，若它是最后一个，front 与 rear 都要置 NULL——边界更多、更易错，真题代码多用带头结点版。</div>
+<h3>（2）双端队列（Deque）</h3>
+<div class="box def">
+· <b>双端队列：</b>两端都可以插入、两端都可以删除；<br>
+· <b>输入受限</b>双端队列：只允许一端插入（另一端只能删）；<b>输出受限</b>：只允许一端删除；<br>
+· <b>与栈的关系：</b>栈是「只在一端插删」的极端，属于双端队列的特例——凡栈能产生的输出序列，双端队列都能产生（能力更强）；<br>
+· 经典考题：给输入序列 1,2,3,4，问某输出序列能否由「输入受限/输出受限的双端队列」得到——<b>一律用模拟法逐项验证</b>。</div>
+<div class="box tip"><b>队列全家福记忆链：</b>顺序队列（假溢出）→ 循环队列（取模 + 判空判满三方案）→ 链式队列（头结点 + 出空回指）→ 双端队列（两端自由度）。</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>栈和队列的应用<span class="tag">三大经典</span></h2>
+<h3>（1）括号匹配（栈的招牌应用）</h3>
+<div class="box method"><b>算法规则：</b>从左到右扫描表达式——<br>
+① 遇到<b>左括号</b>：入栈；<br>
+② 遇到<b>右括号</b>：若栈空 ⇒ 不匹配（右括号多余）；否则弹出栈顶看是否配对——不配对 ⇒ 失败；<br>
+③ 扫描完毕：<b>栈非空 ⇒ 不匹配</b>（左括号多余）；栈空才合法。</div>
+<div class="box example">
+<b>例（代码 + 轨迹）.</b>
+<pre class="code">bool BracketCheck(char str[], int length) {
+    SqStack S;  InitStack(S);
+    for (int i = 0; i < length; i++) {
+        if (str[i]=='(' || str[i]=='[' || str[i]=='{')
+            Push(S, str[i]);                      // 左括号入栈
+        else {
+            if (StackEmpty(S)) return false;      // 右括号多余
+            char top;
+            Pop(S, top);
+            if (!Match(top, str[i])) return false; // 配对失败
+        }
+    }
+    return StackEmpty(S);                         // 左括号多余则 false
+}</pre>
+<b>轨迹演示（输入「{[()]}」）：</b>「{」进、「[」进、「(」进、「)」与「(」配（弹出）、「]」与「[」配、「}」与「{」配 ⇒ 栈空，合法 ✓。<br>
+<b>反例「[(])」：</b>「)」到来时栈顶是「[」⇒ 配对失败 ✗——<b>错的不是数量、是嵌套顺序</b>，这正是必须用栈的原因。</div>
+<h3>（2）表达式求值：中缀 → 后缀（栈的第二个招牌）</h3>
+<div class="box method"><b>中缀转后缀·手算规则（必背）：</b>从左到右扫描中缀表达式——<br>
+① <b>操作数</b>：直接输出；<br>
+② <b>运算符</b>：与栈顶运算符比较优先级——<b>栈顶 ≥ 当前 且栈顶不是括号</b>时，弹出栈顶输出，再压入当前；否则直接压入；<br>
+③ <b>左括号</b>：直接压栈；<br>
+④ <b>右括号</b>：持续弹出并输出，直到遇到左括号（左括号弹出但不输出）；<br>
+⑤ 扫描结束：把栈中剩余运算符全部弹出输出。<br>
+<b>优先级：</b>$*、/ > +、-$（同级按左结合处理——上面的「≥ 就弹」正好实现左结合）。</div>
+<div class="box example">
+<b>例（完整轨迹表）.</b> 中缀：<b>A + B * (C − D) − E / F</b>
+<table>
+<thead><tr><th>步骤</th><th>读入</th><th>动作</th><th>栈（底→顶）</th><th>输出</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>A</td><td>操作数输出</td><td>空</td><td>A</td></tr>
+<tr><td>2</td><td>+</td><td>栈空，压栈</td><td>+</td><td>A</td></tr>
+<tr><td>3</td><td>B</td><td>输出</td><td>+</td><td>A B</td></tr>
+<tr><td>4</td><td>*</td><td>高于栈顶 +，压栈</td><td>+ *</td><td>A B</td></tr>
+<tr><td>5</td><td>(</td><td>左括号压栈</td><td>+ * (</td><td>A B</td></tr>
+<tr><td>6</td><td>C</td><td>输出</td><td>+ * (</td><td>A B C</td></tr>
+<tr><td>7</td><td>−</td><td>栈顶是括号，压栈</td><td>+ * ( −</td><td>A B C</td></tr>
+<tr><td>8</td><td>D</td><td>输出</td><td>+ * ( −</td><td>A B C D</td></tr>
+<tr><td>9</td><td>)</td><td>弹出 − 输出；丢弃 (</td><td>+ *</td><td>A B C D −</td></tr>
+<tr><td>10</td><td>−</td><td>弹 *（≥）、弹 +（同级），压 −</td><td>−</td><td>A B C D − * +</td></tr>
+<tr><td>11</td><td>E</td><td>输出</td><td>−</td><td>…E</td></tr>
+<tr><td>12</td><td>/</td><td>高于栈顶 −，压栈</td><td>− /</td><td>…E</td></tr>
+<tr><td>13</td><td>F</td><td>输出</td><td>− /</td><td>…E F</td></tr>
+<tr><td>14</td><td>结束</td><td>弹出 / 与 −</td><td>空</td><td>A B C D − * + E F / −</td></tr>
+</tbody>
+</table>
+<b>结果：</b><code>ABCD−*+EF/−</code> ✓。<br>
+<b>验算（回代数值）：</b>取 A=1,B=2,C=4,D=1,E=6,F=3：中缀 $=1+2\times3-2=5$；后缀按下面规则求值也应得 5 ✓。</div>
+<div class="box def"><b>后缀表达式的求值（再一个栈）：</b>从左到右扫描——<br>
+① 操作数：入栈；② 运算符：弹出<b>两个</b>操作数，<b>先弹出的是右操作数</b>，计算后压回；③ 扫描完，栈顶即结果。<br>
+<b>易错点：</b>减法与除法方向——「右 − 左」写反就全错。例：后缀「34−」⇒ 先弹 4（右）、再弹 3（左），结果 $3-4=-1$。</div>
+<h3>（3）递归与栈（及队列的用武之地）</h3>
+<div class="box tip">
+· <b>递归的本质就是栈：</b>每次调用把「返回地址 + 局部变量」压入系统栈，逐层返回时弹栈——<b>最大递归深度 = 栈空间峰值</b>（与第一章复杂度分析的结论呼应）；<br>
+· 树形递归（如 fib）调用次数 $O(2^n)$、栈深仅 $n$——「时间爆炸、空间线性」的典型案例；<br>
+· <b>递归转非递归</b>：把系统栈换成显式栈手动模拟（如二叉树非递归遍历）；<br>
+· <b>队列的典型舞台：</b>树的层次遍历、图的广度优先搜索、打印机/任务缓冲——凡「先来先服务」都用队列。</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>数组与地址计算<span class="tag">计算题基础</span></h2>
+<div class="box def"><b>数组：</b>由 $n$ 个相同类型数据元素构成的有限序列，是「线性表的推广」——数组一旦建立，维数与各维长度不再改变。数组采用<b>顺序存储</b>，是<b>随机存取</b>结构（按任意下标取元素 $O(1)$）。</div>
+<div class="box def"><b>一维数组：</b>起始地址 base、每元素占 $L$ 字节（下标从 0）：
+$$\text{LOC}(a_i)=\text{base}+i\times L\qquad(i\ \text{从}\ 1\ \text{起则}: \text{base}+(i-1)L)$$</div>
+<div class="thm"><span class="label">二维数组（m 行 × n 列，下标从 0）</span>
+<b>行优先（按行存储，C 语言风格）：</b>
+$$\text{LOC}(a_{ij})=\text{base}+\left[i\times n+j\right]\times L$$
+<b>列优先（按列存储，Fortran 风格）：</b>
+$$\text{LOC}(a_{ij})=\text{base}+\left[j\times m+i\right]\times L$$
+<b>口诀：</b>行优先乘「列数 $n$」，列优先乘「行数 $m$」——乘错方向是最高频失分点。<br>
+若下标从 1 开始：把公式里的 $i$ 换成 $i-1$、$j$ 换成 $j-1$ 即可。</div>
+<div class="box example">
+<b>例（地址计算全过程）.</b> 二维数组 $A[0..8][0..9]$（共 9 行 10 列），每个元素占 3 字节，首地址为 100。分别求行优先与列优先下 $A[4][5]$ 的地址。<br>
+① 参数：$m=9$（行）、$n=10$（列）、$L=3$、base $=100$；<br>
+② 行优先：前面有完整的 4 行（$4\times10=40$ 个）+ 本行前 5 个 ⇒
+$$\text{LOC}=100+(4\times10+5)\times3=100+135=235$$
+③ 列优先：前面有完整的 5 列（$5\times9=45$ 个）+ 本列前 4 个 ⇒
+$$\text{LOC}=100+(5\times9+4)\times3=100+147=247$$
+<b>验算（数元素个数）：</b>行优先共跳过 $4\times10+5=45$ 个元素；列优先跳过 $5\times9+4=49$ 个——247 比 235 多 $4\times3=12$，恰为 $49-45=4$ 个元素之差 ✓。</div>
+</section>
+
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>特殊矩阵的压缩存储<span class="tag">公式推导</span></h2>
+<div class="box def"><b>压缩存储思想：</b>① 多个相同元素只分配一个空间；② 零元素不分配；③ 利用矩阵自身的规律（对称、带状、稀疏）减少存储量。压缩后<b>失去随机存取</b>（除按公式映射的规则矩阵外），需要映射公式换算出位置。</div>
+<h3>（1）对称矩阵（$a_{ij}=a_{ji}$，$n$ 阶）</h3>
+<div class="box def">
+只存<b>下三角（含主对角线）</b>，共 $\dfrac{n(n+1)}2$ 个元素，放入一维数组 $B[0..\frac{n(n+1)}2-1]$（行优先）。<br>
+<b>映射公式（$i\ge j$，$i,j$ 从 1 开始，$k$ 为数组下标从 0）：</b>
+$$k=\frac{i(i-1)}2+(j-1)$$
+<b>推导：</b>第 $i$ 行之前共有 $1+2+\cdots+(i-1)=\dfrac{i(i-1)}2$ 个元素；本行内 $a_{ij}$ 是第 $j$ 个 ⇒ 再加上 $j-1$。<br>
+<b>当 $i\lt j$ 时</b>利用对称性 $a_{ij}=a_{ji}$ 换算：把 $i,j$ 互换后套上式。</div>
+<div class="box example">
+<b>例（$n=5$ 的对称矩阵）.</b> 求 $a_{43}$ 与 $a_{34}$ 的存储下标。<br>
+① $a_{43}$（$4\ge3$）：$k=\dfrac{4\times3}2+(3-1)=6+2=8$；<br>
+② $a_{34}$（$3<4$）：等价于存 $a_{43}$ ⇒ $k=8$（对称分量共用同一空间）；<br>
+<b>验算（枚举序）：</b>存放下标依次为 $a_{11}(0),a_{21}(1),a_{22}(2),a_{31}(3),a_{32}(4),a_{33}(5),a_{41}(6),a_{42}(7),a_{43}(8)$ ✓ 与公式吻合。</div>
+<h3>（2）三角矩阵</h3>
+<div class="box def">
+<b>下三角矩阵</b>（上三角全是常数 $c$）：存下三角 + 1 个常数单元 ⇒ 空间 $\dfrac{n(n+1)}2+1$，映射公式与对称矩阵下三角完全相同；<br>
+<b>上三角矩阵</b>（下三角全是常数）且按行优先存上三角（$i\le j$）：
+$$k=\frac{(i-1)(2n-i+2)}2+(j-i)$$
+<b>推导：</b>第 $i$ 行前共有 $\sum\limits_{r=1}^{i-1}(n-r+1)=\dfrac{(i-1)(2n-i+2)}2$ 个元素；本行内 $a_{ij}$ 是第 $(j-i+1)$ 个 ⇒ 偏移 $j-i$。<br>
+<b>验证（$n=3$）：</b>$a_{11}\to0$，$a_{12}\to1$，$a_{13}\to2$，$a_{22}\to\frac{1\times(6-2+2)}2+0=3$，$a_{23}\to4$，$a_{33}\to\frac{2\times(6-3+2)}2+0=5$ ✓。</div>
+<h3>（3）三对角矩阵（带状矩阵）</h3>
+<div class="box def">
+非零元素只出现在对角线及其上下两侧：$|i-j|\le1$，共 $3n-2$ 个。按<b>行优先</b>存入一维数组：
+$$k=2i+j-3\qquad(i,j\ \text{从 1 开始},\ k\ \text{从 0})$$
+<b>验证序列：</b>$a_{11}(0),a_{12}(1),a_{21}(2),a_{22}(3),a_{23}(4),a_{32}(5),a_{33}(6),a_{34}(7)\dots$——主对角线元素满足 $k=3(i-1)$。<br>
+<b>推导小记：</b>首行只有 2 个元素；第 $i\ (\ge2)$ 行之前共 $2+3(i-2)=3i-4$ 个，行内偏移 $j-i+1$ ⇒ $k=(3i-4)+(j-i+1)=2i+j-3$（对 $i=1$ 也成立）。</div>
+<h3>（4）稀疏矩阵</h3>
+<div class="box def">
+非零元素个数远小于总元素数（如 < 5%）。两种代表存储：<br>
+· <b>三元组表：</b>每个非零元素存 $(\text{行}, \text{列}, \text{值})$，再记总行数、列数、非零个数——顺序存储，失去随机存取；<br>
+· <b>十字链表：</b>每个非零元素既是所在<b>行链表</b>的结点又是<b>列链表</b>的结点（含行指针 right、列指针 down）——适合非零元素经常变动的场景。<br>
+<b>408 考法：</b>给定三元组表问某位置的检索方式（需要顺序扫描）、或比较两种结构适用条件。</div>
+<div class="box tip"><b>四类压缩一句话：</b>对称「存一半、对称换」；三角「存一半 + 常量」（对角线与对称侧别搞反）；三对角「三条带、公式 $2i+j-3$」；稀疏「只存非零、三元组或十字链」。</div>
+</section>
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>典型例题<span class="tag">四大计算题型</span></h2>
+<div class="box example">
+<b>例 1（出栈序列判断）.</b> 入栈序列固定为 1、2、3、4，判断下列序列是否可能：<br>
+<b>（a）3, 4, 2, 1：</b>入 1、2、3 → 出 3 → 入 4 → 出 4 → 出 2 → 出 1 ⇒ <b>可能</b> ✓；<br>
+<b>（b）4, 3, 1, 2：</b>入 1、2、3、4 → 出 4 → 出 3 → 此时栈顶是 2（1 被 2 压住）⇒ 1 不可能先于 2 出 ⇒ <b>不可能</b> ✗。<br>
+<b>判据总结：</b>序列中若存在「先输出小、后输出大，而它们在入栈序中夹着未输出的更大元素」就证伪——<b>最稳的方法：动手模拟</b>。</div>
+<div class="box example">
+<b>例 2（循环队列全流程计算）.</b> 循环队列长 $M=10$（牺牲单元法），初始 front=rear=0。<br>
+① 连续入队 7 个元素：rear 依次后移 ⇒ rear $=7$，front $=0$；<br>
+② 出队 3 个：front $=3$，此时元素数 $=(7-3+10)\%10=4$ ✓；<br>
+③ 还能再入队几个？从 rear=7 继续入队：8 → 9 → 0 → 1 → 2，当 rear 变为 2 时判满 $(2+1)\%10==3==front$ ⇒ <b>恰好还能入 5 个</b>（总量 $4+5=9=M-1$ ✓ 与牺牲单元的容量一致）。<br>
+<b>易错提醒：</b>元素数公式必须「$+M$ 再取模」，$front>rear$ 时直接相减会得负数。</div>
+<div class="box example">
+<b>例 3（三对角矩阵映射）.</b> $n=8$ 的三对角矩阵，按行优先压缩（$k$ 从 0）：求 $a_{45}$ 与 $a_{54}$ 的存储下标，并写出主对角线元素的规律。<br>
+① $|4-5|=1$、$|5-4|=1$ 都在带内（否则为 0，不存储）；<br>
+② $k(a_{45})=2\times4+5-3=10$；$k(a_{54})=2\times5+4-3=11$；<br>
+③ 主对角线：$k=2i+i-3=3(i-1)$ ⇒ $a_{11}\to0$、$a_{22}\to3$、$a_{33}\to6$……<br>
+<b>验算（顺推序列）：</b>$a_{11}(0),a_{12}(1),a_{21}(2),a_{22}(3),a_{23}(4),a_{32}(5),a_{33}(6),a_{34}(7),a_{43}(8),a_{44}(9),a_{45}(10)$ ✓ 与公式一致。</div>
+<div class="box example">
+<b>例 4（中缀转后缀再练）.</b> 求 <b>(A + B) * C − D</b> 的后缀式。<br>
+① 「(」进栈；② A 输出；③ 「+」进栈；④ B 输出；⑤ 「)」⇒ 弹出 + 输出（丢弃括号）；⑥ 「*」进栈；⑦ C 输出；⑧ 「−」：栈顶 * ≥ − ⇒ 弹出 *，再压 −；⑨ D 输出；⑩ 结束弹出 − ⇒
+$$\text{结果：}\ A\ B\ +\ C\ *\ D\ -$$
+<b>验算（回代）：</b>A=1,B=2,C=3,D=4：中缀 $(1+2)\times3-4=5$；后缀「1 2 + 3 * 4 −」= $3\times3-4=5$ ✓。</div>
+</section>
+
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>决策流程与易错点</h2>
+<pre class="flow">栈、队列与数组题
+├─ 栈
+│   ├─ 判空 top==−1 / L->next==NULL；判满 top==MaxSize−1 / 共享栈 top0+1==top1
+│   └─ 出栈序列：模拟法逐步推演（卡特兰数只算「有多少种」）
+├─ 循环队列
+│   ├─ 先认准判满方案：牺牲单元 / size / tag
+│   ├─ 元素数 = (rear − front + M) % M
+│   └─ 指针移动：一律 (p + 1) % M
+├─ 链式队列
+│   └─ 出队删到空时：rear 回指 front（头结点）
+├─ 表达式
+│   ├─ 中缀→后缀：栈顶 ≥ 当前就弹出；括号特殊处理
+│   └─ 后缀求值：先弹出的是右操作数
+└─ 数组与矩阵
+    ├─ 地址：行优先 × 列数 n；列优先 × 行数 m（注意下标起点）
+    └─ 压缩：判断矩阵类型 → 套映射公式 → 验证首个元素 k=0
+</pre>
+<h3>易错点清单</h3>
+<div class="box warn">
+<ol>
+<li><b>出栈序列别硬背：</b>一律模拟——「要输出被压在更深位置的小元素」直接判不可能。</li>
+<li><b>约定先确认：</b>顺序栈 top 指「栈顶元素」还是「栈顶上空」；循环队列 rear 指「队尾元素」还是「其下一个位置」——不同约定判据全部平移。</li>
+<li><b>共享栈满条件：</b>$top_0+1==top_1$（相遇即满），不是 $\ge$。</li>
+<li><b>链队出空回指：</b>删到最后一个结点时必须 <code>rear = front</code>，否则尾指针悬空。</li>
+<li><b>循环队列元素数：</b>$(rear-front+M)\%M$——别漏 $+M$、别漏取模。</li>
+<li><b>括号匹配三重检查：</b>右括号多余（栈空）、配对不符、左括号多余（结束栈非空）——三处都要判。</li>
+<li><b>中缀转后缀的弹出条件：</b>「栈顶优先级<b>≥</b>当前」就弹出（保证左结合）；遇到「)」弹到「(」为止，「(」本身不输出。</li>
+<li><b>后缀求值方向：</b>先弹出的是<b>右</b>操作数——减法除法写反全错。</li>
+<li><b>地址公式乘对方向：</b>行优先乘「总列数」、列优先乘「总行数」；下标从 1 的题先减 1。</li>
+<li><b>压缩矩阵：</b>对称矩阵只存下三角时 $i\lt j$ 要换成 $a_{ji}$；三对角公式 $k=2i+j-3$ 自带「首行只有 2 个」的修正，直接套。</li>
+</ol>
+</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>速查表与能力自查</h2>
+<table>
+<thead><tr><th>主题</th><th>结论</th></tr></thead>
+<tbody>
+<tr><td>操作复杂度</td><td>顺序栈 / 链栈 / 循环队列 / 链队：入、出均 $O(1)$</td></tr>
+<tr><td>出栈序列计数</td><td>卡特兰数 $\frac1{n+1}C_{2n}^{n}$：$n=1,2,3,4$ 对应 $1,2,5,14$</td></tr>
+<tr><td>循环队列三方案</td><td>牺牲单元：空 front==rear、满 (rear+1)%M==front、个数 (rear−front+M)%M；size 法：size==0 / M；tag 法：front==rear 时看 tag（删置 0、插置 1）</td></tr>
+<tr><td>共享栈</td><td>满：top0+1==top1；空：top0==−1 或 top1==MaxSize</td></tr>
+<tr><td>链队关键</td><td>带头结点：空 front==rear；出空时 rear=front</td></tr>
+<tr><td>地址公式</td><td>一维 base+iL；行优先 base+(i·n+j)L；列优先 base+(j·m+i)L</td></tr>
+<tr><td>对称矩阵</td><td>空间 n(n+1)/2；$i\ge j$：$k=\frac{i(i-1)}2+(j-1)$；$i\lt j$ 用对称换算</td></tr>
+<tr><td>上三角矩阵</td><td>$k=\frac{(i-1)(2n-i+2)}2+(j-i)$（行优先存上三角）</td></tr>
+<tr><td>三对角矩阵</td><td>共 $3n-2$ 个；$k=2i+j-3$；对角线 $k=3(i-1)$</td></tr>
+<tr><td>稀疏矩阵</td><td>三元组表（顺序）与十字链表——存储后无随机存取</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>栈「后进先出、序列靠模拟」；队列「先进先出、循环靠取模」；数组矩阵「一切靠公式，先辨类型再套公式、代首元素自检」。</div>
+<h3>能力自查</h3>
+<div class="box method">
+☐ 说出栈的 LIFO 含义与卡特兰数计数（$n=3,4$ 的值）(§1)<br>
+☐ 写顺序栈入栈/出栈代码（先 ++/先取 -- 的顺序）(§1)<br>
+☐ 模拟判断两组出栈序列是否可行 (§1、§8 例1)<br>
+☐ 链栈入栈=头插、出栈=删首结点；共享栈满条件 (§2)<br>
+☐ 默写循环队列三方案的判空/判满/元素数 (§3)<br>
+☐ 循环队列入队出队代码 + 数值演练（例2：9 = M−1）(§3、§8)<br>
+☐ 链队出空回指 front 的原因与代码位置 (§4)<br>
+☐ 括号匹配算法与「[(])」反例 (§5)<br>
+☐ 中缀「A+B*(C−D)−E/F」→ 后缀（复现轨迹表）(§5)<br>
+☐ 后缀求值「先弹右操作数」的方向 (§5)<br>
+☐ 地址计算：A[0..8][0..9]、3 字节、base=100 → 235 / 247 (§6)<br>
+☐ 对称矩阵 $k$ 公式与 $a_{43}\to8$ 验证 (§7)<br>
+☐ 三对角 $k=2i+j-3$ 与对角线规律 (§7、§8)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax、图表由 Mermaid 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>数据结构（408 · 王道体系） · 第三章 栈、队列和数组 · 内容完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var murls=[
+    "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://registry.npmmirror.com/mermaid/10.9.1/files/dist/mermaid.min.js"
+  ];
+  function mload(i){
+    if(i>=murls.length){return;}
+    var s=document.createElement("script");
+    s.src=murls[i];s.async=true;
+    s.onload=function(){try{mermaid.initialize({startOnLoad:false,theme:"neutral",securityLevel:"loose"});mermaid.run({querySelector:".mermaid"});}catch(e){}};
+    s.onerror=function(){mload(i+1);};
+    document.head.appendChild(s);
+  }
+  mload(0);
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
