@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>概率07 · 参数估计 · 完全教程（含全部推导）</title>
+<style>
+:root{--bg:#f4fdf6;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#16a34a;--accent2:#4ade80;--soft:#f0fdf4}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#14532d,#16a34a 55%,#4ade80);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#dcfce7}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#166534;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#14532d}
+.card h3{font-size:1.05rem;color:#166534;margin:24px 0 8px;padding-left:10px;border-left:4px solid #86efac}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#4ade80,#22c55e);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#f0fdf4;border-color:#86efac}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #bbf7d0;border-left:4px solid #4ade80;background:#fbfefb;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#166534;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#166534;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f7fdf9}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(22,163,74,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>概率论与数理统计 · 第七章 参数估计 · 完全教程</h1>
+<p>全部内容 + 全部推导 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>矩估计</span><span>极大似然估计</span><span>无偏·有效·相合</span><span>置信区间</span><span>正态区间估计</span><span>单侧置信区间</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 矩估计</a>
+<a href="#sec-2">02 · 极大似然估计</a>
+<a href="#sec-3">03 · 估计量的评选标准</a>
+<a href="#sec-4">04 · 置信区间的基本概念</a>
+<a href="#sec-5">05 · 单样本区间估计</a>
+<a href="#sec-6">06 · 两样本与单侧区间估计</a>
+<a href="#sec-7">07 · 典型例题</a>
+<a href="#sec-8">08 · 解题决策流程</a>
+<a href="#sec-9">09 · 易错点清单</a>
+<a href="#sec-10">10 · 公式速查表</a>
+<a href="#sec-11">11 · 能力自查与用法索引</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章任务：</b>总体的分布形式已知、但有未知参数 $\theta$（如 $N(\mu,\sigma^2)$ 中的 $\mu,\sigma^2$）——如何用样本把它们<b>估出来</b>？两条线：<b>点估计</b>（给一个数值）＋<b>区间估计</b>（给一个范围与置信度）。</div>
+<pre class="flow">第七章 参数估计
+├─ 点估计（§1–§2）
+│   ├─ 矩估计：样本矩 = 总体矩（含参数）→ 解方程（组）
+│   └─ 极大似然估计：让观测到的样本「最可能」→
+│       写 L(θ) → 取 ln L → 求导置零 → 解 θ̂（边界型直接看最值）
+├─ 评选标准（哪个估计量好）（§3）
+│   ├─ 无偏性：E(θ̂) = θ
+│   ├─ 有效性：无偏中方差越小越好
+│   └─ 相合性：n → ∞ 时 θ̂ 依概率收敛于 θ
+└─ 区间估计（§4–§6）
+    ├─ 枢轴量法：构造「含 θ 且分布已知」的量 → 反解不等式
+    ├─ 单样本正态：μ（σ² 已知用 z，未知用 t）、σ²（χ²）
+    ├─ 两样本正态：均差（t）、方差比（F）
+    └─ 单侧：把 α/2 换成 α
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>矩估计<span class="tag">点估计①</span></h2>
+<div class="box def"><b>原理：</b>由辛钦大数定律，样本 $k$ 阶矩 $A_k=\dfrac1n\sum X_i^k$ 依概率收敛于总体 $k$ 阶矩 $E(X^k)$——用「样本矩」硬性替代「总体矩」，解出未知参数。</div>
+<div class="box method"><b>矩估计三步走：</b><br>
+① 写出含参数的总体矩：$E(X)$（一个参数）；$E(X),D(X)$（或 $E(X),E(X^2)$）（两个参数）；<br>
+② 令样本矩 = 总体矩：$\bar X=E(X)$；$B_2=\dfrac1n\sum(X_i-\bar X)^2=D(X)$（中心矩对应 $D$）；<br>
+③ 解方程（组），得矩估计量 $\hat\theta$。</div>
+<div class="box example">
+<b>例 1（常见单参数：一眼可写）.</b><br>
+① $X\sim$ 0-1 分布（成功概率 $p$）：$E(X)=p$ ⇒ $\hat p=\bar X$（即样本频率）；<br>
+② $X\sim P(\lambda)$：$E(X)=\lambda$ ⇒ $\hat\lambda=\bar X$。<br>
+<b>数据验算：</b>某样本 $1,2,0,1,3$（n=5）：$\hat\lambda=\bar x=\dfrac{7}{5}=1.4$ ✓；样本频率仍是自然估计（与直觉一致）。
+</div>
+<div class="box example">
+<b>例 2（两参数：均匀分布 $U(a,b)$）.</b> 求 $a,b$ 的矩估计。<br>
+① 总体矩：$E(X)=\dfrac{a+b}{2}$，$D(X)=\dfrac{(b-a)^2}{12}$；<br>
+② 列方程：$\bar X=\dfrac{a+b}{2}$，$B_2=\dfrac{(b-a)^2}{12}$；<br>
+③ 解：$b-a=\sqrt{12B_2}=2\sqrt{3B_2}$，$a+b=2\bar X$，故
+$$\hat a=\bar X-\sqrt{3B_2},\qquad \hat b=\bar X+\sqrt{3B_2}$$
+<b>验算：</b>$\dfrac{\hat a+\hat b}{2}=\bar X$ ✓；$\hat b-\hat a=2\sqrt{3B_2}$ ⇒ $\dfrac{(\hat b-\hat a)^2}{12}=B_2$ ✓——两个方程同时满足。
+</div>
+<div class="box example">
+<b>例 3（正态：注意方差用 $B_2$）.</b> $X\sim N(\mu,\sigma^2)$，则
+$$\hat\mu=\bar X,\qquad \hat\sigma^2=B_2=\frac1n\sum_{i=1}^n(X_i-\bar X)^2$$
+<b>提示：</b>矩估计的 $\hat\sigma^2$ 分母是 $n$（对应 $B_2$），<b>不是</b>无偏的 $S^2$。由第六章 $B_2=\dfrac{n-1}{n}S^2$ 得 $E(B_2)=\dfrac{n-1}{n}\sigma^2$——矩估计可以有偏 ✓（评优见 §3）。
+</div>
+</section>
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>极大似然估计<span class="tag">点估计②</span></h2>
+<div class="box def"><b>思想：</b>「已经观测到的样本，理应来自使其出现<b>概率最大</b>的那组参数」——谁让结果最可能发生，就选谁。<br>
+连续型用密度、离散型用分布律，统一写成<b>似然函数</b>：
+$$L(\theta)=\prod_{i=1}^n f(x_i;\theta)\quad(\text{连续})\qquad L(\theta)=\prod_{i=1}^n p(x_i;\theta)\quad(\text{离散})$$</div>
+<div class="box method"><b>MLE 四步走：</b><br>
+① 写似然函数 $L(\theta)$；② 取对数 $\ln L(\theta)$（化积为和）；③ 令 $\dfrac{d\ln L}{d\theta}=0$ 求驻点（多参数解方程组）；④ 检查驻点是否为最大值（含边界情形——不能求导时直接分析单调性）。</div>
+<div class="box example">
+<b>例 1（0-1 分布）.</b> $X\sim B(1,p)$，样本 $x_1,\dots,x_n$。求 $p$ 的 MLE。<br>
+① $L(p)=\prod p^{x_i}(1-p)^{1-x_i}=p^{\sum x_i}(1-p)^{n-\sum x_i}$；<br>
+② $\ln L=\left(\sum x_i\right)\ln p+\left(n-\sum x_i\right)\ln(1-p)$；<br>
+③ 求导置零：
+$$\frac{d\ln L}{dp}=\frac{\sum x_i}{p}-\frac{n-\sum x_i}{1-p}=0\ \Longrightarrow\ \sum x_i=np\ \Longrightarrow\ \hat p=\bar X$$
+<b>验算（与直觉对照）：</b>频率 $\bar X$ 恰是「让本次结果最可能出现」的 $p$ ✓；若全为 1 则 $\hat p=1$、全为 0 则 $\hat p=0$，与边界直觉一致 ✓。
+</div>
+<div class="box example">
+<b>例 2（泊松分布）.</b> $X\sim P(\lambda)$，求 $\lambda$ 的 MLE。<br>
+① $L(\lambda)=\prod\dfrac{\lambda^{x_i}e^{-\lambda}}{x_i!}=\dfrac{\lambda^{\sum x_i}e^{-n\lambda}}{\prod x_i!}$；<br>
+② $\ln L=\left(\sum x_i\right)\ln\lambda-n\lambda-\ln\prod x_i!$；<br>
+③ $\dfrac{d\ln L}{d\lambda}=\dfrac{\sum x_i}{\lambda}-n=0$ ⇒ $\hat\lambda=\bar X$；<br>
+④ 二阶导 $-\dfrac{\sum x_i}{\lambda^2}<0$，确为最大值 ✓。<br>
+<b>数据验算：</b>样本 $1,2,0,1,3$：$\hat\lambda=7/5=1.4$，与矩估计一致（该分布两法同解）。
+</div>
+<div class="box example">
+<b>例 3（正态、双参数）.</b> $X\sim N(\mu,\sigma^2)$，$(\mu,\sigma^2)$ 的 MLE。<br>
+① 对数似然：
+$$\ln L=-\frac n2\ln(2\pi)-\frac n2\ln(\sigma^2)-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i-\mu)^2$$
+② 对 $\mu$ 求偏导置零：$\dfrac{1}{\sigma^2}\sum(x_i-\mu)=0$ ⇒ $\hat\mu=\bar X$；<br>
+③ 对 $\sigma^2$ 求偏导置零：$-\dfrac{n}{2\sigma^2}+\dfrac{1}{2\sigma^4}\sum(x_i-\mu)^2=0$，代入 $\hat\mu$：
+$$\hat\sigma^2=\frac1n\sum(X_i-\bar X)^2=B_2$$
+<b>验算（有偏性）：</b>$E(\hat\sigma^2)=\dfrac{n-1}{n}\sigma^2$，有偏但相合；无偏版本 $S^2=\dfrac{n}{n-1}B_2$ ✓。
+</div>
+<div class="box example">
+<b>例 4（边界型：均匀分布 $U(0,\theta)$）.</b> $X_1,\dots,X_n\sim U(0,\theta)$，求 $\theta$ 的 MLE。<br>
+① 似然函数只有两个取值：
+$$L(\theta)=\begin{cases}\dfrac{1}{\theta^n},&0\le x_i\le\theta\ (\text{全部}\ i)\\[4pt]0,&\text{其他}\end{cases}$$
+② 约束是 $\theta\ge\max x_i$；在可行区间内 $L=\theta^{-n}$ 关于 $\theta$ 单调<b>递减</b>；<br>
+③ 故取可行区间的最小值：
+$$\hat\theta=\max(X_1,\dots,X_n)$$
+（<b>不能用求导法</b>！）<br>
+<b>数据验算：</b>样本 $0.3,0.8,1.2,0.6,1.4$：$\hat\theta_{\text{MLE}}=1.4$，而矩估计 $\hat\theta=2\bar X=1.72$——两法不同，MLE 更贴合「上界」含义 ✓；又 $E(\max)=\dfrac{n}{n+1}\theta$（有偏，修正 $\dfrac{n+1}{n}\max$ 无偏）✓。
+</div>
+<div class="box tip"><b>不变性原理：</b>若 $\hat\theta$ 是 $\theta$ 的 MLE，则对任意函数 $g$，$g(\hat\theta)$ 是 $g(\theta)$ 的 MLE。例：$\hat\sigma=\sqrt{\hat\sigma^2}$（正态标准差的 MLE 就是方差 MLE 开方）。</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>估计量的评选标准<span class="tag">衡量好坏</span></h2>
+<h3>标准一：无偏性</h3>
+<div class="box def"><b>定义：</b>若 $E(\hat\theta)=\theta$ 对一切 $\theta$ 成立，称 $\hat\theta$ 为 $\theta$ 的<b>无偏估计量</b>——没有系统偏差，「平均而言命中」。</div>
+<div class="box example">
+<b>例 1（谁无偏）.</b> 样本来自期望 $\mu$、方差 $\sigma^2$ 的总体：<br>
+① $E(\bar X)=\mu$ ⇒ $\bar X$ 是 $\mu$ 的无偏估计；<br>
+② $E(S^2)=\sigma^2$（第六章定理）⇒ $S^2$ 是 $\sigma^2$ 的无偏估计；<br>
+③ $E(B_2)=\dfrac{n-1}{n}\sigma^2\ne\sigma^2$ ⇒ 矩估计 $B_2$ <b>有偏</b>。<br>
+<b>验算（n=2 特例）：</b>$B_2=\dfrac{(X_1-X_2)^2}{4}$；又 $E[(X_1-X_2)^2]=D(X_1-X_2)=2\sigma^2$，故 $E(B_2)=\dfrac{2\sigma^2}{4}=\dfrac{\sigma^2}{2}=\dfrac{n-1}{n}\sigma^2_{(n=2)}$ ✓。
+</div>
+<h3>标准二：有效性</h3>
+<div class="box def"><b>定义：</b>两个无偏估计中，方差更小者<b>更有效</b>（更集中、更可靠）。</div>
+<div class="box example">
+<b>例 2（$\bar X$ 是最优线性无偏估计）.</b> 一切无偏线性估计 $\hat\mu=\sum c_iX_i$（无偏 ⇔ $\sum c_i=1$）：<br>
+① $D(\hat\mu)=\sigma^2\sum c_i^2$；<br>
+② 配方：
+$$\sum c_i^2=\sum\left(c_i-\frac1n+\frac1n\right)^2=\sum\left(c_i-\frac1n\right)^2+\frac2n\underbrace{\sum\left(c_i-\frac1n\right)}_{=0}+\frac1n\ \ge\ \frac1n$$
+③ 等号当且仅当 $c_i\equiv\dfrac1n$，即 $\hat\mu=\bar X$——<b>在所有无偏线性估计中方差最小</b> ✓。
+</div>
+<h3>标准三：相合性（一致性）</h3>
+<div class="box def"><b>定义：</b>若 $n\to\infty$ 时 $\hat\theta_n\xrightarrow{P}\theta$，称 $\hat\theta$ 为<b>相合估计量</b>——样本越多越准（大样本性质）。</div>
+<div class="box example">
+<b>例 3（相合性举例与反例）.</b><br>
+① $\bar X\xrightarrow{P}\mu$（辛钦大数定律）；$S^2,B_2\xrightarrow{P}\sigma^2$——都相合；<br>
+② 反例：$\hat\mu=X_1$（只取第一个观测值）无偏，但 $n$ 再大也不改进 ⇒ <b>不相合</b>；<br>
+③ 结论：无偏、有效、相合是三个独立标准；实践中「大样本看相合，小样本看无偏+有效」。
+</div>
+</section>
+
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>置信区间的基本概念<span class="tag">区间估计</span></h2>
+<div class="box def"><b>定义：</b>设总体含未知参数 $\theta$。若由样本确定两个统计量 $\hat\theta_L<\hat\theta_U$ 使
+$$P\{\hat\theta_L<\theta<\hat\theta_U\}=1-\alpha$$
+则称 $(\hat\theta_L,\hat\theta_U)$ 为 $\theta$ 的<b>置信水平 $1-\alpha$ 的置信区间</b>（$1-\alpha$ 为置信度，$\alpha$ 为显著性水平）。</div>
+<div class="box warn"><b>正确理解：</b>$\theta$ 是固定的常数、不是随机变量——「$\theta$ 以 $1-\alpha$ 概率落入该区间」是通俗说法；严格含义是「<b>反复抽样、每次构造一个区间，约 $100(1-\alpha)\%$ 的区间会盖住 $\theta$</b>」。置信度高 ⇒ 区间宽（精度下降）；提高精度靠增大 $n$。</div>
+<div class="box method"><b>枢轴量法（求置信区间的通法）：</b><br>
+① 构造<b>枢轴量</b> $G=G(X_1,\dots,X_n;\theta)$：含待估参数、但<b>分布完全已知</b>（不含其他未知参数）；<br>
+② 找常数 $a<b$ 使 $P\{a<G<b\}=1-\alpha$（用标准分布的分位点）；<br>
+③ 从不等式 $a<G<b$ 中<b>反解出 $\theta$</b> 的范围，即得置信区间。<br>
+常用枢轴量（第六章）：$z$、$t(n-1)$、$\chi^2(n-1)$、$F$。</div>
+<div class="box example">
+<b>例（流程演示：σ 已知时 μ 的区间）.</b> $X\sim N(\mu,1)$，抽得 $n=16$、$\bar x=10$，求 $\mu$ 的 95% 置信区间。<br>
+① 枢轴量：$G=\dfrac{\bar X-\mu}{\sigma/\sqrt n}=4(\bar X-\mu)\sim N(0,1)$；<br>
+② $P\{-1.96<G<1.96\}=0.95$，即 $P\{4(10-\mu)\in(-1.96,1.96)\}=0.95$；<br>
+③ 反解：$-1.96<40-4\mu<1.96$ ⇒ $10-0.49<\mu<10+0.49$，区间为 $(9.51,\ 10.49)$。<br>
+<b>验算（长度自检）：</b>半宽 $=z_{0.025}\dfrac{\sigma}{\sqrt n}=1.96\times0.25=0.49$ ✓；若 $n$ 增到 64，半宽减半为 0.245 ✓。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>单样本区间估计<span class="tag">核心公式</span></h2>
+<div class="box warn"><b>前提：</b>总体 $X\sim N(\mu,\sigma^2)$。以下四类区间全部用「枢轴量 + 反解」得到，请重点记忆每个枢轴量。</div>
+<h3>（1）μ 的置信区间：σ² 已知</h3>
+<div class="thm"><span class="label">公式</span>
+$$\bar X\pm z_{\alpha/2}\cdot\frac{\sigma}{\sqrt n}$$
+（枢轴量 $G=\dfrac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1)$。）</div>
+<div class="proof"><span class="label">推导</span>由 $P\{-z_{\alpha/2}<G<z_{\alpha/2}\}=1-\alpha$ 反解：
+$$-z_{\alpha/2}<\frac{\bar X-\mu}{\sigma/\sqrt n}<z_{\alpha/2}\ \Longleftrightarrow\ \bar X-z_{\alpha/2}\frac{\sigma}{\sqrt n}<\mu<\bar X+z_{\alpha/2}\frac{\sigma}{\sqrt n}\ ✓$$<span class="qed">∎</span></div>
+<h3>（2）μ 的置信区间：σ² 未知（最常用）</h3>
+<div class="thm"><span class="label">公式</span>
+$$\bar X\pm t_{\alpha/2}(n-1)\cdot\frac{S}{\sqrt n}$$
+（枢轴量 $T=\dfrac{\bar X-\mu}{S/\sqrt n}\sim t(n-1)$，第六章定理 C。）</div>
+<div class="box tip"><b>与（1）比较：</b>把未知的 $\sigma$ 换成样本的 $S$，正态分位点换成 t 分位点。因 $t_{\alpha/2}(n-1)>z_{\alpha/2}$，区间更宽——为「σ 未知」付出的代价。</div>
+<h3>（3）σ² 的置信区间：μ 未知</h3>
+<div class="thm"><span class="label">公式</span>
+$$\left(\frac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)},\ \frac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)}\right)$$</div>
+<div class="proof"><span class="label">推导</span>枢轴量 $\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$。取两侧各 $\alpha/2$：
+$$P\left\{\chi^2_{1-\alpha/2}(n-1)<\frac{(n-1)S^2}{\sigma^2}<\chi^2_{\alpha/2}(n-1)\right\}=1-\alpha$$
+从中间解出 $\sigma^2$（正数取倒数要<b>翻转</b>不等号）：
+$$\frac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)}<\sigma^2<\frac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)}\ ✓$$
+<b>注意方向：</b>左端点用<b>大</b>分位点 $\chi^2_{\alpha/2}$ 在分母，右端点用<b>小</b>分位点 $\chi^2_{1-\alpha/2}$——因为 $\chi^2$ 不对称，左右必须各查各的 ✓。<span class="qed">∎</span></div>
+<h3>（4）σ 的置信区间</h3>
+<div class="box def">对（3）的开方（$\sqrt{\cdot}$ 单调）：
+$$\left(\sqrt{\frac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)}},\ \sqrt{\frac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)}}\right)$$</div>
+<div class="box tip"><b>影响因素速记：</b>区间半宽 ∝ 分位点（置信度的代价）与 $\dfrac{\sigma}{\sqrt n}$（精度的来源）——<b>想变窄：增大 n；想更稳：接受更宽</b>。</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>两样本与单侧区间估计<span class="tag">扩展</span></h2>
+<h3>（5）两正态总体均值差 $\mu_1-\mu_2$ 的置信区间（方差相等但未知）</h3>
+<div class="thm"><span class="label">公式</span>
+$$(\bar X-\bar Y)\pm t_{\alpha/2}(n_1+n_2-2)\cdot S_w\sqrt{\frac{1}{n_1}+\frac{1}{n_2}},\qquad S_w^2=\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}$$
+（枢轴量即第六章定理 D 的 t 统计量。）</div>
+<h3>（6）两正态总体方差比 $\sigma_1^2/\sigma_2^2$ 的置信区间</h3>
+<div class="thm"><span class="label">公式</span>
+$$\left(\frac{S_1^2}{S_2^2}\cdot\frac{1}{F_{\alpha/2}(n_1-1,n_2-1)},\ \frac{S_1^2}{S_2^2}\cdot\frac{1}{F_{1-\alpha/2}(n_1-1,n_2-1)}\right)$$
+（由倒数公式，右端点也可写作 $\dfrac{S_1^2}{S_2^2}\cdot F_{\alpha/2}(n_2-1,\ n_1-1)$，这样只查上侧表。）</div>
+<div class="proof"><span class="label">推导</span>枢轴量 $F_{piv}=\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(n_1-1,\ n_2-1)$。由
+$$P\left\{F_{1-\alpha/2}<F_{piv}<F_{\alpha/2}\right\}=1-\alpha$$
+反解出 $\dfrac{\sigma_1^2}{\sigma_2^2}$（在分子，取倒数得区间）：
+$$\frac{S_1^2/S_2^2}{F_{\alpha/2}(n_1-1,n_2-1)}<\frac{\sigma_1^2}{\sigma_2^2}<\frac{S_1^2/S_2^2}{F_{1-\alpha/2}(n_1-1,n_2-1)}\ ✓$$<span class="qed">∎</span></div>
+<h3>（7）单侧置信区间</h3>
+<div class="box def"><b>μ 的单侧（σ² 未知）：</b>
+$$P\left\{\mu<\bar X+t_\alpha(n-1)\frac{S}{\sqrt n}\right\}=1-\alpha\qquad\text{（上限）}$$
+$$P\left\{\mu>\bar X-t_\alpha(n-1)\frac{S}{\sqrt n}\right\}=1-\alpha\qquad\text{（下限）}$$
+（σ² 已知时把 $t_\alpha$ 换成 $z_\alpha$；<b>单侧用 $\alpha$，不是 $\alpha/2$</b>。）<br><br>
+<b>σ² 的单侧：</b>
+$$P\left\{\sigma^2<\frac{(n-1)S^2}{\chi^2_{1-\alpha}(n-1)}\right\}=1-\alpha\qquad\text{（上限）}$$
+$$P\left\{\sigma^2>\frac{(n-1)S^2}{\chi^2_{\alpha}(n-1)}\right\}=1-\alpha\qquad\text{（下限）}$$</div>
+<div class="proof"><span class="label">推导（μ 的上限）</span>$P\{T>-t_\alpha(n-1)\}=1-\alpha$（下侧 $\alpha$ 点与上侧对称），即
+$$\frac{\bar X-\mu}{S/\sqrt n}>-t_\alpha(n-1)\ \Longleftrightarrow\ \mu<\bar X+t_\alpha(n-1)\frac{S}{\sqrt n}\ ✓$$<span class="qed">∎</span></div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>典型例题<span class="tag">实战</span></h2>
+<div class="box example">
+<b>例 1（单样本全家桶）.</b> 设 $X\sim N(\mu,\sigma^2)$，抽得 $n=16$ 的样本：$\bar x=10.0$，$s=0.4$。求：<br>
+① $\mu$ 的 95% 双侧置信区间：$t_{0.025}(15)=2.131$，$s/\sqrt n=0.1$：
+$$\bar x\pm t_{\alpha/2}\frac{s}{\sqrt n}=10.0\pm2.131\times0.1=(9.787,\ 10.213)$$
+② $\mu$ 的 99% 双侧：$t_{0.005}(15)=2.947$：$10.0\pm0.2947=(9.705,\ 10.295)$；<br>
+③ $\sigma^2$ 的 95% 区间：$(n-1)s^2=15\times0.16=2.4$，$\chi^2_{0.025}(15)=27.488$，$\chi^2_{0.975}(15)=6.262$：
+$$\left(\frac{2.4}{27.488},\ \frac{2.4}{6.262}\right)=(0.087,\ 0.383)$$
+④ $\sigma$ 的 95% 区间：开方得 $(\sqrt{0.087},\ \sqrt{0.383})=(0.295,\ 0.619)$；<br>
+⑤ $\mu$ 的 95% 单侧上限：$t_{0.05}(15)=1.753$：$\mu<10.0+1.753\times0.1=10.175$。<br>
+<b>验算：</b>①半宽 $2.131\times0.1=0.213$ ✓；②的区间包含①（置信度更高更宽）✓；③中 $s^2=0.16$ 确在区间内 ✓；⑤单侧上限 10.175 低于①的右端 10.213（单侧更"省"）✓。
+</div>
+<div class="box example">
+<b>例 2（两样本均值差）.</b> 两台机床加工同种零件，各抽 $n_1=n_2=10$：$\bar x-\bar y=0.8$，$s_1^2=0.20$，$s_2^2=0.10$（设方差相等）。求 $\mu_1-\mu_2$ 的 95% 置信区间。<br>
+① 合并方差：$S_w^2=\dfrac{9\times0.20+9\times0.10}{18}=0.15$，$S_w\approx0.387$；<br>
+② 标准误：$S_w\sqrt{\dfrac1{10}+\dfrac1{10}}=0.387\times0.447\approx0.173$；<br>
+③ $t_{0.025}(18)=2.101$：
+$$0.8\pm2.101\times0.173=(0.436,\ 1.164)$$
+<b>验算：</b>半宽 $2.101\times0.173\approx0.364$ ✓；区间不含 0——提示两机床均值很可能不同（第八章假设检验将严格判定）。
+</div>
+<div class="box example">
+<b>例 3（方差比）.</b> 沿用例 2 数据（$s_1^2/s_2^2=2$），求 $\sigma_1^2/\sigma_2^2$ 的 95% 置信区间。<br>
+① 枢轴量：$\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(9,9)$，$F_{0.025}(9,9)=4.03$；<br>
+② 区间：
+$$\left(\frac{2}{4.03},\ 2\times4.03\right)=(0.50,\ 8.06)$$
+（右端点用了倒数公式：$1/F_{0.975}(9,9)=F_{0.025}(9,9)$。）<br>
+<b>验算：</b>区间含 1（$0.50<1<8.06$），与例 2「假设方差相等」相容 ✓；区间相当宽——方差比的估计需要大样本才精确 ✓。
+</div>
+</section>
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>解题决策流程</h2>
+<pre class="flow">拿到参数估计题
+├─ 求点估计？
+│   ├─ 矩估计：总体矩 = 样本矩（X̄、B₂）→ 解方程（组）
+│   └─ 极大似然：写 L → ln → 求导置零；边界型（U(0,θ)）单调分析取 max
+├─ 评价估计量？
+│   ├─ 无偏：E(θ̂) = θ ？（S² 对 σ² 无偏；B₂ 有偏）
+│   ├─ 有效：无偏者中方差更小者更有效（X̄ 为最优线性无偏）
+│   └─ 相合：n → ∞ 时 θ̂ → ᵖ θ
+├─ 区间估计？
+│   ├─ 定参数：μ？σ²？μ₁−μ₂？σ₁²/σ₂²？
+│   ├─ 定条件：σ² 已知（z）还是未知（t）？方差相等吗？
+│   ├─ 定侧别：双侧用 α/2；单侧用 α
+│   └─ 反解枢轴量不等式（σ² 区间注意翻转方向）
+└─ 检查前提：总体正态？n 多大？数字保留几位？
+</pre>
+</section>
+
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>易错点清单<span class="tag">避坑</span></h2>
+<div class="box warn">
+<ol>
+<li><b>两种「方差」别混：</b>矩估计/极大似然的 $\hat\sigma^2=B_2$ 分母是 $n$；无偏估计 $S^2$ 分母是 $n-1$——按题目要求选择。</li>
+<li><b>MLE 边界型：</b>$U(0,\theta)$ 的 MLE 是 $\max X_i$（单调分析），不能误用求导法。</li>
+<li><b>不变性原理：</b>$\hat\theta$ 是 MLE ⇒ $g(\hat\theta)$ 是 $g(\theta)$ 的 MLE（如 $\hat\sigma=\sqrt{\hat\sigma^2}$）。</li>
+<li><b>置信区间的含义：</b>是「反复抽样区间覆盖参数」的频率，不是「参数有 $1-\alpha$ 概率落在区间」。</li>
+<li><b>σ² 区间方向：</b>左端点分母用<b>大</b>分位点 $\chi^2_{\alpha/2}$；取倒数时不等号翻转，别写反。</li>
+<li><b>单侧用 α：</b>单侧置信区间用 $z_\alpha,t_\alpha,\chi^2_\alpha$，不是 $\alpha/2$。</li>
+<li><b>两样本 t 的前提：</b>正态、独立、方差相等——缺一不可（方差不等需其他近似）。</li>
+<li><b>宽度三因素：</b>$n\uparrow$ 变窄；置信度 $\uparrow$ 变宽；σ 大则宽；t 分位点比 z 大（σ 未知更宽）。</li>
+<li><b>无偏不是唯一标准：</b>$X_1$ 无偏但极差（不相合）；还要看方差与相合性。</li>
+<li><b>数字规范：</b>分位点查表保留 3 位；区间端点保留位数与原始数据一致，避免过度精确。</li>
+</ol>
+</div>
+</section>
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>公式速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
+<tbody>
+<tr><td>矩估计</td><td>$\bar X=E(X)$；$B_2=D(X)$（$B_2=\dfrac1n\sum(X_i-\bar X)^2$）</td></tr>
+<tr><td>极大似然</td><td>$L(\theta)=\prod f(x_i;\theta)$；$\dfrac{d\ln L}{d\theta}=0$；边界型用单调分析</td></tr>
+<tr><td>无偏性</td><td>$E(\hat\theta)=\theta$；$S^2$ 无偏、$B_2$ 有偏（$\frac{n-1}{n}\sigma^2$）</td></tr>
+<tr><td>有效性</td><td>无偏中方差小者更有效；$\bar X$ 为最优线性无偏估计</td></tr>
+<tr><td>相合性</td><td>$n\to\infty$ 时 $\hat\theta\xrightarrow{P}\theta$</td></tr>
+<tr><td>μ 区间（σ² 已知）</td><td>$\bar X\pm z_{\alpha/2}\dfrac{\sigma}{\sqrt n}$</td></tr>
+<tr><td>μ 区间（σ² 未知）</td><td>$\bar X\pm t_{\alpha/2}(n-1)\dfrac{S}{\sqrt n}$</td></tr>
+<tr><td>σ² 区间</td><td>$\left(\dfrac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)},\ \dfrac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)}\right)$；σ 开方</td></tr>
+<tr><td>μ₁−μ₂ 区间</td><td>$(\bar X-\bar Y)\pm t_{\alpha/2}(n_1+n_2-2)S_w\sqrt{\dfrac1{n_1}+\dfrac1{n_2}}$</td></tr>
+<tr><td>σ₁²/σ₂² 区间</td><td>$\left(\dfrac{S_1^2/S_2^2}{F_{\alpha/2}(n_1-1,n_2-1)},\ \dfrac{S_1^2}{S_2^2}F_{\alpha/2}(n_2-1,n_1-1)\right)$</td></tr>
+<tr><td>单侧 μ 上限</td><td>$\mu<\bar X+t_\alpha(n-1)\dfrac{S}{\sqrt n}$（下限用 $-$）</td></tr>
+<tr><td>单侧 σ² 上限</td><td>$\sigma^2<\dfrac{(n-1)S^2}{\chi^2_{1-\alpha}(n-1)}$（下限分母用 $\chi^2_\alpha$）</td></tr>
+<tr><td>常用表值</td><td>$z_{0.025}=1.96$，$z_{0.05}=1.645$；$t_{0.025}(15)=2.131$，$t_{0.005}(15)=2.947$，$t_{0.05}(15)=1.753$，$t_{0.025}(18)=2.101$；$\chi^2_{0.025}(15)=27.49$，$\chi^2_{0.975}(15)=6.26$，$\chi^2_{0.95}(15)=7.26$；$F_{0.025}(9,9)=4.03$</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>点估计解决「估哪个数」——矩法看方程、似然法看最可能；区间估计解决「估得多准」——一切从<b>枢轴量</b>出发：$\mu$ 找 $z/t$、$\sigma^2$ 找 $\chi^2$、两样本找 $t/F$，<b>反解不等式</b>就得到区间。</div>
+</section>
+
+<section class="card" id="sec-11">
+<h2><span class="num">11</span>能力自查与用法索引</h2>
+<div class="box tip"><b>学习闭环：</b>会点估计（矩法+似然）→ 会评优劣（无偏/有效/相合）→ 会推区间（枢轴量法）→ 会算数字（查表+反解）。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 用矩估计与极大似然法求各类参数的点估计（含 $U(0,\theta)$ 边界型与不变性原理）；<br>
+② 证明 $E(S^2)=\sigma^2$ 与「$\bar X$ 最优线性无偏」（配方 $\sum c_i^2\ge1/n$）；<br>
+③ 判断估计量的无偏性、有效性、相合性；<br>
+④ 用枢轴量法独立推导 $\mu$、$\sigma^2$、$\mu_1-\mu_2$、$\sigma_1^2/\sigma_2^2$ 的置信区间；<br>
+⑤ 完成单侧与双侧区间的查表计算，并解释置信水平与区间宽度的关系；<br>
+⑥ 说清「置信区间不是参数的概率区间」的正确含义。
+</div>
+<h3>用法索引（看到什么 → 用什么 → 对照例题）</h3>
+<table>
+<thead><tr><th>题面特征</th><th>方法</th><th>对照</th></tr></thead>
+<tbody>
+<tr><td>「求估计量 / 估计值」</td><td>矩估计或 MLE（看题目要求）</td><td>§1、§2</td></tr>
+<tr><td>「哪个估计更好」</td><td>无偏 → 有效 → 相合</td><td>§3</td></tr>
+<tr><td>μ 的区间（σ² 已知）</td><td>$z$ 公式</td><td>§5(1)</td></tr>
+<tr><td>μ 的区间（σ² 未知）</td><td>$t$ 公式（最常用）</td><td>§5(2)、§7 例1</td></tr>
+<tr><td>σ² 或 σ 的区间</td><td>$\chi^2$ 枢轴量、翻转反解</td><td>§5(3)(4)、§7 例1</td></tr>
+<tr><td>两样本均值差 / 方差比</td><td>$t(n_1+n_2-2)$ / $F$ 公式</td><td>§6(5)(6)、§7 例2、例3</td></tr>
+<tr><td>「至少 / 不超过」型</td><td>单侧区间（用 $\alpha$）</td><td>§6(7)、§7 例1⑤</td></tr>
+</tbody>
+</table>
+<h3>闭卷自查</h3>
+<div class="box method">
+☐ $U(0,\theta)$ 两种估计对照：矩估计 $2\bar X$ 与 MLE $\max X_i$（含数据验算）(§1 例2、§2 例4)<br>
+☐ 独立推导 0-1 分布 $p$ 的 MLE（写 L → 求导 → 解）(§2 例1)<br>
+☐ 证明 $\bar X$ 最优线性无偏（配方 $\sum c_i^2\ge1/n$）(§3 例2)<br>
+☐ 默写 $\mu$、$\sigma^2$ 四类区间的枢轴量与反解过程 (§5)<br>
+☐ 复算 §7 例1 的全部数字（(9.787,10.213)、(0.087,0.383)、单侧 10.175）(§7)<br>
+☐ 写出 μ 单侧上限的完整推导（$P\{T>-t_\alpha\}=1-\alpha$）(§6)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>概率论与数理统计 · 第七章 参数估计 · 内容与推导完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
