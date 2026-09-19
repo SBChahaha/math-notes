@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高数01 · 函数与极限 · 完全教程（含全部证明）</title>
+<style>
+:root{--bg:#f3f7ff;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#2563eb;--accent2:#60a5fa;--soft:#eff6ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#60a5fa);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#dbeafe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#1d4ed8;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#1e3a8a}
+.card h3{font-size:1.05rem;color:#1d4ed8;margin:24px 0 8px;padding-left:10px;border-left:4px solid #93c5fd}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#60a5fa,#3b82f6);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#eff6ff;border-color:#93c5fd}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #bfdbfe;border-left:4px solid #60a5fa;background:#fbfdff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#1d4ed8;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#1d4ed8;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f7faff}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(37,99,235,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>高等数学 · 第一章 函数与极限 · 完全教程</h1>
+<p>全部内容 + 全部定理证明 + 例题步骤化 + 学习闭环</p>
+<div class="chips"><span>函数</span><span>数列极限</span><span>函数极限</span><span>无穷小比较</span><span>两个重要极限</span><span>连续性</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 函数</a>
+<a href="#sec-2">02 · 数列的极限</a>
+<a href="#sec-3">03 · 函数的极限</a>
+<a href="#sec-4">04 · 无穷小、无穷大与无穷小比较</a>
+<a href="#sec-5">05 · 极限运算法则</a>
+<a href="#sec-6">06 · 极限存在准则与两个重要极限</a>
+<a href="#sec-7">07 · 函数的连续性与间断点</a>
+<a href="#sec-8">08 · 闭区间上连续函数的性质</a>
+<a href="#sec-9">09 · 典型例题</a>
+<a href="#sec-10">10 · 解题决策流程与易错点</a>
+<a href="#sec-11">11 · 公式速查表与能力自查</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章地位：</b>高等数学的<b>地基</b>——研究对象是「函数」，核心工具是「极限」，衔接概念是「连续」。后面所有章节（导数、积分、级数）都建立在本章的极限语言之上。</div>
+<pre class="flow">第一章 函数与极限
+├─ 函数（研究对象）（§1）
+│   └─ 概念、四大特性（有界/单调/奇偶/周期）、反函数、复合、初等函数
+├─ 极限（核心工具）（§2–§6）
+│   ├─ 数列极限：ε-N 定义；唯一性·有界性·保号性（§2，含证明）
+│   ├─ 函数极限：ε-δ 与 ε-X；单侧极限（§3）
+│   ├─ 无穷小与无穷大：无穷小×有界=无穷小（§4）
+│   ├─ 无穷小比较：等价无穷小替换定理（§4，含证明）
+│   ├─ 极限运算法则（§5）
+│   └─ 存在准则与两个重要极限：sinx/x → 1、(1+1/x)^x → e（§6）
+└─ 连续（极限的应用）（§7–§8）
+    ├─ 连续定义、间断点分类（§7）
+    └─ 闭区间连续函数：最值定理、介值定理、零点定理（§8）
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>函数<span class="tag">研究对象</span></h2>
+<div class="box def"><b>函数：</b>设数集 $D\subseteq\mathbb R$，若对每个 $x\in D$ 按对应法则 $f$ 有唯一确定的 $y$ 与之对应，记 $y=f(x)$，$x\in D$。$D$ 称为<b>定义域</b>，值域 $f(D)=\{y\mid y=f(x),\ x\in D\}$。<br>
+两个函数相同 $\iff$ 定义域相同且对应法则相同（与自变量字母无关）。</div>
+<div class="box def"><b>四大特性：</b><br>
+① <b>有界性：</b>$\exists M>0$，$\forall x\in X$：$|f(x)|\le M$（否则无界）；<br>
+② <b>单调性：</b>$x_1<x_2\Rightarrow f(x_1)\le f(x_2)$（单调增）或 $\ge$（单调减）；<br>
+③ <b>奇偶性：</b>定义域对称时，$f(-x)=f(x)$（偶）或 $f(-x)=-f(x)$（奇）；<br>
+④ <b>周期性：</b>$\exists T>0$ 使 $f(x+T)=f(x)$（通常取最小正周期）。</div>
+<div class="box def"><b>反函数与复合：</b>若 $f:D\to f(D)$ 单调，则存在<b>反函数</b> $f^{-1}:f(D)\to D$，图像关于 $y=x$ 对称；<br>
+复合函数 $y=f[g(x)]$：要求 $g$ 的值域与 $f$ 的定义域有交集（内层输出可被外层接收）。</div>
+<div class="box def"><b>初等函数：</b>由<b>幂函数、指数函数、对数函数、三角函数、反三角函数</b>五类基本初等函数经有限次四则运算与复合、且能用一个式子表示的函数。它们在定义区间内连续（§7 将证明）。<br>
+<b>双曲函数（了解）：</b>$\operatorname{sh}x=\dfrac{e^x-e^{-x}}2$（奇），$\operatorname{ch}x=\dfrac{e^x+e^{-x}}2$（偶），$\operatorname{th}x=\dfrac{\operatorname{sh}x}{\operatorname{ch}x}$；满足 $\operatorname{ch}^2x-\operatorname{sh}^2x=1$（验证：$\frac{(e^x+e^{-x})^2-(e^x-e^{-x})^2}{4}=\frac{4}{4}=1$ ✓）。</div>
+</section>
+
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>数列的极限<span class="tag">ε-N</span></h2>
+<div class="box def"><b>定义（ε-N 语言）：</b>数列 $\{x_n\}$ 与常数 $a$：若对任意 $\varepsilon>0$，总存在正整数 $N$，使当 $n>N$ 时恒有
+$$|x_n-a|<\varepsilon$$
+则称 $a$ 是数列的极限（数列收敛于 $a$），记 $\lim\limits_{n\to\infty}x_n=a$。<br>
+<b>几何意义：</b>任取 $a$ 的 $\varepsilon$ 邻域，数列中至多有限项落在邻域外。</div>
+<div class="box example">
+<b>例 1（定义法证明）.</b> 证明 $\lim\limits_{n\to\infty}\dfrac{n+(-1)^{n-1}}{n}=1$。<br>
+① 化简通项：$x_n=1+\dfrac{(-1)^{n-1}}{n}$，故 $|x_n-1|=\dfrac1n$；<br>
+② 任给 $\varepsilon>0$，要使 $\dfrac1n<\varepsilon$，只需 $n>\dfrac1\varepsilon$；<br>
+③ 取 $N=\left[\dfrac1\varepsilon\right]+1$，则当 $n>N$ 时 $1/n<\varepsilon$，即 $|x_n-1|<\varepsilon$ ✓。<br>
+<b>验算（找 N 的逻辑）：</b>$\varepsilon=0.01$ ⇒ $N=101$，则 $n\ge102$ 时误差 $<0.01$ ✓；$\varepsilon=0.001$ ⇒ $N=1001$ ✓——$\varepsilon$ 越小、$N$ 越大，符合「任意小」的要求。
+</div>
+<div class="box example">
+<b>例 2（等比数列 $|q|<1$ ⇒ $q^n\to0$）.</b> 设 $0<|q|<1$，证明 $\lim\limits_{n\to\infty}q^n=0$。<br>
+① 记 $h=\dfrac{1}{|q|}-1>0$，则 $\dfrac{1}{|q|}=1+h$；<br>
+② <b>伯努利不等式：</b>$(1+h)^n\ge1+nh$（对 $n$ 归纳：$(1+h)^{n+1}\ge(1+nh)(1+h)=1+(n+1)h+nh^2\ge1+(n+1)h$ ✓）；<br>
+③ 于是 $|q|^n=\dfrac{1}{(1+h)^n}\le\dfrac{1}{1+nh}<\dfrac1{nh}$，要使 $|q|^n<\varepsilon$ 只需 $n>\dfrac{1}{h\varepsilon}$；<br>
+④ 取 $N=\left[\dfrac{1}{h\varepsilon}\right]+1$ 即可证得 ✓。<br>
+<b>验算：</b>$q=0.5$（$h=1$）：$n=10$ 时 $0.5^{10}\approx0.00098<0.001$ ✓ 与估计 $n>1/\varepsilon=1000$ 相比更宽（估计是保守的）。
+</div>
+<div class="thm"><span class="label">收敛数列的性质</span>
+① <b>唯一性：</b>极限若存在必唯一；<br>
+② <b>有界性：</b>收敛数列必有界；<br>
+③ <b>保号性：</b>若 $\lim x_n=a>0$（或 $<0$），则存在 $N$，当 $n>N$ 时 $x_n>0$（或 $<0$）；<br>
+④ <b>子数列：</b>收敛数列的任一子数列收敛于同一极限。</div>
+<div class="proof"><span class="label">证明（①唯一性）</span>设又 $\lim x_n=a$、$\lim x_n=b$ 且 $a\ne b$。取 $\varepsilon=\dfrac{|a-b|}{2}>0$：$\exists N_1$，$n>N_1$ 时 $|x_n-a|<\varepsilon$；$\exists N_2$，$n>N_2$ 时 $|x_n-b|<\varepsilon$。取 $n>\max\{N_1,N_2\}$，由三角不等式：
+$$|a-b|\le|a-x_n|+|x_n-b|<2\varepsilon=|a-b|$$
+矛盾 ⇒ $a=b$ ✓。<br>
+<b>证明（②有界性）</b>取 $\varepsilon=1$：$\exists N$，$n>N$ 时 $|x_n-a|<1$ ⇒ $|x_n|\le|a|+1$。取
+$$M=\max\{|x_1|,|x_2|,\dots,|x_N|,\ |a|+1\}$$
+则对一切 $n$ 有 $|x_n|\le M$ ✓（前有限项取最大、后面项被 $|a|+1$ 控制）。<br>
+<b>证明（③保号性）</b>设 $a>0$，取 $\varepsilon=\dfrac a2>0$：$\exists N$，$n>N$ 时 $|x_n-a|<\dfrac a2$ ⇒ $x_n>a-\dfrac a2=\dfrac a2>0$ ✓（$a<0$ 同理对称）。<span class="qed">∎</span></div>
+<div class="box warn"><b>两个常用推论：</b>① 若存在子数列发散，或两个子数列极限不同，则原数列发散（例：$(-1)^n$ 的奇偶子列极限 $\pm1\ne$ 同值 ⇒ 发散）；② 有界只是收敛的必要条件——有界数列未必收敛（$(-1)^n$ 就是反例）。<br>
+<b>单调有界准则：</b>单调有界数列必收敛（§6 用它定义 e）。</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>函数的极限<span class="tag">ε-δ 与 ε-X</span></h2>
+<div class="box def">
+<b>定义 1（x→x₀）：</b>设 $f$ 在 $x_0$ 的某去心邻域内有定义。若 $\forall\varepsilon>0$，$\exists\delta>0$，当 $0<|x-x_0|<\delta$ 时恒有 $|f(x)-A|<\varepsilon$，则称 $A$ 为 $f(x)$ 当 $x\to x_0$ 时的极限，记 $\lim\limits_{x\to x_0}f(x)=A$。<br>
+<b>定义 2（x→∞）：</b>若 $\forall\varepsilon>0$，$\exists X>0$，当 $|x|>X$ 时 $|f(x)-A|<\varepsilon$，记 $\lim\limits_{x\to\infty}f(x)=A$（单侧 $x\to+\infty/-\infty$ 类似，只改「$|x|>X$」为「$x>X$ / $x<-X$」）。<br>
+<b>单侧极限：</b>左极限 $f(x_0^-)$、右极限 $f(x_0^+)$（把 $0<|x-x_0|<\delta$ 换成 $x_0-\delta<x<x_0$ 或 $x_0<x<x_0+\delta$）。</div>
+<div class="thm"><span class="label">定理（极限存在的充要条件）</span>
+$$\lim_{x\to x_0}f(x)=A\iff f(x_0^-)=f(x_0^+)=A$$</div>
+<div class="box example">
+<b>例 1（ε-δ 证明）.</b> 证明 $\lim\limits_{x\to1}(2x-1)=1$。<br>
+① 先化简误差：$|(2x-1)-1|=2|x-1|$；<br>
+② 任给 $\varepsilon>0$，要使 $2|x-1|<\varepsilon$，只需 $|x-1|<\dfrac\varepsilon2$；<br>
+③ 取 $\delta=\dfrac\varepsilon2$，当 $0<|x-1|<\delta$ 时 $|(2x-1)-1|<\varepsilon$ ✓。<br>
+<b>验算：</b>$\varepsilon=0.02$ ⇒ $\delta=0.01$；取 $x=1.005$：$|2\times1.005-2|=0.01<0.02$ ✓。
+</div>
+<div class="box example">
+<b>例 2（单侧极限不一致 ⇒ 极限不存在）.</b> 符号函数 $\operatorname{sgn}x$：在 $x=0$ 处左极限 $-1$、右极限 $1$，二者不等 ⇒ $\lim\limits_{x\to0}\operatorname{sgn}x$ 不存在；又如 $f(x)=\dfrac{|x|}{x}$ 同理。而 $\lim\limits_{x\to0}x\sin\dfrac1x=0$：因为 $\left|x\sin\frac1x\right|\le|x|$（无穷小 × 有界）。
+</div>
+<div class="box def"><b>函数极限的性质（对照数列）：</b>① 唯一性；② 局部有界性（极限存在 ⇒ 在某去心邻域内 $|f(x)|\le M$）；③ 局部保号性（$A>0\Rightarrow$ 某邻域内 $f(x)>0$）——证明与 §2 完全同构，把 $N$ 换成 $\delta$ 即可。</div>
+</section>
+
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>无穷小、无穷大与无穷小比较<span class="tag">等价替换</span></h2>
+<div class="box def"><b>无穷小：</b>若 $\lim\limits_{x\to x_0}f(x)=0$（或 $x\to\infty$），称 $f(x)$ 是该过程下的无穷小。<b>注意：</b>无穷小是「极限为 0 的变量」，不是「很小的数」（0 是唯一的常数无穷小）。</div>
+<div class="thm"><span class="label">定理 1（极限与无穷小的关系）</span>
+$$\lim f(x)=A\iff f(x)=A+\alpha(x),\quad \alpha(x)\ \text{为无穷小}$$</div>
+<div class="proof"><span class="label">证明</span>
+<b>必要性：</b>令 $\alpha=f(x)-A$，则 $|\alpha|=|f(x)-A|<\varepsilon$ 当 $x$ 充分接近（或足够大）时成立 ⇒ $\alpha$ 是无穷小 ✓；<br>
+<b>充分性：</b>若 $f=A+\alpha$，则 $|f-A|=|\alpha|<\varepsilon$（无穷小的定义）⇒ $\lim f=A$ ✓。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">定理 2（无穷小的运算）</span>① 有限个无穷小的和仍是无穷小；② 有界函数 × 无穷小 = 无穷小；③ 常数 × 无穷小 = 无穷小（②的特例）。</div>
+<div class="proof"><span class="label">证明（②）</span>设 $x\to x_0$ 时 $\alpha(x)\to0$，且 $g$ 在去心邻域内 $|g(x)|\le M$。任给 $\varepsilon>0$，取 $\varepsilon'=\dfrac\varepsilon M$（$M>0$）；$\exists\delta$，$0<|x-x_0|<\delta$ 时 $|\alpha|<\varepsilon'$，于是
+$$|\alpha(x)g(x)|\le M|\alpha(x)|<M\cdot\frac\varepsilon M=\varepsilon\ ✓$$<span class="qed">∎</span></div>
+<div class="box def"><b>无穷大：</b>若 $\forall M>0$，$\exists\delta>0$，$0<|x-x_0|<\delta$ 时 $|f(x)|>M$，称 $f$ 为无穷大，记 $\lim f(x)=\infty$（当 $f$ 取正/负时可写 $+\infty/-\infty$）。<br>
+<b>关系定理：</b>若 $f$ 是无穷大，则 $\dfrac1f$ 是无穷小；若 $f$ 是无穷小且 $f\not\equiv0$，则 $\dfrac1f$ 是无穷大（互为倒数关系）。</div>
+<div class="box def"><b>无穷小的比较（都是无穷小，但「趋 0 的快慢」不同）：</b>设 $\alpha,\beta$ 为同一过程的无穷小，$\alpha\ne0$：<br>
+① $\lim\dfrac\beta\alpha=0$：$\beta$ 是 $\alpha$ 的<b>高阶</b>无穷小，记 $\beta=o(\alpha)$；<br>
+② $\lim\dfrac\beta\alpha=\infty$：<b>低阶</b>；<br>
+③ $\lim\dfrac\beta\alpha=c\ne0$：<b>同阶</b>；特别 $c=1$ 时称<b>等价</b>，记 $\beta\sim\alpha$；<br>
+④ $\lim\dfrac\beta{\alpha^k}=c\ne0$：$\beta$ 是 $\alpha$ 的 <b>$k$ 阶</b>无穷小。</div>
+<div class="thm"><span class="label">定理 3（等价刻画与替换）</span>
+① $\beta\sim\alpha\iff\beta=\alpha+o(\alpha)$；<br>
+② <b>等价替换定理：</b>若 $\alpha\sim\alpha'$、$\beta\sim\beta'$（同一过程的无穷小），且 $\lim\dfrac{\beta'}{\alpha'}$ 存在，则
+$$\lim\frac{\beta}{\alpha}=\lim\frac{\beta'}{\alpha'}$$</div>
+<div class="proof"><span class="label">证明</span>
+① $\beta\sim\alpha\iff\dfrac\beta\alpha-1\to0\iff\dfrac{\beta-\alpha}{\alpha}\to0\iff\beta-\alpha=o(\alpha)$ ✓；<br>
+② 由 $\beta/\beta'\to1$、$\alpha'/\alpha\to1$ 与「极限乘积法则」（§5）：
+$$\lim\frac\beta\alpha=\lim\left(\frac\beta{\beta'}\cdot\frac{\beta'}{\alpha'}\cdot\frac{\alpha'}{\alpha}\right)=1\cdot\lim\frac{\beta'}{\alpha'}\cdot1\ ✓$$<span class="qed">∎</span></div>
+<div class="box">
+<b>常用等价无穷小（$x\to0$）：</b>
+$$\sin x\sim x,\quad \tan x\sim x,\quad \arcsin x\sim x,\quad \arctan x\sim x$$
+$$1-\cos x\sim\frac{x^2}2,\quad \ln(1+x)\sim x,\quad e^x-1\sim x,\quad a^x-1\sim x\ln a$$
+$$(1+x)^\alpha-1\sim\alpha x,\quad \sqrt{1+x}-1\sim\frac x2$$<br>
+<b>快速验证两例：</b>$\dfrac{1-\cos x}{x^2}=\dfrac12\left(\dfrac{\sin(x/2)}{x/2}\right)^2\to\dfrac12$ ✓（用了重要极限 $\frac{\sin u}u\to1$，§6）；$\ln(1+x)\sim x$：$\ln(1+x)^{1/x}\to\ln e=1$ ✓。
+</div>
+<div class="box warn"><b>重大警告（替换的使用范围）：</b>等价替换只适用于<b>乘除因式</b>，不能对加减项「分别替换」。反例：
+$$\lim_{x\to0}\frac{\tan x-\sin x}{x^3}\ \underbrace{\neq}_{\text{若把}\tan x,\ \sin x\ \text{都换成}\ x\ \text{得}\ 0}\ 0$$
+正确做法：$\tan x-\sin x=\tan x(1-\cos x)\sim x\cdot\dfrac{x^2}2=\dfrac{x^3}2$，故极限为 $\dfrac12$ ✓（先化乘积再替换）。
+</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>极限运算法则<span class="tag">计算基石</span></h2>
+<div class="thm"><span class="label">定理（四则运算法则）</span>设同一极限过程下 $\lim f(x)=A$，$\lim g(x)=B$，则
+① $\lim[f(x)\pm g(x)]=A\pm B$；② $\lim[f(x)g(x)]=AB$；③ $\lim\dfrac{f(x)}{g(x)}=\dfrac AB$（要求 $B\ne0$）。<br>
+数列情形完全相同。</div>
+<div class="proof"><span class="label">证明（②，用无穷小分解）</span>由 §4 定理 1：$f=A+\alpha$，$g=B+\beta$（$\alpha,\beta$ 为无穷小）。则
+$$fg=AB+(A\beta+B\alpha+\alpha\beta)$$
+三个附加项都是无穷小：$A\beta$、$B\alpha$ 是「常数 × 无穷小」；$\alpha\beta$ 是「无穷小 × 有界」（$\beta$ 收敛故局部有界，§4 定理 2②）。因此括号部分为无穷小，即 $fg\to AB$ ✓（①③ 同理，③ 需注意 $B\ne0$ 时 $g$ 局部有下界 $|g|>|B|/2$）。<span class="qed">∎</span></div>
+<div class="box tip"><b>推论：</b>$\lim[Cf(x)]=C\lim f(x)$；$\lim f^n(x)=[\lim f(x)]^n$；若 $f$ 是多项式、$f_{x_0}$ 有定义，则 $\lim\limits_{x\to x_0}f(x)=f(x_0)$（代入即可）。<br>
+<b>复合函数极限：</b>若 $\lim\limits_{x\to x_0}g(x)=u_0$ 且 $f$ 在 $u_0$ 处连续，则
+$$\lim_{x\to x_0}f[g(x)]=f\!\left[\lim_{x\to x_0}g(x)\right]=f(u_0)$$
+（「连续函数可以穿过极限号」。）</div>
+<div class="box example">
+<b>例 1（有理式 $x\to\infty$：比较最高次幂）.</b>
+$$\lim_{x\to\infty}\frac{3x^2-2x+1}{2x^2+x-3}=\lim_{x\to\infty}\frac{3-\dfrac2x+\dfrac1{x^2}}{2+\dfrac1x-\dfrac3{x^2}}=\frac32$$
+（分子分母同除 $x^2$，再用「无穷小的倒数为无穷大/常数·无穷小」的结论。）<br>
+<b>一般规律：</b>$\dfrac{a_mx^m+\cdots}{b_nx^n+\cdots}$：$m=n$ 极限 $=\dfrac{a_m}{b_n}$；$m<n$ 为 $0$；$m>n$ 为 $\infty$。
+</div>
+<div class="box example">
+<b>例 2（有理化：处理根号差）.</b>
+$$\lim_{x\to\infty}\left(\sqrt{x^2+x}-x\right)=\lim_{x\to\infty}\frac{(\sqrt{x^2+x}-x)(\sqrt{x^2+x}+x)}{\sqrt{x^2+x}+x}=\lim_{x\to\infty}\frac{x}{\sqrt{x^2+x}+x}$$
+$$=\lim_{x\to\infty}\frac{1}{\sqrt{1+\dfrac1x}+1}=\frac12$$
+<b>验算（量级直觉）：</b>$\sqrt{x^2+x}=x\sqrt{1+1/x}\approx x(1+\dfrac1{2x})=x+\dfrac12$ ⇒ 差趋近 $\dfrac12$ ✓。
+</div>
+<div class="box example">
+<b>例 3（数列四则）.</b> $\lim\limits_{n\to\infty}\dfrac{2n^2+n-1}{3n^2-2}=\dfrac23$（上下除 $n^2$：$\dfrac{2+\frac1n-\frac1{n^2}}{3-\frac2{n^2}}\to\dfrac23$）✓。
+</div>
+</section>
+
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>极限存在准则与两个重要极限<span class="tag">核心</span></h2>
+<div class="thm"><span class="label">准则 I（夹逼准则）</span>若在某去心邻域内 $g(x)\le f(x)\le h(x)$，且 $\lim g(x)=\lim h(x)=A$，则 $\lim f(x)=A$（数列情形：$\exists$ 从某项起 $y_n\le x_n\le z_n$ 且 $\lim y_n=\lim z_n=a$ ⇒ $\lim x_n=a$）。</div>
+<div class="proof"><span class="label">证明（x→x₀ 情形）</span>任给 $\varepsilon>0$。由 $\lim g=A$：$\exists\delta_1$，$0<|x-x_0|<\delta_1$ 时 $A-\varepsilon<g(x)$；由 $\lim h=A$：$\exists\delta_2$，$0<|x-x_0|<\delta_2$ 时 $h(x)<A+\varepsilon$。取 $\delta=\min\{\delta_1,\delta_2,\delta_0\}$（$\delta_0$ 保证夹逼关系成立），则
+$$A-\varepsilon<g(x)\le f(x)\le h(x)<A+\varepsilon\ \Longrightarrow\ |f(x)-A|<\varepsilon\ ✓$$<span class="qed">∎</span></div>
+<div class="thm"><span class="label">重要极限 1</span>
+$$\lim_{x\to0}\frac{\sin x}{x}=1$$</div>
+<div class="proof"><span class="label">证明（几何夹逼，务必掌握）</span>设 $0<x<\dfrac\pi2$（弧度制！），在单位圆中取扇形：圆心角 $x$ 的扇形面积 $=\dfrac x2$。比较三个面积：
+$$S_{\triangle OAB}=\frac12\sin x\ <\ S_{\text{扇形}}=\frac x2\ <\ S_{\triangle OAC}=\frac12\tan x$$
+两边乘 2 得 $\sin x<x<\tan x$；同除 $\sin x>0$：
+$$1<\frac{x}{\sin x}<\frac1{\cos x}\ \Longrightarrow\ \cos x<\frac{\sin x}{x}<1\qquad(0<x<\tfrac\pi2)$$
+由 $\lim\limits_{x\to0^+}\cos x=1$ 与夹逼准则得 $\lim\limits_{x\to0^+}\dfrac{\sin x}{x}=1$；又 $\dfrac{\sin x}{x}$ 是偶函数，故左极限同为 1。合并即得结论 ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（重要极限 1 的直接应用）.</b><br>
+① $\lim\limits_{x\to0}\dfrac{\sin 3x}{x}=\lim\limits_{x\to0}3\cdot\dfrac{\sin 3x}{3x}=3$（配凑 $\frac{\sin u}u\to1$，$u=3x\to0$）；<br>
+② $\lim\limits_{x\to0}\dfrac{\tan 2x}{\sin 5x}=\lim\limits_{x\to0}\dfrac{\sin 2x}{\cos 2x}\cdot\dfrac{1}{\sin 5x}=\dfrac25\lim\limits_{x\to0}\dfrac{1}{\cos 2x}=\dfrac25$；<br>
+<b>验算：</b>等价无穷小 $\sin 3x\sim3x$、$\tan2x\sim2x$、$\sin5x\sim5x$ 给出同样答案——两法互通 ✓。
+</div>
+<div class="thm"><span class="label">准则 II（单调有界准则）</span>单调有界数列必有极限。</div>
+<div class="proof"><span class="label">证明（思路）</span>设 $\{a_n\}$ 单调增且有上界。由确界原理，数集 $\{a_n\}$ 有上确界 $a=\sup\{a_n\}$：对任意 $\varepsilon>0$，$a-\varepsilon$ 不再是上界，故 $\exists N$ 使 $a_N>a-\varepsilon$；由单调增，$n>N$ 时 $a-\varepsilon<a_N\le a_n\le a$ ⇒ $|a_n-a|<\varepsilon$ ⇒ $\lim a_n=a$ ✓（单调减情形取 $\inf$ 对称）。<span class="qed">∎</span></div>
+<div class="thm"><span class="label">重要极限 2（自然常数 e）</span>数列 $a_n=\left(1+\dfrac1n\right)^n$ 收敛，定义其极限为
+$$e=\lim_{n\to\infty}\left(1+\frac1n\right)^n\approx2.71828$$
+并且 $\lim\limits_{x\to\infty}\left(1+\dfrac1x\right)^x=e$、$\lim\limits_{x\to0}(1+x)^{1/x}=e$。</div>
+<div class="proof"><span class="label">证明（数列情形：单调 + 有界）</span>二项展开：
+$$a_n=\sum_{k=0}^n\frac{n(n-1)\cdots(n-k+1)}{k!\,n^k}=\sum_{k=0}^n\frac1{k!}\left(1-\frac1n\right)\left(1-\frac2n\right)\cdots\left(1-\frac{k-1}n\right)$$
+① <b>单调增：</b>每一项 $\frac1{k!}(1-\frac1n)\cdots(1-\frac{k-1}n)$ 随 $n$ 变大（括号内每个因子变大）而变大，且 $n$ 增大还多出正项 ⇒ $a_{n+1}>a_n$；<br>
+② <b>有界：</b>$a_n\le\sum_{k=0}^n\dfrac1{k!}\le1+1+\dfrac12+\dfrac1{2^2}+\cdots+\dfrac1{2^{n-1}}<3$（用 $k!\ge2^{k-1}$）；<br>
+③ 由准则 II，$a_n$ 收敛，记极限为 $e$（且 $2<e<3$）✓。函数情形 $x\to\infty$ 用 $[x]\le x<[x]+1$ 夹逼（细节略），$x\to0$ 由换元 $x=1/t$ 得到 ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（重要极限 2 的应用）.</b><br>
+① $\lim\limits_{x\to\infty}\left(1+\dfrac2x\right)^x=\left[\lim\limits_{x\to\infty}\left(1+\dfrac2x\right)^{x/2}\right]^{2}=e^2$（配凑 $u=2/x$，指数 $x=\frac{x}{2}\cdot2$）；<br>
+② $\lim\limits_{x\to0}(1-x)^{1/x}=\lim\limits_{x\to0}\left(1+(-x)\right)^{\frac{1}{-x}\cdot(-1)}=\left[\lim\limits_{u\to0}(1+u)^{1/u}\right]^{-1}=e^{-1}$；<br>
+<b>验算：</b>$x=100$ 时 $(1+0.02)^{100}\approx e^{100\ln1.02}\approx e^{1.98}\approx7.24$，与 $e^2\approx7.39$ 同量级（缓和收敛）✓。
+</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>函数的连续性与间断点<span class="tag">概念</span></h2>
+<div class="box def"><b>连续的定义：</b>设 $f$ 在 $x_0$ 的某邻域内有定义，若
+$$\lim_{x\to x_0}f(x)=f(x_0)$$
+则称 $f$ 在 $x_0$ 处<b>连续</b>。等价地，三个条件同时满足：① 有定义；② 极限存在；③ 极限值等于函数值。<br>
+<b>增量形式：</b>记 $\Delta y=f(x_0+\Delta x)-f(x_0)$，则连续 $\iff\lim\limits_{\Delta x\to0}\Delta y=0$（「自变量微小平移，函数值也微小平移」）。<br>
+<b>左/右连续：</b>$f(x_0^-)=f(x_0)$（左连续）、$f(x_0^+)=f(x_0)$（右连续）；连续 $\iff$ 既左连续又右连续。</div>
+<div class="box example">
+<b>例（证明 $\sin x$ 处处连续）.</b> 任取 $x_0$：<br>
+① 和差化积 + 有界性：
+$$|\Delta y|=|\sin(x_0+\Delta x)-\sin x_0|=\left|2\cos\left(x_0+\frac{\Delta x}2\right)\sin\frac{\Delta x}2\right|\le2\left|\sin\frac{\Delta x}2\right|\le|\Delta x|$$
+② $\Delta x\to0$ 时 $|\Delta y|\le|\Delta x|\to0$ ⇒ $\Delta y\to0$ ⇒ 在 $x_0$ 连续 ✓（$x_0$ 任取，故处处连续）。<br>
+<b>关键不等式：</b>$|\sin u|\le|u|$（几何上「弧长 ≥ 弦长」，$x\to0$ 时 $\sin x\sim x$ 的定量版本）。
+</div>
+<div class="box def"><b>运算性质：</b>① 在 $x_0$ 连续的函数，其和、差、积、商（分母非零）仍连续；② 复合函数连续（内层在 $x_0$ 连续、外层在对应点连续）；③ 单调连续函数的反函数连续。<br>
+<b>初等函数的连续性：</b>基本初等函数在定义域内连续（由重要极限 $\sin x/x\to1$、$(1+1/x)^x\to e$ 等论证）；一切初等函数在其<b>定义区间</b>内连续。因此：求初等函数在其定义点处的极限 = 直接代入。</div>
+<div class="box def"><b>间断点分类</b>（设 $x_0$ 是间断点）：<br>
+<b>第一类：</b>左右极限都存在——<br>
+&nbsp;&nbsp;· <b>可去间断点：</b>$f(x_0^-)=f(x_0^+)\ne f(x_0)$（或 $x_0$ 无定义）；<br>
+&nbsp;&nbsp;· <b>跳跃间断点：</b>$f(x_0^-)\ne f(x_0^+)$；<br>
+<b>第二类：</b>左右极限至少一个不存在——<br>
+&nbsp;&nbsp;· <b>无穷间断点：</b>如 $1/x$ 在 0；&nbsp;&nbsp;· <b>振荡间断点：</b>如 $\sin\dfrac1x$ 在 0。</div>
+<div class="box example">
+<b>例（四个典型）.</b> ① $\dfrac{\sin x}{x}$ 在 $x=0$（无定义，但极限 $=1$）⇒ <b>可去</b>，补充定义 $f(0)=1$ 即连续；<br>
+② $\dfrac{|x|}{x}$ 在 $x=0$：左右极限 $-1$、$1$ ⇒ <b>跳跃</b>；<br>
+③ $\dfrac1x$ 在 0 ⇒ <b>无穷</b>（第二类）；④ $\sin\dfrac1x$ 在 0 ⇒ <b>振荡</b>（第二类）。<br>
+<b>带参补定义例：</b>$f(x)=\dfrac{x^2-1}{x-1}$（$x\ne1$）在 1 处极限为 2 ⇒ 可去；定义 $f(1)=2$ 后连续 ✓。
+</div>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>闭区间上连续函数的性质<span class="tag">四大定理</span></h2>
+<div class="thm"><span class="label">定理（四大性质，均设 f 在闭区间 [a,b] 上连续）</span>
+① <b>有界性：</b>$f$ 在 $[a,b]$ 上有界；<br>
+② <b>最值定理：</b>$f$ 在 $[a,b]$ 上必取到最大值与最小值；<br>
+③ <b>零点定理：</b>若 $f(a)f(b)<0$，则 $\exists\xi\in(a,b)$ 使 $f(\xi)=0$；<br>
+④ <b>介值定理：</b>对任意 $\mu$ 介于 $f(a)$ 与 $f(b)$ 之间，$\exists\xi\in(a,b)$ 使 $f(\xi)=\mu$。</div>
+<div class="proof"><span class="label">证明（③思路 + ④由③推出）</span>
+<b>零点定理（二分法思想）：</b>设 $f(a)<0<f(b)$。取中点 $c=\frac{a+b}2$：若 $f(c)=0$ 已得结论；若 $f(c)>0$，则在 $[a,c]$ 上重复；若 $f(c)<0$，则在 $[c,b]$ 上重复。如此得闭区间套 $[a_n,b_n]$，长度 $=\frac{b-a}{2^n}\to0$，由区间套定理存在唯一 $\xi\in[a_n,b_n]$ 全部区间。由连续性：$f(\xi)=\lim f(a_n)\le0$ 且 $f(\xi)=\lim f(b_n)\ge0$（端点符号固定），故 $f(\xi)=0$ ✓。<br>
+<b>介值定理：</b>作辅助函数 $F(x)=f(x)-\mu$。由 $\mu$ 介于两端值之间，$F(a)F(b)<0$；对 $F$ 用零点定理得 $\xi$ 使 $F(\xi)=0$，即 $f(\xi)=\mu$ ✓。<span class="qed">∎</span></div>
+<div class="box example">
+<b>例（零点定理证方程有根）.</b> 证明方程 $\cos x=x$ 在 $(0,1)$ 内有实根。<br>
+① 令 $f(x)=\cos x-x$，在 $[0,1]$ 上连续；<br>
+② 端点值：$f(0)=\cos0-0=1>0$；$f(1)=\cos1-1\approx0.5403-1=-0.4597<0$；<br>
+③ 由零点定理，$\exists\xi\in(0,1)$，$f(\xi)=0$，即 $\cos\xi=\xi$ ✓。<br>
+<b>验算（数值印证）：</b>$\xi\approx0.739$（可用二分法逐步逼近：$f(0.7)=0.0648>0$、$f(0.74)=-0.0011<0$ ⇒ 根在 $(0.70,0.74)$）✓。
+</div>
+<div class="box def"><b>一致连续（了解，同济版选学）：</b>若 $\forall\varepsilon>0$，$\exists\delta>0$（<b>只依赖于 ε</b>），对区间 $I$ 上任意两点 $x_1,x_2$，只要 $|x_1-x_2|<\delta$ 就有 $|f(x_1)-f(x_2)|<\varepsilon$，称 $f$ 在 $I$ 上<b>一致连续</b>。</div>
+<div class="thm"><span class="label">康托尔定理（一致连续性定理）</span>闭区间上连续的函数必在该区间上一致连续。（证明思路：用致密性定理——若不然，存在 $\varepsilon_0>0$ 与两列点 $x_n,x_n'$ 使 $|x_n-x_n'|\to0$ 但 $|f(x_n)-f(x_n')|\ge\varepsilon_0$；由致密性定理取子列 $x_{n_k}\to x_0\in[a,b]$，则 $x'_{n_k}\to x_0$，与 $f$ 在 $x_0$ 连续矛盾。）</div>
+<div class="box warn"><b>闭区间与开区间的区别（反例警示）：</b>$f(x)=\dfrac1x$ 在 $(0,1)$ 内连续但无界、非一致连续（$x\to0^+$ 时无界）；$f(x)=x$ 在 $(0,1)$ 上有界但不取最值、非一致连续——<b>「闭区间」四个字不可少</b>。</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>典型例题<span class="tag">实战</span></h2>
+<div class="box example">
+<b>例 1（等价替换：乘除因式）.</b> 求 $\lim\limits_{x\to0}\dfrac{\ln(1+\sin^2x)}{1-\cos x}$。<br>
+① 判别型：$x\to0$ 时分子 $\ln(1+\sin^2x)\sim\sin^2x\sim x^2$，分母 $1-\cos x\sim\dfrac{x^2}2$（都是乘除因式，可替换）；<br>
+② 替换计算：
+$$\lim_{x\to0}\frac{\ln(1+\sin^2x)}{1-\cos x}=\lim_{x\to0}\frac{\sin^2x}{x^2/2}=\lim_{x\to0}\frac{x^2}{x^2/2}=2$$
+<b>验算（泰勒对照）：</b>$\ln(1+u)=u-\frac{u^2}2+\cdots$，$1-\cos x=\frac{x^2}2-\frac{x^4}{24}+\cdots$，比值主项 $x^2/(x^2/2)=2$ ✓。
+</div>
+<div class="box example">
+<b>例 2（1^∞ 型：凑 e）.</b> 求 $\lim\limits_{x\to\infty}\left(\dfrac{x+1}{x-1}\right)^x$。<br>
+① 识别：底数 $\to1$、指数 $\to\infty$，1^∞ 型；变形：
+$$\left(\frac{x+1}{x-1}\right)^x=\frac{\left(1+\dfrac1x\right)^x}{\left(1-\dfrac1x\right)^x}$$
+② 分子 $\to e$；分母：令 $u=-\dfrac1x\to0$，$\left(1-\dfrac1x\right)^x=\left[(1+u)^{1/u}\right]^{-1}\to e^{-1}$；<br>
+③ 由商的极限法则：原式 $=\dfrac e{e^{-1}}=e^2$。<br>
+<b>验算（取对数直算）：</b>$\ln$ 原式 $=x\ln\dfrac{1+1/x}{1-1/x}\approx x\cdot\dfrac2x=2$ ⇒ 极限 $e^2$ ✓。
+</div>
+<div class="box example">
+<b>例 3（间断点全面分析）.</b> 讨论 $f(x)=\dfrac{x}{\tan x}$ 的间断点。<br>
+① 间断点候选：$\tan x$ 为零或无穷处，即 $x=k\pi$ 与 $x=\dfrac\pi2+k\pi$；<br>
+② 在 $x=0$：$\lim\limits_{x\to0}\dfrac{x}{\tan x}=\lim\limits_{x\to0}\dfrac{x}{x}=1$（$\tan x\sim x$）⇒ <b>可去间断点</b>；<br>
+③ 在 $x=k\pi$（$k\ne0$）：$\lim\limits_{x\to k\pi}\dfrac{x}{\tan x}=\infty$ ⇒ <b>无穷间断点</b>（第二类）；<br>
+④ 在 $x=\dfrac\pi2+k\pi$：$f$ 有定义且 $\tan x=\infty$ ⇒ $\lim=0$，函数连续（$f(\frac\pi2)=0$），<b>不是</b>间断点。<br>
+<b>验算：</b>由周期 $\pi$ 只需分析 $[0,\pi)$：0 可去、$\frac\pi2$ 连续 ✓。
+</div>
+<div class="box example">
+<b>例 4（零点定理：三次方程三根）.</b> 证明 $x^3-4x^2+1=0$ 有三个实根。<br>
+① 令 $f(x)=x^3-4x^2+1$（多项式，处处连续）；<br>
+② 逐区间验号：$f(-1)=-4<0$、$f(0)=1>0$ ⇒ 根在 $(-1,0)$；$f(0)=1>0$、$f(1)=-2<0$ ⇒ 根在 $(0,1)$；$f(3)=27-36+1=-8<0$、$f(4)=64-64+1=1>0$ ⇒ 根在 $(3,4)$；<br>
+③ 三次方程至多三个根，三个区间各一根 ⇒ 恰有三个实根 ✓。<br>
+<b>验算（韦达自查）：</b>三根之和应为 4：约 $(-0.4)+(0.5)+(3.9)=4.0$ ✓（近似吻合）。
+</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>解题决策流程与易错点</h2>
+<h3>极限计算决策流程</h3>
+<pre class="flow">拿到极限题
+├─ 第一步：判别「型」（直接代入）
+│   定式 → 直接用连续性代入
+│   未定式：0/0、∞/∞、0·∞、∞−∞、1^∞、0^0、∞^0
+├─ 0/0 或 ∞/∞
+│   ├─ 因式分解 / 有理化（消零因子）
+│   ├─ 等价无穷小替换（只对乘除因式！）
+│   └─ 洛必达法则（第三章）
+├─ 1^∞ → 凑 (1+u)^{1/u} → e^{lim u·指数}
+├─ 根号差 → 有理化；多项式比 → 比较最高次
+├─ 数列极限
+│   ├─ 证明型 → ε-N（解不等式找 N）
+│   ├─ 递推/单调 → 单调有界准则
+│   └─ 放缩 → 夹逼准则
+└─ 含参连续性 → 分界点两侧极限 = 函数值 → 解方程
+</pre>
+<h3>易错点清单</h3>
+<div class="box warn">
+<ol>
+<li><b>等价替换只管乘除：</b>加减项替换是错的（$\frac{\tan x-\sin x}{x^3}\ne0$，正确为 $\frac12$）。</li>
+<li><b>ε-N 证明中 N 依赖 ε：</b>「$\exists N$」而非「对某个固定 N」；$\varepsilon$ 任意小都要能构造出 N。</li>
+<li><b>极限不存在 ≠ 无穷大：</b>振荡（如 $\sin\frac1x$）也是不存在，但不是无穷大。</li>
+<li><b>分段点必查左右：</b>极限存在 $\iff$ 左右极限相等；连续性还要等于函数值。</li>
+<li><b>1^∞ 不是 1：</b>结果是 $e^{\lim(\text{底}-1)\cdot\text{指数}}$ 型结构，具体凑 $(1+u)^{1/u}$。</li>
+<li><b>$\frac{\sin x}x$ 的两个过程：</b>$x\to0$ 时 $\to1$；$x\to\infty$ 时 $\to0$（有界×无穷小）——别混淆。</li>
+<li><b>单调有界是充分条件：</b>收敛必有界，但有界未必收敛（$(-1)^n$）。</li>
+<li><b>间断点按「左右极限」分类：</b>先算两侧极限再定类，别凭函数式外观猜。</li>
+<li><b>闭区间性质不能搬开区间：</b>$\frac1x$ 在 $(0,1)$ 上连续但无界、无最值。</li>
+<li><b>零点定理两个门槛：</b>① 闭区间连续；② 端点异号——缺一不可。</li>
+</ol>
+</div>
+</section>
+
+<section class="card" id="sec-11">
+<h2><span class="num">11</span>公式速查表与能力自查</h2>
+<table>
+<thead><tr><th>主题</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td>数列极限 ε-N</td><td>$\forall\varepsilon>0,\ \exists N,\ n>N\Rightarrow|x_n-a|<\varepsilon$</td></tr>
+<tr><td>函数极限 ε-δ</td><td>$\forall\varepsilon>0,\ \exists\delta,\ 0<|x-x_0|<\delta\Rightarrow|f(x)-A|<\varepsilon$</td></tr>
+<tr><td>收敛数列性质</td><td>唯一性、有界性、保号性、子数列同极限</td></tr>
+<tr><td>极限与无穷小</td><td>$\lim f=A\iff f=A+\alpha$（$\alpha$ 无穷小）；有界 × 无穷小 $=$ 无穷小</td></tr>
+<tr><td>等价无穷小（$x\to0$）</td><td>$\sin x\sim x$，$\tan x\sim x$，$\arcsin x\sim x$，$\arctan x\sim x$，$1-\cos x\sim\frac{x^2}2$，$\ln(1+x)\sim x$，$e^x-1\sim x$，$(1+x)^\alpha-1\sim\alpha x$</td></tr>
+<tr><td>四则运算</td><td>$\lim(f\pm g)=A\pm B$；$\lim fg=AB$；$\lim\frac fg=\frac AB$（$B\ne0$）</td></tr>
+<tr><td>夹逼准则</td><td>$g\le f\le h$ 且 $\lim g=\lim h=A$ ⇒ $\lim f=A$</td></tr>
+<tr><td>重要极限 I</td><td>$\lim\limits_{x\to0}\dfrac{\sin x}x=1$</td></tr>
+<tr><td>重要极限 II</td><td>$\lim\limits_{x\to\infty}\left(1+\dfrac1x\right)^x=e$；$\lim\limits_{x\to0}(1+x)^{1/x}=e$；$e\approx2.71828$</td></tr>
+<tr><td>连续性</td><td>$\lim\limits_{x\to x_0}f(x)=f(x_0)$；间断点：第一类（可去、跳跃）/第二类（无穷、振荡）</td></tr>
+<tr><td>闭区间连续函数</td><td>有界性、最值定理、零点定理、介值定理</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>极限计算的三大抓手——<b>运算法则</b>（拆开算）、<b>等价替换</b>（乘除因式化简）、<b>两个重要极限</b>（三角与指数结构的归宿）；极限语言（ε-N/ε-δ）是全部理论证明的通用语法。</div>
+<h3>能力自查</h3>
+<div class="box method">
+☐ 用 ε-N 证明 $\lim\frac{n+(-1)^{n-1}}n=1$（写出 N 的构造）(§2)<br>
+☐ 证明收敛数列的唯一性与有界性（反证 + 三角不等式）(§2)<br>
+☐ 用 ε-δ 证明 $\lim\limits_{x\to1}(2x-1)=1$（找 δ）(§3)<br>
+☐ 默写常用等价无穷小表，并说明「只用于乘除」及反例 (§4)<br>
+☐ 复述 sinx/x→1 的几何夹逼证明（三面积不等式）(§6)<br>
+☐ 复述 (1+1/n)^n 单调有界证明（二项展开 + 3 的上界）(§6)<br>
+☐ 对 $\frac{x}{\tan x}$ 完成间断点分类；对 $x^3-4x^2+1=0$ 完成三根定位 (§9)<br>
+☐ 说出闭区间四定理并各举一个反例说明「闭」不可少 (§8)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>高等数学 · 第一章 函数与极限 · 内容与证明完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
