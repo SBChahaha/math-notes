@@ -295,8 +295,8 @@ void BuildMaxHeap(int A[], int len) {
         AdjustDown(A, k, len);
 }
 void HeapSort(int A[], int len) {
-    BuildMaxHeap(A, len);                    /* ① 建大根堆 */
-    for (int i = len; i > 1; i--) {          /* ② 反复取最大 */
+    BuildMaxHeap(A, len);                    /* (1) 建大根堆 */
+    for (int i = len; i > 1; i--) {          /* (2) 反复取最大 */
         swap(A[1], A[i]);                    /* 堆顶换到有序区前端 */
         AdjustDown(A, 1, i-1);               /* 剩余部分重新调整 */
     }

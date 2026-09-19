@@ -210,8 +210,8 @@ graph LR
 }</pre>
 <b>对照记忆：</b>头插不用尾指针但逆序；尾插需要尾指针 r 但保序——两种都是 $O(n)$ 总时间。</div>
 <div class="box def"><b>插入（在结点 p 之后插入 s）：</b>
-<pre class="code">s->next = p->next;    // ① 先让新结点接住后继
-p->next = s;          // ② 再断开、指到新结点
+<pre class="code">s->next = p->next;    // (1) 先让新结点接住后继
+p->next = s;          // (2) 再断开、指到新结点
 /* 顺序颠倒（先 p->next=s 再 s->next=…）会丢失原后继！ */</pre>
 <b>前插技巧（在 p 之前插入 s，但只给了 p）：</b>把 s 插到 p 之后，再<b>交换 p 与 s 的数据域</b>——仍是 $O(1)$（经典脑筋题）。<br>
 <b>删除（删除 p 的后继 q）：</b>
@@ -230,11 +230,11 @@ free(q);              // 必须释放！</pre></div>
     struct DNode *prior, *next;   // 前驱 + 后继
 } DNode, *DLinkList;</pre>
 <b>插入（在 p 之后插入 s，四条指针，注意顺序）：</b>
-<pre class="code">s->next = p->next;              // ① s 接后
+<pre class="code">s->next = p->next;              // (1) s 接后
 if (p->next != NULL)
-    p->next->prior = s;         // ② 后结点的前驱指向 s
-s->prior = p;                   // ③ s 的前驱指向 p
-p->next = s;                    // ④ p 的后继指向 s</pre>
+    p->next->prior = s;         // (2) 后结点的前驱指向 s
+s->prior = p;                   // (3) s 的前驱指向 p
+p->next = s;                    // (4) p 的后继指向 s</pre>
 <b>删除（删除 p 的后继 q）：</b>
 <pre class="code">q = p->next;
 if (q == NULL) return false;
@@ -306,10 +306,10 @@ typedef struct {
     LNode *p = L->next, *q;         // p 从第一个数据结点开始
     L->next = NULL;                 // 头结点与链表断开（当作新空表）
     while (p != NULL) {
-        q = p->next;                // ① 暂存后继，防丢链
-        p->next = L->next;          // ② 头插到新表
+        q = p->next;                // (1) 暂存后继，防丢链
+        p->next = L->next;          // (2) 头插到新表
         L->next = p;
-        p = q;                      // ③ 继续处理原表
+        p = q;                      // (3) 继续处理原表
     }
 }</pre>
 ① 每个结点做 $O(1)$ 次指针操作，共 $n$ 个 ⇒ 时间 $O(n)$；② 只用 p、q 两个辅助指针 ⇒ 空间 $O(1)$（原地逆置）✓。<br>
