@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据结构08 · 排序 · 完全教程（王道体系）</title>
+<style>
+:root{--bg:#fff5f5;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#dc2626;--accent2:#fca5a5;--soft:#fef2f2}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#7f1d1d,#dc2626 55%,#fca5a5);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#fee2e2}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#991b1b;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#7f1d1d}
+.card h3{font-size:1.05rem;color:#991b1b;margin:24px 0 8px;padding-left:10px;border-left:4px solid #fca5a5}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#f87171,#ef4444);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#fef2f2;border-color:#fca5a5}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #fecaca;border-left:4px solid #f87171;background:#fffbfb;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#991b1b;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#991b1b;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#fffafa}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+pre.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:16px 20px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.86rem;line-height:1.75;white-space:pre}
+pre.mermaid{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:12px;overflow-x:auto;text-align:center;color:#94a3b8;font-size:.85rem}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(220,38,38,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>数据结构 · 第八章 排序 · 完全教程</h1>
+<p>王道体系 · 八大排序全轨迹 + 外部排序 + 全对比表</p>
+<div class="chips"><span>稳定性</span><span>插入·希尔</span><span>冒泡·快排</span><span>选择·堆排</span><span>归并</span><span>基数</span><span>外部排序</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 基本概念与稳定性</a>
+<a href="#sec-2">02 · 直接插入与折半插入</a>
+<a href="#sec-3">03 · 希尔排序</a>
+<a href="#sec-4">04 · 冒泡排序</a>
+<a href="#sec-5">05 · 快速排序</a>
+<a href="#sec-6">06 · 选择排序（简单选择 + 堆排序）</a>
+<a href="#sec-7">07 · 归并排序</a>
+<a href="#sec-8">08 · 基数排序</a>
+<a href="#sec-9">09 · 外部排序</a>
+<a href="#sec-10">10 · 典型例题</a>
+<a href="#sec-11">11 · 决策流程与易错点</a>
+<a href="#sec-12">12 · 八大排序对比表与能力自查</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章地位：</b>数据结构收官章——八大内部排序的<b>过程轨迹、复杂度、稳定性</b>是选择题与「手写中间状态」大题的富矿；外部排序则考「多路归并趟数与最佳归并树」的计算。文末的<b>八大排序对比总表</b>是全章压轴，必须背熟。</div>
+<pre class="flow">第八章 排序
+├─ 基本概念（§1）
+│   └─ 稳定性、内部/外部排序、比较类下限 Ω(n log n)
+├─ 插入类（§2–§3）
+│   ├─ 直接插入：有序区扩大，O(n²)、稳定
+│   ├─ 折半插入：比较 O(n log n)、移动仍 O(n²)
+│   └─ 希尔：分组插排、增量递减、O(n^1.3)、不稳定
+├─ 交换类（§4–§5）
+│   ├─ 冒泡：相邻交换、每趟沉底、稳定
+│   └─ 快排：划分（枢轴归位）+ 递归、平均 O(n log n)、最坏 O(n²)
+├─ 选择类（§6）
+│   ├─ 简单选择：比较恒 n(n−1)/2、不稳定
+│   └─ 堆排序：建堆 O(n) + 反复调整、恒定 O(n log n)、不稳定
+├─ 归并与基数（§7–§8）
+│   ├─ 归并：分治合并、稳定、空间 O(n)
+│   └─ 基数：按位分配收集、O(d(n+r))、稳定、非比较
+└─ 外部排序（§9）
+    └─ 多路平衡归并（趟数 ⌈log_k r⌉）/ 败者树 / 置换选择 / 最佳归并树
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>基本概念与稳定性<span class="tag">总纲</span></h2>
+<div class="box def"><b>排序：</b>把一组记录按关键字递增（或递减）重新排列。<b>趟：</b>一次完整的「扫描/调整」过程。<br>
+<b>内部排序：</b>数据全部在内存中完成；<b>外部排序：</b>数据太大，需在内存与外存间多次交换（§9）。<br>
+<b>比较类排序的下限：</b>任何基于关键字比较的排序，最坏情况至少需要 $\Omega(n\log n)$ 次比较——所以堆排序/归并/快排的 $O(n\log n)$ 已是天花板（基数排序靠「不比较」突破）。</div>
+<div class="box def"><b>稳定性（必考）：</b>排序前后，<b>关键字相同的元素相对次序不变</b>，则称该排序算法<b>稳定</b>；否则不稳定。<br>
+例：$\{49_1,\ 38,\ 49_2\}$ 排序后若仍为 $49_1$ 在 $49_2$ 前 ⇒ 稳定。<br>
+<b>八大算法稳定性速记口诀：</b><b>「快些选堆」不稳定</b>——快速、希尔、简单选择、堆排序不稳定；其余四个（直接插入、折半插入、冒泡、归并、基数）稳定。</div>
+<div class="box tip"><b>为什么要关心稳定性：</b>多关键字排序——先按次关键字排、再按主关键字<b>稳定</b>排序，可保持次关键字内部有序（如「按成绩排序」前已按学号排好）。</div>
+</section>
+
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>直接插入与折半插入<span class="tag">插入类</span></h2>
+<h3>（1）直接插入排序</h3>
+<div class="box method"><b>思想：</b>把待排元素逐个插入「已排好序的前缀」中——前 $i-1$ 个有序，将第 $i$ 个从后往前找到位置并后移。
+<pre class="code">void InsertSort(int A[], int n) {      /* A[1..n]，A[0] 作哨兵 */
+    int i, j;
+    for (i = 2; i <= n; i++) {
+        if (A[i] &lt; A[i-1]) {            /* 需要插入才动 */
+            A[0] = A[i];                /* 哨兵暂存待插值 */
+            for (j = i-1; A[j] > A[0]; j--)
+                A[j+1] = A[j];          /* 从后往前后移 */
+            A[j+1] = A[0];              /* 落位 */
+        }
+    }
+}</pre></div>
+<div class="box example">
+<b>例（{49, 38, 65, 97, 76, 13, 27, 49} 全程轨迹）.</b>
+<table>
+<thead><tr><th>趟</th><th>待插</th><th>动作</th><th>结果</th></tr></thead>
+<tbody>
+<tr><td>初</td><td>—</td><td>—</td><td>49, 38, 65, 97, 76, 13, 27, 49</td></tr>
+<tr><td>i=2</td><td>38</td><td>38<49，插到 49 前</td><td><b>38, 49</b>, 65, 97, 76, 13, 27, 49</td></tr>
+<tr><td>i=3</td><td>65</td><td>65>49，不动</td><td>38, 49, <b>65</b>, 97, 76, 13, 27, 49</td></tr>
+<tr><td>i=4</td><td>97</td><td>最大，不动</td><td>38, 49, 65, <b>97</b>, 76, 13, 27, 49</td></tr>
+<tr><td>i=5</td><td>76</td><td>97 后移，插其前</td><td>38, 49, 65, <b>76, 97</b>, 13, 27, 49</td></tr>
+<tr><td>i=6</td><td>13</td><td>一路后移，插最前</td><td><b>13, 38, 49, 65, 76, 97</b>, 27, 49</td></tr>
+<tr><td>i=7</td><td>27</td><td>97→76→65→49→38 后移</td><td><b>13, 27, 38, 49, 65, 76, 97</b>, 49</td></tr>
+<tr><td>i=8</td><td>49</td><td>97、76、65 后移，插在 49₁ 之后（<b>稳定性体现</b>）</td><td><b>13, 27, 38, 49, 49, 65, 76, 97</b></td></tr>
+</tbody>
+</table>
+<b>稳定性细节：</b>内层循环条件是 $A[j]>A[0]$（严格大于）——相等时停下，新元素插在等值元素<b>之后</b>，次序不颠倒 ⇒ 稳定 ✓。</div>
+<div class="thm"><span class="label">复杂度</span>最好（已有序）：每趟 1 次比较、0 次移动 ⇒ $O(n)$；最坏/平均：$O(n^2)$；空间 $O(1)$；<b>稳定</b>。<br>
+<b>适用：</b>元素基本有序、n 较小时表现好。</div>
+<h3>（2）折半插入排序</h3>
+<div class="box method"><b>改进点：</b>定位插入位置改用<b>折半查找</b>（有序前缀上折半）——比较次数从 $O(n^2)$ 降到 $O(n\log n)$；<b>但元素移动次数不变</b> ⇒ 总时间仍是 $O(n^2)$。
+<pre class="code">void BinInsertSort(int A[], int n) {
+    int i, j, low, high, mid;
+    for (i = 2; i <= n; i++) {
+        A[0] = A[i];                    /* 暂存 */
+        low = 1;  high = i-1;
+        while (low <= high) {           /* 折半定位置 */
+            mid = (low + high) / 2;
+            if (A[mid] > A[0]) high = mid - 1;
+            else low = mid + 1;         /* 相等时往右，保稳定 */
+        }
+        for (j = i-1; j >= high+1; j--)
+            A[j+1] = A[j];              /* 统一后移 */
+        A[high+1] = A[0];
+    }
+}</pre>
+<b>稳定性：</b>折半遇相等时取右半区（<code>else low = mid+1</code>）⇒ 插在等值元素后 ⇒ 稳定 ✓。</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>希尔排序<span class="tag">分组插入</span></h2>
+<div class="box method"><b>思想：</b>取一个<b>增量</b> $d$，把相隔 $d$ 的元素分成一组，组内做直接插入排序；然后<b>缩小增量</b>（如折半递减），重复分组排序；最后 $d=1$（全局插入排序）收尾。<br>
+<b>为什么有效：</b>大增量时元素「大步跳跃」快速接近目标位置，小增量时「小步微调」——整体移动次数大幅减少。</div>
+<div class="box example">
+<b>例（{49, 38, 65, 97, 76, 13, 27, 49}，增量 4 → 2 → 1）.</b><br>
+<b>① d=4 分组：</b>（49,76）（38,13）（65,27）（97,49）——每组 2 个元素各自插排：
+<pre class="flow">组内结果：49,76 | 13,38 | 27,65 | 49,97
+按原位回填：[49, 13, 27, 49, 76, 38, 65, 97]        （下面记为 A）</pre>
+<b>② d=2 分组：</b>奇位序列 $(49,27,76,65)$ 与偶位序列 $(13,49,38,97)$：<br>
+&nbsp;&nbsp;· 奇位插排：$27,49,65,76$；偶位插排：$13,38,49,97$；<br>
+&nbsp;&nbsp;· 回填：$[27, 13, 49, 38, 65, 49, 76, 97]$；<br>
+<b>③ d=1（全局插入排序）：</b>$[27,13,49,38,65,49,76,97]\to[13,27,38,49,49,65,76,97]$ ✓。</div>
+<div class="box warn"><b>不稳定的原因：</b>相隔多组的相同元素可能被「跨组交换」颠倒次序——如两个 49 在 $d=4$ 时就分属不同组独立排序——因此希尔排序<b>不稳定</b>。<br>
+<b>复杂度：</b>时间约 $O(n^{1.3})$（增量设计相关，最坏 $O(n^2)$）；空间 $O(1)$。<b>注意：增量序列的最后一项必须是 1</b>（否则未真正排好）。</div>
+</section>
+
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>冒泡排序<span class="tag">相邻交换</span></h2>
+<div class="box method"><b>思想：</b>从前往后比较<b>相邻</b>两元素，逆序就交换——每趟把当前最大者「冒泡」到末尾；$n-1$ 趟后有序。<b>优化：</b>某趟没有发生任何交换 ⇒ 已经有序，提前结束。
+<pre class="code">void BubbleSort(int A[], int n) {          /* A[0..n-1] */
+    for (int i = 0; i < n - 1; i++) {
+        bool flag = false;                 /* 本趟是否发生交换 */
+        for (int j = 0; j < n - 1 - i; j++)   /* 已沉底的不再比 */
+            if (A[j] > A[j+1]) {
+                swap(A[j], A[j+1]);
+                flag = true;
+            }
+        if (!flag) return;                 /* 提前结束 */
+    }
+}</pre></div>
+<div class="box example">
+<b>例（前两趟完整轨迹）.</b> 上例数组 $[49,38,65,97,76,13,27,49]$：<br>
+<b>第一趟（97 沉底）：</b>(49,38)→换；49&65 不换；65&97 不换；97&76→换；(97,13)→换；(97,27)→换；(97,49)→换：
+$$[38,49,65,76,13,27,49,\ \mathbf{97}]$$
+<b>第二趟（76 沉底）：</b>(38,49)(49,65)(65,76) 不换；(76,13)→换；(76,27)→换；(76,49)→换：
+$$[38,49,65,13,27,49,\ \mathbf{76},\ 97]$$
+继续到第五趟得到全程有序 $[13,27,38,49,49,65,76,97]$（相等元素不交换 ⇒ <b>稳定</b>）。</div>
+<div class="thm"><span class="label">复杂度与性质</span>
+最好（已有序 + flag）：1 趟 $n-1$ 次比较 ⇒ $O(n)$；最坏/平均 $O(n^2)$；空间 $O(1)$；<b>稳定</b>。<br>
+邻接比较的天然优势：<b>链表也能冒泡</b>（与插入排序一样属于「适配链式存储」的一类）。</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>快速排序<span class="tag">平均性能之王</span></h2>
+<div class="box method"><b>思想（分治）：</b>① 取一个<b>枢轴</b>（通常首元素）；② 一趟<b>划分</b>：比枢轴小的挪到左边、大的挪到右边，枢轴落位；③ 对左右两个子区间<b>递归</b>——枢轴自此不再参与。<br>
+<b>「每趟划分」的成果：枢轴元素被放到最终位置</b>（这是「快排一趟后的状态」类题的关键）。</div>
+<div class="box def">
+<pre class="code">int Partition(int A[], int low, int high) {
+    int pivot = A[low];                 /* 枢轴（挖坑法） */
+    while (low &lt; high) {
+        while (low &lt; high && A[high] >= pivot) high--;
+        A[low] = A[high];               /* 大的留在右、小的填左坑 */
+        while (low &lt; high && A[low] <= pivot) low++;
+        A[high] = A[low];               /* 小的留在左、大的填右坑 */
+    }
+    A[low] = pivot;                     /* 枢轴归位 */
+    return low;
+}
+void QuickSort(int A[], int low, int high) {
+    if (low &lt; high) {
+        int pos = Partition(A, low, high);   /* 划分 */
+        QuickSort(A, low, pos - 1);          /* 排左半区 */
+        QuickSort(A, pos + 1, high);         /* 排右半区 */
+    }
+}</pre></div>
+<div class="box example">
+<b>例（一趟划分完整轨迹：枢轴 49）.</b> $A=[49,38,65,97,76,13,27,49]$，low=1、high=8：
+<table>
+<thead><tr><th>步</th><th>指针动作</th><th>数组状态（坑用粗体段表示）</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>pivot=49（A1 挖坑）</td><td>（49）, 38, 65, 97, 76, 13, 27, 49</td></tr>
+<tr><td>1</td><td>high 左行：A8=49≥49 过、A7=27&lt;49 停；A1←27</td><td>27, 38, 65, 97, 76, 13, （27）, 49</td></tr>
+<tr><td>2</td><td>low 右行：A1、A2=38≤49 过、A3=65&gt;49 停；A7←65</td><td>27, 38, （65）, 97, 76, 13, 65, 49</td></tr>
+<tr><td>3</td><td>high 左行：A7、A6=13&lt;49 停；A3←13</td><td>27, 38, 13, 97, 76, （13）, 65, 49</td></tr>
+<tr><td>4</td><td>low 右行：A3=13≤49 过、A4=97&gt;49 停；A6←97</td><td>27, 38, 13, （97）, 76, 97, 65, 49</td></tr>
+<tr><td>5</td><td>high 左行：A6、A5=76≥49 过 → low=high=4，结束；A4←pivot</td><td><b>27, 38, 13, 49, 76, 97, 65, 49</b></td></tr>
+</tbody>
+</table>
+<b>结果：</b>$[27,38,13,\ \mathbf{49},\ 76,97,65,49]$——49 已归位（左右分别全小/全大）✓。<br>
+<b>递归继续：</b>左区 $[27,38,13]$（枢轴 27）⇒ $[13,27,38]$；右区 $[76,97,65,49]$（枢轴 76）⇒ 划分后 $[49,65,76,97]$。<b>全程结果：$[13,27,38,49,49,65,76,97]$</b> ✓。</div>
+<div class="thm"><span class="label">复杂度与三条高频结论</span>
+· 平均时间 $O(n\log n)$（划分较均衡时，递归深度 $\log n$、每层划分 $O(n)$）；<br>
+· <b>最坏 $O(n^2)$：</b>输入「基本有序/逆序」且固定取首元素作枢轴时，每次划分一边空——退化成冒泡级别；<br>
+· 空间：递归栈平均 $O(\log n)$、最坏 $O(n)$；<b>不稳定</b>（跨越式交换破坏相等元素次序）；<br>
+· <b>优化：</b>随机枢轴 / 三数取中（取左、中、右的中位数）可避开最坏情形。</div>
+<div class="box warn"><b>「快排一趟结果」题的写法：</b>把枢轴放最终位置、左边全比它小、右边全比它大即可——<b>左右两半内部不必有序</b>（这正是很多同学丢分的点：写成了「整体更有序」的中间态）。</div>
+</section>
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>选择排序：简单选择与堆排序<span class="tag">选择类</span></h2>
+<h3>（1）简单选择排序</h3>
+<div class="box method"><b>思想：</b>每趟在无序区中<b>选出最小者</b>，与无序区第一个元素交换——有序区每趟扩大 1。
+<pre class="code">void SelectSort(int A[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        int min = i;                       /* 记录最小元下标 */
+        for (int j = i+1; j < n; j++)
+            if (A[j] &lt; A[min]) min = j;
+        if (min != i) swap(A[i], A[min]);
+    }
+}</pre></div>
+<div class="box example">
+<b>例（前两趟）.</b> $[49,38,65,97,76,13,27,49]$：<br>
+① 第 1 趟：最小 13（位置 6）与 49 交换 ⇒ $[\mathbf{13},38,65,97,76,49,27,49]$；<br>
+② 第 2 趟：剩余最小 27（位置 7）与 38 交换 ⇒ $[13,\mathbf{27},65,97,76,49,38,49]$。<br>
+<b>不稳定的证据（举一反三）：</b>对 $[49_1, 38, 49_2, 13]$，第 1 趟把 13 与 49₁ 交换 ⇒ $[13,38,49_2,49_1]$——<b>两个 49 次序颠倒</b> ⇒ 不稳定 ✓。</div>
+<div class="box warn"><b>简单选择的两条「恒定」：</b>比较次数恒为 $\frac{n(n-1)}2$（<b>与初始状态无关</b>，任何输入都这么多比较）；移动次数很少（最多 $n-1$ 次交换）——它适合「元素较大、移动昂贵」的场景，但时间上永远是 $O(n^2)$。</div>
+<h3>（2）堆排序（本节的硬骨头）</h3>
+<div class="box def"><b>大根堆：</b>完全二叉树且每个结点关键字 $\ge$ 两个孩子。顺序存储（1 起编号）：结点 $k$ 的孩子是 $2k$ 与 $2k+1$（0 起编号则是 $2k+1$ 与 $2k+2$——<b>写代码先确认编号基准</b>）。<br>
+<b>两步走：</b>① <b>建堆</b>（从 $\lfloor n/2\rfloor$ 号结点倒着到 1，各做一次「向下调整」）；② <b>反复「取堆顶 ↔ 末尾交换 + 调整剩余部分」</b>。</div>
+<div class="box def">
+<pre class="code">void AdjustDown(int A[], int k, int len) {   /* 大根堆：k 向下调整 */
+    A[0] = A[k];                             /* 暂存（A[0] 作临时位） */
+    for (int i = 2*k; i &lt;= len; i *= 2) {    /* 沿较大孩子下行 */
+        if (i &lt; len && A[i] &lt; A[i+1]) i++;   /* 取较大孩子 */
+        if (A[0] >= A[i]) break;             /* 已满足堆序 */
+        else { A[k] = A[i];  k = i; }        /* 孩子上移，继续下探 */
+    }
+    A[k] = A[0];
+}
+void BuildMaxHeap(int A[], int len) {
+    for (int k = len/2; k >= 1; k--)         /* 自底向上 */
+        AdjustDown(A, k, len);
+}
+void HeapSort(int A[], int len) {
+    BuildMaxHeap(A, len);                    /* ① 建大根堆 */
+    for (int i = len; i > 1; i--) {          /* ② 反复取最大 */
+        swap(A[1], A[i]);                    /* 堆顶换到有序区前端 */
+        AdjustDown(A, 1, i-1);               /* 剩余部分重新调整 */
+    }
+}</pre></div>
+<div class="box example">
+<b>例 1（建堆全轨迹：[53,17,78,9,45,65,87,23]）.</b>
+<table>
+<thead><tr><th>步骤</th><th>调整对象</th><th>过程</th><th>数组</th></tr></thead>
+<tbody>
+<tr><td>初始</td><td>—</td><td>—</td><td>[53,17,78,9,45,65,87,23]</td></tr>
+<tr><td>k=4</td><td>A[4]=9，孩子 A[8]=23</td><td>23&gt;9 ⇒ 23 上移，9 落底</td><td>[53,17,78,<b>23</b>,45,65,87,<b>9</b>]</td></tr>
+<tr><td>k=3</td><td>A[3]=78，孩子 65、87</td><td>大孩子 87&gt;78 ⇒ 87 上移</td><td>[53,17,<b>87</b>,23,45,65,<b>78</b>,9]</td></tr>
+<tr><td>k=2</td><td>A[2]=17，孩子 23、45</td><td>大孩子 45&gt;17 ⇒ 45 上移</td><td>[53,<b>45</b>,87,23,<b>17</b>,65,78,9]</td></tr>
+<tr><td>k=1</td><td>A[1]=53，孩子 45、87</td><td>87 上移；53 下探，孩子 65、78 ⇒ 78 再上移</td><td>[<b>87</b>,45,<b>78</b>,23,17,65,<b>53</b>,9]</td></tr>
+</tbody>
+</table>
+<b>建堆结果：</b>$[87,45,78,23,17,65,53,9]$（可逐结点验证堆序：87≥45,78；45≥23,17；78≥65,53；23≥9 ✓）。<br>
+<b>注意：</b>建堆是从 $\lfloor 8/2\rfloor=4$ 开始自底向上——<b>建堆总代价是 $O(n)$ 而不是 $O(n\log n)$</b>（越靠下的结点调整路径越短）。</div>
+<div class="box example">
+<b>例 2（排序阶段前两轮）.</b><br>
+① 交换 A[1]↔A[8]：$[9,45,78,23,17,65,53,\mathbf{87}]$；对前 7 个调整（9 下沉）⇒ $[78,45,65,23,17,9,53]$<br>
+② 交换 A[1]↔A[7]：$[53,45,65,23,17,9,\mathbf{78},\mathbf{87}]$；对前 6 个调整 ⇒ $[65,45,53,23,17,9]$<br>
+③ 继续重复（每次「取出」一个最大到后端）⇒ 最终 $[9,17,23,45,53,65,78,87]$ ✓。<br>
+<b>排序阶段：</b>$n-1$ 次交换 + 每次 $O(\log n)$ 调整 ⇒ 这一阶段是 $O(n\log n)$。</div>
+<div class="thm"><span class="label">堆排序的复杂度与性质</span>
+时间：建堆 $O(n)$ + 排序 $O(n\log n)$ ⇒ <b>任何输入都是 $O(n\log n)$</b>（不像快排有最坏退化）；空间 $O(1)$（原地，只用一个临时位）；<b>不稳定</b>（交换跳跃）。<br>
+<b>考点延伸：</b>「求前 k 大元素」用堆最优（$O(n + k\log n)$）；堆必须顺序存储（要按下标找孩子）。</div>
+</section>
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>归并排序<span class="tag">稳定 O(n log n)</span></h2>
+<div class="box method"><b>二路归并思想：</b>把序列看成 $n$ 个长度为 1 的有序段，<b>两两合并</b>成 $n/2$ 个长度 2 的有序段，再两两合并……共 $\lceil\log_2 n\rceil$ 趟后全局有序。<br>
+<b>合并（Merge）</b>是核心动作：两个有序段从头比较，谁小先取（<b>相等取左</b>——稳定的关键）。</div>
+<div class="box def">
+<pre class="code">void Merge(int A[], int low, int mid, int high) {
+    int B[ ] = 辅助数组;                 /* 或用全局辅助数组 */
+    for (int k = low; k &lt;= high; k++) B[k] = A[k];   /* 复制 */
+    int i = low, j = mid + 1;
+    for (int k = low; k &lt;= high; k++) {
+        if (i > mid) A[k] = B[j++];              /* 左段取完 */
+        else if (j > high) A[k] = B[i++];        /* 右段取完 */
+        else if (B[i] &lt;= B[j]) A[k] = B[i++];    /* 相等取左，保稳定 */
+        else A[k] = B[j++];
+    }
+}</pre></div>
+<div class="box example">
+<b>例（{49,38,65,97,76,13,27,49} 三趟全轨迹）.</b>
+<table>
+<thead><tr><th>趟</th><th>段长</th><th>结果</th></tr></thead>
+<tbody>
+<tr><td>初始</td><td>1</td><td>[49][38][65][97][76][13][27][49]</td></tr>
+<tr><td>第 1 趟</td><td>2</td><td>[38,49] [65,97] [13,76] [27,49]</td></tr>
+<tr><td>第 2 趟</td><td>4</td><td>[38,49,65,97] [13,27,49,76]</td></tr>
+<tr><td>第 3 趟</td><td>8</td><td>[13,27,38,49,49,65,76,97] ✓</td></tr>
+</tbody>
+</table>
+<b>复杂度：</b>共 $\lceil\log_2n\rceil$ 趟、每趟合并 $O(n)$ ⇒ <b>任何输入都是 $O(n\log n)$</b>；辅助空间 $O(n)$（这是它最大的代价）；<b>稳定</b> ✓。</div>
+</section>
+
+<section class="card" id="sec-8">
+<h2><span class="num">08</span>基数排序<span class="tag">非比较排序</span></h2>
+<div class="box method"><b>思想（LSD：低位优先）：</b>从<b>个位</b>到最高位，每趟按当前位把元素「分配」进 $r$ 个队列（0–9），再按队列顺序「收集」回序列——$d$ 趟后有序。<b>不比较关键字大小</b>，靠「分配 + 收集」。</div>
+<div class="box example">
+<b>例（{278,109,63,930,589,184,505,269,8,83} 三趟全轨迹）.</b><br>
+<b>第 1 趟（按个位）：</b>
+<pre class="flow">q0: 930    q3: 63,83    q4: 184    q5: 505    q8: 278,8    q9: 109,589,269
+收集：930, 63, 83, 184, 505, 278, 8, 109, 589, 269</pre>
+<b>第 2 趟（按十位）：</b>
+<pre class="flow">q0: 505,8,109   q3: 930   q6: 63,269   q7: 278   q8: 83,184,589
+收集：505, 8, 109, 930, 63, 269, 278, 83, 184, 589</pre>
+<b>第 3 趟（按百位）：</b>
+<pre class="flow">q0: 8,63,83   q1: 109,184   q2: 269,278   q5: 505,589   q9: 930
+收集：8, 63, 83, 109, 184, 269, 278, 505, 589, 930  ✓ 有序</pre>
+<b>为什么有效：</b>越靠后的趟「位权越高」——高位相同的元素，其内部次序由前面的低趟保住（收集按先后入队）⇒ 稳定 ✓。</div>
+<div class="thm"><span class="label">复杂度与适用</span>
+时间 $O(d(n+r))$（$d$ 位数、$r$ 基数/队列数）；空间 $O(r)$（队列）；<b>稳定</b>；<br>
+<b>适用：</b>关键字位数少、基数小（如整数、等长字符串、日期）——若 $d$ 很大且 $r$ 也大则不如比较类排序；它不受 $\Omega(n\log n)$ 下限约束（不属于比较排序）。</div>
+</section>
+<section class="card" id="sec-9">
+<h2><span class="num">09</span>外部排序<span class="tag">I/O 为王</span></h2>
+<div class="box def"><b>为什么需要：</b>待排数据太大、内存装不下——只能分批装入内存排序再写回外存。<b>瓶颈是磁盘 I/O</b>（读写次数），一切优化都围绕「减少 I/O 趟数」。</div>
+<div class="box method"><b>两阶段流程：</b><br>
+① <b>生成初始归并段：</b>把数据分块读入内存、内部排序后写回，得到 $r$ 个有序的「初始归并段」；<br>
+② <b>多趟归并：</b>对 $r$ 个段做 $k$ 路平衡归并，每趟把段数缩小 $k$ 倍，直到合成一个有序文件。</div>
+<div class="thm"><span class="label">归并趟数公式（必考计算）</span>
+$$S=\lceil\log_k r\rceil$$
+$r$ 为初始归并段数、$k$ 为归并路数。<b>例：</b>$r=100$、$k=5$ ⇒ $S=\lceil\log_5 100\rceil=\lceil2.86\rceil=3$ 趟；若 $k$ 提到 10 ⇒ $S=2$ 趟——<b>加大 $k$ 是减少 I/O 的第一手段</b>。</div>
+<div class="box def"><b>三个配套技术：</b><br>
+① <b>败者树：</b>$k$ 路归并每次从 $k$ 个段头选最小，朴素比较要 $k-1$ 次；败者树（完全二叉树上的锦标赛）把每次选择的比较降到 $\lceil\log_2 k\rceil$ 次——<b>让大 $k$ 的归并「内部不亏」</b>；<br>
+② <b>置换-选择排序：</b>生成初始段时不要求一次装满内存——利用「缓冲区换出比当前段最大还小的元素」，使初始段平均长度达到 $2w$（$w$ 为内存工作区大小），从而<b>减少初始段数 $r$</b>、减少趟数；<br>
+③ <b>最佳归并树：</b>各初始段长度不等时，用 <b>Huffman 思想</b>（以段长为权、$k$ 叉合并）安排归并顺序使总 I/O 最小。若段数不满「$k$ 叉满树」要<b>补虚段</b>：当 $(r-1)\bmod(k-1)\ne0$ 时，补
+$$(k-1)-\big[(r-1)\bmod(k-1)\big]$$
+个长度为 0 的虚段。<b>例：</b>$k=3$、$r=8$：$(8-1)\bmod 2=1\ne0$ ⇒ 补 1 个虚段（凑成 3 叉满树）✓。</div>
+</section>
+
+<section class="card" id="sec-10">
+<h2><span class="num">10</span>典型例题<span class="tag">划分·堆·性质·计算</span></h2>
+<div class="box example">
+<b>例 1（快排一趟划分手算）.</b> $A=[46,79,56,38,40,84]$，枢轴取首元素 46：<br>
+① high 左行：84≥46 过、40&lt;46 停 ⇒ A1←40；② low 右行：40 过、79&gt;46 停 ⇒ A5←79；<br>
+③ high 左行：79 过、38&lt;46 停 ⇒ A2←38；④ low 右行：38 过、56&gt;46 停 ⇒ A4←56；<br>
+⑤ 指针相遇 ⇒ A3←46：
+$$\boxed{[40,38,\ \mathbf{46},\ 56,79,84]}$$
+<b>验算：</b>左边 40、38 全小于 46，右边全大于 46 ✓（左右半内部无需有序——这正是「一趟结果」的定义）。</div>
+<div class="box example">
+<b>例 2（堆顶删除后的第一次调整）.</b> 大根堆 $[87,45,78,23,17,65,53,9]$，取走堆顶 87（末尾 9 换到堆顶）后调整：<br>
+① 9 与孩子 45、78 比较 ⇒ 78 上移；② 9 下探到 78 原位，与孩子 65、53 比较 ⇒ 65 上移；③ 9 落定：
+$$[78,45,65,23,17,9,53]$$
+<b>观察：</b>每一步都是「与较大的孩子交换」——堆调整的唯一法门。</div>
+<div class="box example">
+<b>例 3（性质快问快答）.</b><br>
+(a) 「比较次数与初始序列无关的排序」⇒ <b>简单选择排序</b>（恒为 $\frac{n(n-1)}2$）、<b>堆排序建堆的比较</b>也有类似定性题；<br>
+(b) 「排序趟数与初始序列无关」⇒ 堆排序、归并排序（固定趟数）；冒泡（有 flag 相关）、快排（相关）；<br>
+(c) 「最坏 $O(n\log n)$ 且空间 $O(1)$」⇒ <b>堆排序</b>（归并空间 $O(n)$、快排最坏 $O(n^2)$）；<br>
+(d) 「不稳定但平均最快」⇒ <b>快速排序</b>。</div>
+<div class="box example">
+<b>例 4（外部排序计算）.</b><br>
+① $r=100$ 个初始段、$k=5$ 路归并：$S=\lceil\log_5 100\rceil=3$ 趟；<br>
+② $k=10$：$S=\lceil\log_{10}100\rceil=2$ 趟；<br>
+③ 最佳归并树：$k=3$、$r=8$ ⇒ $(8-1)\bmod(3-1)=1\ne0$ ⇒ 补 $(3-1)-1=1$ 个虚段；<br>
+<b>结论链：</b>减少 I/O = 「加大 $k$（配败者树）+ 增长初始段（置换选择）+ 最优归并次序（Huffman + 虚段）」。</div>
+</section>
+<section class="card" id="sec-11">
+<h2><span class="num">11</span>决策流程与易错点</h2>
+<pre class="flow">排序题
+├─ 手推轨迹类
+│   ├─ 插入：逐趟写有序前缀（相等停下标稳定）
+│   ├─ 冒泡：每趟最大沉底
+│   ├─ 希尔：按增量分组 → 组内插排 → 回填
+│   ├─ 快排：先写「划分后枢轴归位」的一趟结果
+│   ├─ 堆：建堆自底向上（⌊n/2⌋ → 1）；排序阶段堆顶换末尾
+│   ├─ 归并：段长 1 → 2 → 4 翻倍合并
+│   └─ 基数：逐位「分配进 10 队列 → 收集」
+├─ 性质判断
+│   ├─ 稳定性口诀：快些选堆（不稳定）
+│   ├─ 比较次数与初始无关：简单选择
+│   ├─ 时间与初始无关且 O(nlogn)：堆排、归并
+│   └─ 最坏 O(n²)：快排（有序 + 首元素枢轴）
+└─ 外部排序：S=⌈log_k r⌉；虚段 (k−1)−(r−1)%(k−1)
+</pre>
+<h3>易错点清单</h3>
+<div class="box warn">
+<ol>
+<li><b>稳定性口诀：</b>「快些选堆」四个不稳定（快排、希尔、简单选择、堆排）；插入/冒泡/归并/基数稳定。</li>
+<li><b>折半插入的假象：</b>比较次数降到 $O(n\log n)$，但移动是瓶颈 ⇒ 总时间<b>仍是 $O(n^2)$</b>。</li>
+<li><b>希尔的增量：</b>最后一趟必须 $d=1$；且它<b>不稳定</b>（跨组交换）。</li>
+<li><b>冒泡的最好情形：</b>$O(n)$ 前提是「本趟无交换就停」的 flag 优化。</li>
+<li><b>「快排一趟」的含义：</b>只是枢轴归位、左小右大——<b>两侧内部不保证有序</b>。</li>
+<li><b>快排最坏场景：</b>输入基本有序/逆序 + 固定取首元素枢轴 ⇒ $O(n^2)$；随机枢轴/三数取中可避免。</li>
+<li><b>快排的空间：</b>递归栈 $O(\log n)$（平均），别答 $O(1)$。</li>
+<li><b>简单选择的「恒定」：</b>比较次数与初始无关；移动次数可以很少（最省移动）。</li>
+<li><b>建堆不是 $O(n\log n)$：</b>自底向上建堆总代价 $O(n)$；下标 0 起时孩子是 $2i+1/2i+2$，写代码别套错。</li>
+<li><b>归并的空间：</b>$O(n)$ 辅助数组——「时间优、空间劣」；外部排序的「归并趟数」是磁盘 I/O 概念，别与内部归并混淆。</li>
+<li><b>基数排序：</b>$O(d(n+r))$、稳定、与初始无关；「位数多、基数大」时退化。</li>
+<li><b>「最坏 O(nlogn) + 空间 O(1)」：</b>只有堆排序满足（快排最坏退化、归并空间 $O(n)$）——选择题标准答案。</li>
+</ol>
+</div>
+</section>
+
+<section class="card" id="sec-12">
+<h2><span class="num">12</span>八大排序对比表与能力自查</h2>
+<table>
+<thead><tr><th>算法</th><th>平均</th><th>最好</th><th>最坏</th><th>空间</th><th>稳定</th><th>一句话特点</th></tr></thead>
+<tbody>
+<tr><td><b>直接插入</b></td><td>$O(n^2)$</td><td>$O(n)$</td><td>$O(n^2)$</td><td>$O(1)$</td><td>✓</td><td>基本有序时极快、适合链表</td></tr>
+<tr><td><b>折半插入</b></td><td>$O(n^2)$</td><td>$O(n\log n)$比较</td><td>$O(n^2)$</td><td>$O(1)$</td><td>✓</td><td>少比较、移动不变</td></tr>
+<tr><td><b>希尔</b></td><td>约 $O(n^{1.3})$</td><td>—</td><td>$O(n^2)$</td><td>$O(1)$</td><td>✗</td><td>分组插排、增量递减</td></tr>
+<tr><td><b>冒泡</b></td><td>$O(n^2)$</td><td>$O(n)$</td><td>$O(n^2)$</td><td>$O(1)$</td><td>✓</td><td>相邻交换、每趟沉底</td></tr>
+<tr><td><b>快速</b></td><td>$O(n\log n)$</td><td>$O(n\log n)$</td><td>$O(n^2)$</td><td>$O(\log n)$</td><td>✗</td><td>平均最快；有序输入反成最坏</td></tr>
+<tr><td><b>简单选择</b></td><td>$O(n^2)$</td><td>$O(n^2)$</td><td>$O(n^2)$</td><td>$O(1)$</td><td>✗</td><td>比较恒定、移动最少</td></tr>
+<tr><td><b>堆排序</b></td><td>$O(n\log n)$</td><td>$O(n\log n)$</td><td>$O(n\log n)$</td><td>$O(1)$</td><td>✗</td><td>最坏也线性对数、原地</td></tr>
+<tr><td><b>归并</b></td><td>$O(n\log n)$</td><td>$O(n\log n)$</td><td>$O(n\log n)$</td><td>$O(n)$</td><td>✓</td><td>恒定快、费空间</td></tr>
+<tr><td><b>基数</b></td><td>$O(d(n+r))$</td><td>同</td><td>同</td><td>$O(r)$</td><td>✓</td><td>非比较、按位分配收集</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>外部排序速查：</b>归并趟数 $S=\lceil\log_k r\rceil$；败者树把选最小的比较降到 $\lceil\log_2 k\rceil$；置换-选择使初始段长平均 $2w$；最佳归并树 = $k$ 叉 Huffman + 虚段补足 $(k-1)-[(r-1)\bmod(k-1)]$。</div>
+<h3>能力自查</h3>
+<div class="box method">
+☐ 背出稳定性口诀「快些选堆」并解释每个「不稳定」的原因 (§1、§11)<br>
+☐ 手推直接插入 8 元素全程 7 趟 (§2)<br>
+☐ 希尔三趟（d=4,2,1）回填过程 (§3)<br>
+☐ 冒泡前两趟轨迹 + flag 的作用 (§4)<br>
+☐ 快排一趟划分 6 步表（49 例）+ [46,…] 新例 (§5、§10 例1)<br>
+☐ 建堆 [53,17,…] 四步表 + 排序前两轮 (§6)<br>
+☐ 归并三趟表 (§7)<br>
+☐ 基数三趟队列分配-收集 (§8)<br>
+☐ S=⌈log_k r⌉ 计算两例 + 虚段公式一例 (§9、§10 例4)<br>
+☐ 完整默写八大对比表（时间/空间/稳定性）(§12)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax、图表由 Mermaid 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>数据结构（408 · 王道体系） · 第八章 排序 · 内容完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var murls=[
+    "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://registry.npmmirror.com/mermaid/10.9.1/files/dist/mermaid.min.js"
+  ];
+  function mload(i){
+    if(i>=murls.length){return;}
+    var s=document.createElement("script");
+    s.src=murls[i];s.async=true;
+    s.onload=function(){try{mermaid.initialize({startOnLoad:false,theme:"neutral",securityLevel:"loose"});mermaid.run({querySelector:".mermaid"});}catch(e){}};
+    s.onerror=function(){mload(i+1);};
+    document.head.appendChild(s);
+  }
+  mload(0);
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
