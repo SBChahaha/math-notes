@@ -145,9 +145,9 @@ $$\Delta(uv)=u(x+\Delta x)v(x+\Delta x)-u(x)v(x)=\underbrace{[u(x+\Delta x)-u(x)
 两边除以 $\Delta x$：
 $$\frac{\Delta(uv)}{\Delta x}=\frac{\Delta u}{\Delta x}\,v(x+\Delta x)+u(x)\,\frac{\Delta v}{\Delta x}\ \xrightarrow[\Delta x\to0]{}\ u'v+uv'$$
 （关键：$v$ 可导 ⇒ 连续 ⇒ $v(x+\Delta x)\to v(x)$）✓<br>
-<b>③ 的推导：</b>先算 $\left(\dfrac1v\right)'=\lim\dfrac{\frac1{v+\Delta v}-\frac1v}{\Delta x}=\lim\dfrac{-\Delta v}{v(v+\Delta v)\Delta x}=-\dfrac{v'}{v^2}$，再用乘积法则展开 $\left(u\cdot\dfrac1v\right)'$ 即得 ✓。<span class="qed">∎</span></div>
+<b>③ 的推导：</b>先算 $\left(\dfrac1v\right)'=\lim\dfrac{\frac1{v+\Delta v}-\frac1v}{\Delta x}=\lim\dfrac{-\Delta v}{v(v+\Delta v)\Delta x}=-\dfrac{v'}{v^2}$（用 $\Delta v/\Delta x\to v'$ 与 $v+\Delta v\to v$——$v$ 连续），再用乘积法则展开 $\left(u\cdot\dfrac1v\right)'$ 即得 ✓。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">反函数求导</span>设 $y=f(x)$ 单调可导且 $f'(x)\ne0$，则反函数 $x=f^{-1}(y)$ 可导，且
-$$\left[f^{-1}(y)\right]'=\frac{1}{f'(x)}\qquad\text{即}\quad \frac{dx}{dy}=\frac{1}{\ dy/dx\ }$$
+$$\left[f^{-1}(y)\right]'=\frac{1}{f'(x)}\qquad\text{即}\quad \frac{dx}{dy}=\dfrac{1}{\dfrac{dy}{dx}}$$
 （直观：$\dfrac{\Delta x}{\Delta y}$ 就是 $\dfrac{\Delta y}{\Delta x}$ 的倒数。）</div>
 <div class="thm"><span class="label">复合函数：链式法则</span>设 $y=f(u)$ 在 $u$ 可导，$u=g(x)$ 在 $x$ 可导，则复合函数 $y=f[g(x)]$ 可导：
 $$\frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dx}=f'(u)\,g'(x)$$</div>
@@ -161,7 +161,7 @@ $$\frac{\Delta y}{\Delta x}=f'(u)\frac{\Delta u}{\Delta x}+\varepsilon(\Delta u)
 ① $y=\sin(x^2)$：$y'=\cos(x^2)\cdot2x=2x\cos(x^2)$；<br>
 ② $y=\ln(\cos x)$：$y'=\dfrac1{\cos x}\cdot(-\sin x)=-\tan x$；<br>
 ③ $y=e^{\sin 3x}$：$y'=e^{\sin3x}\cdot\cos3x\cdot3=3\cos3x\,e^{\sin3x}$。<br>
-<b>验算（②用另一法）：</b>$y=\ln\cos x$，$y''=-\tan x$ 求导得 $y''=-\sec^2x$——与直接对 $-\tan x$ 判断一致 ✓（第三章将用）。
+<b>验算（②续）：</b>对 $y'=-\tan x$ 再求导得 $y''=-\sec^2x$ ✓（与直接求导结果一致，第三章将用到）。
 </div>
 </section>
 
@@ -230,7 +230,7 @@ $$\frac{dy}{dx}=\frac{\psi'(t)}{\varphi'(t)},\qquad \frac{d^2y}{dx^2}=\frac{\dfr
 ① 一阶：$\dfrac{dy}{dx}=\dfrac{(b\sin t)'}{(a\cos t)'}=\dfrac{b\cos t}{-a\sin t}=-\dfrac ba\cot t$；<br>
 ② 二阶：
 $$\frac{d^2y}{dx^2}=\frac{\dfrac{d}{dt}\left(-\dfrac ba\cot t\right)}{-a\sin t}=\frac{\dfrac ba\csc^2t}{-a\sin t}=-\frac b{a^2\sin^3t}$$
-<b>验算（参数点 $t=\frac\pi2$）：</b>一阶导 0（顶点处切线水平 ✓）；二阶导 $-\dfrac b{a^2}<0$（顶部向下弯曲 ✓）。
+<b>验算（参数点 $t=\frac\pi2$）：</b>一阶导 0（顶点处切线水平 ✓）；二阶导 $-\dfrac b{a^2}\lt 0$（顶部向下弯曲 ✓）。
 </div>
 <h3>（4）相关变化率</h3>
 <div class="box example">
@@ -239,7 +239,7 @@ $$\frac{d^2y}{dx^2}=\frac{\dfrac{d}{dt}\left(-\dfrac ba\cot t\right)}{-a\sin t}=
 $$\frac{dV}{dt}=4\pi r^2\cdot\frac{dr}{dt}$$
 ② 代入 $r=5$、$\dfrac{dr}{dt}=2$：
 $$\frac{dV}{dt}=4\pi\times25\times2=200\pi\approx628\ (\text{cm}^3/\text{s})$$
-<b>验算（量级）：</b>体积约 $\frac43\pi\cdot125\approx524$ cm³，每秒增加 $200\pi\approx628$ cm³——增长快于当前体积是合理的（表面积大）✓。
+<b>验算（量级）：</b>表面积 $S=4\pi r^2=100\pi\approx314$ cm²，由 $\dfrac{dV}{dt}=S\cdot\dfrac{dr}{dt}$ 得量级自洽；且一秒内增量（$\approx628$ cm³）已超过当前体积（$\frac43\pi\cdot125\approx524$ cm³），符合 $r=5$、$\dot r=2$ cm/s 的快速充气 ✓。
 </div>
 </section>
 
@@ -366,7 +366,7 @@ $$y'=\left(1+\frac1x\right)^x\left[\ln\!\left(1+\frac1x\right)-\frac1{x+1}\right
 ☐ 链式法则证明中的 $\varepsilon(\Delta u)$ 技巧复述 (§2)<br>
 ☐ $(\sin x)^{(n)}$ 归纳三步走（列举、猜测、归纳验证）(§3)<br>
 ☐ $x^2e^x$ 的莱布尼茨计算（只剩三项）(§3)<br>
-☐ 圆 $x^2+y^2=25$ 的 $y'$ 与 $y''$（$y''=-25/y^3$）(§4、§6)<br>
+☐ 圆 $x^2+y^2=25$ 的 $y'$ 与 $y''$（$y''=-25/y^3$，自推练习）(§4)<br>
 ☐ 椭圆参数方程的二阶导 $-\dfrac b{a^2\sin^3t}$（§4）<br>
 ☐ 气球相关变化率 $dV/dt=4\pi r^2\dot r$（§4）<br>
 ☐ 可微 ⇔ 可导证明的两个方向 (§5)

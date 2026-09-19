@@ -110,7 +110,7 @@ window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$
 ② <b>单调性：</b>$x_1\lt x_2\Rightarrow f(x_1)\le f(x_2)$（单调增）或 $\ge$（单调减）；<br>
 ③ <b>奇偶性：</b>定义域对称时，$f(-x)=f(x)$（偶）或 $f(-x)=-f(x)$（奇）；<br>
 ④ <b>周期性：</b>$\exists T>0$ 使 $f(x+T)=f(x)$（通常取最小正周期）。</div>
-<div class="box def"><b>反函数与复合：</b>若 $f:D\to f(D)$ 单调，则存在<b>反函数</b> $f^{-1}:f(D)\to D$，图像关于 $y=x$ 对称；<br>
+<div class="box def"><b>反函数与复合：</b>若 $f:D\to f(D)$ 严格单调，则存在<b>反函数</b> $f^{-1}:f(D)\to D$，图像关于 $y=x$ 对称；<br>
 复合函数 $y=f[g(x)]$：要求 $g$ 的值域与 $f$ 的定义域有交集（内层输出可被外层接收）。</div>
 <div class="box def"><b>初等函数：</b>由<b>幂函数、指数函数、对数函数、三角函数、反三角函数</b>五类基本初等函数经有限次四则运算与复合、且能用一个式子表示的函数。它们在定义区间内连续（§7 将证明）。<br>
 <b>双曲函数（了解）：</b>$\operatorname{sh}x=\dfrac{e^x-e^{-x}}2$（奇），$\operatorname{ch}x=\dfrac{e^x+e^{-x}}2$（偶），$\operatorname{th}x=\dfrac{\operatorname{sh}x}{\operatorname{ch}x}$；满足 $\operatorname{ch}^2x-\operatorname{sh}^2x=1$（验证：$\frac{(e^x+e^{-x})^2-(e^x-e^{-x})^2}{4}=\frac{4}{4}=1$ ✓）。</div>
@@ -135,7 +135,7 @@ $$|x_n-a|<\varepsilon$$
 ② <b>伯努利不等式：</b>$(1+h)^n\ge1+nh$（对 $n$ 归纳：$(1+h)^{n+1}\ge(1+nh)(1+h)=1+(n+1)h+nh^2\ge1+(n+1)h$ ✓）；<br>
 ③ 于是 $|q|^n=\dfrac{1}{(1+h)^n}\le\dfrac{1}{1+nh}<\dfrac1{nh}$，要使 $|q|^n<\varepsilon$ 只需 $n>\dfrac{1}{h\varepsilon}$；<br>
 ④ 取 $N=\left[\dfrac{1}{h\varepsilon}\right]+1$ 即可证得 ✓。<br>
-<b>验算：</b>$q=0.5$（$h=1$）：$n=10$ 时 $0.5^{10}\approx0.00098<0.001$ ✓ 与估计 $n>1/\varepsilon=1000$ 相比更宽（估计是保守的）。
+<b>验算：</b>$q=0.5$（$h=1$）：$n=10$ 时 $0.5^{10}\approx0.00098<0.001$ ✓（实际 $n=10$ 即满足，远小于保守估计 $n>1/(h\varepsilon)=1000$）。
 </div>
 <div class="thm"><span class="label">收敛数列的性质</span>
 ① <b>唯一性：</b>极限若存在必唯一；<br>
@@ -149,7 +149,7 @@ $$|a-b|\le|a-x_n|+|x_n-b|<2\varepsilon=|a-b|$$
 $$M=\max\{|x_1|,|x_2|,\dots,|x_N|,\ |a|+1\}$$
 则对一切 $n$ 有 $|x_n|\le M$ ✓（前有限项取最大、后面项被 $|a|+1$ 控制）。<br>
 <b>证明（③保号性）</b>设 $a>0$，取 $\varepsilon=\dfrac a2>0$：$\exists N$，$n>N$ 时 $|x_n-a|<\dfrac a2$ ⇒ $x_n>a-\dfrac a2=\dfrac a2>0$ ✓（$a<0$ 同理对称）。<span class="qed">∎</span></div>
-<div class="box warn"><b>两个常用推论：</b>① 若存在子数列发散，或两个子数列极限不同，则原数列发散（例：$(-1)^n$ 的奇偶子列极限 $\pm1\ne$ 同值 ⇒ 发散）；② 有界只是收敛的必要条件——有界数列未必收敛（$(-1)^n$ 就是反例）。<br>
+<div class="box warn"><b>两个常用推论：</b>① 若存在子数列发散，或两个子数列极限不同，则原数列发散（例：$(-1)^n$ 的奇、偶子列极限分别为 $1$ 与 $-1$，不相等 ⇒ 发散）；② 有界只是收敛的必要条件——有界数列未必收敛（$(-1)^n$ 就是反例）。<br>
 <b>单调有界准则：</b>单调有界数列必收敛（§6 用它定义 e）。</div>
 </section>
 <section class="card" id="sec-3">
@@ -204,7 +204,7 @@ $$\lim\frac\beta\alpha=\lim\left(\frac\beta{\beta'}\cdot\frac{\beta'}{\alpha'}\c
 $$\sin x\sim x,\quad \tan x\sim x,\quad \arcsin x\sim x,\quad \arctan x\sim x$$
 $$1-\cos x\sim\frac{x^2}2,\quad \ln(1+x)\sim x,\quad e^x-1\sim x,\quad a^x-1\sim x\ln a$$
 $$(1+x)^\alpha-1\sim\alpha x,\quad \sqrt{1+x}-1\sim\frac x2$$<br>
-<b>快速验证两例：</b>$\dfrac{1-\cos x}{x^2}=\dfrac12\left(\dfrac{\sin(x/2)}{x/2}\right)^2\to\dfrac12$ ✓（用了重要极限 $\frac{\sin u}u\to1$，§6）；$\ln(1+x)\sim x$：$\ln(1+x)^{1/x}\to\ln e=1$ ✓。
+<b>快速验证两例：</b>$\dfrac{1-\cos x}{x^2}=\dfrac12\left(\dfrac{\sin(x/2)}{x/2}\right)^2\to\dfrac12$ ✓（用了重要极限 $\frac{\sin u}u\to1$，§6）；$\ln(1+x)\sim x$：由 $\dfrac{\ln(1+x)}x=\ln\left[(1+x)^{1/x}\right]\to\ln e=1$ 得证 ✓。
 </div>
 <div class="box warn"><b>重大警告（替换的使用范围）：</b>等价替换只适用于<b>乘除因式</b>，不能对加减项「分别替换」。反例：
 $$\lim_{x\to0}\frac{\tan x-\sin x}{x^3}\ \underbrace{\neq}_{\text{若把}\tan x,\ \sin x\ \text{都换成}\ x\ \text{得}\ 0}\ 0$$
@@ -219,7 +219,7 @@ $$\lim_{x\to0}\frac{\tan x-\sin x}{x^3}\ \underbrace{\neq}_{\text{若把}\tan x,
 <div class="proof"><span class="label">证明（②，用无穷小分解）</span>由 §4 定理 1：$f=A+\alpha$，$g=B+\beta$（$\alpha,\beta$ 为无穷小）。则
 $$fg=AB+(A\beta+B\alpha+\alpha\beta)$$
 三个附加项都是无穷小：$A\beta$、$B\alpha$ 是「常数 × 无穷小」；$\alpha\beta$ 是「无穷小 × 有界」（$\beta$ 收敛故局部有界，§4 定理 2②）。因此括号部分为无穷小，即 $fg\to AB$ ✓（①③ 同理，③ 需注意 $B\ne0$ 时 $g$ 局部有下界 $|g|>|B|/2$）。<span class="qed">∎</span></div>
-<div class="box tip"><b>推论：</b>$\lim[Cf(x)]=C\lim f(x)$；$\lim f^n(x)=[\lim f(x)]^n$；若 $f$ 是多项式、$f_{x_0}$ 有定义，则 $\lim\limits_{x\to x_0}f(x)=f(x_0)$（代入即可）。<br>
+<div class="box tip"><b>推论：</b>$\lim[Cf(x)]=C\lim f(x)$；$\lim f^n(x)=[\lim f(x)]^n$；若 $f$ 是多项式且在 $x_0$ 处有定义，则 $\lim\limits_{x\to x_0}f(x)=f(x_0)$（代入即可）。<br>
 <b>复合函数极限：</b>若 $\lim\limits_{x\to x_0}g(x)=u_0$ 且 $f$ 在 $u_0$ 处连续，则
 $$\lim_{x\to x_0}f[g(x)]=f\!\left[\lim_{x\to x_0}g(x)\right]=f(u_0)$$
 （「连续函数可以穿过极限号」。）</div>
@@ -231,9 +231,9 @@ $$\lim_{x\to\infty}\frac{3x^2-2x+1}{2x^2+x-3}=\lim_{x\to\infty}\frac{3-\dfrac2x+
 </div>
 <div class="box example">
 <b>例 2（有理化：处理根号差）.</b>
-$$\lim_{x\to\infty}\left(\sqrt{x^2+x}-x\right)=\lim_{x\to\infty}\frac{(\sqrt{x^2+x}-x)(\sqrt{x^2+x}+x)}{\sqrt{x^2+x}+x}=\lim_{x\to\infty}\frac{x}{\sqrt{x^2+x}+x}$$
-$$=\lim_{x\to\infty}\frac{1}{\sqrt{1+\dfrac1x}+1}=\frac12$$
-<b>验算（量级直觉）：</b>$\sqrt{x^2+x}=x\sqrt{1+1/x}\approx x(1+\dfrac1{2x})=x+\dfrac12$ ⇒ 差趋近 $\dfrac12$ ✓。
+$$\lim_{x\to+\infty}\left(\sqrt{x^2+x}-x\right)=\lim_{x\to+\infty}\frac{(\sqrt{x^2+x}-x)(\sqrt{x^2+x}+x)}{\sqrt{x^2+x}+x}=\lim_{x\to+\infty}\frac{x}{\sqrt{x^2+x}+x}$$
+$$=\lim_{x\to+\infty}\frac{1}{\sqrt{1+\dfrac1x}+1}=\frac12$$
+<b>验算（量级直觉，仅 $x\to+\infty$）：</b>$\sqrt{x^2+x}=x\sqrt{1+1/x}\approx x\left(1+\dfrac1{2x}\right)=x+\dfrac12$ ⇒ 差趋近 $\dfrac12$ ✓（$x\to-\infty$ 时 $\sqrt{x^2+x}-x\approx-2x\to+\infty$，双向极限不存在）。
 </div>
 <div class="box example">
 <b>例 3（数列四则）.</b> $\lim\limits_{n\to\infty}\dfrac{2n^2+n-1}{3n^2-2}=\dfrac23$（上下除 $n^2$：$\dfrac{2+\frac1n-\frac1{n^2}}{3-\frac2{n^2}}\to\dfrac23$）✓。
@@ -251,7 +251,7 @@ $$\lim_{x\to0}\frac{\sin x}{x}=1$$</div>
 $$S_{\triangle OAB}=\frac12\sin x\ <\ S_{\text{扇形}}=\frac x2\ <\ S_{\triangle OAC}=\frac12\tan x$$
 两边乘 2 得 $\sin x\lt x<\tan x$；同除 $\sin x>0$：
 $$1<\frac{x}{\sin x}<\frac1{\cos x}\ \Longrightarrow\ \cos x<\frac{\sin x}{x}<1\qquad(0&lt;x<\tfrac\pi2)$$
-由 $\lim\limits_{x\to0^+}\cos x=1$ 与夹逼准则得 $\lim\limits_{x\to0^+}\dfrac{\sin x}{x}=1$；又 $\dfrac{\sin x}{x}$ 是偶函数，故左极限同为 1。合并即得结论 ✓。<span class="qed">∎</span></div>
+由 $0\le1-\cos x=2\sin^2\dfrac x2\le\dfrac{x^2}2\to0$ 得 $\cos x\to1$，再由夹逼准则得 $\lim\limits_{x\to0^+}\dfrac{\sin x}{x}=1$；又 $\dfrac{\sin x}{x}$ 是偶函数，故左极限同为 1。合并即得结论 ✓。<span class="qed">∎</span></div>
 <div class="box example">
 <b>例（重要极限 1 的直接应用）.</b><br>
 ① $\lim\limits_{x\to0}\dfrac{\sin 3x}{x}=\lim\limits_{x\to0}3\cdot\dfrac{\sin 3x}{3x}=3$（配凑 $\frac{\sin u}u\to1$，$u=3x\to0$）；<br>
@@ -267,7 +267,9 @@ $$e=\lim_{n\to\infty}\left(1+\frac1n\right)^n\approx2.71828$$
 $$a_n=\sum_{k=0}^n\frac{n(n-1)\cdots(n-k+1)}{k!\,n^k}=\sum_{k=0}^n\frac1{k!}\left(1-\frac1n\right)\left(1-\frac2n\right)\cdots\left(1-\frac{k-1}n\right)$$
 ① <b>单调增：</b>每一项 $\frac1{k!}(1-\frac1n)\cdots(1-\frac{k-1}n)$ 随 $n$ 变大（括号内每个因子变大）而变大，且 $n$ 增大还多出正项 ⇒ $a_{n+1}>a_n$；<br>
 ② <b>有界：</b>$a_n\le\sum_{k=0}^n\dfrac1{k!}\le1+1+\dfrac12+\dfrac1{2^2}+\cdots+\dfrac1{2^{n-1}}<3$（用 $k!\ge2^{k-1}$）；<br>
-③ 由准则 II，$a_n$ 收敛，记极限为 $e$（且 $2\lt e<3$）✓。函数情形 $x\to\infty$ 用 $[x]\le x<[x]+1$ 夹逼（细节略），$x\to0$ 由换元 $x=1/t$ 得到 ✓。<span class="qed">∎</span></div>
+③ 由准则 II，$a_n$ 收敛，记极限为 $e$（且 $2\lt e<3$）✓。函数情形：对 $x\ge1$，由 $[x]\le x\lt[x]+1$ 得
+$$\left(1+\frac1{[x]+1}\right)^{[x]}\le\left(1+\frac1x\right)^x\le\left(1+\frac1{[x]}\right)^{[x]+1}$$
+两端同趋于 $e$（$x\to-\infty$ 由换元 $x=-t$ 同理）；$x\to0$ 由换元 $x=1/t$ 得到 ✓。<span class="qed">∎</span></div>
 <div class="box example">
 <b>例（重要极限 2 的应用）.</b><br>
 ① $\lim\limits_{x\to\infty}\left(1+\dfrac2x\right)^x=\left[\lim\limits_{x\to\infty}\left(1+\dfrac2x\right)^{x/2}\right]^{2}=e^2$（配凑 $u=2/x$，指数 $x=\frac{x}{2}\cdot2$）；<br>
@@ -313,18 +315,18 @@ $$|\Delta y|=|\sin(x_0+\Delta x)-\sin x_0|=\left|2\cos\left(x_0+\frac{\Delta x}2
 ③ <b>零点定理：</b>若 $f(a)f(b)<0$，则 $\exists\xi\in(a,b)$ 使 $f(\xi)=0$；<br>
 ④ <b>介值定理：</b>对任意 $\mu$ 介于 $f(a)$ 与 $f(b)$ 之间，$\exists\xi\in(a,b)$ 使 $f(\xi)=\mu$。</div>
 <div class="proof"><span class="label">证明（③思路 + ④由③推出）</span>
-<b>零点定理（二分法思想）：</b>设 $f(a)<0\lt f(b)$。取中点 $c=\frac{a+b}2$：若 $f(c)=0$ 已得结论；若 $f(c)>0$，则在 $[a,c]$ 上重复；若 $f(c)<0$，则在 $[c,b]$ 上重复。如此得闭区间套 $[a_n,b_n]$，长度 $=\frac{b-a}{2^n}\to0$，由区间套定理存在唯一 $\xi\in[a_n,b_n]$ 全部区间。由连续性：$f(\xi)=\lim f(a_n)\le0$ 且 $f(\xi)=\lim f(b_n)\ge0$（端点符号固定），故 $f(\xi)=0$ ✓。<br>
+<b>零点定理（二分法思想）：</b>设 $f(a)<0\lt f(b)$。取中点 $c=\frac{a+b}2$：若 $f(c)=0$ 已得结论；若 $f(c)>0$，则在 $[a,c]$ 上重复；若 $f(c)<0$，则在 $[c,b]$ 上重复。如此得闭区间套 $[a_n,b_n]$，长度 $=\frac{b-a}{2^n}\to0$，由区间套定理，存在唯一 $\xi$ 属于所有区间 $[a_n,b_n]$（即 $\xi\in\bigcap_n[a_n,b_n]$）。由连续性：$f(\xi)=\lim f(a_n)\le0$ 且 $f(\xi)=\lim f(b_n)\ge0$（端点符号固定），故 $f(\xi)=0$ ✓。<br>
 <b>介值定理：</b>作辅助函数 $F(x)=f(x)-\mu$。由 $\mu$ 介于两端值之间，$F(a)F(b)<0$；对 $F$ 用零点定理得 $\xi$ 使 $F(\xi)=0$，即 $f(\xi)=\mu$ ✓。<span class="qed">∎</span></div>
 <div class="box example">
 <b>例（零点定理证方程有根）.</b> 证明方程 $\cos x=x$ 在 $(0,1)$ 内有实根。<br>
 ① 令 $f(x)=\cos x-x$，在 $[0,1]$ 上连续；<br>
 ② 端点值：$f(0)=\cos0-0=1>0$；$f(1)=\cos1-1\approx0.5403-1=-0.4597<0$；<br>
 ③ 由零点定理，$\exists\xi\in(0,1)$，$f(\xi)=0$，即 $\cos\xi=\xi$ ✓。<br>
-<b>验算（数值印证）：</b>$\xi\approx0.739$（可用二分法逐步逼近：$f(0.7)=0.0648>0$、$f(0.74)=-0.0011<0$ ⇒ 根在 $(0.70,0.74)$）✓。
+<b>验算（数值印证）：</b>$\xi\approx0.739$（可用二分法逐步逼近：$f(0.7)=0.0648>0$、$f(0.74)\approx-0.0015<0$ ⇒ 根在 $(0.70,0.74)$）✓。
 </div>
 <div class="box def"><b>一致连续（了解，同济版选学）：</b>若 $\forall\varepsilon>0$，$\exists\delta>0$（<b>只依赖于 ε</b>），对区间 $I$ 上任意两点 $x_1,x_2$，只要 $|x_1-x_2|<\delta$ 就有 $|f(x_1)-f(x_2)|<\varepsilon$，称 $f$ 在 $I$ 上<b>一致连续</b>。</div>
 <div class="thm"><span class="label">康托尔定理（一致连续性定理）</span>闭区间上连续的函数必在该区间上一致连续。（证明思路：用致密性定理——若不然，存在 $\varepsilon_0>0$ 与两列点 $x_n,x_n'$ 使 $|x_n-x_n'|\to0$ 但 $|f(x_n)-f(x_n')|\ge\varepsilon_0$；由致密性定理取子列 $x_{n_k}\to x_0\in[a,b]$，则 $x'_{n_k}\to x_0$，与 $f$ 在 $x_0$ 连续矛盾。）</div>
-<div class="box warn"><b>闭区间与开区间的区别（反例警示）：</b>$f(x)=\dfrac1x$ 在 $(0,1)$ 内连续但无界、非一致连续（$x\to0^+$ 时无界）；$f(x)=x$ 在 $(0,1)$ 上有界但不取最值、非一致连续——<b>「闭区间」四个字不可少</b>。</div>
+<div class="box warn"><b>闭区间与开区间的区别（反例警示）：</b>$f(x)=\dfrac1x$ 在 $(0,1)$ 内连续但无界、非一致连续（$x\to0^+$ 时无界）；$f(x)=x$ 在 $(0,1)$ 上有界但不取最值（它本身一致连续，取 $\delta=\varepsilon$ 即可）；$f(x)=\sin\dfrac1x$ 在 $(0,1)$ 上有界、无最值且非一致连续——<b>「闭区间」四个字不可少</b>。</div>
 </section>
 <section class="card" id="sec-9">
 <h2><span class="num">09</span>典型例题<span class="tag">实战</span></h2>
@@ -348,15 +350,15 @@ $$\left(\frac{x+1}{x-1}\right)^x=\frac{\left(1+\dfrac1x\right)^x}{\left(1-\dfrac
 ① 间断点候选：$\tan x$ 为零或无穷处，即 $x=k\pi$ 与 $x=\dfrac\pi2+k\pi$；<br>
 ② 在 $x=0$：$\lim\limits_{x\to0}\dfrac{x}{\tan x}=\lim\limits_{x\to0}\dfrac{x}{x}=1$（$\tan x\sim x$）⇒ <b>可去间断点</b>；<br>
 ③ 在 $x=k\pi$（$k\ne0$）：$\lim\limits_{x\to k\pi}\dfrac{x}{\tan x}=\infty$ ⇒ <b>无穷间断点</b>（第二类）；<br>
-④ 在 $x=\dfrac\pi2+k\pi$：$f$ 有定义且 $\tan x=\infty$ ⇒ $\lim=0$，函数连续（$f(\frac\pi2)=0$），<b>不是</b>间断点。<br>
-<b>验算：</b>由周期 $\pi$ 只需分析 $[0,\pi)$：0 可去、$\frac\pi2$ 连续 ✓。
+④ 在 $x=\dfrac\pi2+k\pi$：先恒等变形 $f(x)=\dfrac{x\cos x}{\sin x}$（$x\ne k\pi$），则 $f\!\left(\dfrac\pi2+k\pi\right)=0$ 且在该点连续——<b>不是</b>间断点（若按字面 $x/\tan x$ 理解，则该点是可去间断点，补充定义即可）。<br>
+<b>验算：</b>间断点候选「$0$、$k\pi$、$\dfrac\pi2+k\pi$」按 $\pi$ 周期重复出现、类型结构相同，故只需分析 $[0,\pi)$ 内代表点：$x=0$ 可去、$x=\dfrac\pi2$ 连续 ✓。
 </div>
 <div class="box example">
 <b>例 4（零点定理：三次方程三根）.</b> 证明 $x^3-4x^2+1=0$ 有三个实根。<br>
 ① 令 $f(x)=x^3-4x^2+1$（多项式，处处连续）；<br>
 ② 逐区间验号：$f(-1)=-4<0$、$f(0)=1>0$ ⇒ 根在 $(-1,0)$；$f(0)=1>0$、$f(1)=-2<0$ ⇒ 根在 $(0,1)$；$f(3)=27-36+1=-8<0$、$f(4)=64-64+1=1>0$ ⇒ 根在 $(3,4)$；<br>
 ③ 三次方程至多三个根，三个区间各一根 ⇒ 恰有三个实根 ✓。<br>
-<b>验算（韦达自查）：</b>三根之和应为 4：约 $(-0.4)+(0.5)+(3.9)=4.0$ ✓（近似吻合）。
+<b>验算（韦达自查）：</b>三根约为 $-0.4728$、$0.5374$、$3.9354$，其和 $=4.0000$，与韦达定理（三根之和 $=4$）精确吻合 ✓。
 </div>
 </section>
 

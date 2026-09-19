@@ -124,7 +124,7 @@ $$U=\int_a^bf(x)\,dx$$</div>
 ① 交点：$x^2=x$ ⇒ $x=0,1$；<br>
 ② 上减下（$0\lt x<1$ 时 $x>x^2$）：
 $$A=\int_0^1(x-x^2)dx=\left[\frac{x^2}2-\frac{x^3}3\right]_0^1=\frac12-\frac13=\frac16$$
-<b>验算（粗估）：</b>区域夹在 $0.1$ 宽的「平均高度约 0.167」的范围内：$\frac16\approx0.167$ ✓。
+<b>验算（平均值旁观）：</b>平均高度 $=$ 面积/宽 $=\frac16\approx0.167$，与被积函数在 $[0,1]$ 上的取值（$0$ 到峰值 $1/4$）量级相符 ✓。
 </div>
 <div class="thm"><span class="label">极坐标面积公式</span>
 $$A=\frac12\int_\alpha^\beta\rho^2(\theta)\,d\theta$$</div>
@@ -167,7 +167,7 @@ $$V=\pi\int_{-R}^{R}(R^2-x^2)dx=\pi\left[R^2x-\frac{x^3}3\right]_{-R}^R=\pi\left
 <div class="box example">
 <b>例 3（柱壳法）.</b> $y=x^2$（$0\le x\le1$）绕 $y$ 轴：
 $$V=2\pi\int_0^1x\cdot x^2dx=2\pi\cdot\frac14=\frac\pi2$$
-<b>对照（垫圈法难度）：</b>若用 $y$ 型圆盘要做反函数 $x=\sqrt y$，再减内柱，明显更繁——<b>换方法省力</b> ✓。
+<b>对照（垫圈法难度）：</b>若用 $y$ 型垫圈：外半径 $1$、内半径 $\sqrt y$，$V=\pi\int_0^1(1-y)dy=\frac\pi2$——要做反函数、明显更繁，<b>换方法省力</b> ✓。
 </div>
 </section>
 
@@ -197,7 +197,7 @@ $$x'^2+y'^2=\rho'^2+\rho^2\ \Longrightarrow\ ds=\sqrt{\rho^2+\rho'^2}\,d\theta\ 
 $$x'^2+y'^2=a^2\left(1-2\cos t+\cos^2t+\sin^2t\right)=2a^2(1-\cos t)=4a^2\sin^2\frac t2$$
 ② 开方取正（$t\in[0,2\pi]$ 时 $\sin\frac t2\ge0$）：
 $$s=\int_0^{2\pi}2a\sin\frac t2\,dt=2a\left[-2\cos\frac t2\right]_0^{2\pi}=2a(2+2)=8a$$
-<b>结论：</b>摆线一拱的弧长恰为 $8a$（与圆周长无关的漂亮数字）；一拱面积 $3\pi a^2$ 见 §6 例题 ✓。
+<b>结论：</b>摆线一拱的弧长恰为 $8a$（结果不含 $\pi$ 的漂亮数字）；一拱面积 $3\pi a^2$ 见 §6 例题 ✓。
 </div>
 </section>
 <section class="card" id="sec-5">
@@ -252,7 +252,7 @@ $$A=\int_0^{2\pi}y\,dx=\int_0^{2\pi}a(1-\cos t)\cdot a(1-\cos t)\,dt=a^2\int_0^{
 $$A=\int_{-1}^{2}\left[(y+2)-y^2\right]dy=\left[\frac{y^2}2+2y-\frac{y^3}3\right]_{-1}^{2}$$
 ③ 上限值 $2+4-\frac83=\frac{10}3$；下限值 $\frac12-2+\frac13=-\frac76$：
 $$A=\frac{10}3+\frac76=\frac{27}6=\frac92$$
-<b>验算（换 x 型对照）：</b>x 型要拆成 $\int_0^1\sqrt x dx+\int_1^4(\sqrt x-(x-2))dx$，结果同为 $\frac92$——复杂但可自检 ✓。
+<b>验算（换 x 型对照）：</b>x 型拆成 $\int_0^1 2\sqrt x\,dx+\int_1^4\left(\sqrt x-(x-2)\right)dx=\frac43+\frac{19}6=\frac{27}6=\frac92$，与 y 型结果一致 ✓。
 </div>
 <div class="box example">
 <b>例 3（旋转体 + 对称区间）.</b> $y=\sin x$ 在 $[0,\pi]$ 绕 $x$ 轴：
@@ -279,7 +279,7 @@ $$V=\pi\int_0^{\pi}\sin^2x\,dx=\pi\cdot\frac{\pi}2=\frac{\pi^2}2$$
 <div class="box warn">
 <ol>
 <li><b>面积写「上减下」：</b>先求交点分段；曲线上下关系反转时不加绝对值会得负值。</li>
-<li><b>元法中的「不变代变」放对位置：</b>微元小段内的变量当常数，但该常数随积分变量变化（如 $dV=\pi f^2(x)dx$ 中的 $f(x)$ 不能当数字）。</li>
+<li><b>元素法中的「不变代变」放对位置：</b>微元小段内的变量当常数，但该常数随积分变量变化（如 $dV=\pi f^2(x)dx$ 中的 $f(x)$ 不能当数字）。</li>
 <li><b>极坐标角度范围：</b>注意对称性（可 2 倍化简）与曲线闭合的完整范围（心形线是 $2\pi$ 不是 $\pi$）。</li>
 <li><b>旋转轴辨认：</b>绕 $x$ 轴用 $\pi\int f^2$；绕 $y$ 轴优先柱壳 $2\pi\int xf$——两法不可混写。</li>
 <li><b>垫圈内外半径：</b>先画图确定哪条是外缘；$g$ 贴着轴时退化为圆盘。</li>

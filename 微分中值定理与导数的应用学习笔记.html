@@ -148,7 +148,7 @@ $$F'(\xi)=f'(\xi)-\lambda g'(\xi)=0\ \Longrightarrow\ \lambda=\frac{f'(\xi)}{g'(
 <h2><span class="num">02</span>洛必达法则<span class="tag">未定式</span></h2>
 <div class="thm"><span class="label">定理（0/0 型）</span>设：① $x\to a$ 时 $f(x)\to0$、$g(x)\to0$；② 在 $a$ 的某去心邻域内可导且 $g'(x)\ne0$；③ $\lim\limits_{x\to a}\dfrac{f'(x)}{g'(x)}$ 存在（或为 $\infty$）。则
 $$\lim_{x\to a}\frac{f(x)}{g(x)}=\lim_{x\to a}\frac{f'(x)}{g'(x)}$$</div>
-<div class="proof"><span class="label">证明（x→a⁺ 情形，用柯西定理）</span>补充定义 $f(a)=g(a)=0$（使其在 $a$ 处连续）。对充分接近 $a$ 的 $x>a$，在 $[a,x]$ 上用柯西中值定理：$\exists\xi\in(a,x)$，
+<div class="proof"><span class="label">证明（x→a⁺ 情形，用柯西定理）</span>补充定义 $f(a)=g(a)=0$（使其在 $a$ 处连续）。对充分接近 $a$ 的 $x>a$（此时 $g(x)\ne g(a)$：若 $g(x)=g(a)$，由罗尔定理存在 $g'$ 的零点，与 $g'\ne0$ 矛盾），在 $[a,x]$ 上用柯西中值定理：$\exists\xi\in(a,x)$，
 $$\frac{f(x)}{g(x)}=\frac{f(x)-f(a)}{g(x)-g(a)}=\frac{f'(\xi)}{g'(\xi)}$$
 当 $x\to a^+$ 时 $\xi\to a^+$，由条件③得右端极限为 $L$，故左端极限也是 $L$ ✓（左极限与 $x\to\infty$ 情形同理；后者作代换 $t=\dfrac1x$）。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">定理（∞/∞ 型）</span>条件同上（只把「$f,g\to0$」换成「$f,g\to\infty$」），结论相同：$\lim\dfrac fg=\lim\dfrac{f'}{g'}$。（证明较繁，从略。）</div>
@@ -157,7 +157,7 @@ $$\frac{f(x)}{g(x)}=\frac{f(x)-f(a)}{g(x)-g(a)}=\frac{f'(\xi)}{g'(\xi)}$$
 · $\infty-\infty$：通分或提取公因子转为商式；<br>
 · $1^\infty$、$0^0$、$\infty^0$：取对数 $\ln y=g\ln f$（化为 $0\cdot\infty$），最后 $y=e^{\lim\ln y}$。</div>
 <div class="box example">
-<b>例 1（0/0 连用三次）.</b> $\lim\limits_{x\to0}\dfrac{x-\sin x}{x^3}$：<br>
+<b>例 1（两次洛必达 + 等价无穷小）.</b> $\lim\limits_{x\to0}\dfrac{x-\sin x}{x^3}$：<br>
 $$\xrightarrow{\text{L'H}}\lim_{x\to0}\frac{1-\cos x}{3x^2}\xrightarrow{\text{L'H}}\lim_{x\to0}\frac{\sin x}{6x}\xrightarrow{\text{等价}}\frac16$$
 <b>验算（泰勒）：</b>$\sin x=x-\dfrac{x^3}6+o(x^3)$ ⇒ 分子 $=\dfrac{x^3}6+o(x^3)$ ⇒ 比值为 $\dfrac16$ ✓（洛必达与泰勒两条路一致）。
 </div>
@@ -219,8 +219,8 @@ $$(1+x)^\alpha=1+\alpha x+\frac{\alpha(\alpha-1)}{2!}x^2+\cdots+\frac{\alpha(\al
 <h2><span class="num">04</span>单调性与极值<span class="tag">一阶导</span></h2>
 <div class="thm"><span class="label">定理（单调性判定）</span>设 $f$ 在 $[a,b]$ 连续、$(a,b)$ 可导：<br>
 ① 若 $(a,b)$ 内 $f'(x)\ge0$，则 $f$ 在 $[a,b]$ 上单调增（$f'\le0$ 则单调减）；<br>
-② 若 $f'>0$（除有限个点外）则严格单增。</div>
-<div class="proof"><span class="label">证明</span>任取 $x_1\lt x_2\in[a,b]$，拉格朗日：$f(x_2)-f(x_1)=f'(\xi)(x_2-x_1)$。$f'(\xi)\ge0$ 时差 $\ge0$（$\le0$ 同理）✓。<span class="qed">∎</span></div>
+② 若 $f'\ge0$ 且在任意子区间上不恒为 0，则 $f$ 严格单增（减同理）。</div>
+<div class="proof"><span class="label">证明</span><b>①：</b>任取 $x_1\lt x_2\in[a,b]$，拉格朗日：$f(x_2)-f(x_1)=f'(\xi)(x_2-x_1)$——$f'(\xi)\ge0$ ⇒ 差 $\ge0$（$\le0$ 同理）✓。<br><b>②（反证）：</b>若 $x_1\lt x_2$ 但 $f(x_1)=f(x_2)$，由①知 $f$ 在 $[x_1,x_2]$ 上为常数 ⇒ $(x_1,x_2)$ 内 $f'\equiv0$，与「任意子区间上不恒为 0」矛盾 ⇒ 必 $f(x_2)>f(x_1)$ ✓。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">极值判定（第一充分条件）</span>设 $f$ 在 $x_0$ 连续，在去心邻域内可导（$f'(x_0)=0$ 或不存在）：<br>
 ① $x\lt x_0$ 时 $f'>0$、$x>x_0$ 时 $f'<0$ ⇒ $x_0$ 为<b>极大</b>值点；<br>
 ② 反向变号 ⇒ <b>极小</b>值点；③ 不变号 ⇒ 不是极值点。</div>
@@ -252,7 +252,7 @@ $$f(x)-\left[f(x_0)+f'(x_0)(x-x_0)\right]=\frac{f''(\xi)}2(x-x_0)^2>0$$
 <b>例 1（$y=x^3$ 的拐点）.</b> $y''=6x$：$x<0$ 时凸、$x>0$ 时凹，变号 ⇒ 拐点 $(0,0)$ ✓。对照 $y=x^4$：$y''=12x^2\ge0$ 恒凹（不变号）⇒ $(0,0)$ 不是拐点——<b>必要条件 ≠ 充分条件</b>。
 </div>
 <div class="box def"><b>渐近线（三类）：</b><br>
-① <b>水平：</b>$\lim\limits_{x\to+\infty}f(x)=b$ ⇒ $y=b$；<br>
+① <b>水平：</b>$\lim\limits_{x\to\pm\infty}f(x)=b$ ⇒ $y=b$（两侧分别检查）；<br>
 ② <b>铅直：</b>$\lim\limits_{x\to x_0}f(x)=\infty$ ⇒ $x=x_0$（多出现在无定义点）；<br>
 ③ <b>斜渐近线 $y=kx+b$：</b>
 $$k=\lim_{x\to\infty}\frac{f(x)}x,\qquad b=\lim_{x\to\infty}\left[f(x)-kx\right]$$
@@ -320,8 +320,8 @@ $$\ln(1+x)-\ln1=\frac{x}{1+\xi}$$
 <b>例 4（图形描绘：$y=\dfrac{x}{1+x^2}$）.</b><br>
 ① 奇函数，定义域 $\mathbb R$；水平渐近线 $y=0$（$x\to\infty$ 时 $f\to0$）；<br>
 ② $y'=\dfrac{1-x^2}{(1+x^2)^2}$：驻点 $x=\pm1$；$x=-1$ 极小 $-\dfrac12$、$x=1$ 极大 $\dfrac12$；<br>
-③ $y''=\dfrac{2x(x^2-3)}{(1+x^2)^3}$：拐点候选 $x=0,\pm\sqrt3$；在 $x=\pm\sqrt3$ 处变号 ⇒ 拐点 $\left(\pm\sqrt3,\ \pm\dfrac{\sqrt3}4\right)$；<br>
-④ 作图：过原点、$(\pm1,\pm\frac12)$ 极值、$\pm\sqrt3$ 拐点、两端趋于 0 —— 「驼峰状」奇函数 ✓。<br>
+③ $y''=\dfrac{2x(x^2-3)}{(1+x^2)^3}$：拐点候选 $x=0,\pm\sqrt3$——三点处 $y''$ 均变号（如 $x=0$ 两侧由正变负），故拐点为 $(0,0)$ 与 $\left(\pm\sqrt3,\ \pm\dfrac{\sqrt3}4\right)$；<br>
+④ 作图：$(\pm1,\pm\frac12)$ 为极值、$(0,0)$ 与 $\pm\sqrt3$ 处为拐点、两端趋于 0 —— 「驼峰状」奇函数 ✓。<br>
 <b>验算（拐点纵坐标）：</b>$f(\sqrt3)=\dfrac{\sqrt3}{1+3}=\dfrac{\sqrt3}4\approx0.433$ ✓。
 </div>
 </section>
@@ -372,7 +372,7 @@ $$\ln(1+x)-\ln1=\frac{x}{1+\xi}$$
 <tr><td>洛必达</td><td>$0/0$ 或 $\infty/\infty$ 且 $\lim f'/g'$ 存在 ⇒ $\lim f/g=\lim f'/g'$</td></tr>
 <tr><td>泰勒公式</td><td>$f(x)=\sum\limits_{k=0}^n\dfrac{f^{(k)}(x_0)}{k!}(x-x_0)^k+\dfrac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}$</td></tr>
 <tr><td>常用展开</td><td>$e^x=1+x+\frac{x^2}{2!}+\cdots$；$\sin x=x-\frac{x^3}{3!}+\cdots$；$\ln(1+x)=x-\frac{x^2}2+\cdots$；$(1+x)^\alpha=1+\alpha x+\frac{\alpha(\alpha-1)}{2!}x^2+\cdots$</td></tr>
-<tr><td>单调性</td><td>$f'>0$ ⇒ 增；$f'<0$ ⇒ 减</td></tr>
+<tr><td>单调性</td><td>$f'\ge0$ ⇒ 单调不减；$f'>0$ ⇒ 严格单增（减同理）</td></tr>
 <tr><td>极值判定</td><td>第一：$f'$ 变号；第二：$f'(x_0)=0$，$f''(x_0)$ 符号（$<0$ 极大、$>0$ 极小）</td></tr>
 <tr><td>凹凸与拐点</td><td>$f''>0$ 凹、$f''<0$ 凸；拐点 $=$ 凹凸变号点</td></tr>
 <tr><td>渐近线</td><td>水平 $y=b$；铅直 $x=x_0$；斜 $y=kx+b$（$k=\lim\frac fx$，$b=\lim(f-kx)$）</td></tr>

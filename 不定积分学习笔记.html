@@ -108,7 +108,7 @@ $$\int f(x)\,dx=F(x)+C$$
 （$F$ 为 $f$ 的任一原函数，$C$ 为积分常数——<b>每一个积分结果都必须带 C</b>。）<br>
 <b>互逆关系（验证积分的黄金法则）：</b>
 $$\left(\int f(x)dx\right)'=f(x),\qquad \int F'(x)\,dx=F(x)+C$$</div>
-<div class="box tip"><b>几何意义：</b>不定积分是「积分曲线族」——同一条曲线沿 $y$ 轴平移得到的无穷多条曲线；过平面上任一点的曲线族中有且仅有一条经过（定 $C$ 的过程叫「初始条件」）。</div>
+<div class="box tip"><b>几何意义：</b>不定积分是「积分曲线族」——同一条曲线沿 $y$ 轴平移得到的无穷多条曲线；过横坐标属于定义区间 $I$ 的任一点，曲线族中有且仅有一条经过（定 $C$ 的过程叫「初始条件」）。</div>
 <div class="box example">
 <b>例（基本验证）.</b> 验证 $\int\cos x\,dx=\sin x+C$：求导 $(\sin x)'=\cos x$ ✓。<br>
 再看 $\int\dfrac1x dx=\ln|x|+C$ 中的绝对值必要性：$x<0$ 时 $(\ln(-x))'=\dfrac{1}{-x}\cdot(-1)=\dfrac1x$ ✓——<b>无论 $x$ 正负，$\ln|x|$ 的导数都是 $1/x$</b>。
@@ -127,7 +127,8 @@ $$\int\sin x\,dx=-\cos x+C,\qquad \int\cos x\,dx=\sin x+C$$
 $$\int\sec^2x\,dx=\tan x+C,\qquad \int\csc^2x\,dx=-\cot x+C$$
 $$\int\sec x\tan x\,dx=\sec x+C,\qquad \int\csc x\cot x\,dx=-\csc x+C$$
 $$\int\frac{dx}{1+x^2}=\arctan x+C,\qquad \int\frac{dx}{\sqrt{1-x^2}}=\arcsin x+C$$
-$$\int\tan x\,dx=-\ln|\cos x|+C,\qquad \int\cot x\,dx=\ln|\sin x|+C$$</div>
+$$\int\tan x\,dx=-\ln|\cos x|+C,\qquad \int\cot x\,dx=\ln|\sin x|+C$$
+（$\int\sec x\,dx$ 与 $\int\csc x\,dx$ 见 §8 完整表。）</div>
 <div class="box example">
 <b>例（凑表：拆项后查表）.</b> 求 $\displaystyle\int\frac{3x^2-2x+\dfrac1x}{x}\,dx$。<br>
 ① 拆项：$\dfrac{3x^2-2x+\frac1x}{x}=3x-2+\dfrac1{x^2}$；<br>
@@ -160,9 +161,10 @@ $$\frac{d}{dx}F[\varphi(x)]=F'[\varphi(x)]\cdot\varphi'(x)=f[\varphi(x)]\varphi'
 </div>
 <h3>（2）第二类换元法（变量代换）</h3>
 <div class="thm"><span class="label">公式</span>设 $x=\psi(t)$ 可导且 $\psi'(t)\ne0$：
-$$\int f(x)\,dx=\int f[\psi(t)]\,\psi'(t)\,dt=F(t)+C\xlongequal{t=\psi^{-1}(x)}F[\psi^{-1}(x)]+C$$</div>
+$$\int f(x)\,dx=\int f[\psi(t)]\,\psi'(t)\,dt=F(t)+C\xlongequal{t=\psi^{-1}(x)}F[\psi^{-1}(x)]+C$$
+（验证：$t=\psi^{-1}(x)$ 时 $\dfrac{d}{dx}F[\psi^{-1}(x)]=f[\psi(t)]\psi'(t)\cdot\dfrac{1}{\psi'(t)}=f(x)$ ✓，其中 $\psi$ 单调可逆保证 $t=\psi^{-1}(x)$ 可导。）</div>
 <div class="box def"><b>三角代换表（处理根式）：</b><br>
-√(a²−x²) → 令 x = a sin t；√(a²+x²) → 令 x = a tan t（或双曲）；√(x²−a²) → 令 x = a sec t。</div>
+$\sqrt{a^2-x^2}\Rightarrow x=a\sin t$；$\sqrt{a^2+x^2}\Rightarrow x=a\tan t$（或双曲）；$\sqrt{x^2-a^2}\Rightarrow x=a\sec t$。</div>
 <div class="box example">
 <b>例 3（含 √(a²−x²)：半圆面积的法宝）.</b> 求 $\displaystyle\int\sqrt{a^2-x^2}\,dx$。<br>
 ① 令 $x=a\sin t$（$|t|<\frac\pi2$）：$dx=a\cos t\,dt$，$\sqrt{a^2-x^2}=a\cos t$：
@@ -171,11 +173,11 @@ $$\int\sqrt{a^2-x^2}dx=\int a^2\cos^2t\,dt=\frac{a^2}2\int(1+\cos 2t)dt=\frac{a^
 $$\int\sqrt{a^2-x^2}\,dx=\frac{a^2}2\arcsin\frac xa+\frac x2\sqrt{a^2-x^2}+C$$
 <b>验算（求导）：</b>记 $T_1=\dfrac{a^2}2\arcsin\dfrac xa$、$T_2=\dfrac x2\sqrt{a^2-x^2}$：
 $$T_1'=\frac{a^2}{2\sqrt{a^2-x^2}},\qquad T_2'=\frac12\sqrt{a^2-x^2}-\frac{x^2}{2\sqrt{a^2-x^2}}$$
-相加得 $\dfrac{a^2-x^2+x^2}{2\sqrt{a^2-x^2}}=\sqrt{a^2-x^2}$ ✓。
+其中 $T_2'=\dfrac12\sqrt{a^2-x^2}-\dfrac{x^2}{2\sqrt{a^2-x^2}}=\dfrac{a^2-2x^2}{2\sqrt{a^2-x^2}}$；两者相加：$\dfrac{a^2+(a^2-2x^2)}{2\sqrt{a^2-x^2}}=\dfrac{2(a^2-x^2)}{2\sqrt{a^2-x^2}}=\dfrac{a^2-x^2}{\sqrt{a^2-x^2}}=\sqrt{a^2-x^2}$ ✓。
 </div>
 <div class="box example">
 <b>例 4（含 √(x²+a²)：对数型）.</b> 求 $\displaystyle\int\frac{dx}{\sqrt{x^2+a^2}}$ $(a>0)$。<br>
-① 令 $x=a\tan t$：$dx=a\sec^2t\,dt$，$\sqrt{x^2+a^2}=a\sec t$：
+① 令 $x=a\tan t$（$|t|\lt\frac\pi2$）：$dx=a\sec^2t\,dt$，$\sqrt{x^2+a^2}=a\sec t$：
 $$\int\frac{dx}{\sqrt{x^2+a^2}}=\int\sec t\,dt=\ln|\sec t+\tan t|+C$$
 ② 回代：$\tan t=\dfrac xa$，$\sec t=\dfrac{\sqrt{x^2+a^2}}a$：
 $$\int\frac{dx}{\sqrt{x^2+a^2}}=\ln\left(x+\sqrt{x^2+a^2}\right)+C$$
@@ -206,7 +208,7 @@ $$\int\ln x\,dx=x\ln x-\int x\cdot\frac1x dx=x\ln x-x+C$$
 <b>例 3（循环型：解方程）.</b> 求 $I=\displaystyle\int e^x\sin x\,dx$。<br>
 ① 分部（$u=\sin x$）：$I=e^x\sin x-\int e^x\cos x\,dx$；<br>
 ② 再分部（$u=\cos x$）：$\int e^x\cos x\,dx=e^x\cos x+\int e^x\sin x\,dx=e^x\cos x+I$；<br>
-③ 回代解方程：$I=e^x\sin x-e^x\cos x-I$ ⇒
+③ 回代解方程（循环型取 $u=\sin x$ 或 $u=e^x$ 均可，结果相同）：$I=e^x\sin x-e^x\cos x-I$ ⇒
 $$I=\frac{e^x(\sin x-\cos x)}2+C$$
 <b>验算（求导）：</b>$\dfrac{d}{dx}\left[\dfrac{e^x(\sin x-\cos x)}2\right]=\dfrac{e^x(\sin x-\cos x)+e^x(\cos x+\sin x)}2=e^x\sin x$ ✓。
 </div>
@@ -219,7 +221,7 @@ $$I=\frac{e^x(\sin x-\cos x)}2+C$$
 $$\int\frac{A}{x-a}dx=A\ln|x-a|+C$$
 $$\int\frac{A}{(x-a)^k}dx=\frac{A}{(1-k)(x-a)^{k-1}}+C\ (k\ge2)$$
 $$\int\frac{2x+p}{x^2+px+q}dx=\ln(x^2+px+q)+C$$
-$$\int\frac{dx}{x^2+px+q}=\frac{2}{\sqrt{4q-p^2}}\arctan\frac{2x+p}{\sqrt{4q-p^2}}+C\quad(\text{配方后套 } \arctan)$$</div>
+$$\int\frac{dx}{x^2+px+q}=\frac{2}{\sqrt{4q-p^2}}\arctan\frac{2x+p}{\sqrt{4q-p^2}}+C\quad(4q-p^2>0,\ \text{配方后套 } \arctan)$$</div>
 <div class="box example">
 <b>例 1（标准部分分式）.</b> 求 $\displaystyle\int\frac{x+1}{x^2-5x+6}dx$。<br>
 ① 分母分解：$x^2-5x+6=(x-2)(x-3)$，设 $\dfrac{x+1}{(x-2)(x-3)}=\dfrac A{x-2}+\dfrac B{x-3}$；<br>
@@ -233,7 +235,7 @@ $$\int\frac{x+1}{x^2-5x+6}dx=-3\ln|x-2|+4\ln|x-3|+C$$
 ① 配方：$x^2+4x+13=(x+2)^2+9$；<br>
 ② 凑 $\arctan$：
 $$\int\frac{dx}{(x+2)^2+9}=\frac13\int\frac{d\left(\frac{x+2}3\right)}{1+\left(\frac{x+2}3\right)^2}=\frac13\arctan\frac{x+2}3+C$$
-<b>验算：</b>$\left(\dfrac13\arctan\dfrac{x+2}3\right)'=\dfrac13\cdot\dfrac{1/3}{1+\frac{(x+2)^2}9}=\dfrac{3}{9+(x+2)^2}=\dfrac1{x^2+4x+13}$ ✓。
+<b>验算：</b>$\left(\dfrac13\arctan\dfrac{x+2}3\right)'=\dfrac13\cdot\dfrac{1/3}{1+\frac{(x+2)^2}9}=\dfrac{1/9}{\frac{9+(x+2)^2}{9}}=\dfrac{1}{9+(x+2)^2}=\dfrac1{x^2+4x+13}$ ✓。
 </div>
 <div class="box tip"><b>可化为有理函数的类型：</b><br>
 ① 三角有理式 $R(\sin x,\cos x)$：<b>万能代换</b> $t=\tan\dfrac x2$，$\sin x=\dfrac{2t}{1+t^2}$、$\cos x=\dfrac{1-t^2}{1+t^2}$、$dx=\dfrac{2dt}{1+t^2}$；<br>
@@ -247,7 +249,7 @@ $$\int\frac{dx}{(x+2)^2+9}=\frac13\int\frac{d\left(\frac{x+2}3\right)}{1+\left(\
 ① 恒等变形：$\dfrac1{1+e^x}=\dfrac{1+e^x-e^x}{1+e^x}=1-\dfrac{e^x}{1+e^x}$；<br>
 ② 分别积分：
 $$\int\frac{dx}{1+e^x}=x-\ln(1+e^x)+C$$
-<b>验算：</b>$1-\dfrac{e^x}{1+e^x}=\dfrac1{1+e^x}$ ✓（变形正确）。
+<b>验算（求导）：</b>$(x-\ln(1+e^x))'=1-\dfrac{e^x}{1+e^x}=\dfrac1{1+e^x}$ ✓。
 </div>
 <div class="box example">
 <b>例 2（分部积分：幂 × 对数）.</b> 求 $\displaystyle\int x^2\ln x\,dx$。<br>
@@ -267,7 +269,7 @@ $$\int\sin^3x\,dx=\int(1-\cos^2x)\sin x\,dx=-\cos x+\frac{\cos^3x}3+C$$
 ① 分子分母乘 $e^x$：$\dfrac{e^x}{e^{2x}+1}$；<br>
 ② 凑微分（$e^xdx=d(e^x)$）：
 $$\int\frac{d(e^x)}{1+(e^x)^2}=\arctan(e^x)+C$$
-<b>验算：</b>$\left(\arctan e^x\right)'=\dfrac{e^x}{1+e^{2x}}=\dfrac{1}{e^{-x}+e^x}$? 交叉验证：$\dfrac{e^x}{1+e^{2x}}=\dfrac{1}{e^{-x}+e^{x}}$（上下除 $e^x$）✓ 与被积函数一致。
+<b>验算：</b>$\left(\arctan e^x\right)'=\dfrac{e^x}{1+e^{2x}}=\dfrac{1}{e^{-x}+e^{x}}$ ✓（上下同除 $e^x$，与被积函数一致）。
 </div>
 </section>
 <section class="card" id="sec-7">
@@ -311,8 +313,8 @@ $$\int\frac{d(e^x)}{1+(e^x)^2}=\arctan(e^x)+C$$
 <tbody>
 <tr><td>幂与倒数</td><td>$\int x^\mu dx=\dfrac{x^{\mu+1}}{\mu+1}$（$\mu\ne-1$）；$\int\dfrac{dx}x=\ln|x|$</td></tr>
 <tr><td>指数</td><td>$\int e^xdx=e^x$；$\int a^xdx=\dfrac{a^x}{\ln a}$</td></tr>
-<tr><td>三角</td><td>$\int\sin x=-\cos x$；$\int\cos x=\sin x$；$\int\sec^2x=\tan x$；$\int\csc^2x=-\cot x$；$\int\sec x\tan x=\sec x$</td></tr>
-<tr><td>三角（凑 ln）</td><td>$\int\tan x=-\ln|\cos x|$；$\int\cot x=\ln|\sin x|$；$\int\sec x=\ln|\sec x+\tan x|$；$\int\csc x=\ln|\csc x-\cot x|$</td></tr>
+<tr><td>三角</td><td>$\int\sin x\,dx=-\cos x$；$\int\cos x\,dx=\sin x$；$\int\sec^2x\,dx=\tan x$；$\int\csc^2x\,dx=-\cot x$；$\int\sec x\tan x\,dx=\sec x$；$\int\csc x\cot x\,dx=-\csc x$</td></tr>
+<tr><td>三角（凑 ln）</td><td>$\int\tan x\,dx=-\ln|\cos x|$；$\int\cot x\,dx=\ln|\sin x|$；$\int\sec x\,dx=\ln|\sec x+\tan x|$；$\int\csc x\,dx=\ln|\csc x-\cot x|$</td></tr>
 <tr><td>反三角型</td><td>$\int\dfrac{dx}{1+x^2}=\arctan x$；$\int\dfrac{dx}{\sqrt{1-x^2}}=\arcsin x$</td></tr>
 <tr><td>含参数 a</td><td>$\int\dfrac{dx}{a^2+x^2}=\dfrac1a\arctan\dfrac xa$；$\int\dfrac{dx}{\sqrt{a^2-x^2}}=\arcsin\dfrac xa$；$\int\dfrac{dx}{x^2-a^2}=\dfrac1{2a}\ln\left|\dfrac{x-a}{x+a}\right|$</td></tr>
 <tr><td>含根式对数</td><td>$\int\dfrac{dx}{\sqrt{x^2\pm a^2}}=\ln\left|x+\sqrt{x^2\pm a^2}\right|$</td></tr>
