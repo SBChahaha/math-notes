@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计组01 · 计算机系统概述 · 完全教程（王道体系）</title>
+<style>
+:root{--bg:#f4f7ff;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#1d4ed8;--accent2:#93c5fd;--soft:#eff6ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.8}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:99}
+.hero{background:linear-gradient(135deg,#1e3a8a,#1d4ed8 55%,#60a5fa);color:#fff;padding:54px 24px 44px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:2px}
+.hero p{margin:0;color:#dbeafe}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 14px;font-size:.82rem}
+.layout{display:flex;gap:26px;max-width:1240px;margin:0 auto;padding:28px 20px 60px;align-items:flex-start}
+.sidebar{position:sticky;top:18px;flex:0 0 244px;width:244px;max-height:calc(100vh - 36px);overflow:auto;background:var(--card);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+.toc-title{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;padding:4px 10px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:#475569;text-decoration:none;font-size:.86rem;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9;color:var(--accent)}
+.toc a.active{background:var(--soft);color:#1e40af;font-weight:600;border-left-color:var(--accent)}
+main{flex:1;min-width:0}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(15,23,42,.08);scroll-margin-top:20px}
+.card h2{display:flex;align-items:center;gap:12px;font-size:1.3rem;margin:0 0 16px;color:#1e3a8a}
+.card h3{font-size:1.05rem;color:#1e40af;margin:24px 0 8px;padding-left:10px;border-left:4px solid #93c5fd}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#60a5fa,#3b82f6);color:#fff;font-size:.9rem;font-weight:700;flex:0 0 auto}
+.tag{font-size:.72rem;font-weight:600;background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.box{border-radius:12px;padding:14px 18px;margin:16px 0;border-left:4px solid #cbd5e1;background:#f8fafc}
+.box.def{background:#eff6ff;border-color:#93c5fd}
+.box.method{background:#ecfdf5;border-color:#10b981}
+.box.example{background:#fffbeb;border-color:#f59e0b}
+.box.warn{background:#fef2f2;border-color:#ef4444}
+.box.tip{background:#f0f9ff;border-color:#0ea5e9}
+.box ul,.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.thm{border:1px solid #bfdbfe;border-left:4px solid #60a5fa;background:#fbfdff;border-radius:12px;padding:14px 18px;margin:16px 0}
+.thm .label{font-weight:700;color:#1e40af;margin-right:8px}
+.proof{border-left:3px dashed #94a3b8;background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 18px;margin:10px 0 18px;font-size:.95rem}
+.proof .label{font-weight:700;color:#475569;margin-right:8px}
+.qed{display:block;text-align:right;color:#64748b;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem;border-radius:10px;overflow:hidden}
+th{background:var(--soft);color:#1e40af;font-weight:600}
+th,td{border:1px solid var(--line);padding:9px 13px;text-align:left;vertical-align:top}
+tbody tr:nth-child(even){background:#f8fbff}
+pre.flow{background:#1c1917;color:#e2e8f0;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.88rem;line-height:1.9}
+pre.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:16px 20px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.86rem;line-height:1.75;white-space:pre}
+pre.mermaid{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:12px;overflow-x:auto;text-align:center;color:#94a3b8;font-size:.85rem}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 20px 50px}
+#btt{position:fixed;right:22px;bottom:26px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 6px 18px rgba(29,78,216,.35)}
+#btt.show{opacity:1;pointer-events:auto}
+@media (max-width:920px){.layout{flex-direction:column;padding:18px 14px 40px}.sidebar{position:relative;top:0;width:100%;flex:none;max-height:none}.toc{display:flex;flex-wrap:wrap;gap:4px}.toc a{border-left:none;border:1px solid var(--line)}.card{padding:22px 18px}.tag{margin-left:0}}
+@media print{#progress,.sidebar,#btt,.chips{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:1px solid var(--line);page-break-inside:avoid}}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true,macros:{oiint:'\\mathop{{\\int\\!\\!\\!\\!\\!\\int}\\mkern-21mu\\bigcirc}'}},chtml:{scale:1.02},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="hero">
+<h1>计算机组成原理 · 第一章 计算机系统概述 · 完全教程</h1>
+<p>王道体系 · 概念讲透 + 性能计算全解 + 学习闭环</p>
+<div class="chips"><span>冯·诺依曼结构</span><span>五大部件</span><span>软硬件层次</span><span>CPI</span><span>MIPS</span><span>CPU 时间</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<a href="index.html" style="display:block;margin:0 0 10px;padding:7px 10px;border-radius:8px;background:#f1f5f9;color:#475569;text-decoration:none;font-size:.86rem;font-weight:600;">← 返回主页</a>
+<div class="toc-title">目录</div>
+<nav class="toc">
+<a href="#sec-0">00 · 知识地图</a>
+<a href="#sec-1">01 · 冯·诺依曼机与硬件组成</a>
+<a href="#sec-2">02 · 软件、层次结构与工作过程</a>
+<a href="#sec-3">03 · 性能指标</a>
+<a href="#sec-4">04 · 典型例题</a>
+<a href="#sec-5">05 · 决策流程与易错点</a>
+<a href="#sec-6">06 · 速查表</a>
+<a href="#sec-7">07 · 能力自查</a>
+</nav>
+</aside>
+<main>
+<section class="card" id="sec-0">
+<h2><span class="num">00</span>知识地图</h2>
+<div class="box tip"><b>本章地位：</b>计组的总纲——先建立「计算机长什么样」（冯·诺依曼五大部件）、「软硬件怎么分工」（层次结构），再掌握全科通用工具<b>性能指标计算</b>（CPU 时间、CPI、MIPS、容量与带宽），后面 6 章都要用。</div>
+<pre class="flow">第一章 计算机系统概述
+├─ 硬件系统（§1）
+│   ├─ 冯·诺依曼机：存储程序思想 + 五大部件
+│   ├─ 部件功能与关键寄存器（PC/IR/MAR/MDR/ACC/MQ/X/PSW）
+│   └─ 演进：以运算器为中心 → 以存储器为中心
+├─ 软件与层次（§2）
+│   ├─ 系统软件 / 应用软件；软硬件逻辑功能等价
+│   ├─ 五级层次结构（微程序机器 → 高级语言机器）
+│   └─ 编译 vs 解释；ISA = 软硬件界面
+└─ 性能指标（§3，计算题富矿）
+    ├─ 三大字长：机器字长 / 指令字长 / 存储字长
+    ├─ 主频 f ⇔ 时钟周期 T = 1/f；CPI
+    ├─ CPU 时间 = 指令数 × CPI × T = 指令数 × CPI / f
+    └─ MIPS、FLOPS、容量、带宽；主频与 CPI 同倍变化时性能不变
+</pre>
+</section>
+
+<section class="card" id="sec-1">
+<h2><span class="num">01</span>冯·诺依曼机与硬件组成<span class="tag">总纲</span></h2>
+<div class="box def"><b>冯·诺依曼结构（1945 年 EDVAC 报告）的两大核心思想：</b><br>
+① <b>存储程序：</b>把「程序（指令序列）」和「数据」都预先以二进制形式存入同一存储器，计算机自动按序取指执行；<br>
+② <b>五大部件：</b>计算机由<b>运算器、控制器、存储器、输入设备、输出设备</b>组成（后两者合称 I/O 设备／外设）。<br>
+原始方案<b>以运算器为中心</b>（I/O 与存储器之间的数据传送都要经过运算器）；现代计算机已演变为<b>以存储器为中心</b>。</div>
+<pre class="mermaid">
+graph TB
+  IN["输入设备"] --> YS["运算器 ALU<br/>（ACC、MQ、X、PSW）"]
+  YS --> OUT["输出设备"]
+  YS <--> MEM["存储器<br/>（主存：存储体、MAR、MDR）"]
+  KZ["控制器 CU<br/>（PC、IR）"] -. "控制信号（指挥所有部件）" .-> YS
+  KZ -.-> MEM
+  KZ -.-> IN
+  KZ -.-> OUT
+</pre>
+<div class="box def"><b>五大部件功能与关键寄存器（必背）：</b>
+<table>
+<thead><tr><th>部件</th><th>核心功能</th><th>关键寄存器</th></tr></thead>
+<tbody>
+<tr><td><b>运算器</b></td><td>算术运算（加减乘除）与逻辑运算</td><td>ACC 累加器、MQ 乘商寄存器、X 操作数寄存器、PSW 程序状态字（标志位）</td></tr>
+<tr><td><b>控制器</b></td><td>取指令、分析指令、执行指令；发控制信号指挥各部件</td><td>PC 程序计数器（下条指令地址）、IR 指令寄存器（当前指令）</td></tr>
+<tr><td><b>存储器</b></td><td>存放程序与数据；按地址存取</td><td>存储体 + MAR 地址寄存器、MDR 数据寄存器</td></tr>
+<tr><td><b>输入设备</b></td><td>把信息变成计算机能识别的形式送入</td><td>键盘、鼠标等</td></tr>
+<tr><td><b>输出设备</b></td><td>把处理结果转换成人们需要的形式输出</td><td>显示器、打印机等</td></tr>
+</tbody>
+</table></div>
+<div class="box tip"><b>主存与 CPU 的连接细节（高频考点）：</b><br>
+· <b>MAR</b>（地址寄存器）：存放欲访问单元的地址，位数决定<b>可寻址单元数</b>（MAR 24 位 ⇒ 2²⁴ 个单元）；<br>
+· <b>MDR</b>（数据寄存器）：存放读出的或要写入的数据，位数 = <b>存储字长</b>；<br>
+· 存取过程：地址→MAR；读出的数据→MDR；写数据也先送 MDR。<br>
+· <b>存储字长</b>（一个存储单元存放的二进制位数）与<b>机器字长</b>（CPU 一次处理的位数）没有必然相等关系——常考辨析。</div>
+<div class="box warn"><b>三条容易记混的结论：</b><br>
+① <b>指令和数据在形式上没有区别</b>（都是二进制码，共存于主存）——靠<b>执行周期</b>（取指周期 / 执行周期）加以区分，这是冯·诺依曼机的「软肋」；<br>
+② 冯·诺依曼机采用<b>顺序执行</b>的串行工作方式（由 PC 控制），但现代 CPU 用流水线并发执行；<br>
+③ <b>哈佛结构</b>与冯·诺依曼相对：指令与数据<b>分开存储</b>（可同时访问，单片机/DSP 常用）——408 常作对比选项。</div>
+</section>
+
+<section class="card" id="sec-2">
+<h2><span class="num">02</span>软件、层次结构与工作过程<span class="tag">软硬件分工</span></h2>
+<div class="box def"><b>软件分类：</b><br>
+· <b>系统软件：</b>操作系统（OS）、数据库管理系统（DBMS）、语言处理程序（编译器/解释器/汇编器）、网络软件、服务性程序等；<br>
+· <b>应用软件：</b>面向具体应用需求开发的软件（办公软件、游戏、专业工具）。<br>
+<b>软硬件逻辑功能等价：</b>同一个功能既可以用硬件实现、也可以用软件实现，二者在逻辑上等效，区别在<b>速度</b>（硬件快）与<b>成本/灵活性</b>（软件灵活）——例如乘法可以用乘法器电路，也可以用移位加法软件循环。</div>
+<div class="box def"><b>计算机系统的五级层次结构（从低到高）：</b></div>
+<pre class="mermaid">
+graph BT
+  L1["第 0 级：微程序机器（硬件直接执行微指令）"] --> L2["第 1 级：传统机器（机器语言机器）"]
+  L2 --> L3["第 2 级：操作系统机器（提供系统调用等）"]
+  L3 --> L4["第 3 级：汇编语言机器"]
+  L4 --> L5["第 4 级：高级语言机器"]
+</pre>
+<div class="box def"><b>三种语言的翻译方式：</b><br>
+· <b>汇编</b>：把汇编语言源程序翻译成机器语言目标程序；<br>
+· <b>编译</b>：把高级语言源程序<b>一次整篇翻译</b>成目标代码，之后再反复执行目标代码（不依赖编译器）；<br>
+· <b>解释</b>：<b>逐句翻译并立即执行</b>，不产生完整的目标文件（执行时需要解释器在场）。<br>
+<b>ISA（指令集体系结构）：</b>软件与硬件之间的<b>界面/契约</b>——规定了机器指令、数据类型、寻址方式、寄存器组织等，同一 ISA 上编译好的程序可在不同实现（微体系结构）上运行。</div>
+<div class="box example">
+<b>例（从源程序到指令执行：把工作过程串一遍）.</b><br>
+① 程序员写出高级语言源程序 → 编译器翻译成机器语言目标文件；<br>
+② 目标文件装入主存，PC 指向第一条指令地址；<br>
+③ 取指令：PC 内容送 <b>MAR</b> → 主存读出指令送 <b>MDR</b> → 送 <b>IR</b>（同时 PC 自增，指向下一条）；<br>
+④ 分析指令：控制器对 IR 中的操作码译码；<br>
+⑤ 执行指令：按译码结果产生控制信号，指挥运算器/存储器/IO 完成操作；<br>
+⑥ 重复 ③–⑤ 直到程序结束。<br>
+<b>观察：</b>「取指令」阶段对任何指令都一样（由 PC/MAR/MDR/IR 完成），差异只在「执行」阶段——这就是后面第五章「指令周期」的雏形 ✓。</div>
+</section>
+<section class="card" id="sec-3">
+<h2><span class="num">03</span>性能指标<span class="tag">计算题富矿</span></h2>
+<h3>（1）三大字长（先分清概念）</h3>
+<div class="box def">
+<table>
+<thead><tr><th>名词</th><th>定义</th></tr></thead>
+<tbody>
+<tr><td><b>机器字长</b></td><td>CPU 一次能处理的二进制位数 = 通用寄存器长度、ALU 位数（如 64 位机）</td></tr>
+<tr><td><b>指令字长</b></td><td>一条指令的二进制长度（可 = 机器字长，也可为其 1/2、2 倍等）</td></tr>
+<tr><td><b>存储字长</b></td><td>一个存储单元存放的二进制位数（= MDR 位数）</td></tr>
+</tbody>
+</table>
+<b>关系：</b>三者相互独立、可以不同；考试常设「机器字长 32 位、指令字长 16 位、存储字长 8 位」这类组合题，读题时逐个确认。</div>
+<h3>（2）时钟与 CPI</h3>
+<div class="box def">
+· <b>主频 $f$</b> 与 <b>时钟周期 $T$</b>（CPU 最小时间单位）互为倒数：
+$$T=\frac1f$$
+· <b>CPI</b>（Cycles Per Instruction）= 执行一条指令平均需要的时钟周期数。程序由多类指令混合而成：
+$$\text{CPI}=\sum_{i}\left(\text{CPI}_i\times\text{该类指令占比}\right)$$
+<b>注意：</b>主频高不等于机器快——若 CPI 同样变大，性能可能持平甚至下降（见 §4 例 2）。</div>
+<h3>（3）CPU 时间（全章第一公式）</h3>
+<div class="thm"><span class="label">CPU 执行时间</span>
+$$T_{\text{CPU}}=\text{指令条数 }IC\ \times\ \text{CPI}\ \times\ \text{时钟周期}
+=\frac{IC\times\text{CPI}}{f}$$
+三要素：<b>指令数（程序特性）× CPI（实现特性）× 时钟周期（工艺特性）</b>。</div>
+<div class="box example">
+<b>内联小算例.</b> 某程序共 $10^6$ 条指令、平均 CPI = 2、主频 1 GHz：
+$$T_{\text{CPU}}=\frac{10^6\times2}{10^9\ \text{Hz}}=2\times10^{-3}\ \text{s}=2\ \text{ms}\ ✓$$
+<b>快算技巧：</b>$T = \dfrac{IC\times\text{CPI}}{f}$ 中把 $10^9$ 记成「GHz」，$\dfrac{10^6\times2}{1}\text{ns}=2\ \text{ms}$。</div>
+<h3>（4）MIPS 与 FLOPS</h3>
+<div class="box def">
+· <b>MIPS</b>（每秒百万条指令）：
+$$\text{MIPS}=\frac{\text{指令数}}{T_{\text{CPU}}\times10^6}=\frac{f}{\text{CPI}\times10^6}$$
+<b>适用警告：</b>MIPS 只在<b>同一指令集</b>的不同机器之间比较才有意义（不同 ISA 的「一条指令」工作量不同）；也不能反映程序特性。<br>
+· <b>FLOPS</b>（每秒浮点运算次数）：$\text{FLOPS}=\dfrac{\text{浮点运算次数}}{T}$；单位阶梯 MFLOPS → GFLOPS → TFLOPS → PFLOPS → EFLOPS（$10^3$ 进制）。</div>
+<div class="box example">
+<b>内联小算例.</b> 主频 2 GHz、CPI = 4：$\text{MIPS}=\dfrac{2000}{4}=500$ ✓（即每秒 5 亿条指令）。<br>
+反过来：某机 MIPS = 400、CPI = 5 ⇒ 主频 $=400\times5=2000\ \text{MHz}=2\ \text{GHz}$ ✓。</div>
+<h3>（5）存储容量与带宽</h3>
+<div class="box def">
+· <b>容量单位（存储按 2¹⁰ 进）：</b>
+$$1\text{KB}=2^{10}\text{B},\quad1\text{MB}=2^{20}\text{B},\quad1\text{GB}=2^{30}\text{B},\quad1\text{TB}=2^{40}\text{B}$$
+· <b>主存容量</b> = 编址单元数 × 每个单元的位数：
+$$\text{容量}=\underbrace{2^{\text{MAR 位数}}}_{\text{单元数}}\times\text{MDR 位数（bit）}$$
+<b>先看编址方式：</b>按字节编址时，MAR 位数给出的是「字节数」；按字编址时要再乘字长。<br>
+· <b>带宽/数据传输率</b> = 每次传送的字节数 × 每秒传送次数：
+$$\text{带宽}=\text{数据线宽度（B）}\times\text{每秒传送次数}$$
+（若时钟上升沿与下降沿都传送，传送频率 ×2。）</div>
+<div class="box example">
+<b>内联小算例.</b> ① 地址线 32 位、按字节编址 ⇒ 可寻址 $2^{32}$ B = <b>4 GB</b>；② 数据总线 32 位（4 B）、总线频率 200 MHz、每个时钟传送一次 ⇒ 带宽 $=4\times200\ \text{MB/s}=800\ \text{MB/s}$；若双沿传送 ⇒ 1.6 GB/s ✓。</div>
+<h3>（6）其他常用指标</h3>
+<div class="box tip">
+· <b>响应时间 / 吞吐量：</b>前者看「单个任务多快完成」，后者看「单位时间完成多少任务」；<br>
+· <b>基准程序（SPEC 等）：</b>用真实程序负载测性能，比 MIPS 更能代表实际速度——MIPS 只反映峰值理想情况；<br>
+· <b>字长对性能的影响：</b>字长大 ⇒ 一次处理位数多、可寻址空间大（地址线相关），但电路更复杂。</div>
+</section>
+<section class="card" id="sec-4">
+<h2><span class="num">04</span>典型例题<span class="tag">概念判断 + 四类计算</span></h2>
+<div class="box example">
+<b>例 1（结构概念四连判）.</b><br>
+(a) 「冯·诺依曼机的基本思想是存储程序」⇒ <b>对</b>；<br>
+(b) 「指令和数据以同等地位存放在主存中，可同时取出并直接区分」⇒ <b>错</b>：可同存，但<b>形式上无差别</b>，要靠取指/执行周期区分；<br>
+(c) 「原始冯·诺依曼机以运算器为中心」⇒ <b>对</b>（现代计算机才以存储器为中心）；<br>
+(d) 「哈佛结构把指令和数据分开存储」⇒ <b>对</b>（可同时访问，与冯·诺依曼相对）。</div>
+<div class="box example">
+<b>例 2（主频翻倍陷阱：CPU 时间对比）.</b> 机器 A：主频 1 GHz、CPI = 2；机器 B：主频 2 GHz、CPI = 4。同一程序在 A 上跑需 N 条指令，在 B 上也需 N 条——谁快？<br>
+① A：$T_A=\dfrac{N\times2}{1\ \text{GHz}}=2N\ \text{ns}$；<br>
+② B：$T_B=\dfrac{N\times4}{2\ \text{GHz}}=2N\ \text{ns}$；<br>
+③ <b>结论：一样快</b>——主频翻倍被 CPI 翻倍抵消。<br>
+<b>启示：</b>主频只是三要素之一，比较机器必须用<b>执行时间</b>（或同 ISA 下的 MIPS）✓。</div>
+<div class="box example">
+<b>例 3（平均 CPI + CPU 时间 + MIPS 全家桶）.</b> 某程序 $10^6$ 条指令，指令类型分布：A 类（CPI=1）占 50%、B 类（CPI=2）占 20%、C 类（CPI=3）占 30%；主频 500 MHz。<br>
+① 平均 CPI：$\text{CPI}=0.5\times1+0.2\times2+0.3\times3=0.5+0.4+0.9=\mathbf{1.8}$；<br>
+② CPU 时间：
+$$T=\frac{IC\times\text{CPI}}{f}=\frac{10^6\times1.8}{500\times10^6}=3.6\times10^{-3}\ \text{s}=3.6\ \text{ms}$$
+③ MIPS：$\text{MIPS}=\dfrac{500}{1.8}\approx278$。<br>
+<b>验算（换时钟周期口径）：</b>$T_{\text{cycle}}=\dfrac1{500\ \text{MHz}}=2\ \text{ns}$，$T=1.8\times10^6\times2\ \text{ns}=3.6\ \text{ms}$ ✓ 两法一致。</div>
+<div class="box example">
+<b>例 4（MAR/MDR 与容量：编址方式决定答案）.</b> 某机地址线 32 位（MAR 32 位）、数据线 32 位（MDR 32 位）。<br>
+① <b>按字节编址</b>：可寻址 $2^{32}$ 个字节 ⇒ 最大主存容量 $2^{32}\ \text{B}=\mathbf{4\ GB}$；<br>
+② <b>按字编址</b>（1 字 = 32 位 = 4 B）：可寻址 $2^{32}$ 个单元，每单元 4 B ⇒ 容量 $2^{32}\times4\ \text{B}=\mathbf{16\ GB}$。<br>
+<b>辨析：</b>MAR 位数给出「单元数」，MDR 位数给出「单元长度」——两者相乘才是容量；<b>编址方式不同，同一个 MAR 位数能得到完全不同的容量答案</b> ✓。</div>
+<div class="box example">
+<b>例 5（总线带宽计算）.</b> 某总线数据线宽 64 位（8 B），总线时钟 100 MHz，每个时钟周期在上升沿和下降沿各传送一次数据。<br>
+① 每秒传送次数 $=100\ \text{M}\times2=200\ \text{M}$ 次；<br>
+② 带宽 $=8\ \text{B}\times200\ \text{M/s}=\mathbf{1.6\ GB/s}$。<br>
+<b>验算（单片对照）：</b>若只单沿传送，带宽减半为 800 MB/s ✓（做此类题先确认「几沿/每周期几次」）。</div>
+</section>
+<section class="card" id="sec-5">
+<h2><span class="num">05</span>决策流程与易错点</h2>
+<pre class="flow">计组概述题
+├─ 结构概念类
+│   ├─ 冯·诺依曼 = 存储程序 + 五大部件 + 以运算器为中心（原始）
+│   ├─ 现代计算机 → 以存储器为中心
+│   ├─ 指令/数据形式无差别 → 按取指/执行周期区分
+│   └─ 哈佛结构 = 指令与数据分开存储
+├─ 性能计算类
+│   ├─ 先算平均 CPI（按占比加权）
+│   ├─ CPU 时间 = 指令数 × CPI ÷ 主频
+│   ├─ MIPS = 主频 ÷ (CPI × 10⁶)（同 ISA 才可比）
+│   ├─ 容量 = 2^MAR位数 × MDR位数（先看编址方式）
+│   └─ 带宽 = 每次字节数 × 每秒传送次数（看单沿/双沿）
+└─ 概念类
+    ├─ 软硬件逻辑等价；编译 vs 解释
+    └─ 五级层次结构；ISA = 软硬件界面
+</pre>
+<h3>易错点清单</h3>
+<div class="box warn">
+<ol>
+<li><b>「中心」演进：</b>原始冯·诺依曼以<b>运算器</b>为中心；现代计算机以<b>存储器</b>为中心——问「现在的」要答后者。</li>
+<li><b>指令与数据形式上无差别：</b>不存在「按二进制位数区分」的说法——靠时序（周期）区分。</li>
+<li><b>主频高 ≠ 机器快：</b>必须结合 CPI 与指令数看 CPU 时间（例 2 的「翻倍抵消」是经典陷阱）。</li>
+<li><b>MIPS 三条局限：</b>不可跨 ISA 比较；不反映程序特性；只代表理想峰值——选择题常拿它做「错误结论」选项。</li>
+<li><b>FLOPS 与 MIPS 分工：</b>浮点性能用 FLOPS（每秒浮点运算次数），通用指令吞吐用 MIPS，别混。</li>
+<li><b>容量单位两套进制：</b>存储容量按 $2^{10}$（1KB = 1024B）；但通信速率、磁盘厂商容量常按 $10^3$——按题目语境。</li>
+<li><b>三大字长独立：</b>机器字长、指令字长、存储字长可各不相等，读题先逐个确认。</li>
+<li><b>MAR/MDR 的含义：</b>MAR 位数 ⇒ 可寻址<b>单元数</b>；MDR 位数 ⇒ 存储字长；容量 = 二者之积——<b>按字节还是按字编址，答案差很多</b>。</li>
+<li><b>时钟周期是最小时间单位：</b>$1\ \text{GHz}\Leftrightarrow1\ \text{ns}$，$T=\frac1f$ 别算反。</li>
+<li><b>编译 vs 解释：</b>编译产生目标代码、之后可脱离编译器运行；解释逐句翻译执行、产生不了完整目标文件。</li>
+</ol>
+</div>
+</section>
+
+<section class="card" id="sec-6">
+<h2><span class="num">06</span>速查表</h2>
+<table>
+<thead><tr><th>主题</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td>冯·诺依曼两大核心</td><td>存储程序（指令与数据同存二进制）+ 五大部件（运算器、控制器、存储器、输入、输出）</td></tr>
+<tr><td>关键寄存器</td><td>PC（下条指令地址）、IR（当前指令）、MAR（地址）、MDR（数据）、ACC/MQ/X（运算）、PSW（标志）</td></tr>
+<tr><td>时钟周期与主频</td><td>$T=\dfrac1f$；1 GHz ⇒ 1 ns</td></tr>
+<tr><td>平均 CPI</td><td>$\text{CPI}=\sum(\text{CPI}_i\times\text{占比}_i)$</td></tr>
+<tr><td>CPU 时间</td><td>$T_{\text{CPU}}=\dfrac{IC\times\text{CPI}}{f}=IC\times\text{CPI}\times T$</td></tr>
+<tr><td>MIPS</td><td>$\dfrac{f}{\text{CPI}\times10^6}$（同 ISA 内比较）</td></tr>
+<tr><td>FLOPS</td><td>浮点运算次数/秒；M→G→T→P→E 为 $10^3$ 进制</td></tr>
+<tr><td>存储容量</td><td>$1\text{KB}=2^{10}\text{B}$；容量 $=2^{\text{MAR 位数}}\times\text{MDR 位数}$</td></tr>
+<tr><td>带宽</td><td>数据线字节数 × 每秒传送次数（双沿 ×2）</td></tr>
+<tr><td>层次结构</td><td>微程序机器 → 传统机器 → OS 机器 → 汇编语言机器 → 高级语言机器</td></tr>
+</tbody>
+</table>
+<div class="box tip"><b>一句话总纲：</b>本章两条主线——「<b>结构</b>：五大部件各司其职、指令数据同存异辨」；「<b>性能</b>：一切归于 $T=\frac{IC\times\text{CPI}}f$，其余指标（MIPS/FLOPS/带宽）都是它的变形」。</div>
+</section>
+
+<section class="card" id="sec-7">
+<h2><span class="num">07</span>能力自查</h2>
+<div class="box tip"><b>学习闭环：</b>说清五大部件与寄存器 → 讲透软硬件层次 → 默写性能三公式 → 完成四类计算。</div>
+<h3>能力清单</h3>
+<div class="box method">
+① 复述冯·诺依曼机两大核心思想与「中心」的历史演进；<br>
+② 说出五大部件功能与 PC/IR/MAR/MDR/ACC/MQ/X/PSW 的用途；<br>
+③ 解释「指令与数据形式无差别」与哈佛结构对比；<br>
+④ 画/说五级层次结构，辨析编译与解释、软硬件逻辑等价、ISA；<br>
+⑤ 熟练计算：平均 CPI、CPU 时间、MIPS、容量（两种编址）、带宽（单/双沿）；<br>
+⑥ 说清 MIPS 的三条局限与「主频高≠快」的原因。
+</div>
+<h3>闭卷操作清单</h3>
+<div class="box method">
+☐ 默画五大部件框图（含控制器的控制箭头）(§1)<br>
+☐ 例 1 四连判全对并说出理由 (§4)<br>
+☐ 复算例 2：A、B 两机时间均为 2N ns (§4)<br>
+☐ 复算例 3：CPI=1.8、T=3.6ms、MIPS≈278（两种口径互验）(§4)<br>
+☐ 复算例 4：按字节 4GB、按字 16GB (§4)<br>
+☐ 复算例 5：1.6GB/s（并算单沿版 800MB/s）(§4)<br>
+☐ 默写性能公式表全部 6 行 (§6)
+</div>
+</section>
+</main>
+</div>
+<footer>
+<p>公式由 MathJax、图表由 Mermaid 渲染，首次打开需联网（已配置多个 CDN 备用源）</p>
+<p>计算机组成原理（408 · 王道体系） · 第一章 计算机系统概述 · 内容完整版</p>
+</footer>
+<button id="btt" title="回到顶部">↑</button>
+<script>
+(function(){
+  var murls=[
+    "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js",
+    "https://registry.npmmirror.com/mermaid/10.9.1/files/dist/mermaid.min.js"
+  ];
+  function mload(i){
+    if(i>=murls.length){return;}
+    var s=document.createElement("script");
+    s.src=murls[i];s.async=true;
+    s.onload=function(){try{mermaid.initialize({startOnLoad:false,theme:"neutral",securityLevel:"loose"});mermaid.run({querySelector:".mermaid"});}catch(e){}};
+    s.onerror=function(){mload(i+1);};
+    document.head.appendChild(s);
+  }
+  mload(0);
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+  var progress=document.getElementById("progress");
+  var btt=document.getElementById("btt");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(window.scrollY/h*100):0)+"%";
+    if(window.scrollY>600){btt.classList.add("show");}else{btt.classList.remove("show");}
+  }
+  window.addEventListener("scroll",onScroll);
+  onScroll();
+  btt.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id);});
+      }
+    });
+  },{rootMargin:"-8% 0px -78% 0px"});
+  secs.forEach(function(s){if(s){io.observe(s);}});
+})();
+</script>
+</body>
+</html>
