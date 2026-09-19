@@ -146,8 +146,8 @@ $$\iint_D\left(x^2+y^2\right)d\sigma+\iint_D 1\,d\sigma=\frac{\pi}{2}+\pi=\frac{
 <div class="box example">
 <b>例 2（比较大小）.</b> 比较 $I_1=\displaystyle\iint_D\ln(x+y)\,d\sigma$ 与 $I_2=\displaystyle\iint_D\ln^2(x+y)\,d\sigma$，$D:\ 3\le x\le5,\ 0\le y\le1$。<br>
 ① $x+y\in[3,6]$，故 $\ln(x+y)\in[\ln3,\ln6]$ 且 $\ln(x+y)>\ln3>1$；<br>
-② 当 $t>1$ 时 $t<t^2$，故在 $D$ 上 $\ln(x+y)<\ln^2(x+y)$；<br>
-③ 由保号性质：$I_1<I_2$。<br>
+② 当 $t>1$ 时 $t\lt t^2$，故在 $D$ 上 $\ln(x+y)<\ln^2(x+y)$；<br>
+③ 由保号性质：$I_1&lt;I_2$。<br>
 <b>验算：</b>取 $(x,y)=(5,1)$：$\ln6\approx1.79$，平方约 $3.2$，确实更大 ✓。
 </div>
 </section>
@@ -227,7 +227,7 @@ $$\iint_D e^{-x^2-y^2}d\sigma=\int_0^{2\pi}d\theta\int_0^1 e^{-r^2}\,r\,dr$$
 ③ 内层凑微分：
 $$\int_0^1 re^{-r^2}dr=-\frac12e^{-r^2}\Bigg|_0^1=\frac{1-e^{-1}}{2}$$
 ④ 结果：$\displaystyle 2\pi\cdot\frac{1-e^{-1}}{2}=\pi\left(1-e^{-1}\right)$。<br>
-<b>验算：</b>$0<e^{-r^2}\le1$，区域面积 $\pi$，故 $0<I<\pi$；而 $\pi(1-e^{-1})\approx1.99<\pi$ ✓。
+<b>验算：</b>$0\lt e^{-r^2}\le1$，区域面积 $\pi$，故 $0&lt;I<\pi$；而 $\pi(1-e^{-1})\approx1.99<\pi$ ✓。
 </div>
 <div class="box example">
 <b>例 2（$r=2a\cos\theta$ 型区域）.</b> 计算 $\displaystyle\iint_D x\,d\sigma$，$D:\ x^2+y^2\le2x$。<br>
@@ -304,7 +304,7 @@ $$\iiint_\Omega z^2dv=\int_{-1}^{1}z^2\cdot\pi\left(1-z^2\right)dz=\pi\left(\fra
 $$\iiint_\Omega z\,dv=\int_0^{2\pi}d\theta\int_0^1r\,dr\int_{r^2}^{1}z\,dz=2\pi\int_0^1r\cdot\frac{1-r^4}{2}\,dr$$
 ③
 $$=\pi\int_0^1\left(r-r^5\right)dr=\pi\left(\frac12-\frac16\right)=\frac{\pi}{3}$$
-<b>验算（估界）：</b>$\Omega$ 内 $0<z\le1$，故 $0<I<V$；体积 $V=\displaystyle\int_0^{2\pi}d\theta\int_0^1\left(1-r^2\right)r\,dr=2\pi\left(\frac12-\frac14\right)=\frac\pi2$，而 $0<\dfrac\pi3<\dfrac\pi2$ ✓。
+<b>验算（估界）：</b>$\Omega$ 内 $0\lt z\le1$，故 $0&lt;I\lt V$；体积 $V=\displaystyle\int_0^{2\pi}d\theta\int_0^1\left(1-r^2\right)r\,dr=2\pi\left(\frac12-\frac14\right)=\frac\pi2$，而 $0<\dfrac\pi3<\dfrac\pi2$ ✓。
 </div>
 <div class="box example">
 <b>例 4（球面坐标）.</b> 计算 $\displaystyle\iiint_\Omega\left(x^2+y^2+z^2\right)dv$，$\Omega$ 为单位球。<br>
@@ -396,7 +396,7 @@ $$\int_c^d\left[\int_a^b f(x,y)\,dy\right]dx=\int_a^b\left[\int_c^d f(x,y)\,dx\r
 <div class="box tip"><b>推广（上下限也含参）：</b>
 $$\frac{d}{dx}\int_{\alpha(x)}^{\beta(x)}f(x,y)\,dy=\int_{\alpha(x)}^{\beta(x)}f_x(x,y)\,dy+f\!\left(x,\beta(x)\right)\beta'(x)-f\!\left(x,\alpha(x)\right)\alpha'(x)$$</div>
 <div class="box example">
-<b>例 1（积分号下求导的经典应用）.</b> 计算 $\displaystyle I=\int_0^1\frac{x^b-x^a}{\ln x}\,dx\quad(0<a<b)$。<br>
+<b>例 1（积分号下求导的经典应用）.</b> 计算 $\displaystyle I=\int_0^1\frac{x^b-x^a}{\ln x}\,dx\quad(0&lt;a&lt;b)$。<br>
 ① 关键观察：
 $$\frac{x^b-x^a}{\ln x}=\int_a^b x^t\,dt$$
 （对 $t$ 积分即得 $x^b-x^a$ 除以 $\ln x$）；<br>

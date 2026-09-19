@@ -122,7 +122,7 @@ $$k_j\,[\boldsymbol\alpha_j,\boldsymbol\alpha_j]=k_j\|\boldsymbol\alpha_j\|^{2}=
 <div class="thm"><span class="label">施密特（Schmidt）正交化</span>设 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_s$ 线性无关，令
 $$\boldsymbol\beta_1=\boldsymbol\alpha_1,\qquad \boldsymbol\beta_k=\boldsymbol\alpha_k-\sum_{i=1}^{k-1}\frac{[\boldsymbol\alpha_k,\boldsymbol\beta_i]}{[\boldsymbol\beta_i,\boldsymbol\beta_i]}\,\boldsymbol\beta_i\qquad(k=2,\dots,s)$$
 则 $\boldsymbol\beta_1,\dots,\boldsymbol\beta_s$ 两两正交且非零，并与原组等价（张成同一子空间）。</div>
-<div class="proof"><span class="label">证明（归纳）</span>设 $\boldsymbol\beta_1,\dots,\boldsymbol\beta_{k-1}$ 已两两正交非零。对 $j<k$，用内积的线性：
+<div class="proof"><span class="label">证明（归纳）</span>设 $\boldsymbol\beta_1,\dots,\boldsymbol\beta_{k-1}$ 已两两正交非零。对 $j\lt k$，用内积的线性：
 $$[\boldsymbol\beta_k,\boldsymbol\beta_j]=[\boldsymbol\alpha_k,\boldsymbol\beta_j]-\sum_{i=1}^{k-1}\frac{[\boldsymbol\alpha_k,\boldsymbol\beta_i]}{[\boldsymbol\beta_i,\boldsymbol\beta_i]}[\boldsymbol\beta_i,\boldsymbol\beta_j]=[\boldsymbol\alpha_k,\boldsymbol\beta_j]-\frac{[\boldsymbol\alpha_k,\boldsymbol\beta_j]}{[\boldsymbol\beta_j,\boldsymbol\beta_j]}[\boldsymbol\beta_j,\boldsymbol\beta_j]=0\ ✓$$
 <b>非零性：</b>若某 $\boldsymbol\beta_k=\boldsymbol0$，则 $\boldsymbol\alpha_k$ 可由 $\boldsymbol\beta_1,\dots,\boldsymbol\beta_{k-1}$ 表示，而后者又可由 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_{k-1}$ 表示 ⇒ 前 $k$ 个 α 相关，矛盾 ✓。等价性显然（每步都是 α、β 的互相线性表示）✓。<span class="qed">∎</span></div>
 <div class="box def">
@@ -358,7 +358,7 @@ $$|t|<\sqrt2$$
 <tbody>
 <tr><td>内积 · 长度 · 正交</td><td>$[\boldsymbol\alpha,\boldsymbol\beta]=\boldsymbol\alpha^{T}\boldsymbol\beta$；$\|\boldsymbol\alpha\|=\sqrt{[\boldsymbol\alpha,\boldsymbol\alpha]}$；$[\boldsymbol\alpha,\boldsymbol\beta]=0$ 即正交</td></tr>
 <tr><td>柯西–施瓦茨</td><td>$|[\boldsymbol\alpha,\boldsymbol\beta]|\le\|\boldsymbol\alpha\|\|\boldsymbol\beta\|$</td></tr>
-<tr><td>施密特正交化</td><td>$\boldsymbol\beta_k=\boldsymbol\alpha_k-\sum_{i<k}\dfrac{[\boldsymbol\alpha_k,\boldsymbol\beta_i]}{[\boldsymbol\beta_i,\boldsymbol\beta_i]}\boldsymbol\beta_i$</td></tr>
+<tr><td>施密特正交化</td><td>$\boldsymbol\beta_k=\boldsymbol\alpha_k-\sum_{i\lt k}\dfrac{[\boldsymbol\alpha_k,\boldsymbol\beta_i]}{[\boldsymbol\beta_i,\boldsymbol\beta_i]}\boldsymbol\beta_i$</td></tr>
 <tr><td>正交矩阵</td><td>$A^{T}A=E\iff A^{-1}=A^{T}$；$|A|=\pm1$；正交变换保内积</td></tr>
 <tr><td>特征值定义与求法</td><td>$A\boldsymbol\alpha=\lambda\boldsymbol\alpha$；$|A-\lambda E|=0$，$(A-\lambda E)\boldsymbol x=\boldsymbol0$ 的非零解</td></tr>
 <tr><td>特征值性质</td><td>$\sum\lambda_i=\operatorname{tr}A$；$\prod\lambda_i=|A|$；不同特征值的特征向量线性无关</td></tr>

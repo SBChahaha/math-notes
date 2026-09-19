@@ -134,10 +134,10 @@ $$k_1\boldsymbol\alpha_1+k_2\boldsymbol\alpha_2+\cdots+k_m\boldsymbol\alpha_m=\b
 则称该向量组<b>线性相关</b>；若只有全零系数才能组合出零向量，则称<b>线性无关</b>。
 </div>
 <div class="thm"><span class="label">判别定理（秩判别法）</span>设 $A=(\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m)$，则
-$$\text{线性相关}\iff A\boldsymbol x=\boldsymbol 0\ \text{有非零解}\iff r(A)<m$$
+$$\text{线性相关}\iff A\boldsymbol x=\boldsymbol 0\ \text{有非零解}\iff r(A)&lt;m$$
 $$\text{线性无关}\iff A\boldsymbol x=\boldsymbol 0\ \text{只有零解}\iff r(A)=m$$
 （$m$ 为向量个数。）</div>
-<div class="proof"><span class="label">证明</span>组合式 $k_1\boldsymbol\alpha_1+\cdots+k_m\boldsymbol\alpha_m=\boldsymbol0$ 恰好是方程组 $A\boldsymbol x=\boldsymbol0$。「相关」⇔ 存在非零解；由第三章齐次方程组推论，非零解 $\iff r(A)<m$；取逆否，无关 $\iff r(A)=m$ ✓。<span class="qed">∎</span></div>
+<div class="proof"><span class="label">证明</span>组合式 $k_1\boldsymbol\alpha_1+\cdots+k_m\boldsymbol\alpha_m=\boldsymbol0$ 恰好是方程组 $A\boldsymbol x=\boldsymbol0$。「相关」⇔ 存在非零解；由第三章齐次方程组推论，非零解 $\iff r(A)\lt m$；取逆否，无关 $\iff r(A)=m$ ✓。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">定理 1（相关 ⇔ 有向量可由其余表示）</span>当 $m\ge2$ 时，
 $$\text{相关}\iff \text{至少有一个向量能由其余 }m-1\ \text{个线性表示}$$</div>
 <div class="proof"><span class="label">证明</span>
@@ -169,7 +169,7 @@ $$\boldsymbol\alpha_3=\boldsymbol\alpha_1+\boldsymbol\alpha_2\iff \boldsymbol\al
 <div class="proof"><span class="label">证明（证「截短」，二者互为逆否）</span>设 $\sum k_i\boldsymbol\alpha_i=\boldsymbol0$（$k_i$ 不全为零）。删去分量后等式在各剩余分量上仍成立 ⇒ 截短组相关 ✓。<br>
 （直觉：减少方程个数，不可能把「非零解」变成「只有零解」。）<span class="qed">∎</span></div>
 <div class="thm"><span class="label">定理 5（个数超过维数必相关）</span>$n$ 维向量空间中任意 $m>n$ 个向量必线性相关。</div>
-<div class="proof"><span class="label">证明</span>把 $m$ 个向量按列排成 $n\times m$ 矩阵 $A$。齐次方程组 $A\boldsymbol x=\boldsymbol 0$：方程数 $n<{}$未知数个数 $m$，且 $r(A)\le n<m$，由第三章推论必有非零解 ⇒ 向量组相关 ✓。<span class="qed">∎</span></div>
+<div class="proof"><span class="label">证明</span>把 $m$ 个向量按列排成 $n\times m$ 矩阵 $A$。齐次方程组 $A\boldsymbol x=\boldsymbol 0$：方程数 $n<{}$未知数个数 $m$，且 $r(A)\le n\lt m$，由第三章推论必有非零解 ⇒ 向量组相关 ✓。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">定理 6（秩的比较定理）</span>若向量组 $B$ 能由向量组 $A$ 线性表示，则
 $$r(B)\le r(A)$$</div>
 <div class="proof"><span class="label">证明</span>取 $A$ 的一个最大无关组（最大无关组见 §4，其大小 $=r(A)=r$）：$A$ 中每个向量都能由这 $r$ 个向量表示，故 $B$ 的每个向量也能由它们表示，即
@@ -225,7 +225,7 @@ $$A=\begin{pmatrix}1&0&1&1\\1&1&2&0\\0&1&1&-1\end{pmatrix}\xrightarrow{\ r_2-r_1
 <div class="proof"><span class="label">证明</span>$A(\boldsymbol\xi_1+\boldsymbol\xi_2)=A\boldsymbol\xi_1+A\boldsymbol\xi_2=\boldsymbol0$；$A(k\boldsymbol\xi_1)=kA\boldsymbol\xi_1=\boldsymbol0$ ✓。<span class="qed">∎</span></div>
 <div class="box def"><b>基础解系：</b>一组解 $\boldsymbol\xi_1,\dots,\boldsymbol\xi_t$ 若满足① 线性无关；② 任一解都可由它们线性表示，则称为<b>基础解系</b>。此时通解为
 $$\boldsymbol x=c_1\boldsymbol\xi_1+\cdots+c_t\boldsymbol\xi_t\qquad(c_1,\dots,c_t\ \text{任意})$$</div>
-<div class="thm"><span class="label">定理（基础解系的存在与个数）</span>设 $r(A)=r<n$（$n$ 为未知数个数），则基础解系恰含 $n-r$ 个解向量。</div>
+<div class="thm"><span class="label">定理（基础解系的存在与个数）</span>设 $r(A)=r\lt n$（$n$ 为未知数个数），则基础解系恰含 $n-r$ 个解向量。</div>
 <div class="proof"><span class="label">证明（构造性）</span>把 $A$ 化为行最简形，不妨设主元在前 $r$ 列，方程组等价于
 $$\begin{cases}x_1=-b_{1,r+1}x_{r+1}-\cdots-b_{1n}x_n\\ \ \ \vdots\\ x_r=-b_{r,r+1}x_{r+1}-\cdots-b_{rn}x_n\end{cases}$$
 ① 令自由未知量 $(x_{r+1},\dots,x_n)^{T}$ 依次取标准单位向量 $\boldsymbol e_1,\dots,\boldsymbol e_{n-r}$，得 $n-r$ 个解 $\boldsymbol\xi_1,\dots,\boldsymbol\xi_{n-r}$；<br>
@@ -339,7 +339,7 @@ $$\boldsymbol x'=P^{-1}\boldsymbol x=\begin{pmatrix}\frac12&\frac12\\[2pt]\frac1
 <thead><tr><th>主题</th><th>公式 / 结论</th></tr></thead>
 <tbody>
 <tr><td>线性表示</td><td>$\boldsymbol\beta$ 可由 $\boldsymbol\alpha_1,\dots,\boldsymbol\alpha_m$ 表示 $\iff r(A)=r(A\mid\boldsymbol\beta)$</td></tr>
-<tr><td>线性相关</td><td>存在不全为零的 $k_i$ 使 $\sum k_i\boldsymbol\alpha_i=\boldsymbol 0\iff r(A)<m$</td></tr>
+<tr><td>线性相关</td><td>存在不全为零的 $k_i$ 使 $\sum k_i\boldsymbol\alpha_i=\boldsymbol 0\iff r(A)\lt m$</td></tr>
 <tr><td>线性无关</td><td>$r(A)=m$（$m$ 为向量个数）</td></tr>
 <tr><td>三个小结论</td><td>单个向量相关 $\iff$ 零向量；两个相关 $\iff$ 成比例；含零必相关</td></tr>
 <tr><td>部分与整体</td><td>部分相关 ⇒ 整体相关（整体无关 ⇒ 部分无关）</td></tr>

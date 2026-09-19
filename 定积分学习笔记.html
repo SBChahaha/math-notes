@@ -108,7 +108,7 @@ window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$
 <h2><span class="num">01</span>定积分的概念<span class="tag">黎曼和</span></h2>
 <div class="box def">
 <b>定义（四步法）：</b>求曲边梯形面积：<br>
-① <b>分割：</b>$a=x_0<x_1<\cdots<x_n=b$，$\Delta x_i=x_i-x_{i-1}$；<br>
+① <b>分割：</b>$a=x_0\lt x_1<\cdots\lt x_n=b$，$\Delta x_i=x_i-x_{i-1}$；<br>
 ② <b>近似：</b>每小块用矩形近似，$\Delta S_i\approx f(\xi_i)\Delta x_i$；<br>
 ③ <b>求和：</b>$S_n=\sum\limits_{i=1}^nf(\xi_i)\Delta x_i$；<br>
 ④ <b>取极限：</b>记 $\lambda=\max\Delta x_i$，若 $\lim\limits_{\lambda\to0}\sum f(\xi_i)\Delta x_i=I$ 存在（与分法、$\xi_i$ 取法无关），称 $f$ 在 $[a,b]$ 上<b>可积</b>，$I$ 为定积分：
@@ -152,7 +152,7 @@ $$\lim_{\lambda\to0}\sum_{i=1}^n\omega_i\Delta x_i=0,\qquad \omega_i=\sup_{[x_{i
 <div class="thm"><span class="label">性质（设相关积分都存在）</span>
 ① <b>线性：</b>$\displaystyle\int_a^b[\alpha f+\beta g]dx=\alpha\int_a^bf\,dx+\beta\int_a^bg\,dx$；<br>
 ② <b>区间可加：</b>$\displaystyle\int_a^bf=\int_a^cf+\int_c^bf$（$c$ 在区间内外均可，按变号规定理解）；<br>
-③ <b>保号性：</b>$f\ge0$ ⇒ $\displaystyle\int_a^bf\ge0$（$a<b$）；<br>
+③ <b>保号性：</b>$f\ge0$ ⇒ $\displaystyle\int_a^bf\ge0$（$a&lt;b$）；<br>
 ④ <b>保序性：</b>$f\le g$ ⇒ $\displaystyle\int_a^bf\le\int_a^bg$；<br>
 ⑤ <b>绝对值不等式：</b>$\left|\displaystyle\int_a^bf\right|\le\int_a^b|f|$。</div>
 <div class="proof"><span class="label">证明（③）</span>黎曼和每一项 $f(\xi_i)\Delta x_i\ge0$ ⇒ 和的极限 ≥0 ✓（④ 由 $g-f\ge0$ 用③；⑤ 由 $-|f|\le f\le|f|$ 用④）。<span class="qed">∎</span></div>

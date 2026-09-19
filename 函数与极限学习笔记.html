@@ -107,7 +107,7 @@ window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$
 两个函数相同 $\iff$ 定义域相同且对应法则相同（与自变量字母无关）。</div>
 <div class="box def"><b>四大特性：</b><br>
 ① <b>有界性：</b>$\exists M>0$，$\forall x\in X$：$|f(x)|\le M$（否则无界）；<br>
-② <b>单调性：</b>$x_1<x_2\Rightarrow f(x_1)\le f(x_2)$（单调增）或 $\ge$（单调减）；<br>
+② <b>单调性：</b>$x_1\lt x_2\Rightarrow f(x_1)\le f(x_2)$（单调增）或 $\ge$（单调减）；<br>
 ③ <b>奇偶性：</b>定义域对称时，$f(-x)=f(x)$（偶）或 $f(-x)=-f(x)$（奇）；<br>
 ④ <b>周期性：</b>$\exists T>0$ 使 $f(x+T)=f(x)$（通常取最小正周期）。</div>
 <div class="box def"><b>反函数与复合：</b>若 $f:D\to f(D)$ 单调，则存在<b>反函数</b> $f^{-1}:f(D)\to D$，图像关于 $y=x$ 对称；<br>
@@ -157,7 +157,7 @@ $$M=\max\{|x_1|,|x_2|,\dots,|x_N|,\ |a|+1\}$$
 <div class="box def">
 <b>定义 1（x→x₀）：</b>设 $f$ 在 $x_0$ 的某去心邻域内有定义。若 $\forall\varepsilon>0$，$\exists\delta>0$，当 $0<|x-x_0|<\delta$ 时恒有 $|f(x)-A|<\varepsilon$，则称 $A$ 为 $f(x)$ 当 $x\to x_0$ 时的极限，记 $\lim\limits_{x\to x_0}f(x)=A$。<br>
 <b>定义 2（x→∞）：</b>若 $\forall\varepsilon>0$，$\exists X>0$，当 $|x|>X$ 时 $|f(x)-A|<\varepsilon$，记 $\lim\limits_{x\to\infty}f(x)=A$（单侧 $x\to+\infty/-\infty$ 类似，只改「$|x|>X$」为「$x>X$ / $x<-X$」）。<br>
-<b>单侧极限：</b>左极限 $f(x_0^-)$、右极限 $f(x_0^+)$（把 $0<|x-x_0|<\delta$ 换成 $x_0-\delta<x<x_0$ 或 $x_0<x<x_0+\delta$）。</div>
+<b>单侧极限：</b>左极限 $f(x_0^-)$、右极限 $f(x_0^+)$（把 $0<|x-x_0|<\delta$ 换成 $x_0-\delta\lt x\lt x_0$ 或 $x_0\lt x\lt x_0+\delta$）。</div>
 <div class="thm"><span class="label">定理（极限存在的充要条件）</span>
 $$\lim_{x\to x_0}f(x)=A\iff f(x_0^-)=f(x_0^+)=A$$</div>
 <div class="box example">
@@ -183,7 +183,7 @@ $$\lim f(x)=A\iff f(x)=A+\alpha(x),\quad \alpha(x)\ \text{为无穷小}$$</div>
 <b>充分性：</b>若 $f=A+\alpha$，则 $|f-A|=|\alpha|<\varepsilon$（无穷小的定义）⇒ $\lim f=A$ ✓。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">定理 2（无穷小的运算）</span>① 有限个无穷小的和仍是无穷小；② 有界函数 × 无穷小 = 无穷小；③ 常数 × 无穷小 = 无穷小（②的特例）。</div>
 <div class="proof"><span class="label">证明（②）</span>设 $x\to x_0$ 时 $\alpha(x)\to0$，且 $g$ 在去心邻域内 $|g(x)|\le M$。任给 $\varepsilon>0$，取 $\varepsilon'=\dfrac\varepsilon M$（$M>0$）；$\exists\delta$，$0<|x-x_0|<\delta$ 时 $|\alpha|<\varepsilon'$，于是
-$$|\alpha(x)g(x)|\le M|\alpha(x)|<M\cdot\frac\varepsilon M=\varepsilon\ ✓$$<span class="qed">∎</span></div>
+$$|\alpha(x)g(x)|\le M|\alpha(x)|&lt;M\cdot\frac\varepsilon M=\varepsilon\ ✓$$<span class="qed">∎</span></div>
 <div class="box def"><b>无穷大：</b>若 $\forall M>0$，$\exists\delta>0$，$0<|x-x_0|<\delta$ 时 $|f(x)|>M$，称 $f$ 为无穷大，记 $\lim f(x)=\infty$（当 $f$ 取正/负时可写 $+\infty/-\infty$）。<br>
 <b>关系定理：</b>若 $f$ 是无穷大，则 $\dfrac1f$ 是无穷小；若 $f$ 是无穷小且 $f\not\equiv0$，则 $\dfrac1f$ 是无穷大（互为倒数关系）。</div>
 <div class="box def"><b>无穷小的比较（都是无穷小，但「趋 0 的快慢」不同）：</b>设 $\alpha,\beta$ 为同一过程的无穷小，$\alpha\ne0$：<br>
@@ -227,7 +227,7 @@ $$\lim_{x\to x_0}f[g(x)]=f\!\left[\lim_{x\to x_0}g(x)\right]=f(u_0)$$
 <b>例 1（有理式 $x\to\infty$：比较最高次幂）.</b>
 $$\lim_{x\to\infty}\frac{3x^2-2x+1}{2x^2+x-3}=\lim_{x\to\infty}\frac{3-\dfrac2x+\dfrac1{x^2}}{2+\dfrac1x-\dfrac3{x^2}}=\frac32$$
 （分子分母同除 $x^2$，再用「无穷小的倒数为无穷大/常数·无穷小」的结论。）<br>
-<b>一般规律：</b>$\dfrac{a_mx^m+\cdots}{b_nx^n+\cdots}$：$m=n$ 极限 $=\dfrac{a_m}{b_n}$；$m<n$ 为 $0$；$m>n$ 为 $\infty$。
+<b>一般规律：</b>$\dfrac{a_mx^m+\cdots}{b_nx^n+\cdots}$：$m=n$ 极限 $=\dfrac{a_m}{b_n}$；$m\lt n$ 为 $0$；$m>n$ 为 $\infty$。
 </div>
 <div class="box example">
 <b>例 2（有理化：处理根号差）.</b>
@@ -243,14 +243,14 @@ $$=\lim_{x\to\infty}\frac{1}{\sqrt{1+\dfrac1x}+1}=\frac12$$
 <section class="card" id="sec-6">
 <h2><span class="num">06</span>极限存在准则与两个重要极限<span class="tag">核心</span></h2>
 <div class="thm"><span class="label">准则 I（夹逼准则）</span>若在某去心邻域内 $g(x)\le f(x)\le h(x)$，且 $\lim g(x)=\lim h(x)=A$，则 $\lim f(x)=A$（数列情形：$\exists$ 从某项起 $y_n\le x_n\le z_n$ 且 $\lim y_n=\lim z_n=a$ ⇒ $\lim x_n=a$）。</div>
-<div class="proof"><span class="label">证明（x→x₀ 情形）</span>任给 $\varepsilon>0$。由 $\lim g=A$：$\exists\delta_1$，$0<|x-x_0|<\delta_1$ 时 $A-\varepsilon<g(x)$；由 $\lim h=A$：$\exists\delta_2$，$0<|x-x_0|<\delta_2$ 时 $h(x)<A+\varepsilon$。取 $\delta=\min\{\delta_1,\delta_2,\delta_0\}$（$\delta_0$ 保证夹逼关系成立），则
-$$A-\varepsilon<g(x)\le f(x)\le h(x)<A+\varepsilon\ \Longrightarrow\ |f(x)-A|<\varepsilon\ ✓$$<span class="qed">∎</span></div>
+<div class="proof"><span class="label">证明（x→x₀ 情形）</span>任给 $\varepsilon>0$。由 $\lim g=A$：$\exists\delta_1$，$0<|x-x_0|<\delta_1$ 时 $A-\varepsilon\lt g(x)$；由 $\lim h=A$：$\exists\delta_2$，$0<|x-x_0|<\delta_2$ 时 $h(x)&lt;A+\varepsilon$。取 $\delta=\min\{\delta_1,\delta_2,\delta_0\}$（$\delta_0$ 保证夹逼关系成立），则
+$$A-\varepsilon&lt;g(x)\le f(x)\le h(x)&lt;A+\varepsilon\ \Longrightarrow\ |f(x)-A|<\varepsilon\ ✓$$<span class="qed">∎</span></div>
 <div class="thm"><span class="label">重要极限 1</span>
 $$\lim_{x\to0}\frac{\sin x}{x}=1$$</div>
-<div class="proof"><span class="label">证明（几何夹逼，务必掌握）</span>设 $0<x<\dfrac\pi2$（弧度制！），在单位圆中取扇形：圆心角 $x$ 的扇形面积 $=\dfrac x2$。比较三个面积：
+<div class="proof"><span class="label">证明（几何夹逼，务必掌握）</span>设 $0\lt x<\dfrac\pi2$（弧度制！），在单位圆中取扇形：圆心角 $x$ 的扇形面积 $=\dfrac x2$。比较三个面积：
 $$S_{\triangle OAB}=\frac12\sin x\ <\ S_{\text{扇形}}=\frac x2\ <\ S_{\triangle OAC}=\frac12\tan x$$
-两边乘 2 得 $\sin x<x<\tan x$；同除 $\sin x>0$：
-$$1<\frac{x}{\sin x}<\frac1{\cos x}\ \Longrightarrow\ \cos x<\frac{\sin x}{x}<1\qquad(0<x<\tfrac\pi2)$$
+两边乘 2 得 $\sin x\lt x<\tan x$；同除 $\sin x>0$：
+$$1<\frac{x}{\sin x}<\frac1{\cos x}\ \Longrightarrow\ \cos x<\frac{\sin x}{x}<1\qquad(0&lt;x<\tfrac\pi2)$$
 由 $\lim\limits_{x\to0^+}\cos x=1$ 与夹逼准则得 $\lim\limits_{x\to0^+}\dfrac{\sin x}{x}=1$；又 $\dfrac{\sin x}{x}$ 是偶函数，故左极限同为 1。合并即得结论 ✓。<span class="qed">∎</span></div>
 <div class="box example">
 <b>例（重要极限 1 的直接应用）.</b><br>
@@ -259,7 +259,7 @@ $$1<\frac{x}{\sin x}<\frac1{\cos x}\ \Longrightarrow\ \cos x<\frac{\sin x}{x}<1\
 <b>验算：</b>等价无穷小 $\sin 3x\sim3x$、$\tan2x\sim2x$、$\sin5x\sim5x$ 给出同样答案——两法互通 ✓。
 </div>
 <div class="thm"><span class="label">准则 II（单调有界准则）</span>单调有界数列必有极限。</div>
-<div class="proof"><span class="label">证明（思路）</span>设 $\{a_n\}$ 单调增且有上界。由确界原理，数集 $\{a_n\}$ 有上确界 $a=\sup\{a_n\}$：对任意 $\varepsilon>0$，$a-\varepsilon$ 不再是上界，故 $\exists N$ 使 $a_N>a-\varepsilon$；由单调增，$n>N$ 时 $a-\varepsilon<a_N\le a_n\le a$ ⇒ $|a_n-a|<\varepsilon$ ⇒ $\lim a_n=a$ ✓（单调减情形取 $\inf$ 对称）。<span class="qed">∎</span></div>
+<div class="proof"><span class="label">证明（思路）</span>设 $\{a_n\}$ 单调增且有上界。由确界原理，数集 $\{a_n\}$ 有上确界 $a=\sup\{a_n\}$：对任意 $\varepsilon>0$，$a-\varepsilon$ 不再是上界，故 $\exists N$ 使 $a_N>a-\varepsilon$；由单调增，$n>N$ 时 $a-\varepsilon&lt;a_N\le a_n\le a$ ⇒ $|a_n-a|<\varepsilon$ ⇒ $\lim a_n=a$ ✓（单调减情形取 $\inf$ 对称）。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">重要极限 2（自然常数 e）</span>数列 $a_n=\left(1+\dfrac1n\right)^n$ 收敛，定义其极限为
 $$e=\lim_{n\to\infty}\left(1+\frac1n\right)^n\approx2.71828$$
 并且 $\lim\limits_{x\to\infty}\left(1+\dfrac1x\right)^x=e$、$\lim\limits_{x\to0}(1+x)^{1/x}=e$。</div>
@@ -267,7 +267,7 @@ $$e=\lim_{n\to\infty}\left(1+\frac1n\right)^n\approx2.71828$$
 $$a_n=\sum_{k=0}^n\frac{n(n-1)\cdots(n-k+1)}{k!\,n^k}=\sum_{k=0}^n\frac1{k!}\left(1-\frac1n\right)\left(1-\frac2n\right)\cdots\left(1-\frac{k-1}n\right)$$
 ① <b>单调增：</b>每一项 $\frac1{k!}(1-\frac1n)\cdots(1-\frac{k-1}n)$ 随 $n$ 变大（括号内每个因子变大）而变大，且 $n$ 增大还多出正项 ⇒ $a_{n+1}>a_n$；<br>
 ② <b>有界：</b>$a_n\le\sum_{k=0}^n\dfrac1{k!}\le1+1+\dfrac12+\dfrac1{2^2}+\cdots+\dfrac1{2^{n-1}}<3$（用 $k!\ge2^{k-1}$）；<br>
-③ 由准则 II，$a_n$ 收敛，记极限为 $e$（且 $2<e<3$）✓。函数情形 $x\to\infty$ 用 $[x]\le x<[x]+1$ 夹逼（细节略），$x\to0$ 由换元 $x=1/t$ 得到 ✓。<span class="qed">∎</span></div>
+③ 由准则 II，$a_n$ 收敛，记极限为 $e$（且 $2\lt e<3$）✓。函数情形 $x\to\infty$ 用 $[x]\le x<[x]+1$ 夹逼（细节略），$x\to0$ 由换元 $x=1/t$ 得到 ✓。<span class="qed">∎</span></div>
 <div class="box example">
 <b>例（重要极限 2 的应用）.</b><br>
 ① $\lim\limits_{x\to\infty}\left(1+\dfrac2x\right)^x=\left[\lim\limits_{x\to\infty}\left(1+\dfrac2x\right)^{x/2}\right]^{2}=e^2$（配凑 $u=2/x$，指数 $x=\frac{x}{2}\cdot2$）；<br>
@@ -313,7 +313,7 @@ $$|\Delta y|=|\sin(x_0+\Delta x)-\sin x_0|=\left|2\cos\left(x_0+\frac{\Delta x}2
 ③ <b>零点定理：</b>若 $f(a)f(b)<0$，则 $\exists\xi\in(a,b)$ 使 $f(\xi)=0$；<br>
 ④ <b>介值定理：</b>对任意 $\mu$ 介于 $f(a)$ 与 $f(b)$ 之间，$\exists\xi\in(a,b)$ 使 $f(\xi)=\mu$。</div>
 <div class="proof"><span class="label">证明（③思路 + ④由③推出）</span>
-<b>零点定理（二分法思想）：</b>设 $f(a)<0<f(b)$。取中点 $c=\frac{a+b}2$：若 $f(c)=0$ 已得结论；若 $f(c)>0$，则在 $[a,c]$ 上重复；若 $f(c)<0$，则在 $[c,b]$ 上重复。如此得闭区间套 $[a_n,b_n]$，长度 $=\frac{b-a}{2^n}\to0$，由区间套定理存在唯一 $\xi\in[a_n,b_n]$ 全部区间。由连续性：$f(\xi)=\lim f(a_n)\le0$ 且 $f(\xi)=\lim f(b_n)\ge0$（端点符号固定），故 $f(\xi)=0$ ✓。<br>
+<b>零点定理（二分法思想）：</b>设 $f(a)<0\lt f(b)$。取中点 $c=\frac{a+b}2$：若 $f(c)=0$ 已得结论；若 $f(c)>0$，则在 $[a,c]$ 上重复；若 $f(c)<0$，则在 $[c,b]$ 上重复。如此得闭区间套 $[a_n,b_n]$，长度 $=\frac{b-a}{2^n}\to0$，由区间套定理存在唯一 $\xi\in[a_n,b_n]$ 全部区间。由连续性：$f(\xi)=\lim f(a_n)\le0$ 且 $f(\xi)=\lim f(b_n)\ge0$（端点符号固定），故 $f(\xi)=0$ ✓。<br>
 <b>介值定理：</b>作辅助函数 $F(x)=f(x)-\mu$。由 $\mu$ 介于两端值之间，$F(a)F(b)<0$；对 $F$ 用零点定理得 $\xi$ 使 $F(\xi)=0$，即 $f(\xi)=\mu$ ✓。<span class="qed">∎</span></div>
 <div class="box example">
 <b>例（零点定理证方程有根）.</b> 证明方程 $\cos x=x$ 在 $(0,1)$ 内有实根。<br>

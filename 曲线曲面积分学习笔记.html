@@ -245,7 +245,7 @@ $$A=\frac12\oint_L x\,dy-y\,dx=\frac{1}{2}\int_0^{2\pi}ab\,dt=\pi ab$$
 ① 记 $P=\dfrac{-y}{x^2+y^2},\ Q=\dfrac{x}{x^2+y^2}$，可算得
 $$\frac{\partial Q}{\partial x}=\frac{y^2-x^2}{\left(x^2+y^2\right)^2}=\frac{\partial P}{\partial y}\qquad(\text{除原点外处处成立})$$
 但原点在 $L$ 内部、偏导不存在，<b>不能对整个区域直接套格林公式</b>；<br>
-② 挖洞：取半径为 $R$ 的小圆周 $l:\ x=R\cos\theta,\ y=R\sin\theta$（取 $0<R<1$，保证严格落在椭圆内部），对椭圆与 $l$ 之间的环形区域 $D'$ 用格林公式（右边 $=0$）：
+② 挖洞：取半径为 $R$ 的小圆周 $l:\ x=R\cos\theta,\ y=R\sin\theta$（取 $0\lt R<1$，保证严格落在椭圆内部），对椭圆与 $l$ 之间的环形区域 $D'$ 用格林公式（右边 $=0$）：
 $$\oint_L-\oint_l=\iint_{D'}\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy=0\ \Longrightarrow\ \oint_L=\oint_l$$
 ③ 在小圆 $l$ 上：$x\,dy-y\,dx=R^2d\theta$、$x^2+y^2=R^2$，故
 $$\oint_L=\int_0^{2\pi}\frac{R^2}{R^2}\,d\theta=2\pi\qquad(\text{与 }R\text{ 无关})$$

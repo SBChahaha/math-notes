@@ -106,7 +106,7 @@ window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$
 <h2><span class="num">01</span>微分中值定理<span class="tag">理论核心</span></h2>
 <div class="thm"><span class="label">费马引理</span>设 $f$ 在 $x_0$ 的某邻域内有定义，且在 $x_0$ 处可导；若 $x_0$ 是极值点，则 $f'(x_0)=0$。</div>
 <div class="proof"><span class="label">证明</span>设 $x_0$ 为极大值点（极小对称）：在邻近区域内 $f(x)\le f(x_0)$，故
-$$x>x_0:\ \frac{f(x)-f(x_0)}{x-x_0}\le0,\qquad x<x_0:\ \frac{f(x)-f(x_0)}{x-x_0}\ge0$$
+$$x>x_0:\ \frac{f(x)-f(x_0)}{x-x_0}\le0,\qquad x&lt;x_0:\ \frac{f(x)-f(x_0)}{x-x_0}\ge0$$
 两边取极限（可导 ⇒ 极限存在且相等）：
 $$f'(x_0)=\lim_{x\to x_0^+}\text{差商}\le0,\qquad f'(x_0)=\lim_{x\to x_0^-}\text{差商}\ge0\ \Longrightarrow\ f'(x_0)=0\ ✓$$<span class="qed">∎</span></div>
 <div class="thm"><span class="label">罗尔定理</span>若 $f$ 在 $[a,b]$ 上连续、在 $(a,b)$ 内可导、且 $f(a)=f(b)$，则 $\exists\xi\in(a,b)$ 使 $f'(\xi)=0$。</div>
@@ -123,7 +123,7 @@ $$F'(\xi)=f'(\xi)-\frac{f(b)-f(a)}{b-a}=0\ \Longrightarrow\ f'(\xi)=\frac{f(b)-f
 <div class="thm"><span class="label">推论（用导数刻画常数函数）</span>
 ① 若在区间 $I$ 上 $f'(x)\equiv0$，则 $f$ 在 $I$ 上恒为常数；<br>
 ② 若 $f'=g'$，则 $f=g+C$。</div>
-<div class="proof"><span class="label">证明（①）</span>任取 $x_1<x_2\in I$，在 $[x_1,x_2]$ 上用拉格朗日：$f(x_2)-f(x_1)=f'(\xi)(x_2-x_1)=0$ ⇒ $f(x_2)=f(x_1)$ ✓。<span class="qed">∎</span></div>
+<div class="proof"><span class="label">证明（①）</span>任取 $x_1\lt x_2\in I$，在 $[x_1,x_2]$ 上用拉格朗日：$f(x_2)-f(x_1)=f'(\xi)(x_2-x_1)=0$ ⇒ $f(x_2)=f(x_1)$ ✓。<span class="qed">∎</span></div>
 <div class="box example">
 <b>例 1（证明恒等式）.</b> 证明 $\arctan x+\operatorname{arccot}x=\dfrac\pi2$（$x\in\mathbb R$）。<br>
 ① 求导：$\left(\arctan x+\operatorname{arccot}x\right)'=\dfrac1{1+x^2}-\dfrac1{1+x^2}=0$；<br>
@@ -200,7 +200,7 @@ $$(1+x)^\alpha=1+\alpha x+\frac{\alpha(\alpha-1)}{2!}x^2+\cdots+\frac{\alpha(\al
 <b>例 1（近似计算 e，带误差估计）.</b> 取 $x=1$、$n=5$：<br>
 ① 近似：$e\approx1+1+\dfrac1{2!}+\dfrac1{3!}+\dfrac1{4!}+\dfrac1{5!}=1+1+0.5+0.1667+0.0417+0.0083=2.7167$；<br>
 ② 误差（拉格朗日余项，$0<\xi<1$）：$|R_5|=\dfrac{e^\xi}{6!}< \dfrac3{720}\approx0.00417$；<br>
-③ 结论：$2.7125<e<2.7208$，真值 $2.71828$ 落于区间内 ✓。<br>
+③ 结论：$2.7125\lt e<2.7208$，真值 $2.71828$ 落于区间内 ✓。<br>
 <b>验算：</b>取 $n$ 更大误差更快减小（$6!$、$7!$ 飙升）——这正是计算器算 e 的方法 ✓。
 </div>
 <div class="box example">
@@ -220,9 +220,9 @@ $$(1+x)^\alpha=1+\alpha x+\frac{\alpha(\alpha-1)}{2!}x^2+\cdots+\frac{\alpha(\al
 <div class="thm"><span class="label">定理（单调性判定）</span>设 $f$ 在 $[a,b]$ 连续、$(a,b)$ 可导：<br>
 ① 若 $(a,b)$ 内 $f'(x)\ge0$，则 $f$ 在 $[a,b]$ 上单调增（$f'\le0$ 则单调减）；<br>
 ② 若 $f'>0$（除有限个点外）则严格单增。</div>
-<div class="proof"><span class="label">证明</span>任取 $x_1<x_2\in[a,b]$，拉格朗日：$f(x_2)-f(x_1)=f'(\xi)(x_2-x_1)$。$f'(\xi)\ge0$ 时差 $\ge0$（$\le0$ 同理）✓。<span class="qed">∎</span></div>
+<div class="proof"><span class="label">证明</span>任取 $x_1\lt x_2\in[a,b]$，拉格朗日：$f(x_2)-f(x_1)=f'(\xi)(x_2-x_1)$。$f'(\xi)\ge0$ 时差 $\ge0$（$\le0$ 同理）✓。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">极值判定（第一充分条件）</span>设 $f$ 在 $x_0$ 连续，在去心邻域内可导（$f'(x_0)=0$ 或不存在）：<br>
-① $x<x_0$ 时 $f'>0$、$x>x_0$ 时 $f'<0$ ⇒ $x_0$ 为<b>极大</b>值点；<br>
+① $x\lt x_0$ 时 $f'>0$、$x>x_0$ 时 $f'<0$ ⇒ $x_0$ 为<b>极大</b>值点；<br>
 ② 反向变号 ⇒ <b>极小</b>值点；③ 不变号 ⇒ 不是极值点。</div>
 <div class="proof"><span class="label">证明（①）</span>由单调性定理：在 $x_0$ 左侧 $f$ 单增、右侧单减 ⇒ 邻近区域 $f(x)\le f(x_0)$ ⇒ 极大 ✓（②③ 同理）。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">极值判定（第二充分条件）</span>设 $f'(x_0)=0$，$f''(x_0)\ne0$：<br>
@@ -232,7 +232,7 @@ $$(1+x)^\alpha=1+\alpha x+\frac{\alpha(\alpha-1)}{2!}x^2+\cdots+\frac{\alpha(\al
 <div class="box example">
 <b>例（全面分析）.</b> $f(x)=x^3-3x^2-9x+5$。<br>
 ① $f'(x)=3x^2-6x-9=3(x-3)(x+1)$，驻点 $x=-1,3$；<br>
-② 符号表：$x<-1$ 时 $f'>0$（增）；$-1<x<3$ 时 $f'<0$（减）；$x>3$ 时 $f'>0$（增）；<br>
+② 符号表：$x<-1$ 时 $f'>0$（增）；$-1\lt x<3$ 时 $f'<0$（减）；$x>3$ 时 $f'>0$（增）；<br>
 ③ 极值：$f(-1)=-1-3+9+5=10$（极大）；$f(3)=27-27-27+5=-22$（极小）；<br>
 ④ $[-2,4]$ 上：$f(-2)=-8-12+18+5=3$，$f(4)=64-48-36+5=-15$；比较 $\{3,\ 10,\ -22,\ -15\}$ ⇒ 最大值 10（$x=-1$），最小值 $-22$（$x=3$）✓。<br>
 <b>验算（第二条件）：</b>$f''=6x-6$：$f''(-1)=-12<0$（极大 ✓）、$f''(3)=12>0$（极小 ✓）——两法一致。
@@ -296,10 +296,10 @@ $$K=\frac2{(1+0)^{3/2}}=2,\qquad \rho=\frac12$$
 <h2><span class="num">07</span>典型例题<span class="tag">实战</span></h2>
 <div class="box example">
 <b>例 1（中值定理证不等式：经典三明治）.</b> 证明：$x>0$ 时
-$$\frac{x}{1+x}<\ln(1+x)<x$$
+$$\frac{x}{1+x}<\ln(1+x)&lt;x$$
 ① 对 $f(t)=\ln(1+t)$ 在 $[0,x]$ 用拉格朗日：$\exists\xi\in(0,x)$，
 $$\ln(1+x)-\ln1=\frac{x}{1+\xi}$$
-② 由 $0<\xi<x$ 得夹逼：$\dfrac{x}{1+x}<\dfrac{x}{1+\xi}<x$ ✓；<br>
+② 由 $0<\xi\lt x$ 得夹逼：$\dfrac{x}{1+x}<\dfrac{x}{1+\xi}\lt x$ ✓；<br>
 <b>验算（x=1）：</b>$\dfrac12<0.6931<1$ ✓ 严格成立。
 </div>
 <div class="box example">
@@ -312,7 +312,7 @@ $$\ln(1+x)-\ln1=\frac{x}{1+\xi}$$
 <div class="box example">
 <b>例 3（单调性求最值）.</b> 证明 $x>0$ 时 $x+\dfrac1x\ge2$。<br>
 ① 设 $f(x)=x+\dfrac1x$：$f'(x)=1-\dfrac1{x^2}=\dfrac{x^2-1}{x^2}$；<br>
-② 符号：$0<x<1$ 减、$x>1$ 增 ⇒ $x=1$ 取最小值 $f(1)=2$；<br>
+② 符号：$0\lt x<1$ 减、$x>1$ 增 ⇒ $x=1$ 取最小值 $f(1)=2$；<br>
 ③ 故 $f(x)\ge2$ ✓（等号仅 $x=1$）。<br>
 <b>验算（取几个点）：</b>$x=0.5$：$2.5\ge2$ ✓；$x=3$：$3.333\ge2$ ✓。
 </div>
@@ -389,7 +389,7 @@ $$\ln(1+x)-\ln1=\frac{x}{1+\xi}$$
 <div class="box method">
 ① 独立证明费马引理、罗尔定理、拉格朗日定理、柯西定理（构造辅助函数的方法）；<br>
 ② 用「导数恒为 0 ⇒ 常数」证恒等式（$\arctan x+\operatorname{arccot}x=\frac\pi2$）；<br>
-③ 用中值定理与泰勒证明不等式（$\frac{x}{1+x}<\ln(1+x)<x$；$e^x\ge1+x$）；<br>
+③ 用中值定理与泰勒证明不等式（$\frac{x}{1+x}<\ln(1+x)\lt x$；$e^x\ge1+x$）；<br>
 ④ 熟练处理七种未定式（含失效情形与循环论证禁区）；<br>
 ⑤ 写出五个常用麦克劳林展开及其余项，并做误差估计（算 $e$）；<br>
 ⑥ 完成函数全面分析（单调表、极值、凹凸、拐点、渐近线）与曲率计算。
@@ -405,7 +405,7 @@ $$\ln(1+x)-\ln1=\frac{x}{1+\xi}$$
 ☐ $e$ 的近似与误差 $(2.7125,2.7208)$ (§3)<br>
 ☐ $x^3-3x^2-9x+5$ 的单调表与 $[-2,4]$ 最值 (§4)<br>
 ☐ 曲率公式推导（$d\alpha$ 与 $ds$）(§6)<br>
-☐ 三明治不等式 $\frac{x}{1+x}<\ln(1+x)<x$（拉格朗日法）(§7)
+☐ 三明治不等式 $\frac{x}{1+x}<\ln(1+x)\lt x$（拉格朗日法）(§7)
 </div>
 </section>
 </main>

@@ -183,7 +183,7 @@ $$S_n=\sum_{k=1}^{N-1}u_k+\sum_{k=N}^{n}u_k\le\sum_{k=1}^{N-1}u_k+\sum_{k=N}^{n}
 右边是常数 ⇒ $\{S_n\}$ 有界 ⇒ 收敛。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">极限形式</span>设 $u_n,v_n>0$，$\displaystyle\lim_{n\to\infty}\frac{u_n}{v_n}=l$，则：
 <ol>
-<li>$0<l<+\infty$：$\sum u_n$ 与 $\sum v_n$ <b>同敛散</b>；</li>
+<li>$0\lt l<+\infty$：$\sum u_n$ 与 $\sum v_n$ <b>同敛散</b>；</li>
 <li>$l=0$：$\sum v_n$ 收敛 $\Rightarrow\sum u_n$ 收敛；</li>
 <li>$l=+\infty$：$\sum v_n$ 发散 $\Rightarrow\sum u_n$ 发散。</li>
 </ol>（证明：由极限定义，$l$ 有限正数时 $u_n$ 与 $v_n$ 被常数倍互相控制，再用比较法。）</div>
@@ -198,13 +198,13 @@ $$\frac{1}{k^p}\le\int_{k-1}^{k}\frac{dx}{x^p}\ \Longrightarrow\ s_n=1+\sum_{k=2
 <div class="thm"><span class="label">比值审敛法（d'Alembert）</span>设 $\sum u_n$ 为正项级数，$\displaystyle\lim_{n\to\infty}\frac{u_{n+1}}{u_n}=\rho$，则
 ① $\rho<1$：收敛；② $\rho>1$（含 $+\infty$）：发散；③ $\rho=1$：<b>失效</b>，需另法。</div>
 <div class="proof"><span class="label">证明</span>
-<b>$\rho<1$：</b>取 $q$ 使 $\rho<q<1$。存在 $N$，当 $n\ge N$ 时 $\dfrac{u_{n+1}}{u_n}<q$，递推得
-$$u_{N+k}<q^k\,u_N$$
+<b>$\rho<1$：</b>取 $q$ 使 $\rho\lt q<1$。存在 $N$，当 $n\ge N$ 时 $\dfrac{u_{n+1}}{u_n}\lt q$，递推得
+$$u_{N+k}&lt;q^k\,u_N$$
 而几何级数 $\sum q^k$ 收敛，由比较法 $\sum u_n$ 收敛。<br>
 <b>$\rho>1$：</b>存在 $N$，当 $n\ge N$ 时 $u_{n+1}>u_n>0$，$u_n$ 从某项起单调递增，故 $u_n\not\to0$，由必要条件发散。<br>
 <b>$\rho=1$ 失效：</b>$p$ 级数 $u_n=1/n^p$ 满足 $\dfrac{u_{n+1}}{u_n}=\left(\dfrac{n}{n+1}\right)^p\to1$，但 $p>1$ 收敛、$p\le1$ 发散——比值极限为 $1$ 时无法判定。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">根值审敛法（Cauchy）</span>设 $\sum u_n$ 为正项级数（$u_n\ge0$），$\displaystyle\lim_{n\to\infty}\sqrt[n]{u_n}=\rho$，则结论同比值法：$\rho<1$ 收敛；$\rho>1$ 发散；$\rho=1$ 失效。<br>
-（证明：$\rho<1$ 时取 $\rho<q<1$，从某项起 $u_n<q^n$，再用几何级数比较；$\rho>1$ 时 $u_n>1$ 从某项起成立，$u_n\not\to0$。）</div>
+（证明：$\rho<1$ 时取 $\rho\lt q<1$，从某项起 $u_n\lt q^n$，再用几何级数比较；$\rho>1$ 时 $u_n>1$ 从某项起成立，$u_n\not\to0$。）</div>
 <div class="box method"><b>选择策略：</b>含 $n!$、$a^n$、$n^k$ 的 → <b>比值法</b>；含 $\left[f(n)\right]^n$ 的 → <b>根值法</b>；与 $1/n^p$ 同阶（可用等价无穷小或泰勒展开找同阶量）的 → <b>比较法</b>。</div>
 <div class="box example">
 <b>例 1（比较法）.</b> 判定 $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^2+1}$。<br>
@@ -233,7 +233,7 @@ $$\frac{u_{n+1}}{u_n}=\frac{(n+1)!}{(n+1)^{n+1}}\cdot\frac{n^n}{n!}=\frac{n^n}{(
 ① $\sqrt[n]{u_n}=\left(1-\dfrac1n\right)^{n}$；<br>
 ② 取极限：$\displaystyle\lim_{n\to\infty}\left(1-\frac1n\right)^n=e^{-1}<1$（重要极限）；<br>
 ③ 由根值法，级数<b>收敛</b>。<br>
-<b>验算（数值感受）：</b>前几项 $u_2=\frac{1}{16}=0.0625$、$u_3=\left(\frac23\right)^9\approx0.026$、$u_4=\left(\frac34\right)^{16}\approx0.010$，部分和 $\approx0.10$；又 $\left(1-\frac1n\right)^{n^2}=\left[\left(1-\frac1n\right)^n\right]^n<e^{-n}$，尾部被 $\sum\limits_{n\ge1}e^{-n}=\frac{1}{e-1}\approx0.58$ 控制，收敛无疑 ✓。
+<b>验算（数值感受）：</b>前几项 $u_2=\frac{1}{16}=0.0625$、$u_3=\left(\frac23\right)^9\approx0.026$、$u_4=\left(\frac34\right)^{16}\approx0.010$，部分和 $\approx0.10$；又 $\left(1-\frac1n\right)^{n^2}=\left[\left(1-\frac1n\right)^n\right]^n\lt e^{-n}$，尾部被 $\sum\limits_{n\ge1}e^{-n}=\frac{1}{e-1}\approx0.58$ 控制，收敛无疑 ✓。
 </div>
 </section>
 <section class="card" id="sec-3">
@@ -299,7 +299,7 @@ $$|a_nx^n|=\left|a_nx_0^n\right|\cdot\left|\frac{x}{x_0}\right|^n\le Mq^n$$
 <ol>
 <li>只在 $x=0$ 收敛（记 $R=0$）；</li>
 <li>在全数轴收敛（记 $R=+\infty$）；</li>
-<li>存在唯一 $R>0$：$|x|<R$ 时绝对收敛，$|x|>R$ 时发散，$x=\pm R$ 单独判定。</li>
+<li>存在唯一 $R>0$：$|x|\lt R$ 时绝对收敛，$|x|>R$ 时发散，$x=\pm R$ 单独判定。</li>
 </ol>
 $R$ 称<b>收敛半径</b>，$(-R,R)$ 称<b>收敛区间</b>。（证明：取 $R=\sup\{|x|:\ \sum a_nx^n\ \text{收敛}\}$，由阿贝尔定理即得三种情形。）</div>
 <div class="box method">
@@ -390,23 +390,23 @@ $$\frac{1}{1-x}\ \xrightarrow{\ \frac{d}{dx}\ }\ \frac{1}{(1-x)^2}\ \xrightarrow
 <b>泰勒级数：</b>若 $f(x)$ 在 $x_0$ 处有任意阶导数，称形式幂级数 $\displaystyle\sum_{n=0}^{\infty}\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n$ 为 $f$ 在 $x_0$ 处的泰勒级数；$x_0=0$ 时称<b>麦克劳林级数</b>。
 </div>
 <div class="thm"><span class="label">可展条件</span>设 $f$ 在 $x_0$ 某邻域内有任意阶导数，则
-$$f(x)=\sum_{n=0}^{\infty}\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n\ \ (|x-x_0|<R)\iff R_n(x)\to0\ (n\to\infty)$$
+$$f(x)=\sum_{n=0}^{\infty}\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n\ \ (|x-x_0|&lt;R)\iff R_n(x)\to0\ (n\to\infty)$$
 （$R_n$ 是泰勒公式的余项。级数收敛还不够，必须<b>收敛到 $f$ 本身</b>。）</div>
 <div class="proof"><span class="label">例证（$e^x$ 的展开式）</span>$f(x)=e^x$ 在 $0$ 处各阶导数均为 $1$，麦克劳林公式为
 $$e^x=1+x+\frac{x^2}{2!}+\cdots+\frac{x^n}{n!}+R_n(x),\qquad R_n(x)=\frac{e^{\theta x}}{(n+1)!}x^{n+1}\ (0<\theta<1)$$
 放缩：
 $$\left|R_n(x)\right|\le e^{|x|}\,\frac{|x|^{n+1}}{(n+1)!}\ \longrightarrow\ 0$$
 （因为 $\dfrac{|x|^{n+1}}{(n+1)!}$ 是收敛级数 $e^{|x|}$ 的通项，必趋于 $0$。）故 $R_n\to0$，展开成立：
-$$e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!}\qquad(-\infty<x<+\infty)$$
+$$e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!}\qquad(-\infty&lt;x<+\infty)$$
 $\sin x,\cos x$ 同理：各阶导数绝对值 $\le1$，余项被 $\dfrac{|x|^{n+1}}{(n+1)!}\to0$ 控制。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">常用展开式（必背七个）</span>
-$$\frac{1}{1-x}=\sum_{n=0}^{\infty}x^n\qquad(-1<x<1)$$
-$$\frac{1}{1+x}=\sum_{n=0}^{\infty}(-1)^n x^n\qquad(-1<x<1)$$
-$$e^{x}=\sum_{n=0}^{\infty}\frac{x^n}{n!}\qquad(-\infty<x<+\infty)$$
-$$\sin x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{(2n+1)!}\qquad(-\infty<x<+\infty)$$
-$$\cos x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{(2n)!}\qquad(-\infty<x<+\infty)$$
-$$\ln(1+x)=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}x^n}{n}\qquad(-1<x\le1)$$
-$$(1+x)^{\alpha}=1+\alpha x+\frac{\alpha(\alpha-1)}{2!}x^2+\cdots+\frac{\alpha(\alpha-1)\cdots(\alpha-n+1)}{n!}x^n+\cdots\quad(-1<x<1)$$
+$$\frac{1}{1-x}=\sum_{n=0}^{\infty}x^n\qquad(-1&lt;x<1)$$
+$$\frac{1}{1+x}=\sum_{n=0}^{\infty}(-1)^n x^n\qquad(-1&lt;x<1)$$
+$$e^{x}=\sum_{n=0}^{\infty}\frac{x^n}{n!}\qquad(-\infty&lt;x<+\infty)$$
+$$\sin x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{(2n+1)!}\qquad(-\infty&lt;x<+\infty)$$
+$$\cos x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{(2n)!}\qquad(-\infty&lt;x<+\infty)$$
+$$\ln(1+x)=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}x^n}{n}\qquad(-1&lt;x\le1)$$
+$$(1+x)^{\alpha}=1+\alpha x+\frac{\alpha(\alpha-1)}{2!}x^2+\cdots+\frac{\alpha(\alpha-1)\cdots(\alpha-n+1)}{n!}x^n+\cdots\quad(-1&lt;x<1)$$
 <b>附（由逐项积分得到）：</b>$\displaystyle\arctan x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{2n+1}\quad(-1\le x\le1)$。
 </div>
 <div class="box method">
@@ -418,7 +418,7 @@ $$(1+x)^{\alpha}=1+\alpha x+\frac{\alpha(\alpha-1)}{2!}x^2+\cdots+\frac{\alpha(\
 <b>例 1（变量代换）.</b> 将 $f(x)=e^{-x^2}$ 展开成幂级数。<br>
 ① 在 $e^t=\displaystyle\sum_{n=0}^{\infty}\frac{t^n}{n!}$ 中令 $t=-x^2$；<br>
 ② 得
-$$e^{-x^2}=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{n!}=1-x^2+\frac{x^4}{2!}-\frac{x^6}{3!}+\cdots\qquad(-\infty<x<+\infty)$$
+$$e^{-x^2}=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{n!}=1-x^2+\frac{x^4}{2!}-\frac{x^6}{3!}+\cdots\qquad(-\infty&lt;x<+\infty)$$
 <b>验算（两边求导）：</b>右端导数 $=\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n\,2n\,x^{2n-1}}{n!}=-2x\sum_{m=0}^{\infty}\frac{(-1)^m x^{2m}}{m!}=-2xe^{-x^2}$，与左端导数一致 ✓。
 </div>
 <div class="box example">
@@ -434,7 +434,7 @@ $$(2-x)\left(\frac12+\frac{x}{4}+\frac{x^2}{8}+\cdots\right)=1+\frac x2+\frac{x^
 ① 起点：$\dfrac{1}{1+x}=\displaystyle\sum_{n=0}^{\infty}(-1)^nx^n\quad(|x|<1)$；<br>
 ② 两边从 $0$ 到 $x$ 逐项积分：
 $$\ln(1+x)=\int_0^x\frac{dt}{1+t}=\sum_{n=0}^{\infty}(-1)^n\frac{x^{n+1}}{n+1}=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}x^n}{n}$$
-③ 端点：$x=1$ 时右端是交错调和级数，收敛于 $\ln 2$（左连续），故收敛范围为 $-1<x\le1$。<br>
+③ 端点：$x=1$ 时右端是交错调和级数，收敛于 $\ln 2$（左连续），故收敛范围为 $-1\lt x\le1$。<br>
 <b>验算：</b>对右端逐项求导回到 $\dfrac{1}{1+x}$ ✓；$x\to0$ 时右端 $\sim x$，与 $\ln(1+x)\sim x$ 一致 ✓。
 </div>
 </section>
@@ -492,7 +492,7 @@ $$\left|u_{n+1}(x)+\cdots+u_{n+p}(x)\right|\le\sum_{k=n+1}^{n+p}|u_k(x)|\le\sum_
 <li><b>逐项求导：</b>各项有连续导数且逐项求导后的级数一致收敛 ⇒ $\displaystyle s'(x)=\sum_{n=1}^{\infty}u_n'(x)$。</li>
 </ol>
 （证明用 $\varepsilon$–$N$ 估计，属《数学分析》范围；要点：一致收敛保证「求和」与「取极限/积分/求导」可以交换次序。反例 §8 例 2 说明仅「处处收敛」不够。）</div>
-<div class="box tip"><b>与幂级数的联系：</b>幂级数 $\sum a_nx^n$ 在 $(-R,R)$ 内的任何闭区间 $[-r,r]\ (0<r<R)$ 上一致收敛——用 M 判别法：$|a_nx^n|\le|a_n|r^n$，而 $\sum|a_n|r^n$ 收敛。这正是 §5 中「逐项求导、逐项积分」合法的依据；也提示端点 $x=\pm R$ 处要格外小心（一致收敛可能破坏）。</div>
+<div class="box tip"><b>与幂级数的联系：</b>幂级数 $\sum a_nx^n$ 在 $(-R,R)$ 内的任何闭区间 $[-r,r]\ (0\lt r\lt R)$ 上一致收敛——用 M 判别法：$|a_nx^n|\le|a_n|r^n$，而 $\sum|a_n|r^n$ 收敛。这正是 §5 中「逐项求导、逐项积分」合法的依据；也提示端点 $x=\pm R$ 处要格外小心（一致收敛可能破坏）。</div>
 <div class="box example">
 <b>例 1（M 判别法）.</b> 证明 $\displaystyle\sum_{n=1}^{\infty}\frac{x^n}{n^2}$ 在 $[-1,1]$ 上一致收敛。<br>
 ① 对一切 $x\in[-1,1]$：$\left|\dfrac{x^n}{n^2}\right|\le\dfrac{1}{n^2}$；<br>
@@ -550,7 +550,7 @@ $$f(x)\sim\frac{a_0}{2}+\sum_{n=1}^{\infty}a_n\cos nx,\qquad a_n=\frac{2}{\pi}\i
 （理由：奇×偶=奇、积分为 $0$；奇×奇=偶、偶×偶=偶，对称区间积分 $=2\int_0^\pi$。）</div>
 <div class="box example">
 <b>例 1（奇函数：方波）.</b> 设 $f$ 以 $2\pi$ 为周期，在 $(-\pi,\pi)$ 上
-$$f(x)=\begin{cases}-1,&-\pi<x<0\\[2pt] 1,&0<x<\pi\end{cases}$$
+$$f(x)=\begin{cases}-1,&-\pi&lt;x<0\\[2pt] 1,&0&lt;x<\pi\end{cases}$$
 将 $f$ 展开成傅里叶级数。<br>
 ① 奇偶性：$f(-x)=-f(x)$（奇函数）⇒ $a_n=0$，只有正弦项；<br>
 ② 求 $b_n$：
@@ -599,7 +599,7 @@ $b_n$ 同理。<span class="qed">∎</span></div>
 ①
 $$b_n=\frac{2}{\pi}\int_0^{\pi}x\sin nx\,dx=\frac{2}{\pi}\cdot\frac{(-1)^{n+1}\pi}{n}=\frac{2(-1)^{n+1}}{n}$$
 ② 故
-$$x\sim 2\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}\sin nx\qquad(0<x<\pi)$$
+$$x\sim 2\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}\sin nx\qquad(0&lt;x<\pi)$$
 （奇延拓下，$x=0,\pm\pi$ 处级数和为 $\dfrac{f(0^+)+f(0^-)}{2}=\dfrac{0+0}{2}=0$。）<br>
 <b>（二）余弦级数（偶延拓，延拓后是 $|x|$）：</b><br>
 ③

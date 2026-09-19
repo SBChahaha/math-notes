@@ -141,7 +141,7 @@ $$1\cdot\begin{vmatrix}5&6\\8&10\end{vmatrix}-2\cdot\begin{vmatrix}4&6\\7&10\end
 <section class="card" id="sec-2">
 <h2><span class="num">02</span>全排列 · 逆序数 · 对换<span class="tag">基础</span></h2>
 <div class="box def">
-<b>全排列：</b>把 $1,2,\dots,n$ 排成一列 $p_1p_2\cdots p_n$，共有 $n!$ 种。对 $i<j$，若 $p_i>p_j$，称 $(p_i,p_j)$ 构成一个<b>逆序</b>；逆序总数为<b>逆序数</b> $\tau(p_1p_2\cdots p_n)$。逆序数为偶（奇）数的排列叫<b>偶（奇）排列</b>。
+<b>全排列：</b>把 $1,2,\dots,n$ 排成一列 $p_1p_2\cdots p_n$，共有 $n!$ 种。对 $i\lt j$，若 $p_i>p_j$，称 $(p_i,p_j)$ 构成一个<b>逆序</b>；逆序总数为<b>逆序数</b> $\tau(p_1p_2\cdots p_n)$。逆序数为偶（奇）数的排列叫<b>偶（奇）排列</b>。
 </div>
 <div class="box method"><b>数逆序数的稳定算法：</b>从左往右，对每个元素数「它后面比它小的元素个数」，相加即可（也可从右往左数「前面比它大的」，用来交叉验算）。</div>
 <div class="box example">
@@ -179,7 +179,7 @@ $$D=\sum_{p_1p_2\cdots p_n}(-1)^{\tau(p_1p_2\cdots p_n)}\,a_{1p_1}a_{2p_2}\cdots
 $$\begin{vmatrix}a_{11}&a_{12}&\cdots&a_{1n}\\ &a_{22}&\cdots&a_{2n}\\ &&\ddots&\vdots\\ &&&a_{nn}\end{vmatrix}=a_{11}a_{22}\cdots a_{nn}$$</div>
 <div class="proof"><span class="label">证明（以上三角为例）</span>若某项 $a_{1p_1}\cdots a_{np_n}\neq0$，需每因子非零。上三角中 $i>p_i$ 时 $a_{ip_i}=0$，故必须
 $$p_i\ge i\qquad(i=1,\dots,n)$$
-又 $\sum p_i=\sum i$，若某 $p_i>i$ 则必有某 $p_k<k$，矛盾。故只能 $p_i=i$：只剩恒等排列一项，
+又 $\sum p_i=\sum i$，若某 $p_i>i$ 则必有某 $p_k\lt k$，矛盾。故只能 $p_i=i$：只剩恒等排列一项，
 $$D=(-1)^{\tau(12\cdots n)}a_{11}a_{22}\cdots a_{nn}=a_{11}a_{22}\cdots a_{nn}\ ✓$$<span class="qed">∎</span></div>
 <div class="box example">
 <b>例（反对角行列式）.</b> 计算 $D=\begin{vmatrix}0&0&0&1\\0&0&2&0\\0&3&0&0\\4&0&0&0\end{vmatrix}$。<br>
@@ -252,13 +252,13 @@ $$\sum_{j=1}^{n}a_{ij}A_{kj}=D\,\delta_{ik}=\begin{cases}D,&i=k\\[2pt]0,&i\neq k
 即「某行元素 × 另一行对应代数余子式之和 $=0$」。</div>
 <div class="proof"><span class="label">证明</span>把第 $k$ 行换成第 $i$ 行得两行相同的行列式 $D^*=0$，再按第 $k$ 行展开，其代数余子式与原行列式完全相同，即得 $a_{i1}A_{k1}+\cdots+a_{in}A_{kn}=0$ ✓。<span class="qed">∎</span></div>
 <div class="thm"><span class="label">范德蒙德行列式</span>
-$$V_n=\begin{vmatrix}1&1&\cdots&1\\ x_1&x_2&\cdots&x_n\\ \vdots&\vdots&&\vdots\\ x_1^{n-1}&x_2^{n-1}&\cdots&x_n^{n-1}\end{vmatrix}=\prod_{1\le i<j\le n}\left(x_j-x_i\right)$$
+$$V_n=\begin{vmatrix}1&1&\cdots&1\\ x_1&x_2&\cdots&x_n\\ \vdots&\vdots&&\vdots\\ x_1^{n-1}&x_2^{n-1}&\cdots&x_n^{n-1}\end{vmatrix}=\prod_{1\le i&lt;j\le n}\left(x_j-x_i\right)$$
 </div>
 <div class="proof"><span class="label">证明（对阶数归纳）</span>$n=2$ 显然。设对 $n-1$ 阶成立。从最后一行起逐行做 $R_i-x_1R_{i-1}$（$i=n,\dots,2$，不变号），第 $i\ge2$ 行第 $j$ 列变为
 $$x_j^{\,i-1}-x_1x_j^{\,i-2}=x_j^{\,i-2}\left(x_j-x_1\right)$$
 提取第 $j$ 列（$j\ge2$）的公因子 $(x_j-x_1)$：
 $$V_n=\left[\prod_{j=2}^{n}\left(x_j-x_1\right)\right]\cdot V_{n-1}\left(x_2,\dots,x_n\right)$$
-由归纳假设代入 $V_{n-1}$ 即得 $V_n=\prod_{i<j}(x_j-x_i)$ ✓。顺带得到：$V_n\neq0\iff x_1,\dots,x_n$ 互不相同。<span class="qed">∎</span></div>
+由归纳假设代入 $V_{n-1}$ 即得 $V_n=\prod_{i\lt j}(x_j-x_i)$ ✓。顺带得到：$V_n\neq0\iff x_1,\dots,x_n$ 互不相同。<span class="qed">∎</span></div>
 <div class="box example">
 <b>例 1（挑零多的行展开）.</b> 计算 $D=\begin{vmatrix}3&0&0&0\\1&2&0&0\\0&3&5&0\\2&1&4&6\end{vmatrix}$。<br>
 ① 第 1 行只有 $a_{11}=3\neq0$：$D=3A_{11}=3M_{11}$；<br>
@@ -362,7 +362,7 @@ $$x_1=x_2=x_3=\frac{D_j}{D}=\frac{-3}{-3}=1$$
 <tr><td>分拆</td><td>某行元素为两数之和 ⇒ 拆成两个行列式之和</td></tr>
 <tr><td>消元</td><td>某行加另一行的 $k$ 倍 ⇒ $D$ 不变</td></tr>
 <tr><td>展开定理</td><td>$\displaystyle D=\sum_j a_{ij}A_{ij}$；$\displaystyle\sum_j a_{ij}A_{kj}=D\delta_{ik}$</td></tr>
-<tr><td>范德蒙德</td><td>$\displaystyle V_n=\prod_{1\le i<j\le n}(x_j-x_i)$</td></tr>
+<tr><td>范德蒙德</td><td>$\displaystyle V_n=\prod_{1\le i\lt j\le n}(x_j-x_i)$</td></tr>
 <tr><td>克拉默法则</td><td>$D\neq0$ 时 $x_j=\dfrac{D_j}{D}$（唯一解）</td></tr>
 <tr><td>齐次方程组</td><td>有非零解 $\iff D=0$</td></tr>
 </tbody>

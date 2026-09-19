@@ -105,19 +105,19 @@ window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$
 <h2><span class="num">01</span>二维随机变量与联合分布<span class="tag">基础</span></h2>
 <div class="box def">
 <b>二维随机变量 $(X,Y)$：</b>联合分布函数
-$$F(x,y)=P\{X\le x,\ Y\le y\},\qquad -\infty<x,y<+\infty$$
+$$F(x,y)=P\{X\le x,\ Y\le y\},\qquad -\infty&lt;x,y<+\infty$$
 </div>
 <div class="thm"><span class="label">联合分布函数的性质</span>
 ① $0\le F(x,y)\le1$；② 关于 $x$、关于 $y$ 均单调不减；③ 边界值
 $$F(-\infty,y)=F(x,-\infty)=F(-\infty,-\infty)=0,\qquad F(+\infty,+\infty)=1$$
 ④ 关于每个变量右连续；⑤ <b>矩形公式</b>：
-$$P\{x_1<X\le x_2,\ y_1<Y\le y_2\}=F(x_2,y_2)-F(x_1,y_2)-F(x_2,y_1)+F(x_1,y_1)\ \ge0$$</div>
+$$P\{x_1&lt;X\le x_2,\ y_1&lt;Y\le y_2\}=F(x_2,y_2)-F(x_1,y_2)-F(x_2,y_1)+F(x_1,y_1)\ \ge0$$</div>
 <div class="proof"><span class="label">证明（矩形公式）</span>记 $D=(x_1,x_2]\times(y_1,y_2]$。两次「大减小」：
-$$\{X\le x_2,Y\le y_2\}=\{X\le x_1,Y\le y_2\}\cup\{x_1<X\le x_2,\ Y\le y_2\}$$
-$$\{x_1<X\le x_2,\ Y\le y_2\}=\{x_1<X\le x_2,\ Y\le y_1\}\cup D$$
+$$\{X\le x_2,Y\le y_2\}=\{X\le x_1,Y\le y_2\}\cup\{x_1&lt;X\le x_2,\ Y\le y_2\}$$
+$$\{x_1&lt;X\le x_2,\ Y\le y_2\}=\{x_1&lt;X\le x_2,\ Y\le y_1\}\cup D$$
 对两个互斥分解用有限可加性：
-$$P\{x_1<X\le x_2,\ Y\le y_2\}=F(x_2,y_2)-F(x_1,y_2)$$
-$$P\{x_1<X\le x_2,\ Y\le y_1\}=F(x_2,y_1)-F(x_1,y_1)$$
+$$P\{x_1&lt;X\le x_2,\ Y\le y_2\}=F(x_2,y_2)-F(x_1,y_2)$$
+$$P\{x_1&lt;X\le x_2,\ Y\le y_1\}=F(x_2,y_1)-F(x_1,y_1)$$
 两式相减即得；非负性由概率定义给出 ✓。<span class="qed">∎</span></div>
 <div class="box def">
 <b>离散型：</b>联合分布律 $p_{ij}=P\{X=x_i,\ Y=y_j\}$，满足 $p_{ij}\ge0$、$\displaystyle\sum_i\sum_j p_{ij}=1$。<br>
@@ -140,14 +140,14 @@ $$F(x,y)=\int_{-\infty}^{x}\!\!\int_{-\infty}^{y}f(u,v)\,dv\,du,\qquad P\{(X,Y)\
 <b>验算（枚举）：</b>16 种等可能投法中，「第 1 筒恰 1 封且第 2 筒至多 1 封」有 6 种（先定哪封信进 1 筒：2 种；另一封进 2/3/4：3 种），$6/16=3/8$ ✓。
 </div>
 <div class="box example">
-<b>例 2（连续联合密度）.</b> 设 $f(x,y)=Axy$（$0<x<1,\ 0<y<2$），其余为 0。求 $A$ 与 $P\{X+Y\le1\}$。<br>
+<b>例 2（连续联合密度）.</b> 设 $f(x,y)=Axy$（$0\lt x<1,\ 0\lt y<2$），其余为 0。求 $A$ 与 $P\{X+Y\le1\}$。<br>
 ① 归一：
 $$\int_0^1\!\!\int_0^2Axy\,dy\,dx=A\cdot\frac12\cdot\frac{4}{2}=A=1\ \Longrightarrow\ A=1$$
-② 积分区域 $0<x<1,\ 0<y\le1-x$：
+② 积分区域 $0\lt x<1,\ 0\lt y\le1-x$：
 $$P\{\!X+Y\le1\!\}=\int_0^1x\left[\int_0^{1-x}y\,dy\right]dx=\frac12\int_0^1x(1-x)^2dx$$
 ③ $\displaystyle\int_0^1\left(x-2x^2+x^3\right)dx=\frac12-\frac23+\frac14=\frac1{12}$，故
 $$P\{X+Y\le1\}=\frac{1}{24}$$<br>
-<b>验算（区域占比直觉）：</b>该区域只占支撑域 $\{0<x<1,0<y<2\}$ 的一角，概率 $\approx0.042$ 远小于一半，量级合理 ✓。
+<b>验算（区域占比直觉）：</b>该区域只占支撑域 $\{0\lt x<1,0\lt y<2\}$ 的一角，概率 $\approx0.042$ 远小于一半，量级合理 ✓。
 </div>
 </section>
 <section class="card" id="sec-2">
@@ -171,18 +171,18 @@ $$P\{X=2\}=p_{20}+p_{21}+p_{22}=\frac{1+0+0}{16}=\frac1{16}$$
 <b>验算（另一种数法）：</b>$X=0$ 即「两封信都不进 1 筒」：$(3/4)^2=9/16$ ✓；$X\ge1$ 用组合逻辑亦得 $6/16,1/16$ ✓。
 </div>
 <div class="box example">
-<b>例 2（连续：$f=xy$ 的边缘）.</b> $f(x,y)=xy\ (0<x<1,\ 0<y<2)$。求 $f_X,\ f_Y$。<br>
+<b>例 2（连续：$f=xy$ 的边缘）.</b> $f(x,y)=xy\ (0\lt x<1,\ 0\lt y<2)$。求 $f_X,\ f_Y$。<br>
 ① 对 $y$ 积分：
-$$f_X(x)=\int_0^2xy\,dy=x\cdot\frac{4}{2}=2x,\qquad 0<x<1$$
+$$f_X(x)=\int_0^2xy\,dy=x\cdot\frac{4}{2}=2x,\qquad 0&lt;x<1$$
 ② 对 $x$ 积分：
-$$f_Y(y)=\int_0^1xy\,dx=\frac{y}{2},\qquad 0<y<2$$
+$$f_Y(y)=\int_0^1xy\,dx=\frac{y}{2},\qquad 0&lt;y<2$$
 ③ 归一性校验：$\displaystyle\int_0^12x\,dx=1$ ✓，$\displaystyle\int_0^2\frac y2dy=1$ ✓。<br>
 <b>观察：</b>$f(x,y)=xy=(2x)\cdot\left(\dfrac y2\right)=f_X(x)f_Y(y)$——说明 $X$ 与 $Y$ 独立（§4 展开）。
 </div>
 <div class="box example">
 <b>例 3（二维均匀分布：边缘可以不同分布）.</b> $(X,Y)$ 在三角形 $D=\{x>0,\ y>0,\ x+y<1\}$ 上均匀分布（$f=1/S_D=2$，区域内）。求 $f_X$。<br>
 ① 固定 $x\in(0,1)$，$y$ 从 0 到 $1-x$：
-$$f_X(x)=\int_0^{1-x}2\,dy=2(1-x),\qquad 0<x<1$$
+$$f_X(x)=\int_0^{1-x}2\,dy=2(1-x),\qquad 0&lt;x<1$$
 ② 校验：$\displaystyle\int_0^12(1-x)dx=2\cdot\frac12=1$ ✓。<br>
 <b>观察：</b>$f_X(x)=2(1-x)$ 不是均匀分布——均匀分布只在「矩形」情形下边缘也均匀（如 $x^2+y^2\le1$ 的圆域边缘也不是均匀的）✓。
 </div>
@@ -206,13 +206,13 @@ $$P\{X=0\mid Y=0\}=\frac{4/16}{9/16}=\frac49,\qquad P\{X=1\mid Y=0\}=\frac{4/16}
 <b>解读：</b>「第 2 筒没有信」拉高了「第 1 筒有信」的概率（从边缘的 $\frac9{16},\frac38,\frac1{16}$ 变为 $\frac49,\frac49,\frac19$）——条件分布携带信息。
 </div>
 <div class="box example">
-<b>例 2（连续条件密度）.</b> $f(x,y)=xy\ (0<x<1,\ 0<y<2)$，求 $f_{X|Y}(x\mid y)$。<br>
+<b>例 2（连续条件密度）.</b> $f(x,y)=xy\ (0\lt x<1,\ 0\lt y<2)$，求 $f_{X|Y}(x\mid y)$。<br>
 ① 边缘（§2 例 2）：$f_Y(y)=\dfrac y2$；<br>
 ② 相除：
-$$f_{X|Y}(x\mid y)=\frac{xy}{y/2}=2x,\qquad 0<x<1$$
+$$f_{X|Y}(x\mid y)=\frac{xy}{y/2}=2x,\qquad 0&lt;x<1$$
 ③ 校验：$\displaystyle\int_0^1 2x\,dx=1$ ✓。<br>
 <b>观察：</b>条件密度 $2x$ 与 $y$ 无关，且恰等于边缘 $f_X(x)$——「知道 $Y$ 不改变 $X$ 的分布」⇒ 独立性信号 ✓。<br>
-（对照 §2 例 3 三角形均匀分布：$f_{X|Y}(x\mid y)=\dfrac{2}{2(1-y)}=\dfrac{1}{1-y}$（$0<x<1-y$）——依赖 $y$，不独立。）
+（对照 §2 例 3 三角形均匀分布：$f_{X|Y}(x\mid y)=\dfrac{2}{2(1-y)}=\dfrac{1}{1-y}$（$0\lt x<1-y$）——依赖 $y$，不独立。）
 </div>
 </section>
 <section class="card" id="sec-4">
@@ -231,7 +231,7 @@ $$F(x,y)=\int_{-\infty}^{x}\!\!\int_{-\infty}^{y}f_X(u)f_Y(v)\,dv\,du=\left[\int
 ③ <b>老实算：</b>求 $f_X,f_Y$ 检验 $f=f_Xf_Y$；离散则逐格检验 $p_{ij}=p_{i\cdot}p_{\cdot j}$。
 </div>
 <div class="box example">
-<b>例 1（独立）.</b> $f(x,y)=xy\ (0<x<1,\ 0<y<2)$，判断独立性。<br>
+<b>例 1（独立）.</b> $f(x,y)=xy\ (0\lt x<1,\ 0\lt y<2)$，判断独立性。<br>
 ① 支撑域为矩形 ⇒ 过第一关；<br>
 ② 分离变量 $f=x\cdot y$ ⇒ 独立；<br>
 ③ 复核：$f_Xf_Y=2x\cdot\dfrac y2=xy=f$ ✓。<br>
@@ -281,13 +281,13 @@ $$f_Z(z)=\frac{1}{2\pi\sigma_1\sigma_2}\cdot\tau\sqrt{2\pi}\cdot e^{-\frac{(z-\m
 <div class="box example">
 <b>例 2（两均匀之和：三角分布）.</b> $X,Y$ 独立同 $U(0,1)$，求 $Z=X+Y$ 的密度。<br>
 ① 被积函数非零条件：
-$$0<x<1\quad\text{且}\quad 0<z-x<1\iff z-1<x<z$$
+$$0&lt;x<1\quad\text{且}\quad 0&lt;z-x<1\iff z-1&lt;x&lt;z$$
 ② 分段计算：
 &nbsp;&nbsp;• $z\le0$ 或 $z\ge2$：区间无交集 ⇒ $f_Z=0$；<br>
-&nbsp;&nbsp;• $0<z\le1$：$x\in(0,z)$，$f_Z=\displaystyle\int_0^z1\,dx=z$；<br>
-&nbsp;&nbsp;• $1<z<2$：$x\in(z-1,1)$，$f_Z=\displaystyle\int_{z-1}^1 1\,dx=2-z$；<br>
+&nbsp;&nbsp;• $0\lt z\le1$：$x\in(0,z)$，$f_Z=\displaystyle\int_0^z1\,dx=z$；<br>
+&nbsp;&nbsp;• $1\lt z<2$：$x\in(z-1,1)$，$f_Z=\displaystyle\int_{z-1}^1 1\,dx=2-z$；<br>
 ③ 即
-$$f_Z(z)=\begin{cases}z,&0<z\le1\\ 2-z,&1<z<2\\ 0,&\text{其他}\end{cases}$$
+$$f_Z(z)=\begin{cases}z,&0&lt;z\le1\\ 2-z,&1&lt;z<2\\ 0,&\text{其他}\end{cases}$$
 <b>验算（归一 + 衔接）：</b>$\displaystyle\int_0^1z\,dz+\int_1^2(2-z)dz=\frac12+\frac12=1$ ✓；在 $z=1$ 处两侧值均为 $1$，连续 ✓。
 </div>
 <h3>5.3 最值函数 $M=\max(X,Y)$、$N=\min(X,Y)$</h3>
@@ -300,8 +300,8 @@ $$F_{\max}(z)=F_X(z)F_Y(z)\ ✓$$
 $$1-F_{\min}(w)=P\{X>w\}P\{Y>w\}=\left[1-F_X(w)\right]\left[1-F_Y(w)\right]\ ✓$$<span class="qed">∎</span></div>
 <div class="box example">
 <b>例 3（均匀最值）.</b> $X,Y$ 独立同 $U(0,1)$，求 $M=\max(X,Y)$、$N=\min(X,Y)$ 的密度。<br>
-① $F_X(z)=z\ (0<z<1)$ ⇒ $F_M=z^2$，$f_M=2z\ (0<z<1)$；<br>
-② $F_N=1-(1-z)^2$，$f_N=2(1-z)\ (0<z<1)$；<br>
+① $F_X(z)=z\ (0\lt z<1)$ ⇒ $F_M=z^2$，$f_M=2z\ (0\lt z<1)$；<br>
+② $F_N=1-(1-z)^2$，$f_N=2(1-z)\ (0\lt z<1)$；<br>
 ③ 校验：$\displaystyle\int_0^12z\,dz=1$、$\displaystyle\int_0^12(1-z)dz=1$ ✓。<br>
 <b>直觉验算：</b>$f_M$ 递增、$f_N$ 递减——「两数取大偏大、取小偏小」，符合直觉 ✓。
 </div>
