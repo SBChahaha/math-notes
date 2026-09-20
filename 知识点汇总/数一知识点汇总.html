@@ -38,11 +38,21 @@ td.c{text-align:center}
 .toc a{color:#1a1a1a;text-decoration:none;border-bottom:1px dotted #bbb}
 .foot{margin-top:6mm;border-top:1px dashed #bbb;padding-top:2mm;font-size:9pt;color:#666}
 .pbtn{position:fixed;right:18px;bottom:18px;z-index:9;font:600 13px/1.2 "Microsoft YaHei",sans-serif;background:#1f3a93;color:#fff;border:0;border-radius:8px;padding:12px 18px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
-@media print{body{background:#fff}.sheet{box-shadow:none;margin:0;max-width:none;padding:0}.pbtn{display:none}@page{size:A4;margin:13mm 11mm}}
+.pbtn2{position:fixed;right:18px;bottom:66px;z-index:9;font:600 13px/1.2 "Microsoft YaHei",sans-serif;background:#475569;color:#fff;border:0;border-radius:8px;padding:12px 18px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+body.col2 .sheet{column-count:2;column-gap:9mm;column-rule:1px solid #e5e7eb}
+body.col2 table{font-size:8.5pt}
+body.col2 th,body.col2 td{padding:.6mm 1mm}
+body.col2 .box{padding:1.5mm 2.2mm}
+body.col2 .strip{font-size:8pt}
+body.col2 h3{font-size:11.5pt}
+body.col2 h4{font-size:10.5pt}
+body.col2 .mini{font-size:8.5pt}
+@media print{body{background:#fff}.sheet{box-shadow:none;margin:0;max-width:none;padding:0}.pbtn,.pbtn2{display:none}@page{size:A4;margin:12mm 10mm}}
 </style>
 </head>
 <body>
 <button class="pbtn" onclick="window.print()">打印 / 存 PDF</button>
+<button class="pbtn2" id="colbtn" onclick="document.body.classList.toggle('col2');document.getElementById('colbtn').textContent=document.body.classList.contains('col2')?'双栏省纸：开':'双栏省纸：关';">双栏省纸：关</button>
 <div class="sheet">
 
 <div class="cover">
@@ -90,15 +100,6 @@ td.c{text-align:center}
 <p><a href="#ch26">第 26 章　假设检验</a></p>
 </div>
 
-<h2 class="part" id="part1">第一部分　高等数学（上册）</h2>
-<div class="part-list">
-第 1 章　函数与极限<br>
-第 2 章　导数与微分<br>
-第 3 章　微分中值定理与导数的应用<br>
-第 4 章　不定积分<br>
-第 5 章　定积分<br>
-第 6 章　定积分的应用
-</div>
 
 <h2 class="chap" id="ch1">第 1 章　函数与极限</h2>
 <div class="strip">本章速览：一 函数 · 二 数列极限 · 三 函数极限 · 四 极限运算法则 · 五 极限存在准则 · 六 无穷小与等价替换 · 七 连续与间断点 · 八 闭区间连续函数的性质 · 九 速查与易错 · 十 技巧库（全）</div>
@@ -205,7 +206,7 @@ td.c{text-align:center}
 0, & n&lt;m
 \end{cases}
 \]
-分子分母同时除以最高次幂是最稳妥的写法。
+分子分母同时除以最高次幂是最稳妥的写法。<br>注意 \(x\to-\infty\) 时「\(\infty\)」的符号还要看 \((-1)^{n-m}\)：如 \(\lim\limits_{x\to-\infty}\frac{x^2}{x}=-\infty\)。
 </div>
 
 <h3>五、极限存在准则与两个重要极限</h3>
@@ -360,7 +361,7 @@ td.c{text-align:center}
 <li><b>抓大头 + 量级比较</b>：\(x\to+\infty\) 时 \(a^x\gg x^\beta\gg\ln^\gamma x\ (a>1,\beta>0)\)；有理式比最高次。</li>
 <li><b>无穷小 × 有界 = 无穷小</b>；\(o(\cdot)\) 运算规则化简。</li>
 <li><b>准则放缩</b>：含 \([\,]\)、\(\sin\infty\)、\(n\) 项结构优先夹逼。</li>
-<li><b>证极限不存在</b>：海涅定理找两条路径（沿 \(y=x\) 与 \(y=2x\) 趋近不同值），或左右极限不等，或振荡。</li>
+<li><b>证极限不存在</b>：取两个数列 \(x_n^{(1)},x_n^{(2)}\to x_0\)（\(x_n\ne x_0\)）使 \(f(x_n^{(1)}),f(x_n^{(2)})\) 的极限不同（或左右极限不等、振荡）。</li>
 <li><b>已知极限反求参数</b>：由式定型（如分母趋于 0 ⇒ 分子也趋于 0），列方程解参数。</li>
 </ol>
 </div>
@@ -603,7 +604,7 @@ td.c{text-align:center}
 <tr><td>\(\arcsin x=x+\dfrac{x^3}{6}+o(x^3)\)</td><td>\(\dfrac{1}{1+x}=1-x+x^2-\cdots+(-1)^nx^n+o(x^n)\)</td></tr>
 </tbody>
 </table>
-<div class="mini">用法分层：求极限 / 判阶用佩亚诺余项；估值、证不等式用拉格朗日余项。展开阶数「够用为止」——比目标分母高一阶。</div>
+<div class="mini"><b>非零点展开模板</b>：\(f(x)=\sum_k\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+R_n\)；如 \(\ln x=\ln x_0+\frac{x-x_0}{x_0}-\frac{(x-x_0)^2}{2x_0^2}+\cdots\)（\(x_0\) 附近）。<br>用法分层：求极限 / 判阶用佩亚诺余项；估值、证不等式用拉格朗日余项。展开阶数「够用为止」——比目标分母高一阶。</div>
 
 <h3>三、洛必达法则</h3>
 <div class="box"><span class="t">定理（\(\frac00\) 与 \(\frac\infty\infty\) 两种基本型）</span><br>
@@ -640,7 +641,7 @@ td.c{text-align:center}
 </div>
 <div class="box"><span class="t">最大值与最小值</span><br>
 闭区间 \([a,b]\) 上：比较所有「驻点 + 不可导点 + 端点」的函数值，最大者即最大值。<br>
-实际问题：若目标函数在定义域内只有<b>唯一</b>驻点，则它必为所求最值点（省去比较）；务必写清定义域与量纲。<br>
+实际问题：若目标函数在定义域内只有<b>唯一</b>驻点，且由问题背景保证最值存在、不可能在端点取得，则它必为所求最值点（省去比较）；务必写清定义域与量纲。<br>
 开区间/无穷区间：结合单调性、渐近线、极限行为判断最值是否存在。
 </div>
 <div class="box gray"><span class="t">判断流程速记</span><br>
@@ -757,7 +758,7 @@ td.c{text-align:center}
 
 <h4>8.6 极值/最值应用题建模</h4>
 <div class="box">
-设变量 \(x\) → 写目标函数 \(S(x)\)（唯一！）→ 明确定义域 → \(S'(x)=0\) 解驻点 → 说明唯一驻点即最值（或比较边界）→ 回代求答案并写单位。
+设变量 \(x\) → 写目标函数 \(S(x)\)（唯一！）→ 明确定义域 → \(S'(x)=0\) 解驻点 → 说明唯一驻点即最值（须确认最值存在且不在边界取得，或直接比较边界）→ 回代求答案并写单位。
 </div>
 
 <h4>8.7 凹凸拐点列表模板</h4>
@@ -998,6 +999,7 @@ td.c{text-align:center}
 <li>绝对值：\(\left|\int_a^b f\right|\le\int_a^b|f|\)。</li>
 <li>估值：\(m(b-a)\le\int_a^b f\le M(b-a)\)（\(m,M\) 为 \(f\) 在 \([a,b]\) 上的最小、最大值）。</li>
 <li><b>积分中值定理</b>：\(f\) 在 \([a,b]\) 连续 ⇒ \(\exists\xi\in[a,b]\)，\(\int_a^b f(x)dx=f(\xi)(b-a)\)；\(f(\xi)\) 即函数在区间上的平均值。</li>
+<li>（补充）\(f\) 在 \([a,b]\) 上连续且 \(f\ge0\)，若 \(\int_a^b f(x)dx=0\)，则 \(f(x)\equiv0\)——「积分值为零」类证明的依据。</li>
 </ol>
 </div>
 <div class="mini">证明题的常见起点：把积分写成 \(f(\xi)(b-a)\)，再配罗尔/拉格朗日中值定理；求极限时注意 \(\frac{1}{b-a}\int_a^b f=f(\xi)\) 的形式。</div>
@@ -1044,7 +1046,7 @@ td.c{text-align:center}
 </table>
 <div class="mini">口诀：「偶带 \(\frac{\pi}{2}\)」。\(\int_0^{\pi}\sin^n x\,dx=2\int_0^{\pi/2}\sin^n x\,dx\)（关于 \(\frac{\pi}{2}\) 对称）。</div>
 <div class="box gray"><span class="t">常用定积分结论</span><br>
-\(\displaystyle\int_0^{\pi}\sin x\,dx=2\)；\(\displaystyle\int_0^{2\pi}\sin^2x\,dx=\pi\)；\(\displaystyle\int_{-\pi}^{\pi}\cos mx\cos nx\,dx=\pi\delta_{mn}\)（正交性）；\(\displaystyle\int_0^{1}x^m(1-x)^n dx=\frac{m!\,n!}{(m+n+1)!}\)（选学）。
+\(\displaystyle\int_0^{\pi}\sin x\,dx=2\)；\(\displaystyle\int_0^{2\pi}\sin^2x\,dx=\pi\)；\(\displaystyle\int_{-\pi}^{\pi}\cos mx\cos nx\,dx=\pi\delta_{mn}\ (m,n\ \text{不同时为}0)\)（正交性；\(m=n=0\) 时为 \(2\pi\)）；\(\displaystyle\int_0^{1}x^m(1-x)^n dx=\frac{m!\,n!}{(m+n+1)!}\)（选学）。
 </div>
 
 <h3>四、反常积分</h3>
@@ -1196,7 +1198,7 @@ td.c{text-align:center}
 \[ V=\pi\int_a^b f^2(x)\,dx;\qquad V=\pi\int_a^b\left[f^2(x)-g^2(x)\right]dx\ (\text{两曲线间}) \]
 <b>绕 \(y\) 轴</b>：两种写法择简——<br>
 ① 垫圈（边界写成 \(x=\) 常数形式）：\(V=\pi\displaystyle\int_c^d\left[x_{\text{右}}^2(y)-x_{\text{左}}^2(y)\right]dy\)；<br>
-② <b>壳层法</b>（区域在 \(y=f(x)\) 下方）：\(V=2\pi\displaystyle\int_a^b x\,f(x)\,dx\)。
+② <b>壳层法</b>（区域在 \(y=f(x)\) 下方，\(a\ge0\)）：\(V=2\pi\displaystyle\int_a^b x\,f(x)\,dx\)；若区域跨到 \(y\) 轴左侧，壳半径为 \(|x|\)。
 </div>
 <div class="box"><span class="t">平行截面面积已知的立体</span><br>
 \[ V=\int_a^b A(x)\,dx \]
@@ -1328,16 +1330,6 @@ td.c{text-align:center}
 </div>
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 6 章 完 ——</div>
-
-<h2 class="part" id="part2">第二部分　高等数学（下册）</h2>
-<div class="part-list">
-第 7 章　微分方程<br>
-第 8 章　向量代数与空间解析几何<br>
-第 9 章　多元函数微分法及其应用<br>
-第 10 章　重积分<br>
-第 11 章　曲线积分与曲面积分<br>
-第 12 章　无穷级数
-</div>
 
 <h2 class="chap" id="ch7">第 7 章　微分方程</h2>
 <div class="strip">本章速览：一 基本概念 · 二 一阶方程（可分离、齐次、线性、伯努利、全微分） · 三 可降阶的高阶方程 · 四 线性方程解的结构 · 五 常系数线性方程 · 六 欧拉方程 · 七 速查与易错 · 八 技巧库（全）</div>
@@ -1697,7 +1689,7 @@ td.c{text-align:center}
 <tbody>
 <tr><td>点—面</td><td>\(d=\dfrac{|Ax_0+By_0+Cz_0+D|}{\sqrt{A^2+B^2+C^2}}\)</td></tr>
 <tr><td>平行平面—平面</td><td>同法向量化系数一致后 \(d=\dfrac{|D_1-D_2|}{|\vec n|}\)</td></tr>
-<tr><td>点—直线（选学）</td><td>\(d=\dfrac{|\vec s\times\overrightarrow{M_0M_1}|}{|\vec s|}\)</td></tr>
+<tr><td>点—直线</td><td>\(d=\dfrac{|\vec s\times\overrightarrow{M_0M_1}|}{|\vec s|}\)</td></tr>
 <tr><td>异面直线（选学）</td><td>\(d=\dfrac{\left|[\vec s_1\ \vec s_2\ \overrightarrow{M_1M_2}]\right|}{|\vec s_1\times\vec s_2|}\)</td></tr>
 </tbody>
 </table>
@@ -1736,7 +1728,7 @@ td.c{text-align:center}
 \[ \lim_{(x,y)\to(x_0,y_0)}f(x,y)=A \]
 要求点 \((x,y)\) 以<b>任意方式</b>趋近 \((x_0,y_0)\) 时，\(f\) 都趋于 \(A\)。<br>
 证明不存在（最常用）：找两条不同路径极限不同——常选 \(y=kx\)（斜率不同）、\(y=kx^2\)、沿坐标轴等。<br>
-注意区分：二重极限存在 ⇒ 累次极限存在且相等（反之不然，累次极限相等也不保证二重极限存在，如 \(\frac{xy}{x^2+y^2}\)）。
+注意区分：二重极限存在且两个累次极限都存在时三者相等；但二重极限存在时累次极限未必存在，累次极限存在也不保证二重极限存在（如 \(\frac{xy}{x^2+y^2}\) 在原点）。
 </div>
 <div class="box"><span class="t">连续</span><br>
 \(\lim\limits_{(x,y)\to(x_0,y_0)}f(x,y)=f(x_0,y_0)\) 则连续；有界闭区域上连续 ⇒ 有界、取到最值、具有介值性。间断点的情形比一元复杂（孤立点、曲线状间断）。
@@ -1853,7 +1845,7 @@ td.c{text-align:center}
 <h4>8.2 可微性判断四步法</h4>
 <div class="box">
 ① 求 \(f_x(x_0,y_0),f_y(x_0,y_0)\)（用定义）；② 写出 \(\Delta z-f_x\Delta x-f_y\Delta y\)；③ 除以 \(\rho=\sqrt{\Delta x^2+\Delta y^2}\)；④ 检验极限是否为 0——为 0 则可微，否则不可微。<br>
-速判经验：初等函数在定义域内都可微；分段/分界点处一律回到定义。
+速判经验：初等函数在其定义区域内（内点）可微；定义域边界点、分段点一律回到定义。
 </div>
 
 <h4>8.3 复合求导树形图模板</h4>
@@ -1903,6 +1895,8 @@ td.c{text-align:center}
 ① 求方向导数（先单位化方向，再点乘梯度）；② 求最速上升/下降方向（±∇f）及最大变化率 |∇f|；③ 与等值线结合：等值线的切向量 ⊥ 梯度。
 </div>
 
+<div class="box gray"><span class="t">大纲「了解」项补遗</span><br>① 全微分形式不变性：无论 \(u,v\) 是自变量还是中间变量，\(dz=z_u\,du+z_v\,dv\) 均成立；<br>② 二元二阶泰勒公式：\(f(x_0+h,\ y_0+k)=f(x_0,y_0)+(h\partial_x+k\partial_y)f+\frac12(h\partial_x+k\partial_y)^2f+o(\rho^2)\)（\(\rho=\sqrt{h^2+k^2}\)）；<br>③ 隐函数组求导（两个方程确定两个隐函数）：用雅可比行列式解线性方程组，了解即可。</div>
+
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 9 章 完 ——</div>
 
 <h2 class="chap" id="ch10">第 10 章　重积分</h2>
@@ -1912,7 +1906,7 @@ td.c{text-align:center}
 <div class="box"><span class="t">定义与几何意义</span><br>
 \[ \iint_D f(x,y)\,d\sigma=\lim_{\lambda\to0}\sum_{i=1}^{n}f(\xi_i,\eta_i)\,\Delta\sigma_i \]
 （\(\lambda\) 为小区域直径的最大值）。连续函数在有界闭区域上可积。<br>
-几何：\(f\ge0\) 时等于曲顶柱体体积；\(f\equiv1\) 时 \(\iint_D 1\,d\sigma=D\) 的面积。
+几何：\(f\ge0\) 时等于曲顶柱体体积；\(f\equiv1\) 时 \(\iint_D 1\,d\sigma\) 等于区域 \(D\) 的面积。
 </div>
 <div class="box"><span class="t">性质</span><br>
 ① 线性；② 区域可加：\(D=D_1+D_2\)（无公共内点）⇒ \(\iint_D=\iint_{D_1}+\iint_{D_2}\)；<br>
@@ -2069,7 +2063,7 @@ td.c{text-align:center}
 ① 对称性直接定某坐标（关于 \(y\) 轴对称 ⇒ \(\bar x=0\)）；<br>
 ② 组合体：质心 = 各块「质量 × 自身质心」的加权平均（负质量法处理挖孔）；<br>
 ③ 转动惯量叠加 + 平行轴定理 \(I=I_C+md^2\)（选学，能大幅简化）；<br>
-④ 与第五章「平均值」思想联动：质心就是密度加权平均。
+④ 与第六章 §六「函数平均值」思想联动：质心就是按密度的加权平均。
 </div>
 
 <h4>7.8 重积分证不等式 / 估值题</h4>
@@ -2092,7 +2086,7 @@ td.c{text-align:center}
 <div class="box"><span class="t">计算：一化、二代、三积分</span><br>
 参数式 \(x=x(t),y=y(t)\ (\alpha\le t\le\beta)\)：
 \[ \int_L f\,ds=\int_\alpha^\beta f(x(t),y(t))\,\sqrt{x'^2(t)+y'^2(t)}\,dt \]
-（空间曲线再加 \(z'^2(t)\)；注意下限 < 上限。）
+（空间曲线再加 \(z'^2(t)\)；注意下限 &lt; 上限。）
 </div>
 <table>
 <thead><tr><th>曲线给法</th><th>弧微分 \(ds\)</th></tr></thead>
@@ -2207,7 +2201,7 @@ td.c{text-align:center}
 <div class="box warn"><span class="t">易错清单</span>
 <ol>
 <li>一型、二型混用公式：一型「与方向无关、直接把 \(ds\) 换成参数式」，二型「从起点积到终点、方向改变符号」。</li>
-<li>一型曲线积分参数下限忘写成小的（必须下限 < 上限）；二型则按起点 → 终点，不调整次序。</li>
+<li>一型曲线积分参数下限忘写成小的（必须下限 &lt; 上限）；二型则按起点 → 终点，不调整次序。</li>
 <li>格林公式忘了验「正向」和「无奇点」；有洞时内边界要取顺时针。</li>
 <li>把「\(Q_x=P_y\)」直接用于含奇点的区域判路径无关（错，必须单连通且无奇点）。</li>
 <li>高斯公式用于非闭曲面不补面；补面后忘记减去补面的通量。</li>
@@ -2222,7 +2216,7 @@ td.c{text-align:center}
 
 <h4>8.1 第一类曲线积分三步走</h4>
 <div class="box">
-① 参数化（或选显式/极坐标）；② 写 \(ds\)（对号入座用表）；③ 代入化为定积分（下限 < 上限）。<br>
+① 参数化（或选显式/极坐标）；② 写 \(ds\)（对号入座用表）；③ 代入化为定积分（下限 &lt; 上限）。<br>
 技巧：曲线本身有对称性先减半；被积函数在曲线上可用曲线方程化简（如 \(L: x^2+y^2=R^2\) 时 \(x^2+y^2\to R^2\) 直接代）。
 </div>
 
@@ -2284,6 +2278,8 @@ td.c{text-align:center}
 ① 一型：对称 + 奇 ⇒ 0；② 二型：一般不用（方向本身破坏对称），但可拆成分量分别用；③ 应用（质心、转动惯量）优先对称定型心坐标。
 </div>
 
+<div class="mini">物理应用提示（大纲要求）：第一类曲线/曲面积分可直接计算质量、质心（形心）、转动惯量等（密度 × 几何量再积分）；求引力时按坐标分量分别积分并利用对称性消项——结构与本册第 10 章 §五一致。</div>
+
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 11 章 完 ——</div>
 
 <h2 class="chap" id="ch12">第 12 章　无穷级数</h2>
@@ -2292,7 +2288,7 @@ td.c{text-align:center}
 <h3>一、常数项级数的概念与性质</h3>
 <div class="box"><span class="t">定义</span><br>
 \(\sum_{n=1}^{\infty}u_n=u_1+u_2+\cdots\)，部分和 \(S_n=\sum_{k=1}^{n}u_k\)；若 \(\lim_{n\to\infty}S_n=S\) 存在，称级数收敛，和为 \(S\)；否则发散。余项 \(r_n=S-S_n\to0\)。<br>
-两个基准级数：几何级数 \(\sum aq^n\)（\(|q|&lt;1\) 收敛于 \(\frac{a}{1-q}\)）；调和级数 \(\sum\frac1n\) <b>发散</b>。
+两个基准级数：几何级数 \(\sum_{n=0}^{\infty}aq^n\)（\(|q|&lt;1\) 收敛于 \(\frac{a}{1-q}\)）；调和级数 \(\sum\frac1n\) <b>发散</b>。
 </div>
 <div class="box"><span class="t">性质</span>
 <ul>
@@ -2333,7 +2329,7 @@ td.c{text-align:center}
 </ul>
 </div>
 <div class="box gray"><span class="t">判定流程</span><br>
-先对 \(\sum|u_n|\)（正项级数）用判别法：收敛 ⇒ 绝对收敛（完毕）；发散 ⇒ 再看原级数是否交错级数用莱布尼茨；是 ⇒ 条件收敛；否 ⇒ 发散（或用部分和/性质另行论证）。
+先对 \(\sum|u_n|\)（正项级数）用判别法：收敛 ⇒ 绝对收敛（完毕）；发散 ⇒ 再看原级数是否交错级数用莱布尼茨；是 ⇒ 条件收敛；否 ⇒ 改用其他方法继续判定（部分和、级数性质或其他判别法），<b>不能直接判发散</b>。
 </div>
 
 <h3>四、幂级数</h3>
@@ -2342,7 +2338,7 @@ td.c{text-align:center}
 ⇒ 存在<b>收敛半径 \(R\)</b>：\((-R,R)\) 内绝对收敛，\(|x|>R\) 发散，端点 \(x=\pm R\) 单独讨论。
 </div>
 <div class="box"><span class="t">求收敛半径</span><br>
-\[ \rho=\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|\Rightarrow R=\frac1\rho;\qquad \text{或}\quad R=\frac{1}{\lim\sqrt[n]{|a_n|}} \]
+\[ \rho=\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|\Rightarrow R=\frac1\rho;\qquad \text{或}\quad R=\frac{1}{\lim\sqrt[n]{|a_n|}}\quad(\text{设极限存在；否则用上极限——柯西-阿达马}) \]
 （\(\rho=0\Rightarrow R=+\infty\)；\(\rho=+\infty\Rightarrow R=0\)。）<b>缺项级数</b>（如只含 \(x^{2n}\)）不能直接用公式，应令 \(t=x^2\) 换元或直接按定义判敛散。
 </div>
 <div class="box"><span class="t">幂级数的运算性质（收敛区间内）</span><br>
@@ -2447,17 +2443,9 @@ td.c{text-align:center}
 数列型：部分和单调有界；通项放缩比较（把通项放大成已收敛级数项）；交错型找莱布尼茨；参数题逐个讨论。
 </div>
 
-<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 12 章 完 · 高等数学部分结束 ——</div>
+<div class="mini">函数项级数（了解）：使 \(\sum u_n(x)\) 收敛的全体 \(x\) 构成收敛域，其和是 \(x\) 的函数 \(S(x)\)；幂级数是其最重要的特例。</div>
 
-<h2 class="part" id="part3">第三部分　线性代数</h2>
-<div class="part-list">
-第 13 章　行列式<br>
-第 14 章　矩阵及其运算<br>
-第 15 章　矩阵的初等变换与线性方程组<br>
-第 16 章　向量组的线性相关性<br>
-第 17 章　相似矩阵及二次型<br>
-第 18 章　线性空间与线性变换（选学）
-</div>
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 12 章 完 · 高等数学部分结束 ——</div>
 
 <h2 class="chap" id="ch13">第 13 章　行列式</h2>
 <div class="strip">本章速览：一 定义与逆序数 · 二 行列式的性质 · 三 按行展开与代数余子式 · 四 计算方法 · 五 克莱姆法则 · 六 抽象行列式 · 七 速查与易错 · 八 技巧库（全）</div>
@@ -2583,7 +2571,7 @@ td.c{text-align:center}
 
 <h4>8.2 加边法（升阶法）</h4>
 <div class="box">
-形如「主对角 + 每行同列」的行列式（\(\begin{vmatrix}a_1+b&b&\cdots\\ \vdots\end{vmatrix}\) 型），通过升一阶加边：
+形如「主对角线为 \(a_i+b\)、其余元素全为 \(b\)」的行列式（\(\begin{vmatrix}a_1+b&b&\cdots\\ \vdots\end{vmatrix}\) 型），通过升一阶加边：
 \[ \begin{vmatrix}1&1&1&\cdots\\ 0&a_1+b&b&\cdots\\ 0&b&a_2+b&\cdots\\ \vdots\end{vmatrix} \]
 再用第一行消去其余行，化为三角——「升阶降计算」的典型。
 </div>
@@ -2645,7 +2633,7 @@ td.c{text-align:center}
 \(A_{m\times s}B_{s\times n}=C_{m\times n}\)，其中 \(c_{ij}=\sum\limits_{k=1}^{s}a_{ik}b_{kj}\)（<b>左行乘右列</b>）。<br>
 运算律：\((AB)C=A(BC)\)，\(A(B+C)=AB+AC\)，\((A+B)C=AC+BC\)，\(k(AB)=(kA)B=A(kB)\)。<br>
 <b>三个「不」</b>：<br>
-① \(AB\ne BA\)（乘法不交换；数量矩阵 \(kE\) 例外——与任何矩阵可交换）；<br>
+① \(AB\ne BA\)（乘法不交换；数量矩阵 \(kE\) 例外——与任何同阶方阵可交换）；<br>
 ② \(AB=O\) 推不出 \(A=O\) 或 \(B=O\)；<br>
 ③ \(AB=AC\) 且 \(A\ne O\) 推不出 \(B=C\)（消去律不成立，除非 \(A\) 可逆）。<br>
 由此：\((A+B)^2\ne A^2+2AB+B^2\)（除非 \(AB=BA\)）。
@@ -2820,7 +2808,7 @@ td.c{text-align:center}
 <li>\(k\ne0\)：\(r(kA)=r(A)\)。</li>
 <li>\(r\!\begin{pmatrix}A&O\\O&B\end{pmatrix}=r(A)+r(B)\)。</li>
 <li>\(r(A^TA)=r(A)\)（实矩阵常用）。</li>
-<li><b>Sylvester 不等式</b>：若 \(AB=O\)（\(A\) 为 \(m\times n\)），则 \(r(A)+r(B)\le n\)。</li>
+<li><b>Sylvester 不等式</b>：一般形式 \(r(AB)\ge r(A)+r(B)-n\)（\(A\) 为 \(m\times n\)、\(B\) 为 \(n\times p\)）；重要推论：若 \(AB=O\)，则 \(r(A)+r(B)\le n\)。</li>
 <li>若 \(r(A)=n\)（列满秩），则 \(r(AB)=r(B)\)（左乘列满秩保持秩）。</li>
 </ol>
 </div>
@@ -2962,14 +2950,14 @@ td.c{text-align:center}
 <div class="box"><span class="t">判定定理（核心）</span><br>
 \[ \alpha_1,\dots,\alpha_m\ \text{线性相关}\iff r(\alpha_1,\dots,\alpha_m)&lt;m \]
 \[ \alpha_1,\dots,\alpha_m\ \text{线性无关}\iff r(\alpha_1,\dots,\alpha_m)=m\ (\text{列满秩}) \]
-（\(m\) 是向量个数；等价说法：齐次方程组有非零解 ↔ 相关。）
+（\(m\) 是向量个数；等价说法：齐次方程组有非零解 ↔ 相关。）<br>又一等价刻画：线性相关 ⇔ 至少有一个向量可由其余向量线性表示（线性无关 ⇔ 任一向量都不能由其余表示）。
 </div>
 <table>
 <thead><tr><th>情形</th><th>结论</th></tr></thead>
 <tbody>
 <tr><td>含零向量</td><td>必线性相关</td></tr>
 <tr><td>两个向量成比例（共线）</td><td>线性相关</td></tr>
-<tr><td>向量个数 \(m&gt;\) 维数 \(n\)</td><td>必线性相关（\(n+1\) 个 n 维向量必相关）</td></tr>
+<tr><td>向量个数超过维数（\(m&gt;n\)）</td><td>必线性相关（\(n+1\) 个 n 维向量必相关）</td></tr>
 <tr><td>部分相关</td><td>整体相关（整体无关 ⇒ 任何部分无关）</td></tr>
 <tr><td>无关组添加一个向量后相关</td><td>新向量可由原组<b>唯一</b>线性表示</td></tr>
 </tbody>
@@ -3003,7 +2991,7 @@ td.c{text-align:center}
 </ul>
 </div>
 <div class="box gray"><span class="t">常用秩不等式（与 15 章合体）</span><br>
-\(r(A+B)\le r(A)+r(B)\)；\(r(AB)\le\min\{r(A),r(B)\}\)；\(AB=O\Rightarrow r(A)+r(B)\le n\)；<br>
+\(r(A+B)\le r(A)+r(B)\)；\(r(AB)\le\min\{r(A),r(B)\}\)；\(AB=O\Rightarrow r(A)+r(B)\le n\)（\(n\) 为 \(A\) 的列数）；<br>
 若 \(\beta\) 可由组 \(\alpha\) 表示，则 \(r(\alpha_1,\dots,\alpha_m,\beta)=r(\alpha_1,\dots,\alpha_m)\)。
 </div>
 
@@ -3100,7 +3088,7 @@ td.c{text-align:center}
 每步「减掉在已有 β 上的投影」；最后逐个单位化得标准正交组。
 </div>
 <div class="box"><span class="t">正交矩阵</span><br>
-\(A^TA=E\) ⇔ \(A^{-1}=A^T\) ⇔ \(A\) 的列（行）向量组是标准正交基 ⇔ \(|A|=\pm1\)。<br>
+\(A^TA=E\) ⇔ \(A^{-1}=A^T\) ⇔ \(A\) 的列（行）向量组是标准正交基（此时必有 \(|A|=\pm1\)，反之不成立）。<br>
 正交变换（\(x=Qy\)，\(Q\) 正交）保持内积与长度不变（旋转/反射的代数刻画）。
 </div>
 
@@ -3122,7 +3110,7 @@ td.c{text-align:center}
 <h3>三、相似矩阵与可对角化</h3>
 <div class="box"><span class="t">定义与相似不变量</span><br>
 存在可逆矩阵 \(P\) 使 \(P^{-1}AP=B\)，称 \(A\) 与 \(B\) 相似。<br>
-相似的必要条件（相似不变量）：特征多项式与特征值相同、迹相同、行列式相同、秩相同、可逆性相同。
+相似的必要条件（相似不变量）：特征多项式与特征值相同、迹相同、行列式相同、秩相同、可逆性相同；进一步：\(A\sim B\Rightarrow A^k\sim B^k\)、\(f(A)\sim f(B)\)（任意多项式），且可逆时 \(A^{-1}\sim B^{-1}\)。
 </div>
 <div class="box"><span class="t">可对角化的充要条件</span><br>
 \(A\) 可对角化 ⇔ \(A\) 有 \(n\) 个线性无关的特征向量 ⇔ 每个特征值的「几何重数 = 代数重数」，即对每个 \(k\) 重特征值 \(\lambda\)：
@@ -3159,7 +3147,7 @@ td.c{text-align:center}
 </div>
 <div class="box"><span class="t">标准形、规范形与合同</span><br>
 经可逆线性变换 \(x=Cy\) 后化得<b>标准形</b>（只含平方项）\(f=d_1y_1^2+\cdots+d_ny_n^2\)；系数只取 \(1,-1,0\) 时称<b>规范形</b>。<br>
-<b>合同</b>：\(A\simeq B\iff\exists\) 可逆 \(C\)：\(B=C^{T}AC\)。<b>惯性定理</b>：标准形中正系数个数 \(p\)（正惯性指数）、负系数个数 \(q\)（负惯性指数）由 \(A\) 唯一决定，\(p+q=r(A)\)；合同 ⇔ 正负惯性指数相同。
+<b>合同</b>：\(A\simeq B\iff\exists\) 可逆 \(C\)：\(B=C^{T}AC\)。<b>惯性定理</b>：标准形中正系数个数 \(p\)（正惯性指数）、负系数个数 \(q\)（负惯性指数）由 \(A\) 唯一决定，\(p+q=r(A)\)；合同 ⇔ 正负惯性指数相同。（二次型的秩：\(r(f)=r(A)=p+q\)。）
 </div>
 <div class="box"><span class="t">化标准形两法</span><br>
 ① <b>正交变换法</b>（\(Q^T=Q^{-1}\)，先求特征值）：\(f=\lambda_1y_1^2+\cdots+\lambda_ny_n^2\)（系数就是特征值，标准形同时是相似对角化的结果）；<br>
@@ -3265,7 +3253,7 @@ td.c{text-align:center}
 
 <h4>8.8 高频结论速记</h4>
 <div class="box">
-① 正交向量组线性无关；② 不同特征值特征向量无关（对称时正交）；③ \(k\) 重根多想可对角化必须 \(n-r(A-\lambda E)=k\)；<br>
+① 正交向量组线性无关；② 不同特征值特征向量无关（对称时正交）；③ \(k\) 重根想可对角化，必须 \(n-r(A-\lambda E)=k\)；<br>
 ④ 正定 ⇔ 顺序主子式全正；⑤ \(A\) 正定 ⇔ 存在可逆 \(C\) 使 \(A=C^{T}C\)；⑥ 正交矩阵 \(|A|=\pm1\) 且 \(A^{-1}=A^T\)。
 </div>
 
@@ -3376,18 +3364,6 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 18 章 完 · 线性代数部分结束 ——</div>
 
-<h2 class="part" id="part4">第四部分　概率论与数理统计</h2>
-<div class="part-list">
-第 19 章　概率论的基本概念<br>
-第 20 章　随机变量及其分布<br>
-第 21 章　多维随机变量及其分布<br>
-第 22 章　随机变量的数字特征<br>
-第 23 章　大数定律与中心极限定理<br>
-第 24 章　样本及抽样分布<br>
-第 25 章　参数估计<br>
-第 26 章　假设检验
-</div>
-
 <h2 class="chap" id="ch19">第 19 章　概率论的基本概念</h2>
 <div class="strip">本章速览：一 样本空间与事件运算 · 二 概率定义与性质 · 三 条件概率与乘法公式 · 四 全概率与贝叶斯 · 五 独立性 · 六 速查与易错 · 七 技巧库（全）</div>
 
@@ -3407,7 +3383,7 @@ td.c{text-align:center}
 </div>
 
 <h3>二、概率的定义与性质</h3>
-<div class="box"><span class="t">三种定义</span><br>
+<div class="box"><span class="t">概率的四种定义</span><br>
 ① 统计定义：频率的稳定值；② <b>古典概型</b>：样本点有限且等可能，\(P(A)=\dfrac{A\text{ 包含的样本点数}}{\text{样本点总数}}\)；③ <b>几何概型</b>：\(P(A)=\dfrac{A\text{ 的测度}}{S\text{ 的测度}}\)（长度/面积/体积比）。<br>
 ④ 公理化定义：非负性、规范性 \(P(S)=1\)、可列可加性（互斥事件列）。
 </div>
@@ -3525,7 +3501,7 @@ td.c{text-align:center}
 
 <h4>7.7 常用放缩与恒等式</h4>
 <div class="box">
-\(P(A\cup B)\le P(A)+P(B)\)；\(P(A-B)=P(A)-P(AB)\ge P(A)-P(B)\)（当 \(P(A)\ge P(B)\) 时）；<br>
+\(P(A\cup B)\le P(A)+P(B)\)；\(P(A-B)=P(A)-P(AB)\ge P(A)-P(B)\)（因 \(P(AB)\le P(B)\)，恒成立）；<br>
 \(P(AB)\le P(A)\le P(A\cup B)\le P(A)+P(B)\)——证明不等式题的主力链条。
 </div>
 
@@ -3573,8 +3549,8 @@ td.c{text-align:center}
 <table>
 <thead><tr><th>分布</th><th>记号</th><th>密度 / 分布函数</th></tr></thead>
 <tbody>
-<tr><td>均匀分布</td><td>\(U(a,b)\)</td><td>\(f=\dfrac{1}{b-a}\ (a&lt;x&lt;b)\)；F 为线性函数</td></tr>
-<tr><td>指数分布</td><td>\(E(\lambda)\)</td><td>\(f=\lambda e^{-\lambda x}\ (x&gt;0)\)；\(F=1-e^{-\lambda x}\ (x&gt;0)\)</td></tr>
+<tr><td>均匀分布</td><td>\(U(a,b)\)</td><td>\(f=\dfrac{1}{b-a}\ (a&lt;x&lt;b)\)；\(F(x)=0\ (x\le a),\ \dfrac{x-a}{b-a}\ (a&lt;x&lt;b),\ 1\ (x\ge b)\)</td></tr>
+<tr><td>指数分布</td><td>\(E(\lambda)\)</td><td>\(f=\lambda e^{-\lambda x}\ (x&gt;0)\)；\(F(x)=0\ (x\le0),\ 1-e^{-\lambda x}\ (x&gt;0)\)</td></tr>
 <tr><td>正态分布</td><td>\(N(\mu,\sigma^2)\)</td><td>\(f=\dfrac{1}{\sqrt{2\pi}\,\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\)</td></tr>
 </tbody>
 </table>
@@ -3727,6 +3703,8 @@ td.c{text-align:center}
 <li>\(X,Y\) 独立 ⇒ \(g(X)\) 与 \(h(Y)\) 也独立（对任意函数）。</li>
 <li>快速判定技巧：联合密度非零区域是<b>矩形</b>且密度可分离变量成 \(g(x)h(y)\) ⇒ 独立；区域不是矩形 ⇒ 不独立。</li>
 <li><b>二维正态分布</b>：\(X,Y\) 独立 ⇔ 相关系数 \(\rho=0\)（仅正态有此结论，一般分布不成立）。</li>
+<li><b>二维正态密度与条件分布</b>：\(f(x,y)=\dfrac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\exp\left\{-\dfrac{1}{2(1-\rho^2)}\left[\dfrac{(x-\mu_1)^2}{\sigma_1^2}-2\rho\dfrac{(x-\mu_1)(y-\mu_2)}{\sigma_1\sigma_2}+\dfrac{(y-\mu_2)^2}{\sigma_2^2}\right]\right\}\)；给定 \(Y=y\) 时 \(X\mid Y=y\sim N\!\left(\mu_1+\rho\dfrac{\sigma_1}{\sigma_2}(y-\mu_2),\ \sigma_1^2(1-\rho^2)\right)\)（期望关于 y 线性）。</li>
+<li>注意：边缘都是正态 ⇏ 联合是二维正态（经典陷阱）；但联合是二维正态 ⇒ 边缘必为正态。</li>
 </ul>
 </div>
 
@@ -3738,10 +3716,10 @@ td.c{text-align:center}
 ① 写 \(F_Z(z)=P(g(X,Y)\le z)\)；② 在 \(xOy\) 面上画出区域 \(\{g(x,y)\le z\}\)；③ 化成二重积分 \(\iint_{D_z}f(x,y)\,dx\,dy\)；④ 对 z 求导得 \(f_Z(z)\)（记得分段）。
 </div>
 <div class="box"><span class="t">Z = X + Y 的卷积公式（独立时）</span><br>
-\[ f_Z(z)=\int_{-\infty}^{+\infty}f_X(x)\,f_Y(z-x)\,dx=\int_{-\infty}^{+\infty}f_X(z-y)\,f_Y(y)\,dy \]
+\[ f_Z(z)=\int_{-\infty}^{+\infty}f_X(x)\,f_Y(z-x)\,dx=\int_{-\infty}^{+\infty}f_X(z-y)\,f_Y(y)\,dy \]<br>（不独立时不能用 \(f_Xf_Y\)，但通式 \(f_Z(z)=\int_{-\infty}^{+\infty}f(x,\,z-x)\,dx\) 仍成立。）
 <b>正态可加性</b>：\(X\sim N(\mu_1,\sigma_1^2),\ Y\sim N(\mu_2,\sigma_2^2)\) 且独立 ⇒
 \[ X+Y\sim N\!\left(\mu_1+\mu_2,\ \sigma_1^2+\sigma_2^2\right) \]
-一般线性组合：\(aX+bY\sim N\!\left(a\mu_1+b\mu_2,\ a^2\sigma_1^2+b^2\sigma_2^2\right)\)（独立时）。
+一般线性组合：\(aX+bY\sim N\!\left(a\mu_1+b\mu_2,\ a^2\sigma_1^2+b^2\sigma_2^2\right)\)（独立时）。<br>其他可加性（独立）：\(B(n_1,p)+B(n_2,p)=B(n_1+n_2,p)\)；\(P(\lambda_1)+P(\lambda_2)=P(\lambda_1+\lambda_2)\)。
 </div>
 <div class="box"><span class="t">max 与 min 的分布（独立）</span><br>
 \[ F_{\max}(z)=F_X(z)\,F_Y(z),\qquad F_{\min}(z)=1-\left[1-F_X(z)\right]\left[1-F_Y(z)\right] \]
@@ -3861,7 +3839,7 @@ n 个独立同分布推广：\(F_{\max}(z)=[F(z)]^n\)，\(F_{\min}(z)=1-[1-F(z)]
 \(|\rho|=1\iff\) 存在 \(a\ne0,b\) 使 \(P(Y=aX+b)=1\)（线性关系）；\(|\rho|\) 越接近 1 线性关系越强。
 </div>
 <div class="box"><span class="t">不相关的等价说法（重要）</span><br>
-\[ \rho_{XY}=0\iff \mathrm{Cov}(X,Y)=0\iff E(XY)=E(X)E(Y)\iff D(X\pm Y)=D(X)+D(Y) \]
+\[ \rho_{XY}=0\iff \mathrm{Cov}(X,Y)=0\iff E(XY)=E(X)E(Y)\iff D(X\pm Y)=D(X)+D(Y)\qquad(\text{前提}\ D(X)&gt;0,\ D(Y)&gt;0) \]
 <b>独立 ⇒ 不相关；不相关 ⇏ 独立</b>（反例：\(X\sim U(-1,1),\ Y=X^2\)，不相关但明显不独立）。<br>
 特例：二维正态分布中「独立 ⇔ 不相关」（正态专属结论）。<br>
 实质：不相关仅表示「无线性关系」，不代表无任何关系。
@@ -3999,7 +3977,7 @@ n 重伯努利试验中，事件发生的频率 \(\dfrac{n_A}{n}\xrightarrow{P}p
 <div class="mini">共同思想：<b>样本多了，平均值稳定</b>；大数定律的极限是一个常数（依概率收敛），而中心极限定理讲的是「偏差的分布形状」（依分布收敛）。</div>
 
 <h3>二、中心极限定理</h3>
-<div class="box"><span class="t">列维-林德伯格定理（独立同分布 CLT）</span><br>
+<div class="box"><span class="t">林德伯格-列维定理（独立同分布 CLT）</span><br>
 设 \(X_1,X_2,\dots\) 独立同分布，\(E(X_i)=\mu\)，\(D(X_i)=\sigma^2\in(0,+\infty)\)，则
 \[ \frac{\sum_{i=1}^{n}X_i-n\mu}{\sigma\sqrt n}\xrightarrow{\text{分布}}N(0,1) \]
 近似使用（n 充分大时）：
@@ -4198,7 +4176,7 @@ n 重伯努利试验中，事件发生的频率 \(\dfrac{n_A}{n}\xrightarrow{P}p
 </div>
 <div class="box"><span class="t">最大似然估计（MLE）</span><br>
 似然函数：连续 \(L(\theta)=\prod\limits_{i=1}^{n}f(x_i;\theta)\)；离散 \(L(\theta)=\prod p(x_i;\theta)\)。<br>
-步骤：① 写 \(L(\theta)\)；② 取对数 \(\ln L\)；③ 解方程 \(\dfrac{d\ln L}{d\theta}=0\) 得驻点（比 L 直接求导简单得多）；④ 若 L 单调，则驻点在端点——直接观察取最大值的位置。
+步骤：① 写 \(L(\theta)\)；② 取对数 \(\ln L\)；③ 解方程 \(\dfrac{d\ln L}{d\theta}=0\) 得驻点（比 L 直接求导简单得多）；④ 若 \(\ln L\) 单调，则无内部驻点，最大值在参数允许范围的端点处取得（由样本取值决定，如均匀分布的 \(\max X_i\)）。
 </div>
 <table>
 <thead><tr><th>分布</th><th>矩估计</th><th>最大似然估计</th></tr></thead>
@@ -4211,7 +4189,7 @@ n 重伯努利试验中，事件发生的频率 \(\dfrac{n_A}{n}\xrightarrow{P}p
 </tbody>
 </table>
 <div class="box gray"><span class="t">不变性</span><br>
-若 \(\hat\theta\) 是 \(\theta\) 的 MLE，且 \(g\) 单调，则 \(g(\hat\theta)\) 是 \(g(\theta)\) 的 MLE（如正态中 \(\widehat{\sigma}=\sqrt{\hat\sigma^2}\)）。
+若 \(\hat\theta\) 是 \(\theta\) 的 MLE，则对任意函数 \(g\)，\(g(\hat\theta)\) 是 \(g(\theta)\) 的 MLE（如正态中 \(\widehat{\sigma}=\sqrt{\hat\sigma^2}\)）。
 </div>
 
 <h3>二、估计量的评选标准</h3>
@@ -4243,7 +4221,7 @@ n 重伯努利试验中，事件发生的频率 \(\dfrac{n_A}{n}\xrightarrow{P}p
 <div class="box"><span class="t">正态总体方差 σ² 的置信区间</span><br>
 用 \(\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)\)：
 \[ \left(\frac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)},\ \frac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)}\right) \]
-注意：分母左侧用「大的上分位点」\(\chi^2_{\alpha/2}\)、右侧用「小的」\(\chi^2_{1-\alpha/2}\)，区间才以 S² 为中心方向正确。
+注意：分母左侧用大的上分位点 \(\chi^2_{\alpha/2}(n-1)\)、右侧用小的 \(\chi^2_{1-\alpha/2}(n-1)\)，才不至于把两个端点写反。
 </div>
 <div class="box"><span class="t">两正态总体的区间估计</span><br>
 ① 均值差 \(\mu_1-\mu_2\)（σ 已知）：
@@ -4311,6 +4289,8 @@ n 重伯努利试验中，事件发生的频率 \(\dfrac{n_A}{n}\xrightarrow{P}p
 置信区间与假设检验对偶：\(\mu_0\) 落在 \(1-\alpha\) 置信区间内 ⇔ 不拒绝 \(H_0:\mu=\mu_0\)（水平 α）——第 26 章的核心直觉来源。
 </div>
 
+<div class="mini">单侧置信区间（了解）：置信下限用单侧分位点 \(t_\alpha(n-1)\)（或 \(z_\alpha\)）替代双侧的 \(\alpha/2\) 分位点，同法反解即可。</div>
+
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 25 章 完 ——</div>
 
 <h2 class="chap" id="ch26">第 26 章　假设检验</h2>
@@ -4318,7 +4298,7 @@ n 重伯努利试验中，事件发生的频率 \(\dfrac{n_A}{n}\xrightarrow{P}p
 
 <h3>一、假设检验的基本概念</h3>
 <div class="box"><span class="t">原假设与备择假设</span><br>
-\(H_0\)（原假设，通常含等号）与 \(H_1\)（备择假设）；双侧检验（\(H_1:\mu\ne\mu_0\)）与单侧检验（\(H_1:\mu&gt;\mu_0\) 或 \(&lt;\mu_0\)）。<br>
+\(H_0\)（原假设，通常含等号）与 \(H_1\)（备择假设）；双侧检验（\(H_1:\mu\ne\mu_0\)）与单侧检验（\(H_1:\mu&gt;\mu_0\) 或 \(H_1:\mu&lt;\mu_0\)）。<br>
 检验统计量：在 \(H_0\) 成立时分布已知的统计量；拒绝域：由显著性水平 α 确定的「小概率区域」。
 </div>
 <div class="box"><span class="t">两类错误</span>
@@ -4351,13 +4331,13 @@ p 值（了解）：在 \(H_0\) 下出现「当前或更极端」结果的概率
 <tbody>
 <tr><td>单总体均值 \(\mu\)</td><td>σ 已知</td><td>\(U=\dfrac{\sqrt n(\bar X-\mu_0)}{\sigma}\sim N(0,1)\)</td><td>\(|U|&gt;z_{\alpha/2}\)</td></tr>
 <tr><td>单总体均值 \(\mu\)</td><td>σ 未知</td><td>\(T=\dfrac{\sqrt n(\bar X-\mu_0)}{S}\sim t(n-1)\)</td><td>\(|T|&gt;t_{\alpha/2}(n-1)\)</td></tr>
-<tr><td>单总体方差 \(\sigma^2\)</td><td>—</td><td>\(\chi^2=\dfrac{(n-1)S^2}{\sigma_0^2}\sim\chi^2(n-1)\)</td><td>\(\chi^2&gt;\chi^2_{\alpha/2}\) 或 \(\chi^2&lt;\chi^2_{1-\alpha/2}\)</td></tr>
+<tr><td>单总体方差 \(\sigma^2\)</td><td>—</td><td>\(\chi^2=\dfrac{(n-1)S^2}{\sigma_0^2}\sim\chi^2(n-1)\)</td><td>\(\chi^2&gt;\chi^2_{\alpha/2}(n-1)\) 或 \(\chi^2&lt;\chi^2_{1-\alpha/2}(n-1)\)</td></tr>
 <tr><td>两总体均值差</td><td>等方差未知</td><td>\(T=\dfrac{\bar X-\bar Y}{S_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\sim t(n_1+n_2-2)\)</td><td>\(|T|&gt;t_{\alpha/2}(n_1+n_2-2)\)</td></tr>
-<tr><td>两总体方差比</td><td>—</td><td>\(F=\dfrac{S_1^2}{S_2^2}\sim F(n_1-1,n_2-1)\)</td><td>\(F&gt;F_{\alpha/2}\) 或 \(F&lt;F_{1-\alpha/2}\)</td></tr>
+<tr><td>两总体方差比</td><td>—</td><td>\(F=\dfrac{S_1^2}{S_2^2}\sim F(n_1-1,n_2-1)\)</td><td>\(F&gt;F_{\alpha/2}(n_1-1,n_2-1)\) 或 \(F&lt;F_{1-\alpha/2}(n_1-1,n_2-1)\)</td></tr>
 </tbody>
 </table>
 <div class="box gray"><span class="t">单侧检验</span><br>
-方向由 \(H_1\) 决定：\(H_1:\mu&gt;\mu_0\) ⇒ 拒绝域在右侧（如 \(U&gt;z_\alpha\)）；\(H_1:\mu&lt;\mu_0\) ⇒ 左侧（\(U&lt;-z_\alpha\)）。<b>先看「高于/低于」「显著大于/小于」等方向词再写拒绝域。</b>
+方向由 \(H_1\) 决定：\(H_1:\mu&gt;\mu_0\) ⇒ 拒绝域在右侧（如 \(U&gt;z_\alpha\)）；\(H_1:\mu&lt;\mu_0\) ⇒ 左侧（\(U&lt;-z_\alpha\)）。<b>先看「高于/低于」「显著大于/小于」等方向词再写拒绝域。</b><br>方差的单侧：\(H_1:\sigma^2&gt;\sigma_0^2\) ⇒ 拒绝域 \(\chi^2&gt;\chi^2_\alpha(n-1)\)；方差比的单侧：\(H_1:\sigma_1^2&gt;\sigma_2^2\) ⇒ \(F&gt;F_\alpha(n_1-1,n_2-1)\)。
 </div>
 
 <h3>三、假设检验与置信区间的关系（对偶）</h3>
@@ -4418,14 +4398,14 @@ p 值（了解）：在 \(H_0\) 下出现「当前或更极端」结果的概率
 
 <h4>5.6 全书使用与复习建议</h4>
 <div class="box">
-① 每章先看「知识地图/速览」建立框架，再读盒子里的定义定理；② 做题卡壳时直接查「技巧库」与「速查」；③ 打印前联网打开一次（公式由 MathJax 渲染）；④ 本册覆盖数一全部 26 章：高数上（1–6）、高数下（7–12）、线代（13–18）、概率统计（19–26）。
+① 每章先看「本章速览」建立框架，再读盒子里的定义定理；② 做题卡壳时直接查「技巧库」与「速查」；③ 打印前联网打开一次（公式由 MathJax 渲染）；④ 本册覆盖数一大纲全部内容（26 章）：高数上（1–6）、高数下（7–12）、线代（13–17 + 选学 18）、概率统计（19–26）。
 </div>
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 26 章 完 ——</div>
 <div class="mini" style="text-align:center;color:#888;margin:8mm 0 2mm;font-size:11pt">—— 全书完 · 考研数一知识点汇总（26 章 · 四部分） ——</div>
 <div class="foot">
 使用说明：本册为「知识点 + 技巧」全集，覆盖数一全部章节；建议 A4 打印（关闭页眉页脚，100% 缩放）；公式需联网渲染一次后打印效果最佳。<br>
-结构：封面 → 目录 → 四个分部 → 各章（知识全表 → 速查 → 易错 → 技巧库）。
+结构：封面 → 目录（四部分分组）→ 各章（知识全表 → 速查 → 易错 → 技巧库）。
 </div>
 
 </div>
