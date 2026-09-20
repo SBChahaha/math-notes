@@ -36,7 +36,7 @@ td.c{text-align:center}
 
 <h1>考研数一 · 知识点汇总（打印版）</h1>
 <div class="sub">高等数学（同济版）上册 · 第 1 章　函数与极限</div>
-<div class="strip">本章速览：一 函数 · 二 数列极限 · 三 函数极限 · 四 极限运算法则 · 五 极限存在准则 · 六 无穷小与等价替换 · 七 连续与间断点 · 八 闭区间连续函数的性质 · 九 速查与易错</div>
+<div class="strip">本章速览：一 函数 · 二 数列极限 · 三 函数极限 · 四 极限运算法则 · 五 极限存在准则 · 六 无穷小与等价替换 · 七 连续与间断点 · 八 闭区间连续函数的性质 · 九 速查与易错 · 十 技巧库（全）</div>
 
 <h2>一、函数</h2>
 <div class="box"><span class="t">函数定义与三要素</span><br>
@@ -256,6 +256,74 @@ td.c{text-align:center}
 <li>洛必达使用前必验三条：\(\frac00\) 或 \(\frac\infty\infty\)；去心邻域内可导且 \(g'\ne0\)；\(\frac{f'}{g'}\) 极限存在或为 \(\infty\)。</li>
 </ol>
 </div>
+
+<h2>十、技巧库（做题时能想到的全在这里）</h2>
+
+<h3>10.1 用定义证极限（ε-N / ε-δ 套路）</h3>
+<div class="box">
+<ol>
+<li>作差 \(|x_n-a|\)，用<b>放缩法</b>放大成只含 \(n\) 的简单式子；</li>
+<li>令放大后的式子 \(&lt;\varepsilon\)，解出 \(n>N(\varepsilon)\)；</li>
+<li>取 \(N\)（取整加 1），按格式书写。</li>
+</ol>
+常用放大：\(\dfrac{1}{n^2}&lt;\dfrac1n\)；\(\dfrac{n}{n^2+1}&lt;\dfrac1n\)；\(|\sin n|\le1\)；\(|q|^n\to0\) 用对数或归纳。ε-δ 同理：先写 \(|f(x)-A|\) 放大，解 \(\delta\)，必要时取 \(\delta=\min\{1,\cdots\}\)。
+</div>
+
+<h3>10.2 数列极限专项技巧</h3>
+<div class="box">
+<ol>
+<li><b>夹逼三板斧</b>：① 放大/缩小分母；② 舍去或补上若干项；③ 整体换成最大项、最小项（\(n\) 项和的标配）。</li>
+<li><b>单调有界三步</b>：归纳证界 → 作差 \(x_{n+1}-x_n\)（或作比）证单调 → 设 \(\lim x_n=a\) 代入解方程并取舍。</li>
+<li><b>压缩递推</b>：若 \(|x_{n+1}-a|\le q|x_n-a|\ (0&lt;q&lt;1)\)，则 \(x_n\to a\)（先解出不动点 \(a\)）。</li>
+<li><b>n 项和先化简</b>：裂项 \(\frac1{k(k+1)}=\frac1k-\frac1{k+1}\)、等比求和、提公因子；含 \(\frac ik\) 结构联想定积分定义（第五章）。</li>
+<li><b>连续化</b>：把 \(n\) 换成 \(x\) 先求函数极限，再归结回数列（如 \(\sqrt[n]{n}\)）。</li>
+<li><b>Stolz 定理（选学，探路神器）</b>：\(b_n\) 严格增且 \(b_n\to+\infty\) 时，若 \(\lim\frac{a_{n+1}-a_n}{b_{n+1}-b_n}=L\)，则 \(\lim\frac{a_n}{b_n}=L\)（数列版洛必达；答题建议用它找答案、用标准法书写）。</li>
+<li><b>母题结论直接引用</b>：\(\lim\sqrt[n]{n}=1\)，\(\lim\frac{\ln n}{n}=0\)，\(\lim q^n=0\ (|q|&lt;1)\)，\(\lim\frac{n^k}{a^n}=0\ (a>1)\)。</li>
+</ol>
+</div>
+
+<h3>10.3 函数极限专项技巧</h3>
+<div class="box">
+<ol>
+<li><b>代入优先</b>：初等函数在定义区间内直接代。</li>
+<li><b>乘除因子等价替换</b>；加减同阶相消 → 泰勒保阶（保留到首个非零项）。</li>
+<li><b>未定式分型处理</b>：0/0、∞/∞ 用洛必达（验条件）或泰勒；0·∞ 倒因子化分式；∞−∞ 通分或有理化；0^0、∞^0、1^∞ 一律 \(u^v=e^{v\ln u}\)。</li>
+<li><b>1^∞ 三招</b>：① 凑 \((1+\alpha)^{1/\alpha}\) 结构；② 公式 \(e^{\lim v(u-1)}\)；③ 取对数后等价替换。</li>
+<li><b>凑导数定义</b>：\(\lim\limits_{\square\to0}\dfrac{f(x_0+\square)-f(x_0)}{\square}=f'(x_0)\)——凡是形如「函数差 ÷ 自变量差」的极限先想它（第二章高频）。</li>
+<li><b>有理化/通分</b>：\(\sqrt A-\sqrt B=\dfrac{A-B}{\sqrt A+\sqrt B}\)；分式相减先通分。</li>
+<li><b>换元</b>：\(t=\dfrac1x\)、\(u=x-x_0\)、三角换元，把过程搬到 0 点，套等价无穷小。</li>
+<li><b>抓大头 + 量级比较</b>：\(x\to+\infty\) 时 \(a^x\gg x^\beta\gg\ln^\gamma x\ (a>1,\beta>0)\)；有理式比最高次。</li>
+<li><b>无穷小 × 有界 = 无穷小</b>；\(o(\cdot)\) 运算规则化简。</li>
+<li><b>准则放缩</b>：含 \([\,]\)、\(\sin\infty\)、\(n\) 项结构优先夹逼。</li>
+<li><b>证极限不存在</b>：海涅定理找两条路径（沿 \(y=x\) 与 \(y=2x\) 趋近不同值），或左右极限不等，或振荡。</li>
+<li><b>已知极限反求参数</b>：由式定型（如分母趋于 0 ⇒ 分子也趋于 0），列方程解参数。</li>
+</ol>
+</div>
+
+<h3>10.4 存在性证明与连续性应用</h3>
+<div class="box">
+<ul>
+<li>证根存在：待证结论移项构造 \(F(x)\) + 零点定理；证唯一：再加单调（或罗尔反证，第三章）。</li>
+<li>分段含参连续：分界点处「左极限 = 右极限 = 函数值」列方程组。</li>
+<li>利用奇偶/周期性简化：奇函数在对称区间积分等（第五章衔接）。</li>
+<li>连续 + 单调 ⇒ 反函数连续，可用于反三角函数极限。</li>
+</ul>
+</div>
+
+<h3>10.5 常用泰勒前几项（阶数速判，第三章细讲）</h3>
+<table>
+<thead><tr><th>函数</th><th>展开（\(x\to0\) 用）</th></tr></thead>
+<tbody>
+<tr><td class="c">\(e^x\)</td><td>\(1+x+\dfrac{x^2}{2}+\dfrac{x^3}{6}+o(x^3)\)</td></tr>
+<tr><td class="c">\(\ln(1+x)\)</td><td>\(x-\dfrac{x^2}{2}+\dfrac{x^3}{3}+o(x^3)\)</td></tr>
+<tr><td class="c">\(\sin x\)</td><td>\(x-\dfrac{x^3}{6}+o(x^3)\)</td></tr>
+<tr><td class="c">\(\cos x\)</td><td>\(1-\dfrac{x^2}{2}+\dfrac{x^4}{24}+o(x^4)\)</td></tr>
+<tr><td class="c">\(\tan x\)</td><td>\(x+\dfrac{x^3}{3}+o(x^3)\)</td></tr>
+<tr><td class="c">\(\arcsin x\)</td><td>\(x+\dfrac{x^3}{6}+o(x^3)\)</td></tr>
+<tr><td class="c">\((1+x)^\alpha\)</td><td>\(1+\alpha x+\dfrac{\alpha(\alpha-1)}{2}x^2+o(x^2)\)</td></tr>
+</tbody>
+</table>
+<div class="mini">判阶口诀：先看首项差几阶——差 1 阶用等价替换就够，差 2 阶以上必须泰勒/洛必达。</div>
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 1 章 完 ——</div>
 
