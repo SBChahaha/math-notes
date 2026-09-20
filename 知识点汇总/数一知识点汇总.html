@@ -39,15 +39,19 @@ td.c{text-align:center}
 .foot{margin-top:6mm;border-top:1px dashed #bbb;padding-top:2mm;font-size:9pt;color:#666}
 .pbtn{position:fixed;right:18px;bottom:18px;z-index:9;font:600 13px/1.2 "Microsoft YaHei",sans-serif;background:#1f3a93;color:#fff;border:0;border-radius:8px;padding:12px 18px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
 .pbtn2{position:fixed;right:18px;bottom:66px;z-index:9;font:600 13px/1.2 "Microsoft YaHei",sans-serif;background:#475569;color:#fff;border:0;border-radius:8px;padding:12px 18px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
-body.col2 .sheet{column-count:2;column-gap:9mm;column-rule:1px solid #e5e7eb}
-body.col2 table{font-size:8.5pt}
-body.col2 th,body.col2 td{padding:.6mm 1mm}
-body.col2 .box{padding:1.5mm 2.2mm}
-body.col2 .strip{font-size:8pt}
-body.col2 h3{font-size:11.5pt}
-body.col2 h4{font-size:10.5pt}
-body.col2 .mini{font-size:8.5pt}
-@media print{body{background:#fff}.sheet{box-shadow:none;margin:0;max-width:none;padding:0}.pbtn,.pbtn2{display:none}@page{size:A4;margin:12mm 10mm}}
+body.col2{font-size:9.5pt}
+body.col2 #flow{column-count:2;column-gap:6mm;column-rule:.8px solid #e5e7eb}
+body.col2 #flow h2.chap{page-break-before:auto;break-before:auto;margin-top:8mm;border-top:2pt solid #1f3a93;padding-top:2mm}
+body.col2 #flow h2.chap:first-child{margin-top:0;border-top:0;padding-top:0}
+body.col2 #flow table{font-size:7pt}
+body.col2 #flow th,body.col2 #flow td{padding:.5mm .8mm}
+body.col2 #flow .box{padding:1.2mm 2mm;break-inside:avoid;page-break-inside:avoid}
+body.col2 #flow .strip{font-size:8pt;break-inside:avoid}
+body.col2 #flow h3{font-size:11pt}
+body.col2 #flow h4{font-size:10pt}
+body.col2 #flow .mini{font-size:8pt}
+body.col2 #flow mjx-container{font-size:88%}
+@media print{body{background:#fff}.sheet{box-shadow:none;margin:0;max-width:none;padding:0}.pbtn,.pbtn2{display:none}@page{size:A4;margin:12mm 8mm}}
 </style>
 </head>
 <body>
@@ -100,6 +104,8 @@ body.col2 .mini{font-size:8.5pt}
 <p><a href="#ch26">第 26 章　假设检验</a></p>
 </div>
 
+
+<div id="flow">
 
 <h2 class="chap" id="ch1">第 1 章　函数与极限</h2>
 <div class="strip">本章速览：一 函数 · 二 数列极限 · 三 函数极限 · 四 极限运算法则 · 五 极限存在准则 · 六 无穷小与等价替换 · 七 连续与间断点 · 八 闭区间连续函数的性质 · 九 速查与易错 · 十 技巧库（全）</div>
@@ -403,7 +409,7 @@ body.col2 .mini{font-size:8.5pt}
 记作 \(y'|_{x=x_0}\)、\(\left.\frac{dy}{dx}\right|_{x=x_0}\) 或 \(f'(x_0)\)；该极限存在则称 \(f\) 在 \(x_0\) 可导。区间内每点可导得到导函数 \(f'(x)\)。
 </div>
 <div class="box"><span class="t">左、右导数与可导的充要条件</span><br>
-\[ f'_-(x_0)=\lim_{\Delta x\to0^-}\frac{\Delta y}{\Delta x},\qquad f'_+(x_0)=\lim_{\Delta x\to0^+}\frac{\Delta y}{\Delta x} \]
+\[ \begin{aligned} f'_-(x_0)&=\lim_{\Delta x\to0^-}\frac{\Delta y}{\Delta x},\\ f'_+(x_0)&=\lim_{\Delta x\to0^+}\frac{\Delta y}{\Delta x} \end{aligned} \]
 <b>可导 ⇔ 左、右导数存在且相等</b>——分段函数分界点可导性的标准判法。
 </div>
 <div class="box"><span class="t">几何意义与切线、法线</span><br>
@@ -457,7 +463,7 @@ body.col2 .mini{font-size:8.5pt}
 <h3>三、高阶导数</h3>
 <div class="box"><span class="t">定义与常用 n 阶公式</span><br>
 \(y''=(y')'\)，记 \(y''\)、\(\dfrac{d^2y}{dx^2}\)；\(n\) 阶记 \(y^{(n)}=\left(y^{(n-1)}\right)'\)。
-\[ (e^x)^{(n)}=e^x,\qquad (\sin x)^{(n)}=\sin\!\left(x+\frac{n\pi}{2}\right),\qquad (\cos x)^{(n)}=\cos\!\left(x+\frac{n\pi}{2}\right) \]
+\[ \begin{aligned} &(e^x)^{(n)}=e^x,\qquad (\sin x)^{(n)}=\sin\!\left(x+\frac{n\pi}{2}\right),\\ &(\cos x)^{(n)}=\cos\!\left(x+\frac{n\pi}{2}\right) \end{aligned} \]
 \[ (x^\mu)^{(n)}=\mu(\mu-1)\cdots(\mu-n+1)\,x^{\mu-n},\qquad (\ln x)^{(n)}=\frac{(-1)^{n-1}(n-1)!}{x^n} \]
 \[ \left(\frac{1}{x+a}\right)^{(n)}=\frac{(-1)^n\,n!}{(x+a)^{n+1}} \]
 </div>
@@ -1546,12 +1552,12 @@ body.col2 .mini{font-size:8.5pt}
 <div class="box"><span class="t">向量积（叉积）</span><br>
 \(\vec c=\vec a\times\vec b\)：模 \(|\vec c|=|\vec a||\vec b|\sin\theta\)（等于以 \(\vec a,\vec b\) 为邻边的平行四边形面积）；方向同时垂直于 \(\vec a,\vec b\)，且 \(\vec a,\vec b,\vec c\) 构成右手系。<br>
 坐标公式（行列式展开）：
-\[ \vec a\times\vec b=\begin{vmatrix}\vec i&\vec j&\vec k\\ a_x&a_y&a_z\\ b_x&b_y&b_z\end{vmatrix} =\big(a_yb_z-a_zb_y,\ a_zb_x-a_xb_z,\ a_xb_y-a_yb_x\big) \]
+\[ \begin{aligned} \vec a\times\vec b&=\begin{vmatrix}\vec i&\vec j&\vec k\\ a_x&a_y&a_z\\ b_x&b_y&b_z\end{vmatrix}\\ &=\big(a_yb_z-a_zb_y,\ a_zb_x-a_xb_z,\ a_xb_y-a_yb_x\big) \end{aligned} \]
 反交换：\(\vec a\times\vec b=-\vec b\times\vec a\)；<b>平行 ⇔ \(\vec a\times\vec b=\vec 0\)</b>。<br>
 面积应用：三角形面积 \(S=\dfrac12|\vec a\times\vec b|\)。
 </div>
 <div class="box"><span class="t">混合积</span><br>
-\[ [\vec a\,\vec b\,\vec c]=(\vec a\times\vec b)\cdot\vec c=\begin{vmatrix}a_x&a_y&a_z\\ b_x&b_y&b_z\\ c_x&c_y&c_z\end{vmatrix} \]
+\[ \begin{aligned} [\vec a\,\vec b\,\vec c]&=(\vec a\times\vec b)\cdot\vec c\\ &=\begin{vmatrix}a_x&a_y&a_z\\ b_x&b_y&b_z\\ c_x&c_y&c_z\end{vmatrix} \end{aligned} \]
 几何意义：绝对值等于以三向量为棱的平行六面体体积。<br>
 <b>三向量共面 ⇔ \([\vec a\,\vec b\,\vec c]=0\)</b>；轮换不变：\([\vec a\vec b\vec c]=[\vec b\vec c\vec a]=[\vec c\vec a\vec b]\)。
 </div>
@@ -1755,7 +1761,8 @@ body.col2 .mini{font-size:8.5pt}
 <h3>三、复合函数与隐函数求导</h3>
 <div class="box"><span class="t">复合函数链式法则</span><br>
 设 \(z=f(u,v),\ u=u(x,y),\ v=v(x,y)\)：
-\[ \frac{\partial z}{\partial x}=\frac{\partial f}{\partial u}\frac{\partial u}{\partial x}+\frac{\partial f}{\partial v}\frac{\partial v}{\partial x},\qquad \frac{\partial z}{\partial y}=\frac{\partial f}{\partial u}\frac{\partial u}{\partial y}+\frac{\partial f}{\partial v}\frac{\partial v}{\partial y} \]
+\[ \frac{\partial z}{\partial x}=\frac{\partial f}{\partial u}\frac{\partial u}{\partial x}+\frac{\partial f}{\partial v}\frac{\partial v}{\partial x} \]
+\[ \frac{\partial z}{\partial y}=\frac{\partial f}{\partial u}\frac{\partial u}{\partial y}+\frac{\partial f}{\partial v}\frac{\partial v}{\partial y} \]
 思路：画<b>变量依赖树</b>——每条路径上的偏导相乘，同一变量的各路径相加。<br>
 全导数（\(z=f(u,v),u=u(t),v=v(t)\)）：\(\dfrac{dz}{dt}=f_u u'(t)+f_v v'(t)\)。
 </div>
@@ -1895,7 +1902,7 @@ body.col2 .mini{font-size:8.5pt}
 ① 求方向导数（先单位化方向，再点乘梯度）；② 求最速上升/下降方向（±∇f）及最大变化率 |∇f|；③ 与等值线结合：等值线的切向量 ⊥ 梯度。
 </div>
 
-<div class="box gray"><span class="t">大纲「了解」项补遗</span><br>① 全微分形式不变性：无论 \(u,v\) 是自变量还是中间变量，\(dz=z_u\,du+z_v\,dv\) 均成立；<br>② 二元二阶泰勒公式：\(f(x_0+h,\ y_0+k)=f(x_0,y_0)+(h\partial_x+k\partial_y)f+\frac12(h\partial_x+k\partial_y)^2f+o(\rho^2)\)（\(\rho=\sqrt{h^2+k^2}\)）；<br>③ 隐函数组求导（两个方程确定两个隐函数）：用雅可比行列式解线性方程组，了解即可。</div>
+<div class="box gray"><span class="t">大纲「了解」项补遗</span><br>① 全微分形式不变性：无论 \(u,v\) 是自变量还是中间变量，\(dz=z_u\,du+z_v\,dv\) 均成立；<br>② 二元二阶泰勒公式：\[\begin{aligned}f(x_0+h,\ y_0+k)=\;&f(x_0,y_0)+(h\partial_x+k\partial_y)f\\ &+\tfrac12(h\partial_x+k\partial_y)^2f+o(\rho^2)\end{aligned}\]（\(\rho=\sqrt{h^2+k^2}\)）；<br>③ 隐函数组求导（两个方程确定两个隐函数）：用雅可比行列式解线性方程组，了解即可。</div>
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 9 章 完 ——</div>
 
@@ -1962,7 +1969,8 @@ body.col2 .mini{font-size:8.5pt}
 适用：绕 \(z\) 轴的旋转体、含 \(x^2+y^2\) 的区域与被积函数（圆柱、圆锥、旋转抛物面）。
 </div>
 <div class="box"><span class="t">球面坐标</span><br>
-\[ x=r\sin\varphi\cos\theta,\quad y=r\sin\varphi\sin\theta,\quad z=r\cos\varphi,\qquad dV=r^2\sin\varphi\,dr\,d\varphi\,d\theta \]
+\[ x=r\sin\varphi\cos\theta,\quad y=r\sin\varphi\sin\theta,\quad z=r\cos\varphi \]
+\[ dV=r^2\sin\varphi\,dr\,d\varphi\,d\theta \]
 其中 \(r\in[0,+\infty)\) 为到原点距离，\(\varphi\in[0,\pi]\) 为与 \(z\) 轴正向夹角，\(\theta\in[0,2\pi]\) 为经度角。<br>
 适用：球体、锥体、球与锥的组合，被积函数含 \(x^2+y^2+z^2\)。（球面 \(x^2+y^2+z^2=R^2\) 即 \(r=R\)；锥面 \(z=\sqrt{x^2+y^2}\) 即 \(\varphi=\frac\pi4\)。）
 </div>
@@ -2177,15 +2185,15 @@ body.col2 .mini{font-size:8.5pt}
 <h3>六、高斯公式、斯托克斯公式与场论初步</h3>
 <div class="box"><span class="t">高斯公式（通量与散度）</span><br>
 \(\Sigma\) 是空间闭区域 \(\Omega\) 的<b>外侧</b>边界，\(P,Q,R\) 有连续偏导：
-\[ \oint\kern-1.2em\oint_\Sigma P\,dydz+Q\,dzdx+R\,dxdy=\iiint_\Omega\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\right)dV \]
-散度：\(\mathrm{div}\,\vec F=\dfrac{\partial P}{\partial x}+\dfrac{\partial Q}{\partial y}+\dfrac{\partial R}{\partial z}\)；物理意义：通量 = 散度的体积分（源汇强度）。<br>
+\[ \begin{aligned} \oint\kern-1.1em\oint_\Sigma &P\,dydz+Q\,dzdx+R\,dxdy\\ &=\iiint_\Omega\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\right)dV \end{aligned} \]
+散度：\[\mathrm{div}\,\vec F=\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\]<br>物理意义：通量 = 散度的体积分（源汇强度）。<br>
 技巧：曲面不闭 → <b>补面</b>成闭（补上的面用减法扣掉）；有奇点 → <b>挖洞</b>。
 </div>
 <div class="box"><span class="t">斯托克斯公式（环流量与旋度）</span><br>
 \(\Gamma\) 是曲面 \(\Sigma\) 的边界，二者方向按<b>右手法则</b>匹配：
-\[ \oint_\Gamma P\,dx+Q\,dy+R\,dz=\iint_\Sigma\begin{vmatrix}\cos\alpha&\cos\beta&\cos\gamma\\[2pt]\dfrac{\partial}{\partial x}&\dfrac{\partial}{\partial y}&\dfrac{\partial}{\partial z}\\[6pt]P&Q&R\end{vmatrix}dS \]
+\[ \begin{aligned} \oint_\Gamma P\,&dx+Q\,dy+R\,dz\\ &=\iint_\Sigma\begin{vmatrix}\cos\alpha&\cos\beta&\cos\gamma\\[2pt]\dfrac{\partial}{\partial x}&\dfrac{\partial}{\partial y}&\dfrac{\partial}{\partial z}\\[6pt]P&Q&R\end{vmatrix}dS \end{aligned} \]
 展开即 \(\iint_\Sigma\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)dydz+\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)dzdx+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dxdy\)。<br>
-旋度：\(\mathrm{rot}\,\vec F=\nabla\times\vec F=\left(\dfrac{\partial R}{\partial y}-\dfrac{\partial Q}{\partial z},\ \dfrac{\partial P}{\partial z}-\dfrac{\partial R}{\partial x},\ \dfrac{\partial Q}{\partial x}-\dfrac{\partial P}{\partial y}\right)\)；物理意义：环流量 = 旋度的曲面积分。
+旋度：\[\begin{aligned}\mathrm{rot}\,\vec F=\nabla\times\vec F=\Big(&\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z},\ \frac{\partial P}{\partial z}-\frac{\partial R}{\partial x},\\ &\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\Big)\end{aligned}\]<br>物理意义：环流量 = 旋度的曲面积分。
 </div>
 <div class="box gray"><span class="t">空间曲线积分与路径无关</span><br>
 单连通区域上，\(\int_\Gamma Pdx+Qdy+Rdz\) 与路径无关 ⇔ \(\mathrm{rot}\,\vec F=\vec 0\) ⇔ 存在势函数 \(u\)：\(du=Pdx+Qdy+Rdz\)。
@@ -2308,7 +2316,8 @@ body.col2 .mini{font-size:8.5pt}
 基准级数：\(\sum\frac{1}{n^p}\)（<b>p 级数：\(p>1\) 收敛，\(p\le1\) 发散</b>）、几何级数、\(\sum\frac{1}{n\ln^p n}\)。
 </div>
 <div class="box"><span class="t">比值判别法（达朗贝尔）</span><br>
-\[ \rho=\lim_{n\to\infty}\frac{u_{n+1}}{u_n}:\quad \rho&lt;1\ \text{收敛};\quad \rho>1\ (\text{含}+\infty)\ \text{发散};\quad \rho=1\ \text{失效} \]
+\[ \rho=\lim_{n\to\infty}\frac{u_{n+1}}{u_n}:\quad \rho&lt;1\ \text{收敛};\quad \rho>1\ \text{（含}+\infty\text{）发散} \]
+\[ \rho=1\ \text{时失效——改用其他判别法} \]
 适用：含 \(n!\)、连乘结构。
 </div>
 <div class="box"><span class="t">根值判别法（柯西）</span><br>
@@ -2338,7 +2347,8 @@ body.col2 .mini{font-size:8.5pt}
 ⇒ 存在<b>收敛半径 \(R\)</b>：\((-R,R)\) 内绝对收敛，\(|x|>R\) 发散，端点 \(x=\pm R\) 单独讨论。
 </div>
 <div class="box"><span class="t">求收敛半径</span><br>
-\[ \rho=\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|\Rightarrow R=\frac1\rho;\qquad \text{或}\quad R=\frac{1}{\lim\sqrt[n]{|a_n|}}\quad(\text{设极限存在；否则用上极限——柯西-阿达马}) \]
+\[ \rho=\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|\Rightarrow R=\frac1\rho \]
+\[ \text{或}\quad R=\frac{1}{\lim\sqrt[n]{|a_n|}}\quad(\text{设极限存在；否则用上极限}) \]
 （\(\rho=0\Rightarrow R=+\infty\)；\(\rho=+\infty\Rightarrow R=0\)。）<b>缺项级数</b>（如只含 \(x^{2n}\)）不能直接用公式，应令 \(t=x^2\) 换元或直接按定义判敛散。
 </div>
 <div class="box"><span class="t">幂级数的运算性质（收敛区间内）</span><br>
@@ -2372,7 +2382,8 @@ body.col2 .mini{font-size:8.5pt}
 在连续点收敛于 \(f(x)\)；在间断点收敛于 \(\dfrac{f(x^-)+f(x^+)}{2}\)（端点同理）。
 </div>
 <div class="box"><span class="t">系数公式（周期 2π）</span><br>
-\[ a_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\cos nx\,dx\ (n=0,1,2,\dots),\qquad b_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\sin nx\,dx\ (n=1,2,\dots) \]
+\[ a_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\cos nx\,dx\ (n=0,1,2,\dots) \]
+\[ b_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\sin nx\,dx\ (n=1,2,\dots) \]
 </div>
 <div class="box"><span class="t">奇偶性与延拓</span><br>
 奇函数 ⇒ \(a_n=0\)，只剩<b>正弦级数</b>；偶函数 ⇒ \(b_n=0\)，只剩<b>余弦级数</b>。<br>
@@ -2459,7 +2470,7 @@ body.col2 .mini{font-size:8.5pt}
 例：\(\tau(3412)=4\)（3 前无、4 前无、1 前有 3、4 共 2 个、2 前有 3、4 共 2 个 ⇒ 2+2=4）。
 </div>
 <div class="box"><span class="t">n 阶行列式定义</span><br>
-\[ D=\begin{vmatrix}a_{11}&\cdots&a_{1n}\\ \vdots&&\vdots\\ a_{n1}&\cdots&a_{nn}\end{vmatrix} =\sum_{p_1p_2\cdots p_n}(-1)^{\tau(p_1p_2\cdots p_n)}\,a_{1p_1}a_{2p_2}\cdots a_{np_n} \]
+\[ \begin{aligned} D&=\begin{vmatrix}a_{11}&\cdots&a_{1n}\\ \vdots&&\vdots\\ a_{n1}&\cdots&a_{nn}\end{vmatrix}\\ &=\sum_{p_1p_2\cdots p_n}(-1)^{\tau(p_1p_2\cdots p_n)}\,a_{1p_1}a_{2p_2}\cdots a_{np_n} \end{aligned} \]
 共有 \(n!\) 项，每项取自不同行不同列的乘积，符号由列标排列的逆序数决定。
 </div>
 <div class="box"><span class="t">两个常用特殊值</span><br>
@@ -2503,7 +2514,7 @@ body.col2 .mini{font-size:8.5pt}
 按行展开得到 \(D_n\) 与 \(D_{n-1},D_{n-2}\) 的关系（如三对角型 \(D_n=aD_{n-1}-bcD_{n-2}\)），解递推求通项；形如 \(D_n=aD_{n-1}+b^n\) 可构造等比。
 </div>
 <div class="box"><span class="t">④ 范德蒙德行列式</span><br>
-\[ V=\begin{vmatrix}1&1&\cdots&1\\ x_1&x_2&\cdots&x_n\\ \vdots&\vdots&&\vdots\\ x_1^{n-1}&x_2^{n-1}&\cdots&x_n^{n-1}\end{vmatrix} =\prod_{1\le j&lt;i\le n}(x_i-x_j) \]
+\[ \begin{aligned} V&=\begin{vmatrix}1&1&\cdots&1\\ x_1&x_2&\cdots&x_n\\ \vdots&\vdots&&\vdots\\ x_1^{n-1}&x_2^{n-1}&\cdots&x_n^{n-1}\end{vmatrix}\\ &=\prod_{1\le j&lt;i\le n}(x_i-x_j) \end{aligned} \]
 （大减小、按 \(i>j\) 排列；自变量互异时 \(V\ne0\)。）
 </div>
 <div class="box"><span class="t">⑤ 分块行列式</span><br>
@@ -2684,7 +2695,8 @@ body.col2 .mini{font-size:8.5pt}
 </div>
 <div class="box"><span class="t">分块对角矩阵（准对角矩阵）</span><br>
 \(M=\begin{pmatrix}A&O\\O&B\end{pmatrix}\) 的幂、行列式、逆都<b>各块独立</b>：
-\[ M^k=\begin{pmatrix}A^k&O\\O&B^k\end{pmatrix},\qquad |M|=|A||B|,\qquad M^{-1}=\begin{pmatrix}A^{-1}&O\\O&B^{-1}\end{pmatrix} \]
+\[ M^k=\begin{pmatrix}A^k&O\\O&B^k\end{pmatrix},\qquad |M|=|A||B| \]
+\[ M^{-1}=\begin{pmatrix}A^{-1}&O\\O&B^{-1}\end{pmatrix} \]
 副对角型：\(\begin{pmatrix}O&A\\B&O\end{pmatrix}^{-1}=\begin{pmatrix}O&B^{-1}\\A^{-1}&O\end{pmatrix}\)（注意位置互换）。
 </div>
 <div class="box gray"><span class="t">分块行列式（第 13 章联动）</span><br>
@@ -3084,7 +3096,7 @@ body.col2 .mini{font-size:8.5pt}
 <div class="box"><span class="t">施密特正交化（Gram-Schmidt）</span><br>
 由线性无关组 \(\alpha_1,\dots,\alpha_m\) 造正交组：
 \[ \beta_1=\alpha_1,\qquad \beta_2=\alpha_2-\frac{(\alpha_2,\beta_1)}{(\beta_1,\beta_1)}\beta_1 \]
-\[ \beta_3=\alpha_3-\frac{(\alpha_3,\beta_1)}{(\beta_1,\beta_1)}\beta_1-\frac{(\alpha_3,\beta_2)}{(\beta_2,\beta_2)}\beta_2,\quad\dots \]
+\[ \begin{aligned} \beta_3=\alpha_3&-\frac{(\alpha_3,\beta_1)}{(\beta_1,\beta_1)}\beta_1\\ &-\frac{(\alpha_3,\beta_2)}{(\beta_2,\beta_2)}\beta_2,\ \dots \end{aligned} \]
 每步「减掉在已有 β 上的投影」；最后逐个单位化得标准正交组。
 </div>
 <div class="box"><span class="t">正交矩阵</span><br>
@@ -3703,7 +3715,7 @@ body.col2 .mini{font-size:8.5pt}
 <li>\(X,Y\) 独立 ⇒ \(g(X)\) 与 \(h(Y)\) 也独立（对任意函数）。</li>
 <li>快速判定技巧：联合密度非零区域是<b>矩形</b>且密度可分离变量成 \(g(x)h(y)\) ⇒ 独立；区域不是矩形 ⇒ 不独立。</li>
 <li><b>二维正态分布</b>：\(X,Y\) 独立 ⇔ 相关系数 \(\rho=0\)（仅正态有此结论，一般分布不成立）。</li>
-<li><b>二维正态密度与条件分布</b>：\(f(x,y)=\dfrac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\exp\left\{-\dfrac{1}{2(1-\rho^2)}\left[\dfrac{(x-\mu_1)^2}{\sigma_1^2}-2\rho\dfrac{(x-\mu_1)(y-\mu_2)}{\sigma_1\sigma_2}+\dfrac{(y-\mu_2)^2}{\sigma_2^2}\right]\right\}\)；给定 \(Y=y\) 时 \(X\mid Y=y\sim N\!\left(\mu_1+\rho\dfrac{\sigma_1}{\sigma_2}(y-\mu_2),\ \sigma_1^2(1-\rho^2)\right)\)（期望关于 y 线性）。</li>
+<li><b>二维正态密度与条件分布</b>：\[\begin{aligned}f(x,y)=\;&\frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\exp\Big\{-\frac{1}{2(1-\rho^2)}\Big[\\&\frac{(x-\mu_1)^2}{\sigma_1^2}-\frac{2\rho(x-\mu_1)(y-\mu_2)}{\sigma_1\sigma_2}\\&+\frac{(y-\mu_2)^2}{\sigma_2^2}\Big]\Big\}\end{aligned}\]，给定 \(Y=y\) 时 \(X\mid Y=y\sim N\!\left(\mu_1+\rho\dfrac{\sigma_1}{\sigma_2}(y-\mu_2),\ \sigma_1^2(1-\rho^2)\right)\)（期望关于 y 线性）。</li>
 <li>注意：边缘都是正态 ⇏ 联合是二维正态（经典陷阱）；但联合是二维正态 ⇒ 边缘必为正态。</li>
 </ul>
 </div>
@@ -3825,7 +3837,8 @@ n 个独立同分布推广：\(F_{\max}(z)=[F(z)]^n\)，\(F_{\min}(z)=1-[1-F(z)]
 ⑥ \(D(X)=0\iff P(X=E(X))=1\)（几乎处处常数）。
 </div>
 <div class="box gray"><span class="t">切比雪夫不等式</span><br>
-\[ P\bigl(|X-E(X)|\ge\varepsilon\bigr)\le\frac{D(X)}{\varepsilon^2},\qquad P\bigl(|X-E(X)|&lt;\varepsilon\bigr)\ge1-\frac{D(X)}{\varepsilon^2} \]
+\[ P\bigl(|X-E(X)|\ge\varepsilon\bigr)\le\frac{D(X)}{\varepsilon^2} \]
+\[ P\bigl(|X-E(X)|&lt;\varepsilon\bigr)\ge1-\frac{D(X)}{\varepsilon^2} \]
 用途：用期望方差估计概率（证明/选择题）。
 </div>
 
@@ -4402,6 +4415,8 @@ p 值（了解）：在 \(H_0\) 下出现「当前或更极端」结果的概率
 </div>
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 26 章 完 ——</div>
+</div>
+
 <div class="mini" style="text-align:center;color:#888;margin:8mm 0 2mm;font-size:11pt">—— 全书完 · 考研数一知识点汇总（26 章 · 四部分） ——</div>
 <div class="foot">
 使用说明：本册为「知识点 + 技巧」全集，覆盖数一全部章节；建议 A4 打印（关闭页眉页脚，100% 缩放）；公式需联网渲染一次后打印效果最佳。<br>
