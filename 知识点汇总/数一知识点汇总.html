@@ -1153,6 +1153,182 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 5 章 完 ——</div>
 
+<h2 class="chap" id="ch6">第 6 章　定积分的应用</h2>
+<div class="strip">本章速览：一 元素法 · 二 平面图形的面积 · 三 体积 · 四 弧长与旋转曲面侧面积 · 五 物理应用 · 六 平均值 · 七 速查与易错 · 八 技巧库（全）</div>
+
+<h3>一、元素法（微元法）总纲</h3>
+<div class="box"><span class="t">四步模板（所有应用题的骨架）</span>
+<ol>
+<li><b>选变量、定区间</b>：根据图形或物理过程选 \(x\)（或 \(y,\theta,t\)），确定范围 \([a,b]\)；</li>
+<li><b>取微元</b>：在小区间 \([x,x+dx]\) 上「以不变代变」，写出所求量 \(Q\) 的微元 \(dQ=q(x)\,dx\)（必须是 \(dx\) 的一次式，高次项略去）；</li>
+<li><b>积分</b>：\(Q=\int_a^b q(x)\,dx\)；</li>
+<li><b>验算</b>：量纲检查、特例验证（退化情形）、与估算比较。</li>
+</ol>
+</div>
+<div class="mini">判断微元对不对：把 \(dQ\) 的表达式做量纲检查（面积 \(=\) 长×长、体积 \(=\) 面积×长），十拿九稳。</div>
+
+<h3>二、平面图形的面积</h3>
+<div class="box"><span class="t">直角坐标（两种型）</span><br>
+<b>X 型</b>（上下边界）：\(A=\displaystyle\int_a^b\left[f(x)-g(x)\right]dx\)，其中上边界 \(f\)、下边界 \(g\)；<br>
+<b>Y 型</b>（左右边界）：\(A=\displaystyle\int_c^d\left[\varphi(y)-\psi(y)\right]dy\)。<br>
+选型原则：<b>边界函数简单、需要分块少</b>的那一种；必须分块时逐块求面积再相加（找交点作为分界）。
+</div>
+<div class="box"><span class="t">参数方程与极坐标</span><br>
+参数方程 \(x=x(t),\ y=y(t)\) 与 \(x\) 轴围成的面积：\(A=\displaystyle\int_{t_1}^{t_2}\left|y(t)\,x'(t)\right|dt\)（注意积分方向与符号）。<br>
+极坐标曲边扇形：
+\[ A=\frac12\int_\alpha^\beta \rho^2(\theta)\,d\theta \]
+口诀：极坐标面积「½ 乘 ρ 方」，别丢 \(\frac12\)。
+</div>
+<table>
+<thead><tr><th>经典图形</th><th>面积</th></tr></thead>
+<tbody>
+<tr><td>心形线 \(\rho=a(1+\cos\theta)\)</td><td>\(\dfrac{3\pi a^2}{2}\)</td></tr>
+<tr><td>圆 \(\rho=2a\cos\theta\)</td><td>\(\pi a^2\)</td></tr>
+<tr><td>双纽线 \(\rho^2=a^2\cos2\theta\)（全线）</td><td>\(a^2\)</td></tr>
+<tr><td>三叶玫瑰 \(\rho=a\cos3\theta\)（三叶全）</td><td>\(\dfrac{\pi a^2}{4}\)</td></tr>
+</tbody>
+</table>
+<div class="mini">对称性减半：图形关于坐标轴对称时只算一半乘 2；极坐标先找角度的对称区间。</div>
+
+<h3>三、体积</h3>
+<div class="box"><span class="t">旋转体（绕坐标轴）</span><br>
+<b>绕 \(x\) 轴</b>（圆盘/垫圈法）：
+\[ V=\pi\int_a^b f^2(x)\,dx;\qquad V=\pi\int_a^b\left[f^2(x)-g^2(x)\right]dx\ (\text{两曲线间}) \]
+<b>绕 \(y\) 轴</b>：两种写法择简——<br>
+① 垫圈（边界写成 \(x=\) 常数形式）：\(V=\pi\displaystyle\int_c^d\left[x_{\text{右}}^2(y)-x_{\text{左}}^2(y)\right]dy\)；<br>
+② <b>壳层法</b>（区域在 \(y=f(x)\) 下方）：\(V=2\pi\displaystyle\int_a^b x\,f(x)\,dx\)。
+</div>
+<div class="box"><span class="t">平行截面面积已知的立体</span><br>
+\[ V=\int_a^b A(x)\,dx \]
+（\(A(x)\) 为垂直于 \(x\) 轴、位置 \(x\) 处的截面面积）。常用于楔形体、斜截圆柱、椭球等。
+</div>
+<div class="box gray"><span class="t">帕普斯-古尔丁定理（选学但极快）</span><br>
+平面区域绕不与之相交的直线旋转：\(V=2\pi\,\bar d\,A\)（\(\bar d\) 为形心到轴的距离，\(A\) 为面积）；平面曲线弧同理：\(S=2\pi\bar d\,L\)。
+</div>
+
+<h3>四、弧长与旋转曲面侧面积</h3>
+<div class="box"><span class="t">平面曲线弧长（三种形式）</span><br>
+直角坐标：\(s=\displaystyle\int_a^b\sqrt{1+\left[y'(x)\right]^2}\,dx\)；<br>
+参数方程：\(s=\displaystyle\int_\alpha^\beta\sqrt{\left[x'(t)\right]^2+\left[y'(t)\right]^2}\,dt\)；<br>
+极坐标：\(s=\displaystyle\int_\alpha^\beta\sqrt{\rho^2(\theta)+\left[\rho'(\theta)\right]^2}\,d\theta\)。<br>
+三式统一来源：弧微分 \(ds=\sqrt{(dx)^2+(dy)^2}\)。
+</div>
+<div class="box"><span class="t">旋转曲面侧面积（绕 x 轴）</span><br>
+\[ S=2\pi\int_a^b\left|y(x)\right|\sqrt{1+\left[y'(x)\right]^2}\,dx=2\pi\int\left|y\right|ds \]
+参数方程：\(S=2\pi\displaystyle\int_\alpha^\beta\left|y(t)\right|\sqrt{\left[x'(t)\right]^2+\left[y'(t)\right]^2}\,dt\)。
+</div>
+<div class="box warn"><span class="t">重点警示</span><br>
+侧面积公式里必须是<b>弧微分 \(ds\)</b>，不能用 \(dx\) 代替——\(S\ne2\pi\int y\,dx\)！这是本章最高频错误（把曲面「投影」当曲面本身）。<br>
+球面验证：圆 \(x^2+y^2=R^2\) 绕 \(x\) 轴旋转，\(S=2\pi\int_{-R}^{R}\sqrt{R^2-x^2}\cdot\frac{R}{\sqrt{R^2-x^2}}dx=4\pi R^2\)。
+</div>
+
+<h3>五、物理应用</h3>
+<div class="box"><span class="t">变力做功</span><br>
+\[ W=\int_a^b F(x)\,dx \]
+典型：弹簧 \(W=\frac12k\left(x_2^2-x_1^2\right)\)；<b>抽水问题</b> \(W=\displaystyle\int_0^H \rho g\,x\,A(x)\,dx\)（\(x\) 为该层水距出水面的高度，\(A(x)dx\) 为水层体积）。<br>
+关键：把「一层水」提上去的距离写对（从该层到出水面），不是从底部。
+</div>
+<div class="box"><span class="t">液体静压力</span><br>
+\[ P=\int_a^b \rho g\,h(x)\,\ell(x)\,dx \]
+\(h(x)\) 为深度（从液面往下量），\(\ell(x)\) 为该深度处水平宽度。常见图形：矩形/三角/圆形闸门（先写出宽度函数）。
+</div>
+<div class="box"><span class="t">引力</span><br>
+细杆对质点的引力：取质量元 \(dm=\rho\,dx\)，微元引力分量积分（注意方向投影）：
+\[ F=\int \frac{G\,m\,dm}{r^2}\cos\theta \]
+一般只考「沿杆延长线」或「垂直方向分量」两种。
+</div>
+<div class="box"><span class="t">质心与形心</span><br>
+平面薄片（均匀密度）形心：
+\[ \bar x=\frac1A\int_a^b x\left[f(x)-g(x)\right]dx,\qquad \bar y=\frac{1}{2A}\int_a^b\left[f^2(x)-g^2(x)\right]dx \]
+细杆：\(\bar x=\dfrac{\int_a^b x\,\rho(x)\,dx}{\int_a^b\rho(x)\,dx}\)（密度均匀时即中点）。<br>
+组合图形：形心 = 各块「面积 × 自身形心」的加权平均；挖孔用<b>负面积法</b>。
+</div>
+
+<h3>六、函数在区间上的平均值</h3>
+<div class="box">
+\[ \bar f=\frac{1}{b-a}\int_a^b f(x)\,dx \]
+理解：把「总量」平均摊到长度上（总路程 ÷ 时间 = 平均速度）。<br>
+常考：求平均值、由平均值反求参数、平均值大小的比较（用单调性）。
+</div>
+
+<h3>七、速查与易错</h3>
+<div class="box"><span class="t">应用题的统一步骤</span><br>
+① 画图（草图也要画！）；② 选变量与区间（对称优先）；③ 写微元并做量纲检查；④ 积分；⑤ 验算（对称性、特例、单位）。
+</div>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>面积写成 \(\int[f-g]\) 但 \(f,g\) 没有上下之分（应取「上 − 下」或加绝对值分块）。</li>
+<li>需分块的图形没找交点就硬积（答案必然错）。</li>
+<li>极坐标面积漏 \(\frac12\) 或漏平方（\(\rho^2\)）。</li>
+<li>绕 \(y\) 轴体积方法选错：壳层法是 \(2\pi x f(x)dx\)，垫圈法是 \(\pi\int(R^2-r^2)dy\)，别混。</li>
+<li>侧面积用 \(dx\) 代替 \(ds\)（必须 \(ds\)）。</li>
+<li>弧长公式漏根号或漏 \(dt\)、\(d\theta\)。</li>
+<li>抽水做功的高度从底部起算（应从水面/出口起算）。</li>
+<li>液体压力深度从底部量（应从液面量）。</li>
+<li>平均值忘记除 \((b-a)\)。</li>
+<li>物理题不写单位、量纲混乱。</li>
+</ol>
+</div>
+
+<h3>八、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>8.1 面积题「四问」选型法</h4>
+<div class="box">
+① 边界写成 \(y=f(x)\) 还是 \(x=\varphi(y)\) 更简单？② 需要分几块？③ 能否用对称性只算一半？④ 极坐标下图形是否有简单方程（心形线/玫瑰线）？——选完模型再动笔，能省一半计算量。
+</div>
+
+<h4>8.2 对称性使用清单</h4>
+<div class="box">
+图形关于 \(y\) 轴对称 → 面积/弧长算右半 ×2；关于 \(x\) 轴对称同理；旋转体关于某平面截面已知 → 用平行截面法或化成半图形 ×2。<br>
+注意：绕轴旋转时，「对称减半」不能随便用（旋转体本身是否对称要单独判断）。
+</div>
+
+<h4>8.3 体积一题两法互验</h4>
+<div class="box">
+同一旋转体：圆盘/垫圈法与壳层法各写一遍，答案应相同——考场上用作验算（也是纠错的最后保险）。<br>
+例：\(y=x^2,\ x\in[0,1]\) 绕 \(y\) 轴旋转：<br>
+壳层法 \(V=2\pi\displaystyle\int_0^1 x\cdot x^2\,dx=2\pi\cdot\frac14=\frac{\pi}{2}\)；<br>
+垫圈法（该高度处 \(x\) 从 0 到 \(\sqrt y\)）\(V=\pi\displaystyle\int_0^1(\sqrt y)^2\,dy=\pi\int_0^1 y\,dy=\frac{\pi}{2}\)——两法互验 ✓。
+</div>
+
+<h4>8.4 帕普斯定理秒杀场合</h4>
+<div class="box">
+形心好求的图形绕平行轴旋转：\(V=2\pi\bar d A\)、\(S=2\pi\bar d L\)。<br>
+例：半圆域绕直径：\(V=2\pi\cdot\frac{4R}{3\pi}\cdot\frac{\pi R^2}{2}=\frac{4\pi R^3}{3}\)（球体积）；半圆弧绕直径：\(S=2\pi\cdot\frac{2R}{\pi}\cdot\pi R=4\pi R^2\)（球面）。
+</div>
+
+<h4>8.5 常见曲线结论表（记结论 + 会推导）</h4>
+<table>
+<thead><tr><th>曲线</th><th>参数/方程</th><th>全长（一拱/全线）</th><th>面积</th><th>旋转体（绕 x 轴）</th></tr></thead>
+<tbody>
+<tr><td>星形线</td><td>\(x=a\cos^3t,\ y=a\sin^3t\)</td><td>\(6a\)</td><td>\(\frac{3\pi a^2}{8}\)</td><td>\(V=\frac{32\pi a^3}{105}\)，\(S=\frac{12\pi a^2}{5}\)</td></tr>
+<tr><td>摆线（一拱）</td><td>\(x=a(t-\sin t),\ y=a(1-\cos t)\)</td><td>\(8a\)</td><td>\(3\pi a^2\)</td><td>\(V=5\pi^2a^3\)</td></tr>
+<tr><td>心形线</td><td>\(\rho=a(1+\cos\theta)\)</td><td>\(8a\)</td><td>\(\frac{3\pi a^2}{2}\)</td><td>—</td></tr>
+<tr><td>双纽线</td><td>\(\rho^2=a^2\cos2\theta\)</td><td>—</td><td>\(a^2\)</td><td>—</td></tr>
+</tbody>
+</table>
+<div class="mini">考场策略：结论用于验算，书写必须展示推导骨架（微元 + 积分式 + 关键换元）。</div>
+
+<h4>8.6 抽水做功与液体压力模板</h4>
+<div class="box">
+抽水：\(dW=\rho g\,x\,A(x)dx\)（\(x\)：该层到水面的距离）→ 积分。<br>
+压力：\(dP=\rho g\,h\,\ell(h)\,dh\)（\(h\)：从液面往下的深度）→ 积分。<br>
+两题通法：<b>先写「一薄层」的几何量，再乘系数</b>；把「深度/高度」的定义在图上标清楚再积分。
+</div>
+
+<h4>8.7 形心与组合法</h4>
+<div class="box">
+组合图形：\(\bar x=\dfrac{\sum A_i\bar x_i}{\sum A_i}\)（负面积法处理挖孔）；对称图形形心必在对称轴上；直角三角形形心在两条中线交点。<br>
+技巧：先用平移把形心化到简单位置，再用帕普斯反求距离。
+</div>
+
+<h4>8.8 应用题验算三件套</h4>
+<div class="box">
+① 量纲（面积/体积/功的单位）；② 特例（参数取 0、取对称值时应退化）；③ 两法互验（体积、侧面积、形心都可换法重算）。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 6 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
