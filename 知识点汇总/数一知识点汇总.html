@@ -4187,6 +4187,132 @@ n 重伯努利试验中，事件发生的频率 \(\dfrac{n_A}{n}\xrightarrow{P}p
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 24 章 完 ——</div>
 
+<h2 class="chap" id="ch25">第 25 章　参数估计</h2>
+<div class="strip">本章速览：一 点估计（矩估计、最大似然） · 二 估计量的评选标准 · 三 区间估计 · 四 速查与易错 · 五 技巧库（全）</div>
+
+<h3>一、点估计</h3>
+<div class="box"><span class="t">矩估计法</span><br>
+原理：大数定律保证「样本矩 → 总体矩」，用样本矩代替总体矩解出参数。<br>
+步骤：① 写出总体矩（含未知参数）；② 令总体矩 = 样本矩；③ 解方程得估计量。<br>
+单参数：\(E(X)=\bar X\)；双参数：联立 \(E(X)=\bar X\) 与 \(E(X^2)=A_2=\frac1n\sum X_i^2\)。
+</div>
+<div class="box"><span class="t">最大似然估计（MLE）</span><br>
+似然函数：连续 \(L(\theta)=\prod\limits_{i=1}^{n}f(x_i;\theta)\)；离散 \(L(\theta)=\prod p(x_i;\theta)\)。<br>
+步骤：① 写 \(L(\theta)\)；② 取对数 \(\ln L\)；③ 解方程 \(\dfrac{d\ln L}{d\theta}=0\) 得驻点（比 L 直接求导简单得多）；④ 若 L 单调，则驻点在端点——直接观察取最大值的位置。
+</div>
+<table>
+<thead><tr><th>分布</th><th>矩估计</th><th>最大似然估计</th></tr></thead>
+<tbody>
+<tr><td>\(N(\mu,\sigma^2)\)</td><td>\(\hat\mu=\bar X,\ \hat\sigma^2=\frac1n\sum(X_i-\bar X)^2\)</td><td>同左（MLE 方差分母是 n）</td></tr>
+<tr><td>\(P(\lambda)\)</td><td>\(\hat\lambda=\bar X\)</td><td>\(\hat\lambda=\bar X\)</td></tr>
+<tr><td>\(E(\lambda)\)</td><td>\(\hat\lambda=1/\bar X\)</td><td>\(\hat\lambda=1/\bar X\)</td></tr>
+<tr><td>\(U(0,\theta)\)</td><td>\(\hat\theta=2\bar X\)</td><td>\(\hat\theta=\max\{X_1,\dots,X_n\}\)（<b>两法不同</b>）</td></tr>
+<tr><td>\(U(a,b)\)</td><td>联立一二阶矩</td><td>\(\hat a=\min X_i,\ \hat b=\max X_i\)</td></tr>
+</tbody>
+</table>
+<div class="box gray"><span class="t">不变性</span><br>
+若 \(\hat\theta\) 是 \(\theta\) 的 MLE，且 \(g\) 单调，则 \(g(\hat\theta)\) 是 \(g(\theta)\) 的 MLE（如正态中 \(\widehat{\sigma}=\sqrt{\hat\sigma^2}\)）。
+</div>
+
+<h3>二、估计量的评选标准</h3>
+<div class="box"><span class="t">无偏性</span><br>
+\(E(\hat\theta)=\theta\) 称无偏估计。基本事实：\(E(\bar X)=\mu\)；\(E(S^2)=\sigma^2\)（所以样本方差分母取 \(n-1\)）。<br>
+反例：MLE 的 \(\hat\sigma^2=\frac1n\sum(X_i-\bar X)^2\) 有偏（\(E=\frac{n-1}{n}\sigma^2\)），乘 \(\frac{n}{n-1}\) 修正为 \(S^2\)。
+</div>
+<div class="box"><span class="t">有效性</span><br>
+同为无偏估计时，方差越小越有效：\(D(\hat\theta_1)&lt;D(\hat\theta_2)\) ⇒ \(\hat\theta_1\) 更有效。<br>
+例：均匀分布 \(U(0,\theta)\) 中 \(\frac{n+1}{n}\max X_i\) 比 \(2\bar X\) 更有效（方差更小）。
+</div>
+<div class="box"><span class="t">一致性（相合性）</span><br>
+\(\hat\theta\xrightarrow{P}\theta\)（\(n\to\infty\)）称一致估计；\(\bar X\)、\(S^2\)、常见 MLE 都满足（由大数定律保证）。
+</div>
+
+<h3>三、区间估计</h3>
+<div class="box"><span class="t">基本概念</span><br>
+若 \(P(\hat\theta_1&lt;\theta&lt;\hat\theta_2)=1-\alpha\)，称 \((\hat\theta_1,\hat\theta_2)\) 是 \(\theta\) 的置信度 \(1-\alpha\) 的置信区间。<br>
+含义：反复抽样构造区间，约有 \(1-\alpha\) 比例的区间包含真值（频率意义，不是「θ 以某概率落入」）。<br>
+构造法（枢轴量法）：① 找一个<b>含 θ 且不含其他未知参数</b>的统计量 \(G\)；② 由分位点写概率等式 \(P(a&lt;G&lt;b)=1-\alpha\)；③ 解出 θ 的范围。
+</div>
+<div class="box"><span class="t">正态总体均值 μ 的置信区间</span><br>
+① \(\sigma\) 已知：用 \(U=\dfrac{\sqrt n(\bar X-\mu)}{\sigma}\sim N(0,1)\)
+\[ \left(\bar X\pm z_{\alpha/2}\cdot\frac{\sigma}{\sqrt n}\right) \]
+② \(\sigma\) 未知：用 \(T=\dfrac{\sqrt n(\bar X-\mu)}{S}\sim t(n-1)\)
+\[ \left(\bar X\pm t_{\alpha/2}(n-1)\cdot\frac{S}{\sqrt n}\right) \]
+（\(z_{\alpha/2}\)、\(t_{\alpha/2}\) 是上侧分位点；\(1-\alpha=0.95\) 时 \(z_{\alpha/2}=1.96\)。）
+</div>
+<div class="box"><span class="t">正态总体方差 σ² 的置信区间</span><br>
+用 \(\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)\)：
+\[ \left(\frac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)},\ \frac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)}\right) \]
+注意：分母左侧用「大的上分位点」\(\chi^2_{\alpha/2}\)、右侧用「小的」\(\chi^2_{1-\alpha/2}\)，区间才以 S² 为中心方向正确。
+</div>
+<div class="box"><span class="t">两正态总体的区间估计</span><br>
+① 均值差 \(\mu_1-\mu_2\)（σ 已知）：
+\[ (\bar X-\bar Y)\pm z_{\alpha/2}\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}} \]
+② 均值差（等方差未知）：\((\bar X-\bar Y)\pm t_{\alpha/2}(n_1+n_2-2)\,S_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}\)；<br>
+③ 方差比 \(\sigma_1^2/\sigma_2^2\)：用 \(F\) 分布构造（\(\frac{S_1^2}{S_2^2}\cdot\frac{1}{F_{\alpha/2}(n_1-1,n_2-1)}\) 到 \(\frac{S_1^2}{S_2^2}\cdot\frac{1}{F_{1-\alpha/2}(n_1-1,n_2-1)}\)）。
+</div>
+<div class="box gray"><span class="t">区间精度</span><br>
+区间长度 ∝ \(\dfrac{1}{\sqrt n}\)：样本量翻 4 倍，精度提高 1 倍。给定「区间长度不超过 d」的要求，可反解所需样本量 \(n\)。
+</div>
+
+<h3>四、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>MLE 的方差估计分母是 \(n\)（有偏），与 \(S^2\) 的 \(n-1\) 区分清楚。</li>
+<li>均匀分布 \(U(0,\theta)\)：矩估计 \(2\bar X\) 与 MLE \(\max X_i\) 不同（经典对比考点）。</li>
+<li>似然函数单调时没有驻点，要直接看端点取最大（如 \(U(0,\theta)\) 的 MLE）。</li>
+<li>置信区间分位点下标写反（左大右小：用 \(\chi^2_{\alpha/2}\) 与 \(\chi^2_{1-\alpha/2}\) 时注意位置）。</li>
+<li>σ 未知时误用 \(z\) 分位点（应用 \(t(n-1)\)）。</li>
+<li>枢轴量选择错误：必须只含待估参数、不含其他未知参数。</li>
+<li>两样本区间估计忘记合并方差 \(S_p^2\) 或自由度 \(n_1+n_2-2\)。</li>
+<li>把置信度解释成「θ 落入区间的概率」（θ 是常数，概率描述的是区间）。</li>
+<li>无偏性验证时算 \(E(\hat\theta)\) 出错（注意 \(\bar X\) 的期望与 \(\max\) 的分布）。</li>
+<li>有效性比较只比方差，忽略两个估计量是否都无偏。</li>
+</ol>
+</div>
+
+<h3>五、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>5.1 点估计两法选择流程</h4>
+<div class="box">
+题目说「求矩估计」→ 样本矩 = 总体矩；说「求最大似然估计」→ 写 L、取对数、求导；<br>
+没指定时：常规分布两法都可（结果常相同）；含端点参数的分布（均匀）两法结果不同，<b>题目通常指定</b>。
+</div>
+
+<h4>5.2 MLE 操作模板（含不可导情形）</h4>
+<div class="box">
+① 写 L（注意支撑集与参数的依赖：参数出现在取值范围里时，MLE 常是端点的次序统计量）；② 取对数化简；③ 求导找驻点；④ 若 lnL 单调，则最大值在参数允许范围的端点/边界，由样本取值决定（如 \(\max X_i\)）；⑤ 结论注明「样本观测下」。
+</div>
+
+<h4>5.3 无偏性验证清单</h4>
+<div class="box">
+\(E(\bar X)=\mu\)；\(E(S^2)=\sigma^2\)；\(E(A_k)=\mu_k\)（样本原点矩无偏）；<br>
+\(E(\max X_i)\) 类需先求最大值的分布（\(F_{\max}=F^n\)）再积分——第 21 章的工具直接用。
+</div>
+
+<h4>5.4 有效性比较的常用方差</h4>
+<div class="box">
+\(D(\bar X)=\sigma^2/n\)；均匀 \(U(0,\theta)\)：\(D(2\bar X)=\theta^2/(3n)\)，\(D\!\left(\frac{n+1}{n}\max\right)=\theta^2/[n(n+2)]\)（更小 ⇒ 更有效）。
+</div>
+
+<h4>5.5 区间估计四步模板</h4>
+<div class="box">
+① 明确待估参数与已知条件（σ 已知/未知；单/双总体）；② 选枢轴量（U/T/χ²/F）；③ 按 \(1-\alpha\) 写分位点等式；④ 解出 θ 区间并写明置信度。<br>
+速记：<b>均值看 U/T、方差看 χ²、比值看 F</b>。
+</div>
+
+<h4>5.6 样本量设计题</h4>
+<div class="box">
+给「区间长度 ≤ d」或「误差 ≤ d」：由长度公式（如 \(2z_{\alpha/2}\sigma/\sqrt n\le d\)）反解 \(n\ge\left(\frac{2z_{\alpha/2}\sigma}{d}\right)^2\)，向上取整。
+</div>
+
+<h4>5.7 参数估计与后续假设检验的衔接</h4>
+<div class="box">
+置信区间与假设检验对偶：\(\mu_0\) 落在 \(1-\alpha\) 置信区间内 ⇔ 不拒绝 \(H_0:\mu=\mu_0\)（水平 α）——第 26 章的核心直觉来源。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 25 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
