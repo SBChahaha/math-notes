@@ -2449,6 +2449,180 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 12 章 完 · 高等数学部分结束 ——</div>
 
+<h2 class="part" id="part3">第三部分　线性代数</h2>
+<div class="part-list">
+第 13 章　行列式<br>
+第 14 章　矩阵及其运算<br>
+第 15 章　矩阵的初等变换与线性方程组<br>
+第 16 章　向量组的线性相关性<br>
+第 17 章　相似矩阵及二次型<br>
+第 18 章　线性空间与线性变换（选学）
+</div>
+
+<h2 class="chap" id="ch13">第 13 章　行列式</h2>
+<div class="strip">本章速览：一 定义与逆序数 · 二 行列式的性质 · 三 按行展开与代数余子式 · 四 计算方法 · 五 克莱姆法则 · 六 抽象行列式 · 七 速查与易错 · 八 技巧库（全）</div>
+
+<h3>一、行列式的定义与逆序数</h3>
+<div class="box"><span class="t">二阶、三阶行列式</span><br>
+\(\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc\)；三阶用对角线法则（沙路法）——<b>仅限二、三阶使用</b>。
+</div>
+<div class="box"><span class="t">逆序数</span><br>
+排列 \(p_1p_2\cdots p_n\) 的逆序数 \(\tau\)：每个元素前面比它大的数字个数之和。<br>
+例：\(\tau(3412)=4\)（3 前无、4 前无、1 前有 3、4 共 2 个、2 前有 3、4 共 2 个 ⇒ 2+2=4）。
+</div>
+<div class="box"><span class="t">n 阶行列式定义</span><br>
+\[ D=\begin{vmatrix}a_{11}&\cdots&a_{1n}\\ \vdots&&\vdots\\ a_{n1}&\cdots&a_{nn}\end{vmatrix} =\sum_{p_1p_2\cdots p_n}(-1)^{\tau(p_1p_2\cdots p_n)}\,a_{1p_1}a_{2p_2}\cdots a_{np_n} \]
+共有 \(n!\) 项，每项取自不同行不同列的乘积，符号由列标排列的逆序数决定。
+</div>
+<div class="box"><span class="t">两个常用特殊值</span><br>
+上（下）三角行列式 = 主对角线元素之积；副对角线型 \(=\ (-1)^{\frac{n(n-1)}{2}}a_{1n}a_{2,n-1}\cdots a_{n1}\)（如二阶 \(a_{21}a_{12}\) 前带负号）。
+</div>
+
+<h3>二、行列式的性质</h3>
+<div class="box"><span class="t">六条性质（计算的地基）</span>
+<ol>
+<li><b>转置不变</b>：\(|A^T|=|A|\)——行与列地位对称（对行成立的对列也成立）。</li>
+<li><b>互换两行（列）变号</b>；两行相同 ⇒ \(D=0\)。</li>
+<li><b>某行有公因子可提出</b>：\(\begin{vmatrix}ka&kb\\c&d\end{vmatrix}=k\begin{vmatrix}a&b\\c&d\end{vmatrix}\)。</li>
+<li><b>分拆性</b>：某行是两组数之和 ⇒ 拆成两个行列式之和。</li>
+<li><b>倍加不变</b>：把某行的 \(k\) 倍加到另一行，\(D\) 不变（<b>化三角的主力</b>）。</li>
+<li>两行成比例（或有一行全零）⇒ \(D=0\)。</li>
+</ol>
+</div>
+
+<h3>三、按行（列）展开与代数余子式</h3>
+<div class="box"><span class="t">余子式与代数余子式</span><br>
+\(M_{ij}\)：划去 \(a_{ij}\) 所在第 \(i\) 行、第 \(j\) 列后剩下的 \(n-1\) 阶行列式（余子式）；<br>
+\(A_{ij}=(-1)^{i+j}M_{ij}\)（代数余子式）——符号棋盘格：\((1,1)\) 为正，正负相间。
+</div>
+<div class="box"><span class="t">展开定理</span><br>
+\[ D=a_{i1}A_{i1}+a_{i2}A_{i2}+\cdots+a_{in}A_{in}\quad\text{（按第 }i\text{ 行展开）} \]
+按列展开同理。<br>
+<b>异乘变零定理</b>：\(\sum\limits_{k=1}^{n}a_{ik}A_{jk}=0\ (i\ne j)\)——「用别行的元素配本行的代数余子式」结果为 0。
+</div>
+<div class="box gray"><span class="t">降阶策略</span><br>
+先用倍加运算把某行（列）化成<b>只剩一个非零元</b>，再按该行展开——一步降一阶。这是「降阶法」的标准动作。
+</div>
+
+<h3>四、行列式的计算方法</h3>
+<div class="box"><span class="t">① 化三角形法（首选）</span><br>
+用倍加运算把行列式化为上（下）三角，再取对角线乘积；尽量避免换行（换行要记一次负号）；提取公因子时用「行提」不要用「整体除」。
+</div>
+<div class="box"><span class="t">② 降阶法</span><br>
+制造某行只有一个非零项后按行展开；多层嵌套时逐层降。
+</div>
+<div class="box"><span class="t">③ 递推法（n 阶结构）</span><br>
+按行展开得到 \(D_n\) 与 \(D_{n-1},D_{n-2}\) 的关系（如三对角型 \(D_n=aD_{n-1}-bcD_{n-2}\)），解递推求通项；形如 \(D_n=aD_{n-1}+b^n\) 可构造等比。
+</div>
+<div class="box"><span class="t">④ 范德蒙德行列式</span><br>
+\[ V=\begin{vmatrix}1&1&\cdots&1\\ x_1&x_2&\cdots&x_n\\ \vdots&\vdots&&\vdots\\ x_1^{n-1}&x_2^{n-1}&\cdots&x_n^{n-1}\end{vmatrix} =\prod_{1\le j&lt;i\le n}(x_i-x_j) \]
+（大减小、按 \(i>j\) 排列；自变量互异时 \(V\ne0\)。）
+</div>
+<div class="box"><span class="t">⑤ 分块行列式</span><br>
+\[ \begin{vmatrix}A&C\\O&B\end{vmatrix}=|A||B|;\qquad \begin{vmatrix}O&A\\B&O\end{vmatrix}=(-1)^{mn}|A||B| \]
+（\(A\) 为 \(m\) 阶、\(B\) 为 \(n\) 阶方阵。）
+</div>
+<div class="box"><span class="t">⑥ 特殊结构结论</span><br>
+奇数阶反对称行列式 \(D=0\)（因 \(D=|A^T|=|-A|=(-1)^nD=-D\)）；爪型/箭型行列式先用倍加消去「爪」再化三角。
+</div>
+
+<h3>五、克莱姆法则</h3>
+<div class="box"><span class="t">定理</span><br>
+对 \(n\) 元线性方程组 \(A\vec x=\vec b\)，若系数行列式 \(D=|A|\ne0\)，则方程组有<b>唯一解</b>：
+\[ x_j=\frac{D_j}{D}\quad(j=1,2,\dots,n) \]
+其中 \(D_j\) 是把 \(D\) 的第 \(j\) 列换成常数项列 \(\vec b\) 所得的行列式。
+</div>
+<div class="box"><span class="t">推论（齐次方程组）</span><br>
+齐次方程组 \(A\vec x=\vec 0\) 有非零解 ⇔ \(|A|=0\)；只有零解 ⇔ \(|A|\ne0\)。<br>
+（这是第 15、16 章「秩与解的结构」的伏笔。）
+</div>
+<div class="mini">与后续知识串联：\(|A|\ne0\) ⇔ \(A\) 可逆 ⇔ 列向量组线性无关 ⇔ \(r(A)=n\) ⇔ 齐次只有零解。</div>
+
+<h3>六、抽象行列式计算（公式汇总）</h3>
+<table>
+<thead><tr><th>公式</th><th>条件/说明</th></tr></thead>
+<tbody>
+<tr><td>\(|A^T|=|A|\)</td><td>转置不变</td></tr>
+<tr><td>\(|kA|=k^n|A|\)</td><td>\(n\) 阶方阵、每个元素都变 k 倍</td></tr>
+<tr><td>\(|AB|=|A||B|\)</td><td>（\(A,B\) 同阶方阵）</td></tr>
+<tr><td>\(|A^{-1}|=|A|^{-1}\)</td><td>\(A\) 可逆</td></tr>
+<tr><td>\(|A^*|=|A|^{n-1}\)</td><td>伴随矩阵（\(n\ge2\)）</td></tr>
+<tr><td>\(|A|=\prod\lambda_i\)</td><td>特征值之积（第 17 章）</td></tr>
+<tr><td>\(\begin{vmatrix}A&C\\O&B\end{vmatrix}=|A||B|\)</td><td>分块三角</td></tr>
+</tbody>
+</table>
+<div class="mini">抽象题套路：把待求行列式用上述公式「翻译」成已知量；遇 \(|A+B|\)、\(|A^*+E|\) 之类先把矩阵化简或提公因子。</div>
+
+<h3>七、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>换行忘记录负号（化三角应尽量只做倍加）。</li>
+<li>把行列式与矩阵的性质混淆：行列式是数，「把某行提出 k」矩阵不允许、行列式允许。</li>
+<li>\(|kA|=k^n|A|\) 错记成 \(k|A|\)。</li>
+<li>\(|A+B|\ne|A|+|B|\)（没有加法公式）；\(|AB|=|A||B|\) 不可推广到加法。</li>
+<li>克莱姆法则条件 \(|A|\ne0\) 被忽略；齐次方程组问题应改看 \(|A|=0\)。</li>
+<li>代数余子式符号漏 \((-1)^{i+j}\)。</li>
+<li>范德蒙德写成 \(|x_j-x_i|\) 或漏「大减小」的顺序。</li>
+<li>分块公式的方向与阶数符号（\((-1)^{mn}\)）记错。</li>
+<li>递推题忘记初值（\(D_1,D_2\)）或递推整理出错。</li>
+</ol>
+</div>
+
+<h3>八、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>8.1 行列式计算总流程</h4>
+<div class="box">
+先观察结构再动手：<br>
+① 数字行列式、某行有多个 0？→ 直接展开/降阶；<br>
+② 元素规律整齐（行和相等、对角占优）？→ 化三角（把各行加到第一行等技巧）；<br>
+③ 爪型/箭型？→ 消爪后化三角；<br>
+④ \(n\) 阶递推结构（三对角）？→ 递推法；<br>
+⑤ 含变元 \(x\) 的行列式方程？→ 展开成多项式求根；<br>
+⑥ 抽象矩阵？→ 六、公式表翻译。
+</div>
+
+<h4>8.2 加边法（升阶法）</h4>
+<div class="box">
+形如「主对角 + 每行同列」的行列式（\(\begin{vmatrix}a_1+b&b&\cdots\\ \vdots\end{vmatrix}\) 型），通过升一阶加边：
+\[ \begin{vmatrix}1&1&1&\cdots\\ 0&a_1+b&b&\cdots\\ 0&b&a_2+b&\cdots\\ \vdots\end{vmatrix} \]
+再用第一行消去其余行，化为三角——「升阶降计算」的典型。
+</div>
+
+<h4>8.3 递推法模板</h4>
+<div class="box">
+① 按首行（列）展开得 \(D_n=pD_{n-1}-qD_{n-2}\) 型；② 写特征方程 \(x^2-px+q=0\)；③ 按根的情形写通项 \(D_n=C_1x_1^n+C_2x_2^n\)（重根则 \((C_1+C_2n)x^n\)）；④ 用 \(D_1,D_2\) 定常数。<br>
+提示：结果一般也要化简成闭合形式。
+</div>
+
+<h4>8.4 拆分法（行列式加法性）</h4>
+<div class="box">
+某行元素 = 两组数之和 ⇒ 拆成两个行列式，其中一个常为零或好算；配合「第一行拆」处理含参和式行列式。
+</div>
+
+<h4>8.5 抽象行列式三招</h4>
+<div class="box">
+① <b>公式翻译</b>：\(|kA|,|A^{-1}|,|A^*|,|AB|\) 逐步化到已知；<br>
+② <b>特征值法</b>：\(|A|=\prod\lambda_i\)，若已知 \(A\) 的特征值立刻出答案（第 17 章联动——\(A^*\)、\(A^{-1}\)、\(A+kE\) 的特征值都可推）；<br>
+③ <b>构造提因子</b>：\(|A^*+E|=|A|\,|\,?\,|\) 型，用 \(A^*=|A|A^{-1}\) 或 \(A^*A=|A|E\) 化简。
+</div>
+
+<h4>8.6 克莱姆法则应用题型</h4>
+<div class="box">
+① 求参数使齐次方程组有非零解：令 \(|A|=0\) 求参数；② 判断唯一解条件：\(|A|\ne0\)；③ 反问题：已知解求参数（代回方程）。
+</div>
+
+<h4>8.7 范德蒙德的识别与凑形</h4>
+<div class="box">
+出现「\(1,x,x^2,\dots\)」的整行（列）立即想范德蒙德；不齐时通过提公因子、转置凑成标准形；互异数个数 = 阶数。
+</div>
+
+<h4>8.8 自查习惯</h4>
+<div class="box">
+算出结果后：① 用 \(n=2,3\) 的小特例验证（把通项公式代小数字）；② 用性质反查（若某行全零结果应为 0）；③ 检查符号（尤其是换行次数与副对角型）。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 13 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
