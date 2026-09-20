@@ -3376,6 +3376,161 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 18 章 完 · 线性代数部分结束 ——</div>
 
+<h2 class="part" id="part4">第四部分　概率论与数理统计</h2>
+<div class="part-list">
+第 19 章　概率论的基本概念<br>
+第 20 章　随机变量及其分布<br>
+第 21 章　多维随机变量及其分布<br>
+第 22 章　随机变量的数字特征<br>
+第 23 章　大数定律与中心极限定理<br>
+第 24 章　样本及抽样分布<br>
+第 25 章　参数估计<br>
+第 26 章　假设检验
+</div>
+
+<h2 class="chap" id="ch19">第 19 章　概率论的基本概念</h2>
+<div class="strip">本章速览：一 样本空间与事件运算 · 二 概率定义与性质 · 三 条件概率与乘法公式 · 四 全概率与贝叶斯 · 五 独立性 · 六 速查与易错 · 七 技巧库（全）</div>
+
+<h3>一、样本空间与随机事件</h3>
+<div class="box"><span class="t">基本概念</span><br>
+随机试验：可重复、结果不止一个、试验前不知哪个结果出现。<br>
+样本空间 \(S\)（全集）、样本点 \(\omega\)；随机事件 \(A\subseteq S\)；基本事件（单个样本点）、必然事件 \(S\)、不可能事件 \(\varnothing\)。
+</div>
+<div class="box"><span class="t">事件的关系与运算</span><br>
+包含 \(A\subset B\)；相等；<br>
+和 \(A\cup B\)（至少一个发生）；积 \(AB\)（同时发生）；<br>
+差 \(A-B=A\bar B\)（A 发生而 B 不发生）；对立 \(\bar A=S-A\)；<br>
+互斥（互不相容）：\(AB=\varnothing\)。<br>
+运算律：交换、结合、分配 \(A(B\cup C)=AB\cup AC\)；<b>德摩根律</b>：
+\[ \overline{A\cup B}=\bar A\,\bar B,\qquad \overline{AB}=\bar A\cup\bar B \]
+（可推广到任意多个；概率题化简事件的第一工具。）
+</div>
+
+<h3>二、概率的定义与性质</h3>
+<div class="box"><span class="t">三种定义</span><br>
+① 统计定义：频率的稳定值；② <b>古典概型</b>：样本点有限且等可能，\(P(A)=\dfrac{A\text{ 包含的样本点数}}{\text{样本点总数}}\)；③ <b>几何概型</b>：\(P(A)=\dfrac{A\text{ 的测度}}{S\text{ 的测度}}\)（长度/面积/体积比）。<br>
+④ 公理化定义：非负性、规范性 \(P(S)=1\)、可列可加性（互斥事件列）。
+</div>
+<div class="box"><span class="t">性质全表</span>
+<ol>
+<li>\(P(\varnothing)=0\)；有限可加（互斥时概率相加）。</li>
+<li>\(P(\bar A)=1-P(A)\)。</li>
+<li><b>减法公式</b>：\(P(A-B)=P(A)-P(AB)\)；若 \(B\subset A\) 则 \(P(A-B)=P(A)-P(B)\)。</li>
+<li><b>加法公式</b>：\(P(A\cup B)=P(A)+P(B)-P(AB)\)；<br>
+三事件：\(P(A\cup B\cup C)=P(A)+P(B)+P(C)-P(AB)-P(AC)-P(BC)+P(ABC)\)。</li>
+<li>单调性：\(A\subset B\Rightarrow P(A)\le P(B)\)。</li>
+<li>\(P(A\cup B)\le P(A)+P(B)\)（一般不等式）。</li>
+</ol>
+</div>
+
+<h3>三、条件概率与乘法公式</h3>
+<div class="box"><span class="t">条件概率</span><br>
+\[ P(B\mid A)=\frac{P(AB)}{P(A)}\qquad(P(A)&gt;0) \]
+含义：在「已知 A 发生」的新样本空间里重新度量 B；条件概率也满足三条公理，故概率的一切性质对 \(P(\cdot\mid A)\) 照用。
+</div>
+<div class="box"><span class="t">乘法公式</span><br>
+\[ P(AB)=P(A)\,P(B\mid A)=P(B)\,P(A\mid B) \]
+三事件推广：\(P(ABC)=P(A)\,P(B\mid A)\,P(C\mid AB)\)（按「逐个发生」的顺序分解）。
+</div>
+
+<h3>四、全概率公式与贝叶斯公式</h3>
+<div class="box"><span class="t">完备事件组（划分）</span><br>
+\(B_1,B_2,\dots,B_n\) 两两互斥且并集为 \(S\)（且 \(P(B_i)&gt;0\)），称完备事件组——把「所有可能的原因/来源」分类。
+</div>
+<div class="box"><span class="t">全概率公式</span><br>
+\[ P(A)=\sum_{i=1}^{n}P(B_i)\,P(A\mid B_i) \]
+思想：把 A 按原因 \(B_i\) 拆成互斥块求和（「由因求果」）。
+</div>
+<div class="box"><span class="t">贝叶斯公式</span><br>
+\[ P(B_i\mid A)=\frac{P(B_i)\,P(A\mid B_i)}{\sum\limits_{j=1}^{n}P(B_j)\,P(A\mid B_j)} \]
+含义：已知「果 A」反推「因 \(B_i\)」的概率（后验概率 = 先验 × 似然 ÷ 全概率）；分母就是全概率，起归一化作用（「由果溯因」）。
+</div>
+
+<h3>五、独立性</h3>
+<div class="box"><span class="t">两事件独立</span><br>
+\[ P(AB)=P(A)P(B)\iff P(B\mid A)=P(B)\ (P(A)&gt;0) \]
+含义：A 发生与否不影响 B 的概率。<br>
+性质：A、B 独立 ⇒ 三对组合 \(\bar A\) 与 \(B\)、\(A\) 与 \(\bar B\)、\(\bar A\) 与 \(\bar B\) 都独立。
+</div>
+<div class="box"><span class="t">互斥与独立的区别（高频陷阱）</span><br>
+互斥：不能同时发生（\(AB=\varnothing\)）；独立：一个发生不影响另一个概率。<br>
+两事件互斥且 \(P(A)&gt;0,P(B)&gt;0\) ⇒ <b>一定不独立</b>（此时 \(P(AB)=0\ne P(A)P(B)\)）。
+</div>
+<div class="box"><span class="t">多个事件的独立性</span><br>
+<b>三事件两两独立</b>：\(P(AB)=P(A)P(B)\)、\(P(AC)=P(A)P(C)\)、\(P(BC)=P(B)P(C)\)（3 个等式）；<br>
+<b>三事件相互独立</b>：两两独立 + \(P(ABC)=P(A)P(B)P(C)\)（共 4 个等式）。<br>
+两两独立 ⇏ 相互独立（存在经典反例）；n 个事件相互独立要求「任意 k 个的积概率 = 概率之积」全部成立。
+</div>
+<div class="box gray"><span class="t">伯努利试验与二项概型</span><br>
+每次试验只有「成功/失败」两种结果、重复独立进行，称 n 重伯努利试验；恰好成功 k 次的概率：
+\[ P_n(k)=\binom{n}{k}p^k(1-p)^{n-k} \]
+这是第 20 章二项分布的来源。
+</div>
+
+<h3>六、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>互斥、对立、独立三个概念混用：对立必互斥；互斥（非零概率）必不独立；独立与互斥无关。</li>
+<li>加法公式丢 \(-P(AB)\)；三事件漏掉 \(+P(ABC)\)。</li>
+<li>减法公式写成 \(P(A-B)=P(A)-P(B)\)（应为 \(P(A)-P(AB)\)）。</li>
+<li>条件概率方向写反（\(P(B\mid A)\) 与 \(P(A\mid B)\) 完全不同）。</li>
+<li>全概率公式的完备事件组不互斥、不全面（漏原因）。</li>
+<li>贝叶斯公式分母忘写成全概率（漏归一化）。</li>
+<li>古典概型计数出错：样本点是否有序、放回与否、同物分组是否要除阶乘。</li>
+<li>「两两独立」当「相互独立」使用（三事件必须再验 \(P(ABC)\)）。</li>
+<li>没验证独立性就使用 \(P(AB)=P(A)P(B)\)。</li>
+<li>德摩根律化简方向写反（并的补 = 补的交）。</li>
+</ol>
+</div>
+
+<h3>七、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>7.1 事件化简两板斧</h4>
+<div class="box">
+① 德摩根律把「至少一个」与「都不」互化：\(\overline{A\cup B}=\bar A\bar B\)、\(\overline{AB}=\bar A\cup\bar B\)；<br>
+② 差化积：\(A-B=A\bar B\)；把复杂事件写成互斥事件的和（为全概率/加法公式做准备）。
+</div>
+
+<h4>7.2 古典概型四大模型</h4>
+<table>
+<thead><tr><th>模型</th><th>要点</th></tr></thead>
+<tbody>
+<tr><td>摸球模型</td><td>分清「放回/不放回」「有序/无序」，用组合数算有利样本</td></tr>
+<tr><td>分房模型</td><td>人可区分、房可区分；总数 \(n^m\)</td></tr>
+<tr><td>分组模型</td><td>均匀分组除以组数阶乘；再分配乘 \(n!\)</td></tr>
+<tr><td>抽签模型</td><td>与顺序无关——第 k 个抽到某物的概率人人相等</td></tr>
+</tbody>
+</table>
+
+<h4>7.3 全概率「找原因」套路</h4>
+<div class="box">
+题目出现「分两阶段」「来自不同来源」「不同机器/箱/批次」→ 把<b>第一阶段的可能结果</b>设为完备事件组 \(B_i\)，第二阶段目标事件为 \(A\)，套 \(P(A)=\sum P(B_i)P(A\mid B_i)\)。
+</div>
+
+<h4>7.4 贝叶斯题标准模板</h4>
+<div class="box">
+① 写先验 \(P(B_i)\)；② 写似然 \(P(A\mid B_i)\)；③ 分母 = 全概率；④ 代入公式；⑤ 检查所有 \(P(B_i\mid A)\) 之和为 1（自检）。
+</div>
+
+<h4>7.5 「至少一个」的对偶思想</h4>
+<div class="box">
+\[ P(\text{至少一个发生})=1-P(\text{全部不发生}) \]
+独立场合立刻变成 \(1-\prod P(\bar A_i)\)——「至少」类问题的标准快解。
+</div>
+
+<h4>7.6 独立性证明与使用</h4>
+<div class="box">
+证明独立：验证 \(P(AB)=P(A)P(B)\)（常配合条件概率、全概率反推）；使用独立：乘积拆分概率、重复试验概型；注意补事件的独立传递。
+</div>
+
+<h4>7.7 常用放缩与恒等式</h4>
+<div class="box">
+\(P(A\cup B)\le P(A)+P(B)\)；\(P(A-B)=P(A)-P(AB)\ge P(A)-P(B)\)（当 \(P(A)\ge P(B)\) 时）；<br>
+\(P(AB)\le P(A)\le P(A\cup B)\le P(A)+P(B)\)——证明不等式题的主力链条。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 19 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
