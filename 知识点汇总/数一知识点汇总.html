@@ -3271,6 +3271,111 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 17 章 完 ——</div>
 
+<h2 class="chap" id="ch18">第 18 章　线性空间与线性变换（选学）</h2>
+<div class="strip">本章速览：一 线性空间的定义与性质 · 二 维数、基与坐标 · 三 基变换与坐标变换 · 四 线性变换及其矩阵表示 · 五 速查与易错 · 六 技巧库</div>
+
+<h3>一、线性空间的定义与性质</h3>
+<div class="box"><span class="t">定义（八条公理）</span><br>
+设 \(V\) 是非空集合、\(\mathbb{F}\) 为数域，在 \(V\) 上定义加法与数乘，若对任意 \(\alpha,\beta,\gamma\in V,\ k,l\in\mathbb{F}\) 满足：<br>
+加法交换律、结合律、存在零元素、存在负元素；数乘结合律、单位元 \(1\alpha=\alpha\)、两种分配律——则称 \(V\) 为 \(\mathbb{F}\) 上的<b>线性空间</b>。
+</div>
+<div class="box"><span class="t">典型例子（考点素材库）</span><br>
+① \(\mathbb{R}^n\)（n 维向量空间）；② \(M_{m\times n}\)（矩阵空间）；③ \(P_n[x]\)（次数不超过 n 的多项式，含 0）；④ 连续函数空间 \(C[a,b]\)；⑤ 齐次线性方程组的解空间。
+</div>
+<div class="box"><span class="t">基本性质与子空间</span><br>
+零元素唯一、负元素唯一；\(0\alpha=0\)、\((-1)\alpha=-\alpha\)、\(k\,0=0\)。<br>
+<b>子空间</b>：\(W\subseteq V\) 非空，对加法与数乘封闭（判定两点：\(\alpha+\beta\in W\)、\(k\alpha\in W\) 对任意元素/数成立）。
+</div>
+
+<h3>二、维数、基与坐标</h3>
+<div class="box"><span class="t">定义</span><br>
+若 \(V\) 中存在 \(n\) 个线性无关的向量 \(\alpha_1,\dots,\alpha_n\)，且 \(V\) 中任何向量都可由它们线性表示，称它们为 \(V\) 的一组<b>基</b>，\(n\) 为<b>维数</b>（\(\dim V=n\)）。<br>
+每个向量在给定基下的表示系数唯一，称为<b>坐标</b>：\(\alpha=x_1\alpha_1+\cdots+x_n\alpha_n\)，坐标向量 \(x=(x_1,\dots,x_n)^T\)。
+</div>
+<table>
+<thead><tr><th>空间</th><th>一组自然基</th><th>维数</th></tr></thead>
+<tbody>
+<tr><td>\(\mathbb{R}^n\)</td><td>\(\varepsilon_1,\dots,\varepsilon_n\)（单位坐标向量）</td><td>\(n\)</td></tr>
+<tr><td>\(M_{m\times n}\)</td><td>\(E_{ij}\)（只有一个 1 的矩阵）</td><td>\(mn\)</td></tr>
+<tr><td>\(P_n[x]\)</td><td>\(1,x,x^2,\dots,x^n\)</td><td>\(n+1\)</td></tr>
+<tr><td>\(Ax=0\) 的解空间</td><td>基础解系</td><td>\(n-r(A)\)</td></tr>
+</tbody>
+</table>
+
+<h3>三、基变换与坐标变换</h3>
+<div class="box"><span class="t">过渡矩阵</span><br>
+设旧基 \(\alpha_1,\dots,\alpha_n\)、新基 \(\beta_1,\dots,\beta_n\)，且
+\[ (\beta_1,\dots,\beta_n)=(\alpha_1,\dots,\alpha_n)\,P \]
+则 \(P\) 称为由旧基到新基的<b>过渡矩阵</b>（\(P\) 可逆；它的第 \(j\) 列是 \(\beta_j\) 在旧基下的坐标）。
+</div>
+<div class="box"><span class="t">坐标变换公式</span><br>
+设向量 \(\xi\) 在旧基下坐标为 \(x\)、新基下坐标为 \(x'\)，则
+\[ x=Px'\qquad(\text{旧坐标}=P\times\text{新坐标}) \]
+记忆：基「向前换」（旧→新乘 \(P\)），坐标「向后换」（新→旧乘 \(P\)，即 \(x'=P^{-1}x\)）——方向别记反。
+</div>
+
+<h3>四、线性变换及其矩阵表示</h3>
+<div class="box"><span class="t">定义</span><br>
+变换 \(T:V\to V\) 若满足 \(T(\alpha+\beta)=T\alpha+T\beta\)、\(T(k\alpha)=kT\alpha\)（保加法与数乘），称<b>线性变换</b>。
+</div>
+<div class="box"><span class="t">矩阵表示</span><br>
+在基 \(\alpha_1,\dots,\alpha_n\) 下，若
+\[ T(\alpha_1,\dots,\alpha_n)=(\alpha_1,\dots,\alpha_n)\,A \]
+则 \(A\) 称为 \(T\) 在该基下的矩阵（第 \(j\) 列 = \(T\alpha_j\) 的坐标）。<br>
+<b>不同基下：</b>若新基 \((\beta)=(\alpha)P\)，\(T\) 在新基下的矩阵为 \(B\)，则
+\[ B=P^{-1}AP \]
+——同一线性变换在不同基下的矩阵<b>相似</b>（这就是「相似」的几何本质）。
+</div>
+<div class="box"><span class="t">运算与核·像</span><br>
+① \((T_1+T_2)\) 的矩阵为 \(A_1+A_2\)；\((kT)\) 为 \(kA\)；复合 \(T_1T_2\) 的矩阵为 \(A_1A_2\)（按复合顺序）；可逆变换 ⇔ 矩阵可逆。<br>
+② 核 \(\ker T=\{\alpha\mid T\alpha=0\}\)、像 \(\mathrm{Im}\,T=\{T\alpha\}\) 都是子空间，且
+\[ \dim\ker T+\dim\mathrm{Im}\,T=\dim V \]
+③ 特征值：\(T\xi=\lambda\xi\) ⇔ 矩阵方程 \((A-\lambda E)x=0\)；特征值与基的选取无关。
+</div>
+
+<h3>五、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>过渡矩阵定义式写反：是 \((\beta_1,\dots,\beta_n)=(\alpha_1,\dots,\alpha_n)P\)，\(P\) 的列是新基向量的旧坐标。</li>
+<li>坐标变换方向记反：旧坐标 \(=P\times\) 新坐标（\(x=Px'\)）。</li>
+<li>把「子空间判定」简化成只看封闭性，忘了先验证非空（含零元素）。</li>
+<li>线性变换的矩阵依赖基——换个基矩阵变了（但相似），解题要说明所用基。</li>
+<li>复合顺序：\(T_1T_2\) 表示先 \(T_2\) 后 \(T_1\)，矩阵乘法顺序与之匹配。</li>
+<li>核与像的维数公式漏写或方向错：\(\dim\ker+\dim\mathrm{Im}=\dim V\)。</li>
+</ol>
+</div>
+
+<h3>六、技巧库</h3>
+
+<h4>6.1 子空间判定模板</h4>
+<div class="box">
+三句话：① 非空（含零元）；② 加法封闭；③ 数乘封闭。抽象空间里元素可能是矩阵/多项式，判法不变。
+</div>
+
+<h4>6.2 求过渡矩阵的基本功</h4>
+<div class="box">
+把每个新基向量用旧基线性表示，解出的坐标<b>按列</b>拼成 \(P\)；验证 \(P\) 可逆（新基是基必可逆）。
+</div>
+
+<h4>6.3 线性变换矩阵的求法</h4>
+<div class="box">
+逐列做：算出 \(T\alpha_j\)，把它写成基向量组合，坐标作为第 \(j\) 列；全部列拼好即 \(A\)。
+</div>
+
+<h4>6.4 抽象 ↔ 具体 的翻译表</h4>
+<table>
+<thead><tr><th>抽象语言</th><th>坐标语言（取定基后）</th></tr></thead>
+<tbody>
+<tr><td>线性无关/相关</td><td>坐标列向量组的无关/相关</td></tr>
+<tr><td>基与维数</td><td>极大无关组与秩</td></tr>
+<tr><td>线性变换</td><td>矩阵</td></tr>
+<tr><td>换基</td><td>相似变换 \(B=P^{-1}AP\)</td></tr>
+<tr><td>特征向量</td><td>\((A-\lambda E)x=0\) 的非零解</td></tr>
+</tbody>
+</table>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 18 章 完 · 线性代数部分结束 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
