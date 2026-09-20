@@ -4060,6 +4060,133 @@ n 重伯努利试验中，事件发生的频率 \(\dfrac{n_A}{n}\xrightarrow{P}p
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 23 章 完 ——</div>
 
+<h2 class="chap" id="ch24">第 24 章　样本及抽样分布</h2>
+<div class="strip">本章速览：一 总体、样本与统计量 · 二 三大抽样分布（χ²、t、F） · 三 正态总体的抽样分布四大定理 · 四 速查与易错 · 五 技巧库（全）</div>
+
+<h3>一、总体、样本与统计量</h3>
+<div class="box"><span class="t">基本概念</span><br>
+<b>总体</b>：研究对象的全体（用随机变量 X 刻画其分布）；<b>个体</b>：单个对象。<br>
+<b>简单随机样本</b> \((X_1,\dots,X_n)\)：相互独立且与总体同分布（iid）；样本值 \((x_1,\dots,x_n)\) 是具体观测数据。
+</div>
+<div class="box"><span class="t">统计量</span><br>
+不含任何未知参数的样本函数称统计量（如 \(\bar X\)、\(S^2\)；含未知参数的不算）。常用统计量：
+\[ \bar X=\frac1n\sum_{i=1}^{n}X_i,\qquad S^2=\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar X)^2 \]
+样本 \(k\) 阶原点矩 \(A_k=\frac1n\sum X_i^k\)；样本 \(k\) 阶中心矩 \(B_k=\frac1n\sum(X_i-\bar X)^k\)。<br>
+<b>样本方差分母是 \(n-1\)</b>（自由度），计算式：\(S^2=\dfrac{\sum X_i^2-n\bar X^2}{n-1}\)。
+</div>
+<div class="box"><span class="t">两个基本数字特征</span><br>
+\[ E(\bar X)=E(X)=\mu,\qquad D(\bar X)=\frac{D(X)}{n}=\frac{\sigma^2}{n} \]
+\[ E(S^2)=D(X)=\sigma^2\quad(\text{无偏性}) \]
+正态总体时 \(\bar X\sim N\!\left(\mu,\frac{\sigma^2}{n}\right)\)；非正态大样本时由 CLT 近似正态。
+</div>
+
+<h3>二、三大抽样分布</h3>
+<div class="box"><span class="t">χ² 分布（卡方）</span><br>
+\(X_1,\dots,X_n\) 独立同 \(N(0,1)\) ⇒ \(\sum\limits_{i=1}^{n}X_i^2\sim\chi^2(n)\)（自由度 n）。<br>
+性质：\(E=n\)；\(D=2n\)；<b>可加性</b>：\(\chi^2(n_1)+\chi^2(n_2)\sim\chi^2(n_1+n_2)\)（独立时）；上侧分位点 \(\chi^2_\alpha(n)\)：\(P(\chi^2&gt;\chi^2_\alpha(n))=\alpha\)。
+</div>
+<div class="box"><span class="t">t 分布（学生氏）</span><br>
+\(X\sim N(0,1)\)，\(Y\sim\chi^2(n)\) 且独立 ⇒ \(T=\dfrac{X}{\sqrt{Y/n}}\sim t(n)\)。<br>
+性质：密度偶函数（关于 0 对称）；\(t_{1-\alpha}(n)=-t_\alpha(n)\)；\(n\to\infty\) 时趋近 \(N(0,1)\)；上侧分位点 \(t_\alpha(n)\)。
+</div>
+<div class="box"><span class="t">F 分布</span><br>
+\(X\sim\chi^2(n_1)\)，\(Y\sim\chi^2(n_2)\) 独立 ⇒ \(F=\dfrac{X/n_1}{Y/n_2}\sim F(n_1,n_2)\)。<br>
+性质：\(\dfrac1F\sim F(n_2,n_1)\)；分位点关系
+\[ F_{1-\alpha}(n_1,n_2)=\frac{1}{F_\alpha(n_2,n_1)} \]
+</div>
+<table>
+<thead><tr><th>分布</th><th>构造</th><th>关键性质</th></tr></thead>
+<tbody>
+<tr><td>\(\chi^2(n)\)</td><td>n 个独立标准正态的平方和</td><td>\(E=n,\ D=2n\)，可加</td></tr>
+<tr><td>\(t(n)\)</td><td>标准正态 ÷ √(卡方/n)</td><td>对称；\(n\to\infty\) 趋正态</td></tr>
+<tr><td>\(F(n_1,n_2)\)</td><td>两个卡方÷自由度之比</td><td>倒数仍 F（参数交换）</td></tr>
+</tbody>
+</table>
+
+<h3>三、正态总体的抽样分布（四大定理，必背）</h3>
+<div class="box"><span class="t">定理 1（样本均值的分布）</span><br>
+设 \(X\sim N(\mu,\sigma^2)\)，\((X_1,\dots,X_n)\) 为其样本，则
+\[ \bar X\sim N\!\left(\mu,\ \frac{\sigma^2}{n}\right),\qquad U=\frac{\sqrt n(\bar X-\mu)}{\sigma}\sim N(0,1) \]
+（σ 已知时用 U——标准正态。）
+</div>
+<div class="box"><span class="t">定理 2（样本方差的分布 + 独立性）</span><br>
+\[ \frac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1) \]
+且 \(\bar X\) 与 \(S^2\) <b>相互独立</b>（正态总体专属结论，别套一般分布）。<br>
+（由此得 \(E(S^2)=\sigma^2\)：因为卡方期望为自由度 \(n-1\)。）
+</div>
+<div class="box"><span class="t">定理 3（t 统计量）</span><br>
+当 σ 未知时，用 \(S\) 替换 σ：
+\[ T=\frac{\sqrt n(\bar X-\mu)}{S}\sim t(n-1) \]
+</div>
+<div class="box"><span class="t">定理 4（两正态总体，独立样本）</span><br>
+设样本来自 \(N(\mu_1,\sigma_1^2)\)、\(N(\mu_2,\sigma_2^2)\)，容量 \(n_1,n_2\)：<br>
+① <b>方差比</b>：\(\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(n_1-1,\ n_2-1)\)；<br>
+② <b>均值差</b>（σ₁²、σ₂² 已知）：\(\dfrac{(\bar X-\bar Y)-(\mu_1-\mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}\sim N(0,1)\)；<br>
+③ <b>等方差未知</b>（\(\sigma_1=\sigma_2=\sigma\)）：合并方差
+\[ S_p^2=\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2} \]
+\[ T=\frac{(\bar X-\bar Y)-(\mu_1-\mu_2)}{S_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\sim t(n_1+n_2-2) \]
+</div>
+<div class="mini">选统计量的口诀：<b>已知 σ 用 U（正态）；未知 σ 用 T（t 分布）；方差比值用 F；方差本身用卡方</b>；两个总体自由度注意 \(n_1+n_2-2\)。</div>
+
+<h3>四、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>样本方差分母写成 \(n\)（必须是 \(n-1\)，否则期望不等于 \(\sigma^2\)）。</li>
+<li>卡方自由度写错：\(\frac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)\)，不是 \(\chi^2(n)\)。</li>
+<li>t 统计量自由度忘减一（\(t(n-1)\)）；两样本合并时是 \(n_1+n_2-2\)。</li>
+<li>分位点的下标含义搞反（\(\chi^2_\alpha(n)\) 是「上侧面积为 α」的点）。</li>
+<li>t 分布对称性使用：\(t_{1-\alpha}(n)=-t_\alpha(n)\)；F 倒数关系：\(F_{1-\alpha}(n_1,n_2)=1/F_\alpha(n_2,n_1)\)。</li>
+<li>\(\bar X\) 与 \(S^2\) 独立只对正态总体成立，别乱推广。</li>
+<li>σ 已知/未知选错统计量（已知用 U，未知用 T）。</li>
+<li>两样本方差比用错顺序（分子自由度 \(n_1-1\)，分母 \(n_2-1\)）。</li>
+<li>把统计量与参数混淆（统计量不含未知参数）。</li>
+</ol>
+</div>
+
+<h3>五、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>5.1 抽样分布题「三看」选型法</h4>
+<div class="box">
+一看：涉及均值还是方差（均值 → U/T；方差 → 卡方/F）；<br>
+二看：σ 是否已知（已知 → U；未知 → T）；<br>
+三看：单样本还是两样本（两样本 → F 或合并 t）。<br>
+选定统计量后标准化，查表出概率。
+</div>
+
+<h4>5.2 统计量标准化速查</h4>
+<table>
+<thead><tr><th>已知条件</th><th>统计量</th><th>分布</th></tr></thead>
+<tbody>
+<tr><td>σ 已知，单总体均值</td><td>\(\dfrac{\sqrt n(\bar X-\mu)}{\sigma}\)</td><td>\(N(0,1)\)</td></tr>
+<tr><td>σ 未知，单总体均值</td><td>\(\dfrac{\sqrt n(\bar X-\mu)}{S}\)</td><td>\(t(n-1)\)</td></tr>
+<tr><td>单总体方差</td><td>\(\dfrac{(n-1)S^2}{\sigma^2}\)</td><td>\(\chi^2(n-1)\)</td></tr>
+<tr><td>两总体方差比</td><td>\(\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\)</td><td>\(F(n_1-1,n_2-1)\)</td></tr>
+<tr><td>等方差两总体均值差</td><td>合并 \(t\) 公式</td><td>\(t(n_1+n_2-2)\)</td></tr>
+</tbody>
+</table>
+
+<h4>5.3 样本方差的数字特征题</h4>
+<div class="box">
+用 \(E(S^2)=\sigma^2\)、\(D(S^2)=\frac{2\sigma^4}{n-1}\)（由卡方方差推得：\(D(\chi^2(k))=2k\)）解决「求 E、D 反求 n」类问题。
+</div>
+
+<h4>5.4 分位点三种转换</h4>
+<div class="box">
+① 卡方：区间概率 = 两分位点之差；② t 对称：负值转正值；③ F 倒数：小样本点查不到时用 \(F_{1-\alpha}(n_1,n_2)=1/F_\alpha(n_2,n_1)\)。
+</div>
+
+<h4>5.5 逆求 n / 分位点的套路</h4>
+<div class="box">
+把概率条件写成「标准化统计量 ≤/≥ 某值」，用分位点反解 n 或参数；正态场合用 \(\Phi^{-1}\)；注意 n 取整数且满足「至少」。
+</div>
+
+<h4>5.6 本章与后续两章的关系</h4>
+<div class="box">
+第 25 章（参数估计）用本章统计量构造置信区间/估计量；第 26 章（假设检验）用本章统计量构造检验统计量——本章是数理统计的「武器库」，把四张分布表与四大定理背熟即可。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 24 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
