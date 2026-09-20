@@ -777,6 +777,201 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 3 章 完 ——</div>
 
+<h2 class="chap" id="ch4">第 4 章　不定积分</h2>
+<div class="strip">本章速览：一 原函数与不定积分 · 二 基本积分表 · 三 换元积分法 · 四 分部积分法 · 五 有理函数与三角有理式 · 六 速查与易错 · 七 技巧库（全）</div>
+
+<h3>一、原函数与不定积分</h3>
+<div class="box"><span class="t">原函数</span><br>
+若在区间 \(I\) 上 \(F'(x)=f(x)\)，称 \(F(x)\) 为 \(f(x)\) 在该区间上的一个原函数。<br>
+① <b>存在性</b>：\(f\) 在区间上连续 ⇒ 原函数存在（第 5 章用变上限积分 \(\int_a^x f(t)dt\) 构造）；有第一类间断点的函数没有原函数。<br>
+② <b>不唯一</b>：任意两个原函数相差一个常数；全体原函数即 \(F(x)+C\)。
+</div>
+<div class="box"><span class="t">不定积分</span><br>
+\[ \int f(x)\,dx=F(x)+C \]
+几何上是「积分曲线族」（同一条曲线沿 \(y\) 轴平移）。<b>每个结果必须带 \(+C\)</b>。
+</div>
+<div class="box"><span class="t">基本性质（微分与积分互逆）</span><br>
+\(\left(\int f(x)dx\right)'=f(x)\)；\(d\!\left(\int f(x)dx\right)=f(x)\,dx\)；\(\int F'(x)\,dx=F(x)+C\)。<br>
+线性性：\(\int\left[\alpha f(x)+\beta g(x)\right]dx=\alpha\int f(x)dx+\beta\int g(x)dx\)。
+</div>
+<div class="mini">记忆：先积后微「抵消」，先微后积「带 C」。</div>
+
+<h3>二、基本积分表（必背）</h3>
+<table>
+<thead><tr><th colspan="2">基本积分公式</th></tr></thead>
+<tbody>
+<tr><td>\(\displaystyle\int x^\mu dx=\frac{x^{\mu+1}}{\mu+1}+C\ (\mu\ne-1)\)</td><td>\(\displaystyle\int\frac{dx}{x}=\ln|x|+C\)</td></tr>
+<tr><td>\(\displaystyle\int a^x dx=\frac{a^x}{\ln a}+C\)</td><td>\(\displaystyle\int e^x dx=e^x+C\)</td></tr>
+<tr><td>\(\displaystyle\int\sin x\,dx=-\cos x+C\)</td><td>\(\displaystyle\int\cos x\,dx=\sin x+C\)</td></tr>
+<tr><td>\(\displaystyle\int\sec^2x\,dx=\tan x+C\)</td><td>\(\displaystyle\int\csc^2x\,dx=-\cot x+C\)</td></tr>
+<tr><td>\(\displaystyle\int\sec x\tan x\,dx=\sec x+C\)</td><td>\(\displaystyle\int\csc x\cot x\,dx=-\csc x+C\)</td></tr>
+<tr><td>\(\displaystyle\int\frac{dx}{\sqrt{1-x^2}}=\arcsin x+C\)</td><td>\(\displaystyle\int\frac{dx}{1+x^2}=\arctan x+C\)</td></tr>
+<tr><td>\(\displaystyle\int\tan x\,dx=-\ln|\cos x|+C\)</td><td>\(\displaystyle\int\cot x\,dx=\ln|\sin x|+C\)</td></tr>
+<tr><td>\(\displaystyle\int\sec x\,dx=\ln|\sec x+\tan x|+C\)</td><td>\(\displaystyle\int\csc x\,dx=\ln|\csc x-\cot x|+C\)</td></tr>
+<tr><td>\(\displaystyle\int\frac{dx}{a^2+x^2}=\frac1a\arctan\frac xa+C\)</td><td>\(\displaystyle\int\frac{dx}{\sqrt{a^2-x^2}}=\arcsin\frac xa+C\)</td></tr>
+<tr><td>\(\displaystyle\int\frac{dx}{x^2-a^2}=\frac{1}{2a}\ln\left|\frac{x-a}{x+a}\right|+C\)</td><td>\(\displaystyle\int\frac{dx}{\sqrt{x^2\pm a^2}}=\ln\left|x+\sqrt{x^2\pm a^2}\right|+C\)</td></tr>
+</tbody>
+</table>
+
+<h3>三、换元积分法</h3>
+<div class="box"><span class="t">第一类：凑微分法</span><br>
+\[ \int f(\varphi(x))\,\varphi'(x)\,dx=\int f(u)\,du\quad(u=\varphi(x)) \]
+核心动作：把被积式整理成 \(f(\varphi(x))\,d\varphi(x)\) 的形状，再整体换元。
+</div>
+<table>
+<thead><tr><th colspan="2">常用凑微分清单</th></tr></thead>
+<tbody>
+<tr><td>\(x\,dx=\frac12 d(x^2)\)</td><td>\(\frac{dx}{x}=d\ln|x|\)</td></tr>
+<tr><td>\(e^x dx=d(e^x)\)</td><td>\(\frac{dx}{x^2}=-d\!\left(\frac1x\right)\)</td></tr>
+<tr><td>\(\frac{dx}{2\sqrt x}=d(\sqrt x)\)</td><td>\(\frac{dx}{\sqrt{1-x^2}}=d(\arcsin x)\)</td></tr>
+<tr><td>\(\sec^2x\,dx=d(\tan x)\)</td><td>\(\frac{dx}{1+x^2}=d(\arctan x)\)</td></tr>
+<tr><td>\(\sin x\,dx=-d(\cos x)\)</td><td>\(\cos x\,dx=d(\sin x)\)</td></tr>
+</tbody>
+</table>
+<div class="box"><span class="t">第二类：变量代换法</span><br>
+\[ \int f(x)\,dx=\int f(\varphi(t))\,\varphi'(t)\,dt\quad(x=\varphi(t)) \]
+最后务必<b>回代</b> \(t=\varphi^{-1}(x)\)。
+</div>
+<table>
+<thead><tr><th>被积式含</th><th>代换</th><th>记忆</th></tr></thead>
+<tbody>
+<tr><td>\(\sqrt{a^2-x^2}\)</td><td>\(x=a\sin t\)</td><td>用 \(1-\sin^2=\cos^2\)</td></tr>
+<tr><td>\(\sqrt{a^2+x^2}\)</td><td>\(x=a\tan t\)</td><td>用 \(1+\tan^2=\sec^2\)</td></tr>
+<tr><td>\(\sqrt{x^2-a^2}\)</td><td>\(x=a\sec t\)</td><td>用 \(\sec^2-1=\tan^2\)</td></tr>
+<tr><td>\(\sqrt{ax+b}\)</td><td>\(t=\sqrt{ax+b}\)</td><td>去根号最直接</td></tr>
+<tr><td>分母次数明显偏高</td><td>\(x=\dfrac1t\)（倒代换）</td><td>把高次搬到分子</td></tr>
+</tbody>
+</table>
+<div class="mini">三角代换回代技巧：画辅助直角三角形，根据代换式标出三边，直接读出 \(\sin t,\cos t,\tan t\)。</div>
+
+<h3>四、分部积分法</h3>
+<div class="box"><span class="t">公式</span><br>
+\[ \int u\,dv=uv-\int v\,du\quad\Longleftrightarrow\quad \int uv'\,dx=uv-\int u'v\,dx \]
+</div>
+<div class="box"><span class="t">选取 \(u\) 的口诀：「反、对、幂、三、指」</span><br>
+优先级：<b>反三角 &gt; 对数 &gt; 幂函数 &gt; 三角函数 &gt; 指数函数</b>——排在前的当 \(u\)，排在后的进 \(dv\)。<br>
+例：\(\int xe^x dx\)（幂×指：\(u=x\)）；\(\int x\ln x\,dx\)（对×幂：\(u=\ln x\)）；\(\int x\arctan x\,dx\)（反×幂：\(u=\arctan x\)）；\(\int x\sin x\,dx\)（幂×三：\(u=x\)）。
+</div>
+<table>
+<thead><tr><th>类型</th><th>处理要点</th></tr></thead>
+<tbody>
+<tr><td>\(\int x^n e^{ax}dx\)、\(\int x^n\sin ax\,dx\)</td><td>分部 \(n\) 次，每分部一次降一次幂</td></tr>
+<tr><td>\(\int\ln x\,dx\)、\(\int\arcsin x\,dx\)、\(\int\arctan x\,dx\)</td><td>取 \(dv=dx\)（隐藏的 1），直接分部</td></tr>
+<tr><td>\(\int e^{ax}\sin bx\,dx\)、\(\int e^{ax}\cos bx\,dx\)</td><td>分部两次出现「原积分」→ 移项解方程</td></tr>
+<tr><td>\(\int x^2\arctan x\,dx\) 等混合型</td><td>按口诀选 \(u\)，先分部再化简</td></tr>
+</tbody>
+</table>
+<div class="box gray"><span class="t">循环积分模板</span><br>
+\(I=\int e^x\sin x\,dx\)：分部两次得 \(I=e^x\sin x-e^x\cos x-I\)，移项
+\[ I=\frac{e^x(\sin x-\cos x)}{2}+C \]
+（分部两次要用同一个档次的选择规则，别换顺序。）
+</div>
+
+<h3>五、有理函数与三角有理式积分</h3>
+<div class="box"><span class="t">有理函数拆分（部分分式法）</span><br>
+先分真假：假分式（分子次数 ≥ 分母）先做多项式除法，化成「多项式 + 真分式」。真分式按分母因子拆：
+</div>
+<table>
+<thead><tr><th>分母所含因子</th><th>拆分形式</th></tr></thead>
+<tbody>
+<tr><td>\((x-a)\)</td><td>\(\dfrac{A}{x-a}\)</td></tr>
+<tr><td>\((x-a)^k\)</td><td>\(\dfrac{A_1}{x-a}+\dfrac{A_2}{(x-a)^2}+\cdots+\dfrac{A_k}{(x-a)^k}\)</td></tr>
+<tr><td>\(x^2+px+q\)（不可约）</td><td>\(\dfrac{Bx+C}{x^2+px+q}\)</td></tr>
+<tr><td>\((x^2+px+q)^k\)</td><td>同样带幂次逐项拆</td></tr>
+</tbody>
+</table>
+<div class="mini">积分要点：一次因子 → 对数；高次幂 → 幂函数；二次不可约因子 → 配方后「\(\arctan\) + \(\ln\)」两件套。</div>
+<div class="box"><span class="t">三角有理式：万能代换</span><br>
+令 \(t=\tan\dfrac x2\)，则
+\[ \sin x=\frac{2t}{1+t^2},\qquad \cos x=\frac{1-t^2}{1+t^2},\qquad dx=\frac{2\,dt}{1+t^2} \]
+万能公式「一定可行但常繁琐」——先检查特例代换：<br>
+① \(R(-\sin x,\cos x)=-R\)（对 sin 为奇）⇒ 令 \(t=\cos x\)；<br>
+② \(R(\sin x,-\cos x)=-R\) ⇒ 令 \(t=\sin x\)；<br>
+③ \(R(-\sin x,-\cos x)=R\) ⇒ 令 \(t=\tan x\)。
+</div>
+<div class="box"><span class="t">简单无理式</span><br>
+含 \(\sqrt{ax+b}\)：令 \(t=\sqrt{ax+b}\)；含 \(\sqrt{a^2-x^2}\) 等：三角代换；分母高次根式：倒代换。目的都是把根号整体变成 \(t\) 的有理式。
+</div>
+
+<h3>六、速查与易错</h3>
+<div class="box"><span class="t">求不定积分总流程</span><br>
+① <b>化简</b>：拆项、三角恒等（降幂/积化和差）、代数变形（加项减项、拆分子）；<br>
+② 直接套公式或凑微分；<br>
+③ 不行就<b>换元</b>：根式代换、三角代换、倒代换、万能代换；<br>
+④ 乘积型或含反三角/对数 → <b>分部</b>；<br>
+⑤ 有理分式 → 部分分式拆分。
+</div>
+<div class="box gray"><span class="t">验算习惯</span><br>
+把结果求导，看是否回到被积函数——这是不定积分最可靠的自我检查（比死背答案强）。
+</div>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>漏写 \(+C\)（每个不定积分结果都要带，包括中间过程最后回填）。</li>
+<li>\(\int\frac{dx}{x}=\ln|x|+C\) 的绝对值不能丢。</li>
+<li>\(\mu=-1\) 是幂函数公式的唯一例外，单独记。</li>
+<li>三角代换回代时符号错误——画辅助三角形核对。</li>
+<li>分部积分选 \(u\) 不按口诀，越做越复杂。</li>
+<li>万能代换硬算复杂题，忘了先看 \(\sin/\cos\) 奇偶特例。</li>
+<li>根式运算丢绝对值：\(\sqrt{x^2}=|x|\)。</li>
+<li>循环积分忘记「移项解方程」，试图硬凑。</li>
+<li>拆项系数用赋值法最稳（代入特殊 \(x\) 值定系数），别硬解方程组。</li>
+</ol>
+</div>
+
+<h3>七、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>7.1 凑微分快速识别</h4>
+<div class="box">
+看到「函数 × 其内层导数」结构立刻凑：<br>
+\(x f(x^2)\to\frac12 f(x^2)d(x^2)\)；\(\frac{f(\ln x)}{x}\to f(\ln x)\,d(\ln x)\)；\(e^x f(e^x)\to f(e^x)\,d(e^x)\)；\(f(\sqrt x)\frac{dx}{\sqrt x}\to 2f(\sqrt x)\,d(\sqrt x)\)；\(\frac{f(\arctan x)}{1+x^2}\to f(\arctan x)\,d(\arctan x)\)。
+</div>
+
+<h4>7.2 分部积分的四类切口</h4>
+<table>
+<thead><tr><th>切口</th><th>典型题</th><th>关键动作</th></tr></thead>
+<tbody>
+<tr><td>隐藏 \(dv=dx\)</td><td>\(\int\ln x\,dx,\ \int\arctan x\,dx\)</td><td>直接分部，\(u\) 为对数/反三角</td></tr>
+<tr><td>降幂型</td><td>\(\int x^2e^x dx,\ \int x^2\sin x\,dx\)</td><td>分部到多项式归零</td></tr>
+<tr><td>循环型</td><td>\(\int e^{ax}\sin bx\,dx\)</td><td>分部两次 + 移项解方程</td></tr>
+<tr><td>递推型（选学）</td><td>\(I_n=\int\sin^n x\,dx\)</td><td>分部降幂得递推 \(I_n=\frac{n-1}{n}I_{n-2}-\frac{\sin^{n-1}x\cos x}{n}\)</td></tr>
+</tbody>
+</table>
+
+<h4>7.3 「分子凑分母导数」技巧</h4>
+<div class="box">
+\[ \int\frac{P'(x)}{P(x)}\,dx=\ln|P(x)|+C \]
+例：\(\displaystyle\int\frac{2x+3}{x^2+3x+5}dx=\ln|x^2+3x+5|+C\)；若分子与分母导数差常数，拆成「\(c\cdot\frac{P'}{P}+\frac{\text{常数}}{P}\)」再积分。
+</div>
+
+<h4>7.4 「加一项减一项」与假分式降次</h4>
+<div class="box">
+\[ \int\frac{x^2}{1+x^2}dx=\int\left(1-\frac{1}{1+x^2}\right)dx=x-\arctan x+C \]
+\[ \int\frac{dx}{1+e^x}=\int\frac{(1+e^x)-e^x}{1+e^x}dx=x-\ln(1+e^x)+C \]
+分子次数不低于分母（或凑不出导数）时，先做这种「拼凑除法」。
+</div>
+
+<h4>7.5 三角积分的恒等变形</h4>
+<div class="box">
+降幂：\(\sin^2x=\frac{1-\cos2x}{2}\)，\(\cos^2x=\frac{1+\cos2x}{2}\)；积化和差：\(\sin ax\cos bx=\frac12[\sin(a+b)x+\sin(a-b)x]\)；凑对：\(\sin x\pm\cos x\) 组合平方；\(1\pm\sin x\) 乘共轭。奇数次幂拆一个因子凑微分（\(\int\sin^3x\,dx=\int(1-\cos^2x)(-d\cos x)\)）。
+</div>
+
+<h4>7.6 部分分式「赋值法」求系数</h4>
+<div class="box">
+拆项等式两边代入方便的 \(x\) 值（分母零点的值、\(x=0\)、\(x=\pm1\)）快速定系数；高次幂因子用逐次求导或对称代入补齐。
+</div>
+
+<h4>7.7 分段函数/含绝对值的积分</h4>
+<div class="box">
+在各段分别求原函数，再在分界点处用连续性「拼接」常数，使整体原函数连续（分段积分题的评分点）。
+</div>
+
+<h4>7.8 一题多解的对照练习（建议自测）</h4>
+<div class="box">
+\(\int\frac{x+1}{\sqrt{1-x^2}}dx\)：① 拆成两项（\(\frac x{\sqrt{1-x^2}}\) 凑微分 + \(\frac1{\sqrt{1-x^2}}\) 公式）；② 三角代换 \(x=\sin t\) 全流程。两种都做一遍，对照回代与结果形式（可能相差常数）。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 4 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
