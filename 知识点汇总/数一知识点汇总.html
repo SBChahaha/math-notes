@@ -2286,6 +2286,169 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 11 章 完 ——</div>
 
+<h2 class="chap" id="ch12">第 12 章　无穷级数</h2>
+<div class="strip">本章速览：一 常数项级数与性质 · 二 正项级数判别法 · 三 交错级数与绝对收敛 · 四 幂级数 · 五 函数展开成幂级数 · 六 傅里叶级数 · 七 速查与易错 · 八 技巧库（全）</div>
+
+<h3>一、常数项级数的概念与性质</h3>
+<div class="box"><span class="t">定义</span><br>
+\(\sum_{n=1}^{\infty}u_n=u_1+u_2+\cdots\)，部分和 \(S_n=\sum_{k=1}^{n}u_k\)；若 \(\lim_{n\to\infty}S_n=S\) 存在，称级数收敛，和为 \(S\)；否则发散。余项 \(r_n=S-S_n\to0\)。<br>
+两个基准级数：几何级数 \(\sum aq^n\)（\(|q|&lt;1\) 收敛于 \(\frac{a}{1-q}\)）；调和级数 \(\sum\frac1n\) <b>发散</b>。
+</div>
+<div class="box"><span class="t">性质</span>
+<ul>
+<li>线性：收敛级数可逐项相加、数乘；\(\sum(au_n+bv_n)=a\sum u_n+b\sum v_n\)（两者都收敛时）。</li>
+<li>收敛级数加括号仍收敛且和不变（反之不然：加括号收敛不能推出原级数收敛）。</li>
+<li><b>必要条件</b>：\(\sum u_n\) 收敛 ⇒ \(u_n\to0\)。逆不真（调和级数即反例）。</li>
+</ul>
+</div>
+
+<h3>二、正项级数的判别法</h3>
+<div class="box"><span class="t">基本定理</span><br>
+正项级数收敛 ⇔ 部分和数列有界。
+</div>
+<div class="box"><span class="t">比较判别法</span><br>
+① 一般形式：\(0\le u_n\le v_n\)——「大收 ⇒ 小收，小散 ⇒ 大散」；<br>
+② <b>极限形式</b>：\(\lim\dfrac{u_n}{v_n}=l\)：\(0&lt;l&lt;+\infty\) 时同敛散；\(l=0\) 时 \(v\) 收 ⇒ \(u\) 收；\(l=+\infty\) 时 \(v\) 散 ⇒ \(u\) 散。<br>
+基准级数：\(\sum\frac{1}{n^p}\)（<b>p 级数：\(p>1\) 收敛，\(p\le1\) 发散</b>）、几何级数、\(\sum\frac{1}{n\ln^p n}\)。
+</div>
+<div class="box"><span class="t">比值判别法（达朗贝尔）</span><br>
+\[ \rho=\lim_{n\to\infty}\frac{u_{n+1}}{u_n}:\quad \rho&lt;1\ \text{收敛};\quad \rho>1\ (\text{含}+\infty)\ \text{发散};\quad \rho=1\ \text{失效} \]
+适用：含 \(n!\)、连乘结构。
+</div>
+<div class="box"><span class="t">根值判别法（柯西）</span><br>
+\[ \rho=\lim_{n\to\infty}\sqrt[n]{u_n}:\quad \rho&lt;1\ \text{收敛};\quad \rho>1\ \text{发散};\quad \rho=1\ \text{失效} \]
+适用：含 \(n\) 次幂的结构（如 \((\frac{n}{2n+1})^n\)）。
+</div>
+<div class="mini">选择口诀：见阶乘用比值，见 n 次幂用根值，通项有「可比对手」用比较（极限形式最常用），都不好用积分判别法（了解）。</div>
+
+<h3>三、交错级数与绝对收敛</h3>
+<div class="box"><span class="t">莱布尼茨判别法（交错级数）</span><br>
+交错级数 \(\sum(-1)^{n-1}u_n\)（\(u_n>0\)）若满足：① \(u_n\) 单调不增；② \(\lim u_n=0\)，则级数收敛，且余项估计 \(|r_n|\le u_{n+1}\)。
+</div>
+<div class="box"><span class="t">绝对收敛与条件收敛</span>
+<ul>
+<li>若 \(\sum|u_n|\) 收敛，称 \(\sum u_n\) <b>绝对收敛</b>（绝对收敛 ⇒ 收敛）；</li>
+<li>若 \(\sum u_n\) 收敛但 \(\sum|u_n|\) 发散，称<b>条件收敛</b>（如 \(\sum\frac{(-1)^{n-1}}{n}\)）；</li>
+<li>绝对收敛级数可任意重排，和不变；条件收敛级数不可随意重排。</li>
+</ul>
+</div>
+<div class="box gray"><span class="t">判定流程</span><br>
+先对 \(\sum|u_n|\)（正项级数）用判别法：收敛 ⇒ 绝对收敛（完毕）；发散 ⇒ 再看原级数是否交错级数用莱布尼茨；是 ⇒ 条件收敛；否 ⇒ 发散（或用部分和/性质另行论证）。
+</div>
+
+<h3>四、幂级数</h3>
+<div class="box"><span class="t">阿贝尔定理与收敛半径</span><br>
+若幂级数 \(\sum a_n x^n\) 在 \(x_0\ne0\) 处收敛，则对一切 \(|x|&lt;|x_0|\) 绝对收敛；若在 \(x_1\) 处发散，则对一切 \(|x|>|x_1|\) 发散。<br>
+⇒ 存在<b>收敛半径 \(R\)</b>：\((-R,R)\) 内绝对收敛，\(|x|>R\) 发散，端点 \(x=\pm R\) 单独讨论。
+</div>
+<div class="box"><span class="t">求收敛半径</span><br>
+\[ \rho=\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|\Rightarrow R=\frac1\rho;\qquad \text{或}\quad R=\frac{1}{\lim\sqrt[n]{|a_n|}} \]
+（\(\rho=0\Rightarrow R=+\infty\)；\(\rho=+\infty\Rightarrow R=0\)。）<b>缺项级数</b>（如只含 \(x^{2n}\)）不能直接用公式，应令 \(t=x^2\) 换元或直接按定义判敛散。
+</div>
+<div class="box"><span class="t">幂级数的运算性质（收敛区间内）</span><br>
+和函数连续；可<b>逐项求导</b>、<b>逐项积分</b>（区间内任意次），且收敛半径不变（端点敛散性可能改变）。<br>
+和函数求法：逐项求导/积分把系数「拉平」，凑成几何级数或已知展开式。
+</div>
+<div class="mini">幂级数求和三步：① 观察系数（差比、阶乘、可分拆）；② 先积分或先求导凑标准形；③ 求和后「回代」还原（求导的用积分还原、积分的用求导还原）。</div>
+
+<h3>五、函数展开成幂级数</h3>
+<table>
+<thead><tr><th colspan="2">常用展开式（必背）</th></tr></thead>
+<tbody>
+<tr><td>\(\dfrac{1}{1-x}=\sum\limits_{n=0}^{\infty}x^n\ (|x|&lt;1)\)</td><td>\(e^x=\sum\limits_{n=0}^{\infty}\dfrac{x^n}{n!}\ (-\infty&lt;x&lt;+\infty)\)</td></tr>
+<tr><td>\(\sin x=\sum\limits_{n=0}^{\infty}(-1)^n\dfrac{x^{2n+1}}{(2n+1)!}\)</td><td>\(\cos x=\sum\limits_{n=0}^{\infty}(-1)^n\dfrac{x^{2n}}{(2n)!}\)</td></tr>
+<tr><td>\(\ln(1+x)=\sum\limits_{n=1}^{\infty}(-1)^{n-1}\dfrac{x^n}{n}\ (-1&lt;x\le1)\)</td><td>\((1+x)^\alpha=1+\sum\limits_{n=1}^{\infty}\dfrac{\alpha(\alpha-1)\cdots(\alpha-n+1)}{n!}x^n\)</td></tr>
+<tr><td>\(\arctan x=\sum\limits_{n=0}^{\infty}(-1)^n\dfrac{x^{2n+1}}{2n+1}\ (|x|\le1)\)</td><td>\(\dfrac{1}{1+x}=\sum\limits_{n=0}^{\infty}(-1)^nx^n\ (|x|&lt;1)\)</td></tr>
+</tbody>
+</table>
+<div class="box"><span class="t">间接展开法（考试主流）</span><br>
+利用已知展开式通过：① <b>变量代换</b>（如 \(e^{x^2}\) 把 \(x\to x^2\)）；② <b>逐项求导</b>（如 \(\frac{1}{(1-x)^2}=(\frac{1}{1-x})'\)）；③ <b>逐项积分</b>（如 \(\ln(1+x)=\int_0^x\frac{dt}{1+t}\)）；④ <b>四则组合</b>（拆项后分别展开）——得到新函数的展开式，注意同步换算收敛域。
+</div>
+<div class="box gray"><span class="t">泰勒级数与麦克劳林级数</span><br>
+\(f(x)=\sum\frac{f^{(n)}(0)}{n!}x^n\)（麦克劳林）；一般点：\(\sum\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n\)。函数能展开成幂级数的条件：余项 \(R_n(x)\to0\)。<br>
+考题常用：先写出「目标形式的已知展开」，再匹配系数（如求 \(f^{(n)}(0)\) 或某点高阶导数值）。
+</div>
+
+<h3>六、傅里叶级数</h3>
+<div class="box"><span class="t">狄利克雷收敛定理</span><br>
+设 \(f\) 以 \(2\pi\) 为周期（或只定义在 \([-\pi,\pi]\)），在一个周期内连续或只有有限个第一类间断点、且至多有限个极值点，则其傅里叶级数处处收敛，且
+\[ f(x)\sim\frac{a_0}{2}+\sum_{n=1}^{\infty}\left(a_n\cos nx+b_n\sin nx\right) \]
+在连续点收敛于 \(f(x)\)；在间断点收敛于 \(\dfrac{f(x^-)+f(x^+)}{2}\)（端点同理）。
+</div>
+<div class="box"><span class="t">系数公式（周期 2π）</span><br>
+\[ a_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\cos nx\,dx\ (n=0,1,2,\dots),\qquad b_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\sin nx\,dx\ (n=1,2,\dots) \]
+</div>
+<div class="box"><span class="t">奇偶性与延拓</span><br>
+奇函数 ⇒ \(a_n=0\)，只剩<b>正弦级数</b>；偶函数 ⇒ \(b_n=0\)，只剩<b>余弦级数</b>。<br>
+任意 \([0,\pi]\)（或 \([0,l]\)）上的函数：<b>奇延拓</b>得正弦级数、<b>偶延拓</b>得余弦级数——按题目要求选。
+</div>
+<div class="box"><span class="t">一般周期 2l</span><br>
+把 \(nx\) 换成 \(\dfrac{n\pi x}{l}\)，系数中的 \(\frac1\pi\int_{-\pi}^{\pi}\) 换成 \(\frac1l\int_{-l}^{l}\)。
+</div>
+<div class="mini">经典结论（可直接引用验算）：\(x\sim 2\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}\sin nx\)（\(x\in(-\pi,\pi)\)）；代 \(x=\frac\pi2\) 可得 \(\sum\frac{(-1)^{n+1}}{2n-1}=\frac\pi4\)。</div>
+
+<h3>七、速查与易错</h3>
+<div class="box"><span class="t">级数判定总流程</span><br>
+① 常数项级数：先看 \(u_n\to0\) 是否成立（不成立直接发散）→ 正项？比较/比值/根值 → 交错？莱布尼茨 → 判断绝对/条件收敛。<br>
+② 幂级数：求收敛半径 → 端点单独讨论 → 求和函数（逐项求导/积分）。<br>
+③ 傅里叶：判奇偶/选延拓 → 算系数 → 写级数并说明收敛点（间断点取平均）。
+</div>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>把 \(u_n\to0\) 当充分条件（错）；调和级数是标准反例。</li>
+<li>比值/根值法 \(\rho=1\) 时仍下结论（应改用它法）。</li>
+<li>莱布尼茨忘验证 \(u_n\) 单调不增；只验证 \(u_n\to0\) 不够。</li>
+<li>绝对收敛与条件收敛判断顺序颠倒；条件收敛级数随意重排（错）。</li>
+<li>缺项幂级数硬套 \(\left|\frac{a_{n+1}}{a_n}\right|\) 公式（应先换元或按定义）。</li>
+<li>收敛域端点忘记单独讨论。</li>
+<li>逐项求导/逐项积分后忘记端点敛散性可能改变。</li>
+<li>傅里叶系数常数因子（\(\frac1\pi\) 或 \(\frac1l\)）写错；把 \(\frac{a_0}{2}\) 误写成 \(a_0\)。</li>
+<li>间断点处收敛值忘记取左右极限平均值（考题高频陷阱）。</li>
+<li>反问题：由「级数收敛」推参数时，忘记讨论端点。</li>
+</ol>
+</div>
+
+<h3>八、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>8.1 抽象级数题三招</h4>
+<div class="box">
+① 与 p 级数/几何级数比阶（抓大头定 p）；② 利用「收敛 ⇒ u_n→0」及其量化形式做反证；③ 注意方向陷阱：\(\sum u_n\) 收敛 <b>推不出</b> \(\sum u_n^2\) 收敛（反例 \(u_n=\frac{(-1)^n}{\sqrt n}\)），也推不出 \(u_n\) 单调等。
+</div>
+
+<h4>8.2 比较判别法找「对手」</h4>
+<div class="box">
+通项主部（抓大头）：\(\dfrac{n+1}{n^3+2n}\sim\dfrac{1}{n^2}\)（p=2 收敛）；\(\dfrac{2^n}{n!}\) 用比值；\(\left(\dfrac{n}{2n+1}\right)^n\) 用根值。先定型、再选工具，能省大量时间。
+</div>
+
+<h4>8.3 幂级数求和五招与常用结果</h4>
+<div class="box">
+① 逐项求导凑 \(\frac{1}{1-x}\)：\(\sum nx^{n-1}=\frac{1}{(1-x)^2}\)；② 逐项积分凑 \(\ln\)：\(\sum\frac{x^n}{n}=-\ln(1-x)\)；③ 拆项（裂项）分别求和；④ 解微分方程（和函数 \(S(x)\) 满足的方程）；⑤ 与已知展开式比对。<br>
+常用：\(\sum\frac{x^n}{n!}=e^x\)；\(\sum(-1)^n\frac{x^{2n+1}}{2n+1}=\arctan x\)。
+</div>
+
+<h4>8.4 中心不在原点的幂级数</h4>
+<div class="box">
+\(\sum a_n(x-x_0)^n\) 视为关于 \(t=x-x_0\) 的级数，求出 \(t\) 的收敛区间后平移到 \(x\)——端点照旧单独验证。
+</div>
+
+<h4>8.5 傅里叶级数三类题</h4>
+<div class="box">
+① <b>求展开式</b>：判奇偶（或按题作奇/偶延拓）→ 套系数公式 → 注意收敛点说明。<br>
+② <b>求数项级数的和</b>：把特殊 \(x\) 代入展开式（如 \(x=0,\frac\pi2,\pi\)），由已知和反解目标级数。<br>
+③ <b>由展开式反求参数/积分</b>：比对系数或对展开式两边积分。
+</div>
+<div class="box gray"><span class="t">可利用的经典展开</span><br>
+\(x\sim2\sum\frac{(-1)^{n+1}}{n}\sin nx\)（\(|x|&lt;\pi\)）⇒ 代 \(x=\frac\pi2\) 得 \(\frac{\pi}{4}=\sum\frac{(-1)^{n+1}}{2n-1}\)；<br>
+\(x^2\sim\frac{\pi^2}{3}+4\sum\frac{(-1)^n}{n^2}\cos nx\) ⇒ 代 \(x=\pi\) 得 \(\sum\frac{1}{n^2}=\frac{\pi^2}{6}\)。
+</div>
+
+<h4>8.6 收敛性证明题思路</h4>
+<div class="box">
+数列型：部分和单调有界；通项放缩比较（把通项放大成已收敛级数项）；交错型找莱布尼茨；参数题逐个讨论。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 12 章 完 · 高等数学部分结束 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
