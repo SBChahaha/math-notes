@@ -1526,6 +1526,204 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 7 章 完 ——</div>
 
+<h2 class="chap" id="ch8">第 8 章　向量代数与空间解析几何</h2>
+<div class="strip">本章速览：一 向量代数 · 二 三大乘积 · 三 平面方程 · 四 空间直线 · 五 曲面与空间曲线 · 六 二次曲面 · 七 速查与易错 · 八 技巧库（全）</div>
+
+<h3>一、向量代数基础</h3>
+<div class="box"><span class="t">基本概念</span><br>
+向量 \(\vec a=(a_x,a_y,a_z)\) 由大小与方向确定；模 \(|\vec a|=\sqrt{a_x^2+a_y^2+a_z^2}\)；单位向量 \(\vec a^\circ=\dfrac{\vec a}{|\vec a|}\)。<br>
+平行（共线）⇔ 坐标成比例；\(|\vec a|=0\) 当且仅当 \(\vec a=\vec 0\)。<br>
+两点式：\(\overrightarrow{M_1M_2}=(x_2-x_1,\ y_2-y_1,\ z_2-z_1)\)，距离 \(|\overrightarrow{M_1M_2}|=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}\)。
+</div>
+<div class="box"><span class="t">线性运算与方向余弦</span><br>
+加减、数乘按坐标逐分量进行：\(\vec a\pm\vec b=(a_x\pm b_x,\ a_y\pm b_y,\ a_z\pm b_z)\)，\(\lambda\vec a=(\lambda a_x,\lambda a_y,\lambda a_z)\)。<br>
+方向余弦：\(\cos\alpha=\dfrac{a_x}{|\vec a|}\)，\(\cos\beta=\dfrac{a_y}{|\vec a|}\)，\(\cos\gamma=\dfrac{a_z}{|\vec a|}\)，满足
+\[ \cos^2\alpha+\cos^2\beta+\cos^2\gamma=1 \]
+且 \(\vec a^\circ=(\cos\alpha,\cos\beta,\cos\gamma)\)。
+</div>
+<div class="box"><span class="t">投影</span><br>
+\(\mathrm{Prj}_{\vec u}\,\vec a=|\vec a|\cos\varphi\)（\(\varphi\) 为两向量夹角）；坐标 \(a_x\) 就是 \(\vec a\) 在 \(x\) 轴上的投影。投影可正可负。
+</div>
+
+<h3>二、三大乘积</h3>
+<div class="box"><span class="t">数量积（点积）</span><br>
+\[ \vec a\cdot\vec b=|\vec a||\vec b|\cos\theta=a_xb_x+a_yb_y+a_zb_z \]
+性质：交换律、分配律；\(\vec a\cdot\vec a=|\vec a|^2\)。<br>
+夹角公式：\(\cos\theta=\dfrac{\vec a\cdot\vec b}{|\vec a||\vec b|}\)；<b>垂直 ⇔ \(\vec a\cdot\vec b=0\)</b>。
+</div>
+<div class="box"><span class="t">向量积（叉积）</span><br>
+\(\vec c=\vec a\times\vec b\)：模 \(|\vec c|=|\vec a||\vec b|\sin\theta\)（等于以 \(\vec a,\vec b\) 为邻边的平行四边形面积）；方向同时垂直于 \(\vec a,\vec b\)，且 \(\vec a,\vec b,\vec c\) 构成右手系。<br>
+坐标公式（行列式展开）：
+\[ \vec a\times\vec b=\begin{vmatrix}\vec i&\vec j&\vec k\\ a_x&a_y&a_z\\ b_x&b_y&b_z\end{vmatrix} =\big(a_yb_z-a_zb_y,\ a_zb_x-a_xb_z,\ a_xb_y-a_yb_x\big) \]
+反交换：\(\vec a\times\vec b=-\vec b\times\vec a\)；<b>平行 ⇔ \(\vec a\times\vec b=\vec 0\)</b>。<br>
+面积应用：三角形面积 \(S=\dfrac12|\vec a\times\vec b|\)。
+</div>
+<div class="box"><span class="t">混合积</span><br>
+\[ [\vec a\,\vec b\,\vec c]=(\vec a\times\vec b)\cdot\vec c=\begin{vmatrix}a_x&a_y&a_z\\ b_x&b_y&b_z\\ c_x&c_y&c_z\end{vmatrix} \]
+几何意义：绝对值等于以三向量为棱的平行六面体体积。<br>
+<b>三向量共面 ⇔ \([\vec a\,\vec b\,\vec c]=0\)</b>；轮换不变：\([\vec a\vec b\vec c]=[\vec b\vec c\vec a]=[\vec c\vec a\vec b]\)。
+</div>
+<div class="mini">三大乘积对照：点积出数（判垂直、求夹角、投影）；叉积出向量（判平行、求面积、找法向）；混合积出数（判共面、求体积）。</div>
+
+<h3>三、平面方程</h3>
+<div class="box"><span class="t">三种形式</span><br>
+<b>点法式</b>（过 \(M_0(x_0,y_0,z_0)\)、法向量 \(\vec n=(A,B,C)\)）：
+\[ A(x-x_0)+B(y-y_0)+C(z-z_0)=0 \]
+<b>一般式</b>：\(Ax+By+Cz+D=0\)，法向量 \(\vec n=(A,B,C)\)；<br>
+<b>截距式</b>：\(\dfrac xa+\dfrac yb+\dfrac zc=1\)（\(abc\ne0\)）。
+</div>
+<div class="box"><span class="t">两平面关系（法向量的关系）</span><br>
+夹角：\(\cos\theta=\dfrac{|\vec n_1\cdot\vec n_2|}{|\vec n_1||\vec n_2|}\)（取锐角）；<br>
+互相垂直 ⇔ \(\vec n_1\cdot\vec n_2=0\)；互相平行 ⇔ \(\vec n_1\times\vec n_2=\vec 0\)（系数对应成比例）。
+</div>
+<div class="box"><span class="t">点到平面的距离</span><br>
+\[ d=\frac{|Ax_0+By_0+Cz_0+D|}{\sqrt{A^2+B^2+C^2}} \]
+（先把平面化为一般式再代公式。）
+</div>
+
+<h3>四、空间直线</h3>
+<div class="box"><span class="t">三种形式</span><br>
+<b>点向式</b>（对称式）：\(\dfrac{x-x_0}{l}=\dfrac{y-y_0}{m}=\dfrac{z-z_0}{n}\)，方向向量 \(\vec s=(l,m,n)\)；<br>
+<b>参数式</b>：\(x=x_0+lt,\ y=y_0+mt,\ z=z_0+nt\)；<br>
+<b>一般式</b>（两平面交线）：
+\[ \begin{cases}A_1x+B_1y+C_1z+D_1=0\\ A_2x+B_2y+C_2z+D_2=0\end{cases} \]
+方向向量 \(\vec s=\vec n_1\times\vec n_2\)（<b>顺序不能反</b>）。
+</div>
+<div class="box gray"><span class="t">一般式 → 点向式（两步）</span><br>
+① 定一点：令其中一个变量（如 \(z=0\)）解二元一次方程组；② 方向向量 \(\vec s=\vec n_1\times\vec n_2\)；③ 写对称式。
+</div>
+<div class="box"><span class="t">两条直线的位置关系</span><br>
+设方向向量 \(\vec s_1,\vec s_2\)、连线上点向量 \(\overrightarrow{M_1M_2}\)：<br>
+夹角 \(\cos\theta=\dfrac{|\vec s_1\cdot\vec s_2|}{|\vec s_1||\vec s_2|}\)；平行 ⇔ \(\vec s_1\times\vec s_2=\vec 0\)；垂直 ⇔ \(\vec s_1\cdot\vec s_2=0\)；<br>
+相交/共面 ⇔ 混合积 \([\vec s_1\ \vec s_2\ \overrightarrow{M_1M_2}]=0\)；异面 ⇔ 该混合积 \(\ne0\)。
+</div>
+<div class="box"><span class="t">直线与平面的位置关系</span><br>
+设直线方向 \(\vec s\)、平面法向 \(\vec n\)：<br>
+线面夹角（取锐角）：\(\sin\varphi=\dfrac{|\vec s\cdot\vec n|}{|\vec s||\vec n|}\)；<br>
+直线⊥平面 ⇔ \(\vec s\parallel\vec n\)（\(\vec s\times\vec n=\vec 0\)）；<br>
+直线∥平面 ⇔ \(\vec s\cdot\vec n=0\) 且直线上一点不在平面内；<br>
+直线在平面上 ⇔ \(\vec s\cdot\vec n=0\) 且直线上一点满足平面方程。
+</div>
+<div class="mini">平面束（选学）：过两平面交线的平面族 \(A_1x+B_1y+C_1z+D_1+\lambda(A_2x+B_2y+C_2z+D_2)=0\)，用于「过交线且满足某条件」类题。</div>
+
+<h3>五、曲面与空间曲线</h3>
+<div class="box"><span class="t">曲面方程与球面</span><br>
+曲面：\(F(x,y,z)=0\)；球面（球心 \((x_0,y_0,z_0)\)、半径 \(R\)）：
+\[ (x-x_0)^2+(y-y_0)^2+(z-z_0)^2=R^2 \]
+</div>
+<div class="box"><span class="t">柱面</span><br>
+方程<b>缺某个变量</b> ⇒ 母线平行该轴。<br>
+如 \(x^2+y^2=R^2\)（圆柱面，母线平行 \(z\) 轴）；\(y^2=2px\)（抛物柱面）；\(\frac{x^2}{a^2}+\frac{y^2}{b^2}=1\)（椭圆柱面）。<br>
+口诀：<b>缺谁平行谁</b>；准线在「剩下的两个变量」构成的坐标面内。
+</div>
+<div class="box"><span class="t">旋转曲面（替换法）</span><br>
+曲线在某坐标面内（如 \(yOz\) 面：\(f(y,z)=0\)）绕坐标轴旋转：<br>
+绕 \(z\) 轴：\(f\!\left(\pm\sqrt{x^2+y^2},\ z\right)=0\)（把 \(y\) 换成 \(\pm\sqrt{x^2+y^2}\)）；<br>
+绕 \(y\) 轴：\(f\!\left(y,\ \pm\sqrt{x^2+z^2}\right)=0\)（把 \(z\) 换成 \(\pm\sqrt{x^2+z^2}\)）。<br>
+口诀：<b>绕谁转，谁不动；另一个「加平方补同伴」</b>。<br>
+典型：\(z^2=2y\) 绕 \(y\) 轴 ⇒ \(x^2+z^2=2y\)（旋转抛物面）；直线绕轴 ⇒ 圆锥面（\(\frac{x^2+y^2}{a^2}-\frac{z^2}{c^2}=0\)）。
+</div>
+<div class="box"><span class="t">空间曲线</span><br>
+参数式：\(x=x(t),y=y(t),z=z(t)\)；一般式：两曲面方程联立（交线）。
+</div>
+<div class="box"><span class="t">空间曲线在坐标面上的投影</span><br>
+求「曲线在 \(xOy\) 面上的投影」：从方程组中<b>消去 \(z\)</b> 得投影柱面 \(\Phi(x,y)=0\)，再与 \(z=0\) 联立即投影曲线：
+\[ \begin{cases}\Phi(x,y)=0\\ z=0\end{cases} \]
+另两面的投影同理（消对应变量）。
+</div>
+
+<h3>六、二次曲面（截痕法识别）</h3>
+<table>
+<thead><tr><th>名称</th><th>标准方程</th><th>记忆特征</th></tr></thead>
+<tbody>
+<tr><td>椭球面</td><td>\(\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1\)</td><td>三个平方项、全正、等于 1</td></tr>
+<tr><td>椭圆锥面</td><td>\(\frac{x^2}{a^2}+\frac{y^2}{b^2}-\frac{z^2}{c^2}=0\)</td><td>两项加、一项减、等于 0</td></tr>
+<tr><td>单叶双曲面</td><td>\(\frac{x^2}{a^2}+\frac{y^2}{b^2}-\frac{z^2}{c^2}=1\)</td><td>两正一负、等于 1（连通）</td></tr>
+<tr><td>双叶双曲面</td><td>\(\frac{z^2}{c^2}-\frac{x^2}{a^2}-\frac{y^2}{b^2}=1\)</td><td>一正两负、等于 1（两瓣）</td></tr>
+<tr><td>椭圆抛物面</td><td>\(\frac{x^2}{a^2}+\frac{y^2}{b^2}=z\)</td><td>两个平方 = 一次项</td></tr>
+<tr><td>双曲抛物面（马鞍面）</td><td>\(z=\frac{x^2}{a^2}-\frac{y^2}{b^2}\)</td><td>平方项一正一负 = 一次项</td></tr>
+</tbody>
+</table>
+<div class="mini">截痕法：用平行于坐标面的平面去截，看交线（椭圆/双曲线/抛物线）判断曲面类型；做题时「看方程 → 想截痕」。</div>
+
+<h3>七、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>叉积方向写反：\(\vec a\times\vec b=-\vec b\times\vec a\)——求法向量时注意顺序（如 \(\vec s=\vec n_1\times\vec n_2\)）。</li>
+<li>混合积求体积忘取绝对值（体积为正）。</li>
+<li>点到平面距离：忘记分子绝对值；忘记除以 \(|\vec n|\)；平面没化成一般式。</li>
+<li>线面夹角用错三角函数：线面夹角用 \(\sin\)，线线/面面夹角用 \(\cos\)（都取绝对值）。</li>
+<li>直线∥平面与直线在平面上混淆——必须检查点是否在平面上。</li>
+<li>旋转曲面替换方向搞错：先确认曲线在哪个坐标面、绕哪个轴（绕谁转谁不变）。</li>
+<li>投影曲线忘写「投影平面」：\(\begin{cases}\Phi(x,y)=0\\ z=0\end{cases}\) 两条式子缺一不可。</li>
+<li>方向余弦表达式与单位向量混淆：方向余弦本身是分量 ÷ 模。</li>
+</ol>
+</div>
+
+<h3>八、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>8.1 叉积行列式速算</h4>
+<div class="box">
+\[ \vec a\times\vec b=\big(a_yb_z-a_zb_y,\ a_zb_x-a_xb_z,\ a_xb_y-a_yb_x\big) \]
+口诀：<b>「i 项丢 x，j 项丢 y 再取负，k 项丢 z」</b>；三项交叉相乘相减不要乱序（写成行列式最稳）。
+</div>
+
+<h4>8.2 共线、共面判定总表</h4>
+<table>
+<thead><tr><th>问题</th><th>判别式</th></tr></thead>
+<tbody>
+<tr><td>两向量平行</td><td>\(\vec a\times\vec b=\vec 0\)（坐标成比例）</td></tr>
+<tr><td>三向量共面</td><td>混合积 \([\vec a\vec b\vec c]=0\)</td></tr>
+<tr><td>四点共面</td><td>\([\overrightarrow{M_1M_2}\ \overrightarrow{M_1M_3}\ \overrightarrow{M_1M_4}]=0\)</td></tr>
+<tr><td>两直线共面（相交或平行）</td><td>\([\vec s_1\ \vec s_2\ \overrightarrow{M_1M_2}]=0\)</td></tr>
+<tr><td>直线在平面上</td><td>\(\vec s\cdot\vec n=0\) 且线上一满足平面方程</td></tr>
+<tr><td>四点共面的平面方程</td><td>混合积展开 = 0 即为所求平面</td></tr>
+</tbody>
+</table>
+
+<h4>8.3 平面五求法</h4>
+<div class="box">
+① 点 + 法向量 → 点法式；② 过三点 → 两向量叉积得 \(\vec n\)；③ 过直线 + 线外一点 → 直线上取两点与线外点构成两向量叉积；④ 过两平面交线 → 平面束 \(\lambda\) 法；⑤ 平行于已知平面 → 法向量相同、代点定 \(D\)。
+</div>
+
+<h4>8.4 直线五求法</h4>
+<div class="box">
+① 点 + 方向向量 → 对称式；② 两平面交线 → \(\vec s=\vec n_1\times\vec n_2\) + 取点；③ 过点且与已知直线平行 → 同方向向量；④ 过点且与已知平面垂直 → \(\vec s=\vec n\)；⑤ 过点且平行于两平面 → \(\vec s=\vec n_1\times\vec n_2\)。
+</div>
+
+<h4>8.5 距离公式汇总</h4>
+<table>
+<thead><tr><th>类型</th><th>公式</th></tr></thead>
+<tbody>
+<tr><td>点—面</td><td>\(d=\dfrac{|Ax_0+By_0+Cz_0+D|}{\sqrt{A^2+B^2+C^2}}\)</td></tr>
+<tr><td>平行平面—平面</td><td>同法向量化系数一致后 \(d=\dfrac{|D_1-D_2|}{|\vec n|}\)</td></tr>
+<tr><td>点—直线（选学）</td><td>\(d=\dfrac{|\vec s\times\overrightarrow{M_0M_1}|}{|\vec s|}\)</td></tr>
+<tr><td>异面直线（选学）</td><td>\(d=\dfrac{\left|[\vec s_1\ \vec s_2\ \overrightarrow{M_1M_2}]\right|}{|\vec s_1\times\vec s_2|}\)</td></tr>
+</tbody>
+</table>
+
+<h4>8.6 对称与投影套路</h4>
+<div class="box">
+<b>点关于平面的对称点</b>：过该点作以 \(\vec n\) 为方向向量的直线 → 求与平面交点 → 中点公式反求对称点。<br>
+<b>点关于直线的对称点</b>：过该点作垂直于直线的平面 → 求交点 → 中点反求。<br>
+<b>直线在平面上的投影直线</b>：把直线上两点分别求对称点（或求过直线且垂直于该平面的「投影平面」，再与平面求交线）。
+</div>
+
+<h4>8.7 旋转曲面两步构造</h4>
+<div class="box">
+① 确认母线在哪张坐标面（如 \(yOz\) 面：\(f(y,z)=0\)）；② 绕哪条轴转，就把<b>另一个变量</b>换成「±√(两变量平方和)」：绕 \(z\) 轴把 \(y\) 换成 \(\pm\sqrt{x^2+y^2}\)；绕 \(y\) 轴把 \(z\) 换成 \(\pm\sqrt{x^2+z^2}\)。<br>
+逆向题（给曲面找母线/轴）：看哪两个变量的平方和结构出现，即绕「剩下的那个变量」的轴。
+</div>
+
+<h4>8.8 二次曲面辨识口诀</h4>
+<div class="box">
+三平方项：全正=1 → 椭球；两正一负=1 → 单叶；一正两负=1 → 双叶；等于 0 → 锥面。<br>
+两平方+一次：同号 → 椭圆抛物面；异号 → 马鞍面。<br>
+先「数项、看符号、看常数」，再想截痕验证。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 8 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
