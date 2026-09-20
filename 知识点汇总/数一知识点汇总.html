@@ -41,12 +41,12 @@ td.c{text-align:center}
 .pbtn2{position:fixed;right:18px;bottom:66px;z-index:9;font:600 13px/1.2 "Microsoft YaHei",sans-serif;background:#475569;color:#fff;border:0;border-radius:8px;padding:12px 18px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
 body.col2{font-size:9.5pt}
 @media screen{body.col2 .sheet{max-width:194mm;padding:0;margin:14px auto}}
-body.col2 #flow{column-count:2;column-gap:6mm;column-rule:.8px solid #e5e7eb}
+body.col2 #flow{column-count:2;column-gap:5mm;column-rule:.8px solid #e5e7eb}
 body.col2 #flow h2.chap{page-break-before:auto;break-before:auto;margin-top:8mm;border-top:2pt solid #1f3a93;padding-top:2mm}
 body.col2 #flow h2.chap:first-child{margin-top:0;border-top:0;padding-top:0}
-body.col2 #flow table{font-size:7pt}
+body.col2 #flow table{font-size:6.8pt}
 body.col2 #flow th,body.col2 #flow td{padding:.5mm .8mm}
-body.col2 #flow .box{padding:1.2mm 2mm;break-inside:avoid;page-break-inside:avoid}
+body.col2 #flow .box{padding:1mm 1.6mm;break-inside:avoid;page-break-inside:avoid}
 body.col2 #flow .strip{font-size:8pt;break-inside:avoid}
 body.col2 #flow h3{font-size:11pt}
 body.col2 #flow h4{font-size:10pt}
@@ -54,13 +54,22 @@ body.col2 #flow .mini{font-size:8pt}
 body.col2 #flow mjx-container{font-size:88%}
 body.col2 #flow .box,body.col2 #flow table{break-inside:auto;page-break-inside:auto}
 body.col2 #flow tr,body.col2 #flow table.stack td{break-inside:avoid;page-break-inside:avoid}
+@media screen{
+body.col2.paged .sheet{max-width:none;padding:10mm 6mm;background:transparent;box-shadow:none}
+body.col2.paged #flow{column-count:auto;column-rule:none;display:grid;grid-template-columns:repeat(auto-fit,198mm);gap:10px;justify-content:center}
+body.col2.paged .cover,body.col2.paged .toc,body.col2.paged .foot{background:#fff;max-width:198mm;margin:10px auto;padding:12mm 10mm;border-radius:2px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+body.col2.paged .cover{padding-top:20mm;padding-bottom:10mm}
+.page{width:198mm;height:273mm;column-count:2;column-gap:5mm;column-rule:.8px solid #e5e7eb;column-fill:auto;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.15);border-radius:2px}
+.page.tall{height:auto;min-height:273mm}
+}
+@media screen and (max-width:210mm){body.col2.paged #flow{grid-template-columns:1fr}.page{width:auto;height:auto;column-count:1;box-shadow:none}body.col2.paged .cover,body.col2.paged .toc,body.col2.paged .foot{max-width:none;width:auto;padding:6mm 4mm}}
 body.col2 #flow table.stack,body.col2 #flow table.stack thead,body.col2 #flow table.stack tbody,body.col2 #flow table.stack tr,body.col2 #flow table.stack th,body.col2 #flow table.stack td{display:block;width:100%;box-sizing:border-box}
-@media print{body{background:#fff}.sheet,body.col2 .sheet{box-shadow:none;margin:0;max-width:none;padding:0}.pbtn,.pbtn2{display:none}@page{size:A4;margin:12mm 8mm}}
+@media print{body{background:#fff}.sheet,body.col2 .sheet{box-shadow:none;margin:0;max-width:none;padding:0}.pbtn,.pbtn2{display:none}body.col2.paged #flow{display:block;column-count:2;column-gap:5mm;column-rule:.8px solid #e5e7eb}body.col2.paged .page{display:contents}@page{size:A4;margin:12mm 6mm}}
 </style>
 </head>
 <body>
-<button class="pbtn" onclick="window.print()">打印 / 存 PDF</button>
-<button class="pbtn2" id="colbtn" onclick="document.body.classList.toggle('col2');document.getElementById('colbtn').textContent=document.body.classList.contains('col2')?'双栏省纸：开':'双栏省纸：关';">双栏省纸：关</button>
+<button class="pbtn" onclick="window.__printNow?window.__printNow():window.print()">打印 / 存 PDF</button>
+<button class="pbtn2" id="colbtn">双栏省纸：关</button>
 <div class="sheet">
 
 <div class="cover">
@@ -2185,7 +2194,7 @@ body.col2 #flow table.stack,body.col2 #flow table.stack thead,body.col2 #flow ta
 必须先「定侧」，再「分项」，最后「投影」。
 </div>
 <div class="box"><span class="t">合一公式（显式 z=z(x,y)、取上侧）</span><br>
-\[ \iint_\Sigma P\,dydz+Q\,dzdx+R\,dxdy=\iint_D\left[-P\,z_x-Q\,z_y+R\right]dxdy \]
+\[ \begin{aligned} \iint_\Sigma P\,dydz+&Q\,dzdx+R\,dxdy\\ &=\iint_D\left[-P\,z_x-Q\,z_y+R\right]dxdy \end{aligned} \]
 本质来自 \((dydz,dzdx,dxdy)=(-z_x,-z_y,1)\,dxdy\)（上侧）。
 </div>
 <div class="box gray"><span class="t">两类曲面积分的关系</span><br>
@@ -3417,7 +3426,7 @@ body.col2 #flow table.stack,body.col2 #flow table.stack thead,body.col2 #flow ta
 <li>\(P(\bar A)=1-P(A)\)。</li>
 <li><b>减法公式</b>：\(P(A-B)=P(A)-P(AB)\)；若 \(B\subset A\) 则 \(P(A-B)=P(A)-P(B)\)。</li>
 <li><b>加法公式</b>：\(P(A\cup B)=P(A)+P(B)-P(AB)\)；<br>
-三事件：\(P(A\cup B\cup C)=P(A)+P(B)+P(C)-P(AB)-P(AC)-P(BC)+P(ABC)\)。</li>
+三事件：\[\begin{aligned}P(A\cup B\cup C)=\;&P(A)+P(B)+P(C)\\ &-P(AB)-P(AC)\\ &-P(BC)+P(ABC)\end{aligned}\]。</li>
 <li>单调性：\(A\subset B\Rightarrow P(A)\le P(B)\)。</li>
 <li>\(P(A\cup B)\le P(A)+P(B)\)（一般不等式）。</li>
 </ol>
@@ -3684,7 +3693,7 @@ body.col2 #flow table.stack,body.col2 #flow table.stack thead,body.col2 #flow ta
 <div class="box"><span class="t">联合分布函数</span><br>
 \[ F(x,y)=P(X\le x,\ Y\le y) \]
 性质：对 x、y 分别单调不减；\(0\le F\le1\)；对每个变量右连续；边界 \(\lim\limits_{x\to-\infty}F=0\)，\(F(+\infty,+\infty)=1\)。<br>
-矩形概率：\(P(a&lt;X\le b,\ c&lt;Y\le d)=F(b,d)-F(a,d)-F(b,c)+F(a,c)\)。
+矩形概率：\[\begin{aligned}P(&a&lt;X\le b,\ c&lt;Y\le d)\\ &=F(b,d)-F(a,d)-F(b,c)+F(a,c)\end{aligned}\]
 </div>
 <div class="box"><span class="t">二维离散型</span><br>
 联合分布律 \(p_{ij}=P(X=x_i,\ Y=y_j)\)，满足 \(p_{ij}\ge0\)、\(\sum_i\sum_j p_{ij}=1\)；常写成表格（行 = X 取值，列 = Y 取值）。
@@ -3858,7 +3867,8 @@ n 个独立同分布推广：\(F_{\max}(z)=[F(z)]^n\)，\(F_{\min}(z)=1-[1-F(z)]
 
 <h3>三、协方差与相关系数</h3>
 <div class="box"><span class="t">协方差</span><br>
-\[ \mathrm{Cov}(X,Y)=E\bigl[(X-EX)(Y-EY)\bigr]=E(XY)-E(X)E(Y) \]
+\[ \mathrm{Cov}(X,Y)=E\bigl[(X-EX)(Y-EY)\bigr] \]
+\[ =E(XY)-E(X)E(Y) \]
 性质：对称；\(\mathrm{Cov}(X,X)=D(X)\)；<b>双线性</b>：\(\mathrm{Cov}(aX+b,\ cY+d)=ac\,\mathrm{Cov}(X,Y)\)，\(\mathrm{Cov}(X_1+X_2,Y)=\mathrm{Cov}(X_1,Y)+\mathrm{Cov}(X_2,Y)\)。
 </div>
 <div class="box"><span class="t">相关系数</span><br>
@@ -4454,6 +4464,152 @@ p 值（了解）：在 \(H_0\) 下出现「当前或更极端」结果的概率
     document.head.appendChild(s);
   }
   load(0);
+})();
+</script>
+<script>
+(function(){
+  var flow=document.getElementById('flow');
+  var btn=document.getElementById('colbtn');
+  var originalNodes=null, paginated=false;
+
+  function makePage(){var p=document.createElement('div');p.className='page';return p;}
+
+  function ready(cb){
+    var tries=0;
+    (function loop(){
+      if(window.MathJax && MathJax.startup && MathJax.startup.promise){ MathJax.startup.promise.then(cb); }
+      else if(tries++ < 200){ setTimeout(loop,200); }
+      else{ cb(); }
+    })();
+  }
+
+  function paginate(){
+    if(paginated || !flow){return;}
+    document.body.classList.add('paged');
+    var nodes=[];
+    for(var i=0;i < flow.childNodes.length;i++){
+      var n=flow.childNodes[i];
+      if(n.nodeType===1){nodes.push(n);}
+      else if(n.nodeType===3){
+        if(n.textContent.replace(/\s/g,'')!==''){
+          var w=document.createElement('span');w.appendChild(n);nodes.push(w);
+        }
+      }
+    }
+    originalNodes=nodes.slice();
+    flow.innerHTML='';
+    var page=makePage(); flow.appendChild(page);
+    var pages=[page];
+    var i=0, guard=0, limit=nodes.length*4+200;
+    while(i < nodes.length && guard++ < limit){
+      var n=nodes[i];
+      page.appendChild(n);
+      var probe=document.createElement('i');
+      probe.style.cssText='display:block;width:0;height:0;';
+      page.appendChild(probe);
+      var pr=page.getBoundingClientRect(), mr=probe.getBoundingClientRect();
+      var fits=(mr.left < pr.right-1)&&(mr.top < pr.bottom-3);
+      page.removeChild(probe);
+      if(!fits){
+        if(page.children.length===1){
+          page.classList.add('tall'); i++;
+          page=makePage(); flow.appendChild(page); pages.push(page);
+          continue;
+        }
+        page.removeChild(n);
+        page=makePage(); flow.appendChild(page); pages.push(page);
+        continue;
+      }
+      i++;
+    }
+    paginated=true;
+    var over=0, overInfo='';
+    for(var k=0;k < pages.length;k++){
+      if(!pages[k].classList.contains('tall') && pages[k].scrollWidth > pages[k].clientWidth+2){
+        over++;
+        var prr=pages[k].getBoundingClientRect();
+        var el=null;
+        var kids=pages[k].querySelectorAll('*');
+        for(var z=0;z < kids.length;z++){
+          var rr=kids[z].getBoundingClientRect();
+          if(rr.width>0 && rr.right > prr.right+2){ el=kids[z]; break; }
+        }
+        var host=el?(el.closest('mjx-container')||el):null;
+        overInfo+=' ['+k+':'+(host?(host.tagName+'.'+host.className):'?')+' w='+(host?Math.round(host.getBoundingClientRect().width):0)+' txt='+(host?host.textContent.replace(/\s+/g,' ').substring(0,60):'')+']';
+      }
+    }
+    var rep=document.createElement('pre');
+    rep.id='PAGREPORT'; rep.style.display='none';
+    var gridInfo='';
+    if(pages.length>1){
+      var r1=pages[0].getBoundingClientRect(), r2=pages[1].getBoundingClientRect();
+      gridInfo=' r1='+Math.round(r1.left)+','+Math.round(r1.top)+' r2='+Math.round(r2.left)+','+Math.round(r2.top)+' w='+Math.round(r1.width);
+    }
+    rep.textContent='PAGOK pages='+pages.length+' nodes='+nodes.length+' overflow='+over+gridInfo+overInfo;
+    flow.appendChild(rep);
+  }
+
+  function unpaginate(){
+    if(!paginated || !originalNodes){return;}
+    for(var i=0;i < originalNodes.length;i++){ flow.appendChild(originalNodes[i]); }
+    var junk=flow.querySelectorAll('.page,#PAGREPORT');
+    for(var j=0;j < junk.length;j++){ if(junk[j].parentNode){ junk[j].parentNode.removeChild(junk[j]); } }
+    document.body.classList.remove('paged');
+    paginated=false; originalNodes=null;
+  }
+
+  function toggle(){
+    if(document.body.classList.contains('col2')){
+      unpaginate();
+      document.body.classList.remove('col2');
+      if(btn){ btn.textContent='双栏省纸：关'; }
+    }else{
+      document.body.classList.add('col2');
+      if(window.innerWidth < 795){
+        if(btn){ btn.textContent='双栏省纸：开（窄屏未分页）'; }
+        return;
+      }
+      if(btn){ btn.textContent='双栏省纸：排版中…'; }
+      ready(function(){
+        paginate();
+        if(btn){ btn.textContent='双栏省纸：开'; }
+      });
+    }
+  }
+
+  var pendingRepaginate=false;
+  function printPrep(){
+    if(paginated){ pendingRepaginate=true; unpaginate(); document.body.classList.remove('col2'); if(btn){btn.textContent='双栏省纸：关';} }
+  }
+  function printDone(){
+    if(pendingRepaginate){
+      pendingRepaginate=false;
+      document.body.classList.add('col2');
+      if(btn){btn.textContent='双栏省纸：排版中…';}
+      ready(function(){ paginate(); if(btn){btn.textContent='双栏省纸：开';} });
+    }
+  }
+  window.__printNow=function(){ printPrep(); window.print(); printDone(); };
+  window.addEventListener('beforeprint', printPrep);
+  window.addEventListener('afterprint', printDone);
+
+  if(btn){ btn.addEventListener('click', toggle); }
+  window.addEventListener('load', function(){
+    if(location.hash==='#paged'){ toggle(); }
+    else if(location.hash==='#roundtrip'){
+      toggle();
+      var iv=setInterval(function(){
+        if(paginated){
+          clearInterval(iv);
+          toggle();
+          var rep=document.createElement('pre');
+          rep.id='ROUNDREPORT'; rep.style.display='none';
+          rep.textContent='ROUNDOK children='+flow.children.length+' pagesLeft='+flow.querySelectorAll('.page').length;
+          document.body.appendChild(rep);
+        }
+      },200);
+    }
+  });
 })();
 </script>
 </body>
