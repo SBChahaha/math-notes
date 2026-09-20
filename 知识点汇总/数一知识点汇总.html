@@ -556,6 +556,227 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 2 章 完 ——</div>
 
+<h2 class="chap" id="ch3">第 3 章　微分中值定理与导数的应用</h2>
+<div class="strip">本章速览：一 微分中值定理 · 二 泰勒公式 · 三 洛必达法则 · 四 单调性、极值与最值 · 五 凹凸、拐点、渐近线与作图 · 六 弧微分与曲率 · 七 速查与易错 · 八 技巧库（全）</div>
+
+<h3>一、微分中值定理</h3>
+<div class="box"><span class="t">费马引理</span><br>
+若 \(f\) 在 \(x_0\) 的某邻域内满足 \(f(x)\le f(x_0)\)（或 \(f(x)\ge f(x_0)\)）且 \(f'(x_0)\) 存在，则 \(f'(x_0)=0\)。<br>
+几何：可导的极值点处切线水平。它是罗尔定理证明的支点（只对区间<b>内点</b>的极值成立，端点不算）。
+</div>
+<div class="box"><span class="t">罗尔定理</span><br>
+设 \(f\) 在 \([a,b]\) 上连续、在 \((a,b)\) 内可导，且 \(f(a)=f(b)\)，则 \(\exists\xi\in(a,b)\)，使 \(f'(\xi)=0\)。<br>
+几何：两端等高的光滑曲线弧上必有水平切线。<br>
+用途：证明方程根的存在（含重根）、证明某点为驻点；是构造辅助函数的「模板定理」。
+</div>
+<div class="box"><span class="t">拉格朗日中值定理（微分中值定理）</span><br>
+设 \(f\) 在 \([a,b]\) 上连续、在 \((a,b)\) 内可导，则 \(\exists\xi\in(a,b)\)，使
+\[ f(b)-f(a)=f'(\xi)(b-a)\quad\Longleftrightarrow\quad f'(\xi)=\frac{f(b)-f(a)}{b-a} \]
+有限增量形式：\(f(x+\Delta x)-f(x)=f'(\xi)\Delta x=f'(x+\theta\Delta x)\Delta x\ (0&lt;\theta&lt;1)\)。<br>
+<b>两个推论</b>：① 若在区间 \(I\) 上恒有 \(f'(x)=0\)，则 \(f(x)\equiv C\)；② 若 \(f'(x)=g'(x)\)，则 \(f(x)=g(x)+C\)。证恒等式、证不等式全靠它。
+</div>
+<div class="box"><span class="t">柯西中值定理</span><br>
+设 \(f,g\) 在 \([a,b]\) 上连续、在 \((a,b)\) 内可导，且 \(g'(x)\ne0\)，则 \(\exists\xi\in(a,b)\)，使
+\[ \frac{f(b)-f(a)}{g(b)-g(a)}=\frac{f'(\xi)}{g'(\xi)} \]
+</div>
+<div class="box gray"><span class="t">三定理关系（记这条链）</span><br>
+罗尔（\(f(a)=f(b)\)）→ 拉格朗日（取 \(g(x)=x\) 的柯西）→ 柯西（一般两函数之比）。<br>
+即：罗尔 = 拉格朗日的特例；拉格朗日 = 柯西的特例。证明链：费马 → 罗尔 → 拉格朗日（构造 \(\varphi(x)=f(x)-\frac{f(b)-f(a)}{b-a}(x-a)\)）→ 柯西（构造 \(\varphi(x)=f(x)-\frac{f(b)-f(a)}{g(b)-g(a)}g(x)\)）。
+</div>
+
+<h3>二、泰勒公式</h3>
+<div class="box"><span class="t">泰勒中值定理</span><br>
+设 \(f\) 在含 \(x_0\) 的开区间内具有 \(n+1\) 阶导数，则
+\[ f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+R_n(x) \]
+余项两种形式：<br>
+<b>拉格朗日余项</b> \(R_n(x)=\dfrac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}\)（\(\xi\) 介于 \(x_0\) 与 \(x\) 之间，可用于估值/证不等式）；<br>
+<b>佩亚诺余项</b> \(R_n(x)=o\!\left((x-x_0)^n\right)\)（\(x\to x_0\)，用于求极限/判阶）。<br>
+\(x_0=0\) 时称为<b>麦克劳林公式</b>。
+</div>
+<table>
+<thead><tr><th colspan="2">常用麦克劳林展开（\(x\to0\)）</th></tr></thead>
+<tbody>
+<tr><td>\(e^x=1+x+\dfrac{x^2}{2!}+\cdots+\dfrac{x^n}{n!}+o(x^n)\)</td><td>\(\dfrac{1}{1-x}=1+x+x^2+\cdots+x^n+o(x^n)\)</td></tr>
+<tr><td>\(\sin x=x-\dfrac{x^3}{3!}+\dfrac{x^5}{5!}-\cdots+(-1)^k\dfrac{x^{2k+1}}{(2k+1)!}+o(x^{2k+1})\)</td><td>\(\cos x=1-\dfrac{x^2}{2!}+\dfrac{x^4}{4!}-\cdots+(-1)^k\dfrac{x^{2k}}{(2k)!}+o(x^{2k})\)</td></tr>
+<tr><td>\(\ln(1+x)=x-\dfrac{x^2}{2}+\dfrac{x^3}{3}-\cdots+(-1)^{n-1}\dfrac{x^n}{n}+o(x^n)\)</td><td>\((1+x)^\alpha=1+\alpha x+\dfrac{\alpha(\alpha-1)}{2!}x^2+\cdots+o(x^n)\)</td></tr>
+<tr><td>\(\tan x=x+\dfrac{x^3}{3}+\dfrac{2x^5}{15}+o(x^5)\)</td><td>\(\arctan x=x-\dfrac{x^3}{3}+\dfrac{x^5}{5}-\cdots+o(x^{2k+1})\)</td></tr>
+<tr><td>\(\arcsin x=x+\dfrac{x^3}{6}+o(x^3)\)</td><td>\(\dfrac{1}{1+x}=1-x+x^2-\cdots+(-1)^nx^n+o(x^n)\)</td></tr>
+</tbody>
+</table>
+<div class="mini">用法分层：求极限 / 判阶用佩亚诺余项；估值、证不等式用拉格朗日余项。展开阶数「够用为止」——比目标分母高一阶。</div>
+
+<h3>三、洛必达法则</h3>
+<div class="box"><span class="t">定理（\(\frac00\) 与 \(\frac\infty\infty\) 两种基本型）</span><br>
+设当 \(x\to a\)（\(a\) 可为有限点或 \(\pm\infty\)）时 \(f(x)\to0,\ g(x)\to0\)（或均趋于 \(\infty\)），在 \(a\) 的去心邻域内 \(f,g\) 可导且 \(g'(x)\ne0\)，若 \(\lim\limits_{x\to a}\dfrac{f'(x)}{g'(x)}=A\)（或 \(\infty\)），则
+\[ \lim_{x\to a}\frac{f(x)}{g(x)}=\lim_{x\to a}\frac{f'(x)}{g'(x)}=A. \]
+</div>
+<div class="box"><span class="t">其他未定式的转化</span>
+<ul>
+<li>\(0\cdot\infty\)：把「简单」的因子倒过来写成分母，化为 \(\frac00\) 或 \(\frac\infty\infty\)（如 \(x\ln x=\frac{\ln x}{1/x}\)）。</li>
+<li>\(\infty-\infty\)：通分、有理化、提公因子，化为分式。</li>
+<li>\(1^\infty,\ 0^0,\ \infty^0\)：取对数 \(u^v=e^{v\ln u}\)，指数部分化为 \(0\cdot\infty\)。</li>
+</ul>
+</div>
+<div class="box warn"><span class="t">使用注意（考场三查）</span>
+<ol>
+<li><b>查型</b>：只有 \(\frac00\)、\(\frac\infty\infty\) 能直接用；分子分母各自极限存在且非零时直接代入。</li>
+<li><b>查条件</b>：去心邻域内可导；\(g'(x)\ne0\)；可反复用但每次重新验证。</li>
+<li><b>查结论</b>：若 \(\lim\frac{f'}{g'}\) 不存在（也不是 \(\infty\)），<b>不能断言原极限不存在</b>，应改用泰勒、等价替换或夹逼。</li>
+</ol>
+典型失灵：\(\lim\limits_{x\to+\infty}\dfrac{x+\sin x}{x}=1\)（而 \(\frac{1+\cos x}{1}\) 无极限）；循环型 \(\dfrac{e^x+e^{-x}}{e^x-e^{-x}}\) 反复求导转圈——直接化为 \(\dfrac{e^{2x}+1}{e^{2x}-1}\)。
+</div>
+
+<h3>四、单调性、极值与最值</h3>
+<div class="box"><span class="t">单调性判别</span><br>
+设 \(f\) 在 \([a,b]\) 上连续、在 \((a,b)\) 内可导：<br>
+① \(f'(x)>0\)（\((a,b)\) 内）⇒ \(f\) 在 \([a,b]\) 上<b>严格增</b>；\(f'(x)&lt;0\) ⇒ 严格减。<br>
+② \(f'(x)\ge0\) 且不在任何子区间上恒为 0 ⇒ 严格增（含孤立驻点不影响单调性）。<br>
+判法：求 \(f'\) 的零点与不可导点 → 划分区间 → 列表判断 \(f'\) 符号。
+</div>
+<div class="box"><span class="t">极值</span><br>
+<b>必要条件</b>：可导的极值点必为驻点（\(f'=0\)）；但驻点未必是极值点；极值点还可能在不可导点处。<br>
+<b>第一充分条件</b>（变号法）：\(f'\) 在 \(x_0\) 两侧变号——「正→负」极大，「负→正」极小；不变号非极值。<br>
+<b>第二充分条件</b>（二阶法）：\(f'(x_0)=0,\ f''(x_0)&lt;0\) ⇒ 极大；\(f''(x_0)>0\) ⇒ 极小；\(f''(x_0)=0\) 时该法失效（改用变号或更高阶导数）。
+</div>
+<div class="box"><span class="t">最大值与最小值</span><br>
+闭区间 \([a,b]\) 上：比较所有「驻点 + 不可导点 + 端点」的函数值，最大者即最大值。<br>
+实际问题：若目标函数在定义域内只有<b>唯一</b>驻点，则它必为所求最值点（省去比较）；务必写清定义域与量纲。<br>
+开区间/无穷区间：结合单调性、渐近线、极限行为判断最值是否存在。
+</div>
+<div class="box gray"><span class="t">判断流程速记</span><br>
+① 求 \(f'\)，解 \(f'=0\)，找不可导点；② 列表：区间上 \(f'\) 的符号 → 单调性 → 极值；③ 若需最值：把这些点与端点一起比较；④ 应用题先建模再走 ①②③。
+</div>
+
+<h3>五、凹凸、拐点、渐近线与函数作图</h3>
+<div class="box"><span class="t">凹凸性</span><br>
+<b>几何定义</b>（同济）：弧位于其所对弦的下方 ⇒ 曲线是<b>凹</b>的（凹口向上，∪ 形）；弧位于弦的上方 ⇒ <b>凸</b>的（∩ 形）。<br>
+<b>判别</b>：在 \((a,b)\) 内 \(f''(x)>0\) ⇒ 曲线是凹的；\(f''(x)&lt;0\) ⇒ 曲线是凸的。<br>
+（注：个别资料凹/凸命名相反，落笔时写清二阶导判据即可。）
+</div>
+<div class="box"><span class="t">拐点</span><br>
+凹凸性的分界点称为拐点（拐点是曲线上的点，写作 \((x_0,f(x_0))\)）。<br>
+<b>必要条件</b>：\(f''(x_0)=0\) 或 \(f''\) 不存在（只对横坐标成立）。<br>
+<b>充分条件</b>：\(f''\) 在 \(x_0\) 两侧变号 ⇒ 是拐点；不变号则不是。<br>
+求法三步：求 \(f''\) → 令 \(f''=0\) 并找 \(f''\) 不存在的点 → 列表查 \(f''\) 符号是否变号。
+</div>
+<div class="box"><span class="t">渐近线（三种，两个方向都要查）</span>
+<ul>
+<li><b>水平</b>：\(\lim\limits_{x\to+\infty}f(x)=A\) 或 \(\lim\limits_{x\to-\infty}f(x)=A\) ⇒ \(y=A\)（两侧可不同）。</li>
+<li><b>垂直</b>：\(\lim\limits_{x\to x_0}f(x)=\infty\) ⇒ \(x=x_0\)（常见于分母零点、\(\ln\)、\(\tan\)、分段边界）。</li>
+<li><b>斜</b>：若 \(k=\lim\limits_{x\to\pm\infty}\dfrac{f(x)}{x}\) 与 \(b=\lim\limits_{x\to\pm\infty}\left[f(x)-kx\right]\) 都存在（\(k\ne0\)）⇒ \(y=kx+b\)；<b>注意水平与斜不能同时存在（同一方向）</b>。</li>
+</ul>
+</div>
+<div class="box gray"><span class="t">函数作图六步</span><br>
+① 定义域、奇偶性、周期性；② 求 \(f'\)、\(f''\)；③ 求驻点、不可导点、\(f''=0\) 点；④ 列表（单调/极值/凹凸/拐点一表全出）；⑤ 求渐近线；⑥ 描关键点作图（极值点、拐点、截距、渐近线）。
+</div>
+
+<h3>六、弧微分与曲率</h3>
+<div class="box"><span class="t">弧微分</span><br>
+直角坐标：\(ds=\sqrt{1+(y')^2}\,dx\)；参数方程 \(x=x(t),y=y(t)\)：\(ds=\sqrt{(x'(t))^2+(y'(t))^2}\,dt\)；极坐标 \(r=r(\theta)\)：\(ds=\sqrt{r^2+(r')^2}\,d\theta\)。
+</div>
+<div class="box"><span class="t">曲率与曲率半径</span><br>
+直角坐标：\(K=\dfrac{|y''|}{\left[1+(y')^2\right]^{3/2}}\)；<br>
+参数方程：\(K=\dfrac{|x'(t)y''(t)-y'(t)x''(t)|}{\left[(x'(t))^2+(y'(t))^2\right]^{3/2}}\)。<br>
+曲率半径 \(R=\dfrac1K\)；曲率圆（曲率中心在曲线凹的一侧，即法线指向凹侧，距离 \(R\)）。<br>
+直线曲率 \(K=0\)；圆上各点 \(K=1/r\)。
+</div>
+<div class="box warn"><span class="t">计算注意</span>
+<ul>
+<li>分子加绝对值；分母是 \(1+y'^2\) 的 \(3/2\) 次幂（不是 2 次，也不是 \(3\) 次）。</li>
+<li>参数式分母是两分量平方和的 \(3/2\) 次幂，分子是二阶行列式「\(x'\!y''-y'\!x''\)」——注意顺序和符号（取绝对值后顺序无关）。</li>
+<li>曲率最大/最小问题：常转化为求表达式最值（配合单调性或均值不等式）。</li>
+</ul>
+</div>
+
+<h3>七、速查与易错</h3>
+<table>
+<thead><tr><th>目标</th><th>选用定理</th></tr></thead>
+<tbody>
+<tr><td>证 \(f'(\xi)=0\)、方程根的存在性</td><td>罗尔定理（或构造辅助函数后用罗尔）</td></tr>
+<tr><td>证 \(f(b)-f(a)=f'(\xi)(b-a)\)、增量估计、证恒等式与不等式</td><td>拉格朗日中值定理</td></tr>
+<tr><td>两函数之比、双中值问题</td><td>柯西中值定理</td></tr>
+<tr><td>需要高阶信息、判阶、估值、余项符号</td><td>泰勒公式</td></tr>
+</tbody>
+</table>
+<div class="box gray"><span class="t">求极限路线（本章综合）</span><br>
+先等价替换（乘除因子）→ 仍需处理：洛必达（验三查）或泰勒（高阶保阶）→ 夹逼/重要极限。口诀：<b>低阶用等价、缺阶用泰勒、洛必达失灵靠泰勒</b>。
+</div>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>中值定理条件不验：连续、可导、\(g'(x)\ne0\)；区间是开还是闭要分清。</li>
+<li>非未定式乱用洛必达；\(\lim\frac{f'}{g'}\) 不存在时错误断定原极限不存在。</li>
+<li>求极值漏掉不可导点；把驻点直接当极值点。</li>
+<li>拐点是点 \((x_0,f(x_0))\)，且必须 \(f''\) 变号；只数横坐标、不变号都错。</li>
+<li>渐近线只查单侧；同一方向上水平与斜渐近线并存（错）。</li>
+<li>凹凸命名陷阱：同济写法 \(f''>0\) 是「凹」，个别资料相反——落笔写判据。</li>
+<li>泰勒展开阶数不足（应比目标分母高一阶）；余项记住用对（极限用佩亚诺、估值用拉格朗日）。</li>
+<li>「可导极值点 ⇒ 驻点」不可反推：驻点未必极值（如 \(x^3\) 在 0）。</li>
+<li>中值点 \(\xi\) 不可确定，用于估值时要对 \(f'\) 取区间最值放缩。</li>
+</ol>
+</div>
+
+<h3>八、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>8.1 辅助函数构造表（证「存在 ξ 使……」类）</h4>
+<table>
+<thead><tr><th>要证的结论</th><th>构造 \(F(x)\)</th><th>验证要点</th></tr></thead>
+<tbody>
+<tr><td>\(f'(\xi)=0\)</td><td>\(F=f\)</td><td>凑 \(F\) 两端点相等</td></tr>
+<tr><td>\(f'(\xi)+kf(\xi)=0\)</td><td>\(F=e^{kx}f(x)\)</td><td>\(F'=e^{kx}(f'+kf)\)</td></tr>
+<tr><td>\(f'(\xi)-kf(\xi)=0\)</td><td>\(F=e^{-kx}f(x)\)</td><td>\(F'=e^{-kx}(f'-kf)\)</td></tr>
+<tr><td>\(\xi f'(\xi)+kf(\xi)=0\)</td><td>\(F=x^{k}f(x)\)</td><td>\(F'=x^{k-1}(xf'+kf)\)</td></tr>
+<tr><td>\(f'(\xi)+f'(\eta)=0\) 型</td><td>分区间两次用定理</td><td>找中间点分区</td></tr>
+<tr><td>含两函数乘积结论</td><td>\(F=fg\)</td><td>乘积法则逆用</td></tr>
+<tr><td>\(f''(\xi)=0\)</td><td>对 \(f'\) 用罗尔</td><td>先证 \(f'\) 有两等值点</td></tr>
+</tbody>
+</table>
+
+<h4>8.2 双中值问题三板斧</h4>
+<div class="box">
+① <b>分区间</b>：在 \((a,c)\) 与 \((c,b)\) 上各用一次拉格朗日（\(c\) 常取中点、0 或由题目决定）；<br>
+② <b>柯西一次性给两个点</b>：把结论凑成 \(\frac{f'(\xi)}{g'(\xi)}\) 形式；<br>
+③ <b>组合技</b>：先用拉格朗日得一个 ξ，再用柯西得 η（或反过来）；注意两个中值点的先后关系。
+</div>
+
+<h4>8.3 泰勒证不等式/估值步骤</h4>
+<div class="box">
+① 选展开点：极值点、区间中点、端点；② 展开到「够用」阶数；③ 用拉格朗日余项的符号与界完成证明；④ 多次展开比较（如中点两侧各展开一次再相减）。
+</div>
+
+<h4>8.4 洛必达失灵三类与对策</h4>
+<div class="box">
+① <b>循环型</b>（如 \(\frac{e^x+e^{-x}}{e^x-e^{-x}}\)）→ 代数化简或提公因子；<br>
+② <b>振荡型</b>（含 \(\sin x,\cos x\) 且极限不存在）→ 夹逼、等价替换、拆项分离振荡部分；<br>
+③ <b>导数比无极限型</b> → 原极限仍可能存在（\(x+\sin x\over x\)），改用泰勒/等价/夹逼。
+</div>
+
+<h4>8.5 单调性证不等式模板（迭代求导法）</h4>
+<div class="box">
+① 移项构造 \(F(x)=f(x)-g(x)\)；② \(F(端点)=0\)；③ 求 \(F'\) 定号；若 \(F'\) 定号困难，再求 \(F''\)、\(F'''\)（迭代求导直到能定号），逐层回推；④ 说明区间与取等条件。
+</div>
+
+<h4>8.6 极值/最值应用题建模</h4>
+<div class="box">
+设变量 \(x\) → 写目标函数 \(S(x)\)（唯一！）→ 明确定义域 → \(S'(x)=0\) 解驻点 → 说明唯一驻点即最值（或比较边界）→ 回代求答案并写单位。
+</div>
+
+<h4>8.7 凹凸拐点列表模板</h4>
+<table>
+<thead><tr><th>区间/点</th><th>\(f''\) 符号</th><th>凹凸</th><th>拐点</th></tr></thead>
+<tbody>
+<tr><td>\((-\infty,x_1)\)、\((x_1,x_2)\)、\((x_2,+\infty)\) 等</td><td>+ / −</td><td>凹 / 凸</td><td>\(f''\) 变号点</td></tr>
+</tbody>
+</table>
+<div class="mini">与单调性表格合并成一张「一览表」：列 \(x\)、\(f'\)、\(f''\)、单调/极值、凹凸/拐点——做图题的终极效率武器。</div>
+
+<h4>8.8 曲率题为最值服务</h4>
+<div class="box">
+曲率最大/最小问题：写出 \(K(x)\)（根式可先比较 \(K^2\)）→ 求导找驻点 → 或利用 \(y'\) 与 \(y''\) 的几何关系简化。<br>
+常用：抛物线 \(y=ax^2\) 顶点处曲率最大（\(K=2|a|\)）；直线 \(K=0\)。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 3 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
