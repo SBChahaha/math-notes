@@ -40,6 +40,7 @@ td.c{text-align:center}
 .pbtn{position:fixed;right:18px;bottom:18px;z-index:9;font:600 13px/1.2 "Microsoft YaHei",sans-serif;background:#1f3a93;color:#fff;border:0;border-radius:8px;padding:12px 18px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
 .pbtn2{position:fixed;right:18px;bottom:66px;z-index:9;font:600 13px/1.2 "Microsoft YaHei",sans-serif;background:#475569;color:#fff;border:0;border-radius:8px;padding:12px 18px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
 body.col2{font-size:9.5pt}
+@media screen{body.col2 .sheet{max-width:194mm;padding:0;margin:14px auto}}
 body.col2 #flow{column-count:2;column-gap:6mm;column-rule:.8px solid #e5e7eb}
 body.col2 #flow h2.chap{page-break-before:auto;break-before:auto;margin-top:8mm;border-top:2pt solid #1f3a93;padding-top:2mm}
 body.col2 #flow h2.chap:first-child{margin-top:0;border-top:0;padding-top:0}
@@ -51,7 +52,10 @@ body.col2 #flow h3{font-size:11pt}
 body.col2 #flow h4{font-size:10pt}
 body.col2 #flow .mini{font-size:8pt}
 body.col2 #flow mjx-container{font-size:88%}
-@media print{body{background:#fff}.sheet{box-shadow:none;margin:0;max-width:none;padding:0}.pbtn,.pbtn2{display:none}@page{size:A4;margin:12mm 8mm}}
+body.col2 #flow .box,body.col2 #flow table{break-inside:auto;page-break-inside:auto}
+body.col2 #flow tr,body.col2 #flow table.stack td{break-inside:avoid;page-break-inside:avoid}
+body.col2 #flow table.stack,body.col2 #flow table.stack thead,body.col2 #flow table.stack tbody,body.col2 #flow table.stack tr,body.col2 #flow table.stack th,body.col2 #flow table.stack td{display:block;width:100%;box-sizing:border-box}
+@media print{body{background:#fff}.sheet,body.col2 .sheet{box-shadow:none;margin:0;max-width:none;padding:0}.pbtn,.pbtn2{display:none}@page{size:A4;margin:12mm 8mm}}
 </style>
 </head>
 <body>
@@ -147,7 +151,7 @@ body.col2 #flow mjx-container{font-size:88%}
 
 <h3>二、数列极限</h3>
 <div class="box"><span class="t">ε-N 定义</span><br>
-\(\lim\limits_{n\to\infty}x_n=a\iff \forall\varepsilon>0,\ \exists N\in\mathbb{N}_+,\ \forall n>N:\ |x_n-a|&lt;\varepsilon\)。<br>
+\[\begin{aligned}\lim_{n\to\infty}x_n=a\iff\;&\forall\varepsilon>0,\ \exists N\in\mathbb{N}_+,\\ &\forall n>N:\ |x_n-a|&lt;\varepsilon\end{aligned}\]。<br>
 几何意义：\(a\) 的任意 \(\varepsilon\) 邻域之外至多有有限项；收敛数列只有一个聚点。
 </div>
 <div class="box"><span class="t">收敛数列五大性质</span>
@@ -168,7 +172,7 @@ body.col2 #flow mjx-container{font-size:88%}
 <h3>三、函数极限</h3>
 <div class="box"><span class="t">定义</span>
 <ul>
-<li>\(x\to x_0\)：\(\lim\limits_{x\to x_0}f(x)=A\iff \forall\varepsilon>0,\ \exists\delta>0,\ 0&lt;|x-x_0|&lt;\delta \Rightarrow |f(x)-A|&lt;\varepsilon\)（去心邻域）。</li>
+<li>\(x\to x_0\)：\[\begin{aligned}\lim_{x\to x_0}f(x)=A\iff\;&\forall\varepsilon>0,\ \exists\delta>0:\\ &0&lt;|x-x_0|&lt;\delta\ \Rightarrow\ |f(x)-A|&lt;\varepsilon\end{aligned}\]（去心邻域）。</li>
 <li>\(x\to\infty\)：\(\forall\varepsilon>0,\ \exists X>0,\ |x|>X \Rightarrow |f(x)-A|&lt;\varepsilon\)；\(x\to+\infty\) 与 \(x\to-\infty\) 各用单侧条件。</li>
 <li>单侧极限：\(f(x_0^-)=\lim\limits_{x\to x_0^-}f(x)\)，\(f(x_0^+)\) 同理。</li>
 </ul>
@@ -206,6 +210,8 @@ body.col2 #flow mjx-container{font-size:88%}
 <div class="box gray"><span class="t">抓大头（\(x\to\infty\) 有理式）</span><br>
 \[
 \lim_{x\to\infty}\frac{a_nx^n+\cdots+a_0}{b_mx^m+\cdots+b_0}=
+\]
+\[
 \begin{cases}
 \infty\ (\text{方向由最高次系数符号定}), & n>m\\[2pt]
 \dfrac{a_n}{b_m}, & n=m\\[2pt]
@@ -464,7 +470,8 @@ body.col2 #flow mjx-container{font-size:88%}
 <div class="box"><span class="t">定义与常用 n 阶公式</span><br>
 \(y''=(y')'\)，记 \(y''\)、\(\dfrac{d^2y}{dx^2}\)；\(n\) 阶记 \(y^{(n)}=\left(y^{(n-1)}\right)'\)。
 \[ \begin{aligned} &(e^x)^{(n)}=e^x,\qquad (\sin x)^{(n)}=\sin\!\left(x+\frac{n\pi}{2}\right),\\ &(\cos x)^{(n)}=\cos\!\left(x+\frac{n\pi}{2}\right) \end{aligned} \]
-\[ (x^\mu)^{(n)}=\mu(\mu-1)\cdots(\mu-n+1)\,x^{\mu-n},\qquad (\ln x)^{(n)}=\frac{(-1)^{n-1}(n-1)!}{x^n} \]
+\[ (x^\mu)^{(n)}=\mu(\mu-1)\cdots(\mu-n+1)\,x^{\mu-n} \]
+\[ (\ln x)^{(n)}=\frac{(-1)^{n-1}(n-1)!}{x^n} \]
 \[ \left(\frac{1}{x+a}\right)^{(n)}=\frac{(-1)^n\,n!}{(x+a)^{n+1}} \]
 </div>
 <div class="box"><span class="t">莱布尼茨公式</span><br>
@@ -499,7 +506,8 @@ body.col2 #flow mjx-container{font-size:88%}
 <b>一阶微分形式不变性</b>：无论 \(u\) 是自变量还是中间变量，均有 \(d[f(u)]=f'(u)\,du\)——复合函数微分与换元的基础。
 </div>
 <div class="box"><span class="t">近似计算</span><br>
-\[ f(x_0+\Delta x)\approx f(x_0)+f'(x_0)\,\Delta x,\qquad f(x)\approx f(0)+f'(0)\,x\ (x\to0) \]
+\[ f(x_0+\Delta x)\approx f(x_0)+f'(x_0)\,\Delta x \]
+\[ f(x)\approx f(0)+f'(0)\,x\ (x\to0) \]
 常用近似式（\(|x|\) 很小）：\(\sqrt[n]{1+x}\approx1+\dfrac xn\)；\((1+x)^\alpha\approx1+\alpha x\)；\(\sin x\approx x\)；\(\tan x\approx x\)；\(e^x\approx1+x\)；\(\ln(1+x)\approx x\)；\(\arcsin x\approx\arctan x\approx x\)。
 </div>
 
@@ -579,7 +587,7 @@ body.col2 #flow mjx-container{font-size:88%}
 <div class="box"><span class="t">拉格朗日中值定理（微分中值定理）</span><br>
 设 \(f\) 在 \([a,b]\) 上连续、在 \((a,b)\) 内可导，则 \(\exists\xi\in(a,b)\)，使
 \[ f(b)-f(a)=f'(\xi)(b-a)\quad\Longleftrightarrow\quad f'(\xi)=\frac{f(b)-f(a)}{b-a} \]
-有限增量形式：\(f(x+\Delta x)-f(x)=f'(\xi)\Delta x=f'(x+\theta\Delta x)\Delta x\ (0&lt;\theta&lt;1)\)。<br>
+有限增量形式：\[\begin{aligned}f(x+\Delta x)-f(x)&=f'(\xi)\Delta x\\ &=f'(x+\theta\Delta x)\Delta x\ (0&lt;\theta&lt;1)\end{aligned}\]。<br>
 <b>两个推论</b>：① 若在区间 \(I\) 上恒有 \(f'(x)=0\)，则 \(f(x)\equiv C\)；② 若 \(f'(x)=g'(x)\)，则 \(f(x)=g(x)+C\)。证恒等式、证不等式全靠它。
 </div>
 <div class="box"><span class="t">柯西中值定理</span><br>
@@ -600,7 +608,7 @@ body.col2 #flow mjx-container{font-size:88%}
 <b>佩亚诺余项</b> \(R_n(x)=o\!\left((x-x_0)^n\right)\)（\(x\to x_0\)，用于求极限/判阶）。<br>
 \(x_0=0\) 时称为<b>麦克劳林公式</b>。
 </div>
-<table>
+<table class="stack">
 <thead><tr><th colspan="2">常用麦克劳林展开（\(x\to0\)）</th></tr></thead>
 <tbody>
 <tr><td>\(e^x=1+x+\dfrac{x^2}{2!}+\cdots+\dfrac{x^n}{n!}+o(x^n)\)</td><td>\(\dfrac{1}{1-x}=1+x+x^2+\cdots+x^n+o(x^n)\)</td></tr>
@@ -1201,7 +1209,8 @@ body.col2 #flow mjx-container{font-size:88%}
 <h3>三、体积</h3>
 <div class="box"><span class="t">旋转体（绕坐标轴）</span><br>
 <b>绕 \(x\) 轴</b>（圆盘/垫圈法）：
-\[ V=\pi\int_a^b f^2(x)\,dx;\qquad V=\pi\int_a^b\left[f^2(x)-g^2(x)\right]dx\ (\text{两曲线间}) \]
+\[ V=\pi\int_a^b f^2(x)\,dx \]
+\[ V=\pi\int_a^b\left[f^2(x)-g^2(x)\right]dx\ (\text{两曲线间}) \]
 <b>绕 \(y\) 轴</b>：两种写法择简——<br>
 ① 垫圈（边界写成 \(x=\) 常数形式）：\(V=\pi\displaystyle\int_c^d\left[x_{\text{右}}^2(y)-x_{\text{左}}^2(y)\right]dy\)；<br>
 ② <b>壳层法</b>（区域在 \(y=f(x)\) 下方，\(a\ge0\)）：\(V=2\pi\displaystyle\int_a^b x\,f(x)\,dx\)；若区域跨到 \(y\) 轴左侧，壳半径为 \(|x|\)。
@@ -1247,7 +1256,8 @@ body.col2 #flow mjx-container{font-size:88%}
 </div>
 <div class="box"><span class="t">质心与形心</span><br>
 平面薄片（均匀密度）形心：
-\[ \bar x=\frac1A\int_a^b x\left[f(x)-g(x)\right]dx,\qquad \bar y=\frac{1}{2A}\int_a^b\left[f^2(x)-g^2(x)\right]dx \]
+\[ \bar x=\frac1A\int_a^b x\left[f(x)-g(x)\right]dx \]
+\[ \bar y=\frac{1}{2A}\int_a^b\left[f^2(x)-g^2(x)\right]dx \]
 细杆：\(\bar x=\dfrac{\int_a^b x\,\rho(x)\,dx}{\int_a^b\rho(x)\,dx}\)（密度均匀时即中点）。<br>
 组合图形：形心 = 各块「面积 × 自身形心」的加权平均；挖孔用<b>负面积法</b>。
 </div>
@@ -1350,7 +1360,8 @@ body.col2 #flow mjx-container{font-size:88%}
 
 <h3>二、一阶微分方程</h3>
 <div class="box"><span class="t">① 可分离变量方程</span><br>
-\[ \frac{dy}{dx}=f(x)\,g(y)\ \Longrightarrow\ \frac{dy}{g(y)}=f(x)\,dx\ \Longrightarrow\ \int\frac{dy}{g(y)}=\int f(x)\,dx \]
+\[ \frac{dy}{dx}=f(x)\,g(y)\ \Longrightarrow\ \frac{dy}{g(y)}=f(x)\,dx \]
+\[ \Longrightarrow\ \int\frac{dy}{g(y)}=\int f(x)\,dx \]
 区分隐式/显式通解即可；<b>除以 \(g(y)\) 时可能丢掉 \(g(y)=0\) 的特解</b>（如 \(y\equiv0\)），最后要补验。
 </div>
 <div class="box"><span class="t">② 齐次方程</span><br>
@@ -1428,7 +1439,7 @@ body.col2 #flow mjx-container{font-size:88%}
 </div>
 <div class="box"><span class="t">非齐次型二：f(x) = e^{\alpha x}\left[P_l(x)\cos\beta x+P_n(x)\sin\beta x\right]</span><br>
 特解形式：
-\[ y^*=x^{k}e^{\alpha x}\left[R_m(x)\cos\beta x+S_m(x)\sin\beta x\right],\qquad m=\max(l,n) \]
+\[ \begin{aligned} y^*=x^{k}e^{\alpha x}\big[&R_m(x)\cos\beta x\\ &+S_m(x)\sin\beta x\big],\quad m=\max(l,n) \end{aligned} \]
 \(k=\) \(\alpha+\beta i\) 作为特征根的重数（0 或 1）。<br>
 特例：\(f=A\cos\beta x+B\sin\beta x\)（无 \(e^{\alpha x}\)）时取 \(\alpha=0\)。
 </div>
@@ -2113,7 +2124,7 @@ body.col2 #flow mjx-container{font-size:88%}
 </div>
 <div class="box"><span class="t">计算（参数化直算）</span><br>
 \(L\) 的参数式 \(x=x(t),y=y(t)\)，起点对应 \(t_0\)、终点对应 \(t_1\)：
-\[ \int_L P\,dx+Q\,dy=\int_{t_0}^{t_1}\left[P(x(t),y(t))\,x'(t)+Q(x(t),y(t))\,y'(t)\right]dt \]
+\[ \begin{aligned} \int_L P\,dx+Q\,dy=\int_{t_0}^{t_1}\Big[&P(x(t),y(t))\,x'(t)\\ &+Q(x(t),y(t))\,y'(t)\Big]dt \end{aligned} \]
 注意：积分从<b>起点到终点</b>，\(t_0\) 可以大于 \(t_1\)；显式 \(y=y(x)\) 时化成对 \(x\) 的积分（从起点 x 到终点 x）。
 </div>
 <div class="box gray"><span class="t">两类曲线积分的关系</span><br>
@@ -2133,7 +2144,7 @@ body.col2 #flow mjx-container{font-size:88%}
 <li><b>求面积</b>：\(A=\dfrac12\oint_L x\,dy-y\,dx\)（正向）。</li>
 <li><b>路径无关与势函数</b>：在<b>单连通</b>区域 \(G\) 上（\(P,Q\) 有连续偏导），以下三条等价：<br>
 ① \(\int_L Pdx+Qdy\) 与路径无关；② \(\dfrac{\partial Q}{\partial x}=\dfrac{\partial P}{\partial y}\) 在 \(G\) 上处处成立；③ 存在 \(u(x,y)\) 使 \(du=Pdx+Qdy\)。<br>
-此时 \(\int_A^B Pdx+Qdy=u(B)-u(A)\)。
+此时 \(\int_A^B Pdx+Qdy=u(B)-u(A)\)。</li>
 </ol>
 </div>
 <div class="box gray"><span class="t">原函数（势函数）三种求法</span><br>
@@ -2178,7 +2189,8 @@ body.col2 #flow mjx-container{font-size:88%}
 本质来自 \((dydz,dzdx,dxdy)=(-z_x,-z_y,1)\,dxdy\)（上侧）。
 </div>
 <div class="box gray"><span class="t">两类曲面积分的关系</span><br>
-\[ \iint_\Sigma P\,dydz+Q\,dzdx+R\,dxdy=\iint_\Sigma\left(P\cos\alpha+Q\cos\beta+R\cos\gamma\right)dS \]
+\[ \iint_\Sigma P\,dydz+Q\,dzdx+R\,dxdy \]
+\[ =\iint_\Sigma\left(P\cos\alpha+Q\cos\beta+R\cos\gamma\right)dS \]
 （余弦为定向法向量的方向余弦。）
 </div>
 
@@ -2192,7 +2204,7 @@ body.col2 #flow mjx-container{font-size:88%}
 <div class="box"><span class="t">斯托克斯公式（环流量与旋度）</span><br>
 \(\Gamma\) 是曲面 \(\Sigma\) 的边界，二者方向按<b>右手法则</b>匹配：
 \[ \begin{aligned} \oint_\Gamma P\,&dx+Q\,dy+R\,dz\\ &=\iint_\Sigma\begin{vmatrix}\cos\alpha&\cos\beta&\cos\gamma\\[2pt]\dfrac{\partial}{\partial x}&\dfrac{\partial}{\partial y}&\dfrac{\partial}{\partial z}\\[6pt]P&Q&R\end{vmatrix}dS \end{aligned} \]
-展开即 \(\iint_\Sigma\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)dydz+\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)dzdx+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dxdy\)。<br>
+展开即 \[\begin{aligned}\iint_\Sigma\Big[&\Big(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\Big)dydz\\ &+\Big(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\Big)dzdx\\ &+\Big(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\Big)dxdy\Big]\end{aligned}\]。<br>
 旋度：\[\begin{aligned}\mathrm{rot}\,\vec F=\nabla\times\vec F=\Big(&\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z},\ \frac{\partial P}{\partial z}-\frac{\partial R}{\partial x},\\ &\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\Big)\end{aligned}\]<br>物理意义：环流量 = 旋度的曲面积分。
 </div>
 <div class="box gray"><span class="t">空间曲线积分与路径无关</span><br>
@@ -2358,7 +2370,7 @@ body.col2 #flow mjx-container{font-size:88%}
 <div class="mini">幂级数求和三步：① 观察系数（差比、阶乘、可分拆）；② 先积分或先求导凑标准形；③ 求和后「回代」还原（求导的用积分还原、积分的用求导还原）。</div>
 
 <h3>五、函数展开成幂级数</h3>
-<table>
+<table class="stack">
 <thead><tr><th colspan="2">常用展开式（必背）</th></tr></thead>
 <tbody>
 <tr><td>\(\dfrac{1}{1-x}=\sum\limits_{n=0}^{\infty}x^n\ (|x|&lt;1)\)</td><td>\(e^x=\sum\limits_{n=0}^{\infty}\dfrac{x^n}{n!}\ (-\infty&lt;x&lt;+\infty)\)</td></tr>
@@ -2801,7 +2813,7 @@ body.col2 #flow mjx-container{font-size:88%}
 </div>
 <div class="box"><span class="t">可逆性与逆</span><br>
 初等矩阵都可逆，且逆矩阵是同类型初等矩阵：
-\[ E(i,j)^{-1}=E(i,j),\qquad E(i(k))^{-1}=E\!\left(i\!\left(\tfrac1k\right)\right),\qquad E(i,j(k))^{-1}=E(i,j(-k)) \]
+\[ \begin{aligned} E(i,j)^{-1}&=E(i,j),\\ E(i(k))^{-1}&=E\!\left(i\!\left(\tfrac1k\right)\right),\quad E(i,j(k))^{-1}=E(i,j(-k)) \end{aligned} \]
 方阵 \(A\) 可逆 ⇔ \(A\) 可表示为有限个初等矩阵的乘积。
 </div>
 
@@ -3728,13 +3740,15 @@ body.col2 #flow mjx-container{font-size:88%}
 ① 写 \(F_Z(z)=P(g(X,Y)\le z)\)；② 在 \(xOy\) 面上画出区域 \(\{g(x,y)\le z\}\)；③ 化成二重积分 \(\iint_{D_z}f(x,y)\,dx\,dy\)；④ 对 z 求导得 \(f_Z(z)\)（记得分段）。
 </div>
 <div class="box"><span class="t">Z = X + Y 的卷积公式（独立时）</span><br>
-\[ f_Z(z)=\int_{-\infty}^{+\infty}f_X(x)\,f_Y(z-x)\,dx=\int_{-\infty}^{+\infty}f_X(z-y)\,f_Y(y)\,dy \]<br>（不独立时不能用 \(f_Xf_Y\)，但通式 \(f_Z(z)=\int_{-\infty}^{+\infty}f(x,\,z-x)\,dx\) 仍成立。）
+\[ f_Z(z)=\int_{-\infty}^{+\infty}f_X(x)\,f_Y(z-x)\,dx \]
+\[ =\int_{-\infty}^{+\infty}f_X(z-y)\,f_Y(y)\,dy \]<br>（不独立时不能用 \(f_Xf_Y\)，但通式 \(f_Z(z)=\int_{-\infty}^{+\infty}f(x,\,z-x)\,dx\) 仍成立。）
 <b>正态可加性</b>：\(X\sim N(\mu_1,\sigma_1^2),\ Y\sim N(\mu_2,\sigma_2^2)\) 且独立 ⇒
 \[ X+Y\sim N\!\left(\mu_1+\mu_2,\ \sigma_1^2+\sigma_2^2\right) \]
 一般线性组合：\(aX+bY\sim N\!\left(a\mu_1+b\mu_2,\ a^2\sigma_1^2+b^2\sigma_2^2\right)\)（独立时）。<br>其他可加性（独立）：\(B(n_1,p)+B(n_2,p)=B(n_1+n_2,p)\)；\(P(\lambda_1)+P(\lambda_2)=P(\lambda_1+\lambda_2)\)。
 </div>
 <div class="box"><span class="t">max 与 min 的分布（独立）</span><br>
-\[ F_{\max}(z)=F_X(z)\,F_Y(z),\qquad F_{\min}(z)=1-\left[1-F_X(z)\right]\left[1-F_Y(z)\right] \]
+\[ F_{\max}(z)=F_X(z)\,F_Y(z) \]
+\[ F_{\min}(z)=1-\left[1-F_X(z)\right]\left[1-F_Y(z)\right] \]
 n 个独立同分布推广：\(F_{\max}(z)=[F(z)]^n\)，\(F_{\min}(z)=1-[1-F(z)]^n\)。<br>
 应用：串联系统寿命 = min（一坏全坏）；并联系统寿命 = max（一好就好）。
 </div>
@@ -3852,7 +3866,8 @@ n 个独立同分布推广：\(F_{\max}(z)=[F(z)]^n\)，\(F_{\min}(z)=1-[1-F(z)]
 \(|\rho|=1\iff\) 存在 \(a\ne0,b\) 使 \(P(Y=aX+b)=1\)（线性关系）；\(|\rho|\) 越接近 1 线性关系越强。
 </div>
 <div class="box"><span class="t">不相关的等价说法（重要）</span><br>
-\[ \rho_{XY}=0\iff \mathrm{Cov}(X,Y)=0\iff E(XY)=E(X)E(Y)\iff D(X\pm Y)=D(X)+D(Y)\qquad(\text{前提}\ D(X)&gt;0,\ D(Y)&gt;0) \]
+\[ \begin{aligned} &\rho_{XY}=0\iff \mathrm{Cov}(X,Y)=0\\ &\iff E(XY)=E(X)E(Y)\\ &\iff D(X\pm Y)=D(X)+D(Y) \end{aligned} \]
+（前提 \(D(X)&gt;0,\ D(Y)&gt;0\)）
 <b>独立 ⇒ 不相关；不相关 ⇏ 独立</b>（反例：\(X\sim U(-1,1),\ Y=X^2\)，不相关但明显不独立）。<br>
 特例：二维正态分布中「独立 ⇔ 不相关」（正态专属结论）。<br>
 实质：不相关仅表示「无线性关系」，不代表无任何关系。
