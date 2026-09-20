@@ -2623,6 +2623,152 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 13 章 完 ——</div>
 
+<h2 class="chap" id="ch14">第 14 章　矩阵及其运算</h2>
+<div class="strip">本章速览：一 概念与特殊矩阵（含对称/反对称） · 二 矩阵运算 · 三 逆矩阵 · 四 伴随矩阵 · 五 分块矩阵 · 六 速查与易错 · 七 技巧库（全）</div>
+
+<h3>一、矩阵的概念与特殊矩阵</h3>
+<div class="box"><span class="t">概念</span><br>
+\(m\times n\) 个数排成的数表称为矩阵；行数 = 列数时称方阵；两矩阵相等 ⇔ 同型且对应元素全相等。<br>
+行矩阵、列矩阵、零矩阵 \(O\)、单位矩阵 \(E\)、对角矩阵 \(\Lambda=\mathrm{diag}(\lambda_1,\dots,\lambda_n)\)、数量矩阵 \(kE\)、上（下）三角矩阵。
+</div>
+<div class="box"><span class="t">对称与反对称</span><br>
+对称矩阵：\(A^T=A\)；反对称矩阵：\(A^T=-A\)（主对角线元素全为 0）。<br>
+任意方阵可唯一分解：\(A=\underbrace{\frac{A+A^T}{2}}_{\text{对称}}+\underbrace{\frac{A-A^T}{2}}_{\text{反对称}}\)。<br>
+注意：<b>奇数阶反对称矩阵的行列式为 0</b>（第 13 章结论，选择题高频）。
+</div>
+
+<h3>二、矩阵运算</h3>
+<div class="box"><span class="t">加法与数乘</span><br>
+同型矩阵对应元素相加；数乘 \(\lambda A\) 给每个元素乘 \(\lambda\)。满足交换律、结合律、分配律（八条运算律）。
+</div>
+<div class="box"><span class="t">乘法（重头戏）</span><br>
+\(A_{m\times s}B_{s\times n}=C_{m\times n}\)，其中 \(c_{ij}=\sum\limits_{k=1}^{s}a_{ik}b_{kj}\)（<b>左行乘右列</b>）。<br>
+运算律：\((AB)C=A(BC)\)，\(A(B+C)=AB+AC\)，\((A+B)C=AC+BC\)，\(k(AB)=(kA)B=A(kB)\)。<br>
+<b>三个「不」</b>：<br>
+① \(AB\ne BA\)（乘法不交换；数量矩阵 \(kE\) 例外——与任何矩阵可交换）；<br>
+② \(AB=O\) 推不出 \(A=O\) 或 \(B=O\)；<br>
+③ \(AB=AC\) 且 \(A\ne O\) 推不出 \(B=C\)（消去律不成立，除非 \(A\) 可逆）。<br>
+由此：\((A+B)^2\ne A^2+2AB+B^2\)（除非 \(AB=BA\)）。
+</div>
+<div class="box"><span class="t">转置与方阵行列式</span><br>
+\((A^T)^T=A\)；\((A+B)^T=A^T+B^T\)；\((kA)^T=kA^T\)；<b>\((AB)^T=B^TA^T\)（顺序反过来）</b>。<br>
+方阵行列式：\(|AB|=|A||B|\)；\(|A^T|=|A|\)；\(|kA|=k^n|A|\)。
+</div>
+
+<h3>三、逆矩阵</h3>
+<div class="box"><span class="t">定义与可逆条件</span><br>
+对 \(n\) 阶方阵 \(A\)，若存在 \(B\) 使 \(AB=BA=E\)，则 \(A\) 可逆，\(B=A^{-1}\)（逆矩阵唯一）。<br>
+<b>可逆判定</b>：\(A\) 可逆 ⇔ \(|A|\ne0\) ⇔ \(r(A)=n\)（满秩）⇔ 特征值全非零（第 17 章）。
+</div>
+<div class="box"><span class="t">运算性质</span><br>
+\((A^{-1})^{-1}=A\)；\((AB)^{-1}=B^{-1}A^{-1}\)（<b>顺序反</b>，可推广到多个）；\((A^T)^{-1}=(A^{-1})^T\)；\((kA)^{-1}=k^{-1}A^{-1}\ (k\ne0)\)；\(|A^{-1}|=|A|^{-1}\)。
+</div>
+<div class="box"><span class="t">求逆两条主线</span><br>
+① <b>伴随矩阵法</b>：\(A^{-1}=\dfrac{A^*}{|A|}\)（二阶、三阶手算方便）；<br>
+② <b>初等行变换法</b>：\([A\mid E]\xrightarrow{\text{行变换}}[E\mid A^{-1}]\)（见第 15 章）。<br>
+③ <b>抽象矩阵</b>：由矩阵方程凑出 \(X\cdot A=E\) 的形式。<br>
+例：\(A^2-A-2E=O\) ⇒ \(A(A-E)=2E\) ⇒ \(A^{-1}=\dfrac12(A-E)\)。
+</div>
+<div class="box gray"><span class="t">矩阵方程（A 可逆时）</span><br>
+\(AX=B\Rightarrow X=A^{-1}B\)；\(XA=B\Rightarrow X=BA^{-1}\)；\(AXB=C\Rightarrow X=A^{-1}CB^{-1}\)。<br>
+注意左乘、右乘的位置：<b>左乘清左、右乘清右</b>。
+</div>
+
+<h3>四、伴随矩阵</h3>
+<div class="box"><span class="t">定义</span><br>
+\(A^*=(A_{ji})_{n\times n}\)——由<b>代数余子式</b> \(A_{ij}\) 构成的矩阵再<b>转置</b>（行列式 \(|A|\) 的「余子式矩阵的转置」）。<br>
+注意：元素是代数余子式（带 \((-1)^{i+j}\) 符号），且要转置——两个易错点。
+</div>
+<div class="box"><span class="t">核心公式与性质</span>
+<ul>
+<li>\(AA^*=A^*A=|A|E\)（万能式）；</li>
+<li>\(|A^*|=|A|^{n-1}\)（别记成 \(|A|^n\)）；</li>
+<li>\(A\) 可逆时 \(A^*=|A|A^{-1}\)，且 \((A^*)^{-1}=(A^{-1})^*=\dfrac{A}{|A|}\)；</li>
+<li>\((kA)^*=k^{n-1}A^*\)；\((A^T)^*=(A^*)^T\)；\((AB)^*=B^*A^*\)（顺序反）；</li>
+<li>\(r(A^*)=\begin{cases}n, & r(A)=n\\ 1, & r(A)=n-1\\ 0, & r(A)&lt;n-1\end{cases}\)（选择题高频结论）。</li>
+</ul>
+</div>
+
+<h3>五、分块矩阵</h3>
+<div class="box"><span class="t">分块运算</span><br>
+把大矩阵划成若干小块，按「块」当作元素进行加、减、乘（乘法要求块的维数匹配）；<br>
+转置：分块矩阵转置时<b>块整体也要转置</b>：\(\begin{pmatrix}A&B\\C&D\end{pmatrix}^T=\begin{pmatrix}A^T&C^T\\B^T&D^T\end{pmatrix}\)。
+</div>
+<div class="box"><span class="t">分块对角矩阵（准对角矩阵）</span><br>
+\(M=\begin{pmatrix}A&O\\O&B\end{pmatrix}\) 的幂、行列式、逆都<b>各块独立</b>：
+\[ M^k=\begin{pmatrix}A^k&O\\O&B^k\end{pmatrix},\qquad |M|=|A||B|,\qquad M^{-1}=\begin{pmatrix}A^{-1}&O\\O&B^{-1}\end{pmatrix} \]
+副对角型：\(\begin{pmatrix}O&A\\B&O\end{pmatrix}^{-1}=\begin{pmatrix}O&B^{-1}\\A^{-1}&O\end{pmatrix}\)（注意位置互换）。
+</div>
+<div class="box gray"><span class="t">分块行列式（第 13 章联动）</span><br>
+\[ \begin{vmatrix}A&C\\O&B\end{vmatrix}=|A||B|;\qquad \begin{vmatrix}A&O\\C&B\end{vmatrix}=|A||B| \]
+三角分块直接乘；带 \(C\) 的「反类型」需变形或按行展开。
+</div>
+
+<h3>六、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>矩阵乘法不交换：写 \((A+B)^2\)、\(AB\) 与 \(BA\) 时不能互换。</li>
+<li>\(AB=O\nRightarrow A=O\) 或 \(B=O\)；\(AB=AC\nRightarrow B=C\)（消去律需 \(A\) 可逆）。</li>
+<li>\((AB)^T=B^TA^T\)、\((AB)^{-1}=B^{-1}A^{-1}\) 顺序写反。</li>
+<li>\(|kA|=k^n|A|\)（不是 \(k|A|\)）；\(|A+B|\ne|A|+|B|\)。</li>
+<li>伴随矩阵两坑：元素是<b>代数</b>余子式（带符号）且要<b>转置</b>。</li>
+<li>\(|A^*|=|A|^{n-1}\) 与 \(r(A^*)\) 三档结论记不牢。</li>
+<li>\(A\) 不可逆时写 \(A^*=|A|A^{-1}\)（此式仅可逆时成立；通用式是 \(AA^*=|A|E\)）。</li>
+<li>分块求逆只对特定结构（准对角）直接用公式，否则先化成准对角或整体求逆。</li>
+<li>抽象题中不能「除以矩阵」——只能乘逆矩阵。</li>
+<li>矩阵等式 \(AX=B\) 求解时左乘右乘搞混（顺序反了全错）。</li>
+</ol>
+</div>
+
+<h3>七、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>7.1 乘法速算与结构观察</h4>
+<div class="box">
+① 行乘列逐项算；② 观察零块、对角块跳过大段计算；③ 若 \(A\) 的列向量与 \(B\) 的行向量「点积为零」则乘积为零——先结构后计算；④ 计算 \(AB\) 时可先算 \(B\) 每列被 \(A\) 作用（用于验证）。
+</div>
+
+<h4>7.2 幂运算三招</h4>
+<div class="box">
+① <b>找规律/归纳</b>：算 \(A^2,A^3\) 观察（对角阵、三角阵直接幂）；<br>
+② <b>拆分二项式</b>：若 \(A=kE+N\) 且 \(N\) 幂零（\(N^2=O\)），用二项式展开；<br>
+③ <b>秩 1 矩阵公式</b>：\(A=\alpha\beta^T\)（\(\alpha,\beta\) 为列向量）⇒ \(A^k=(\beta^T\alpha)^{k-1}A\)（\(\beta^T\alpha\) 就是迹）。
+</div>
+
+<h4>7.3 抽象矩阵求逆模板</h4>
+<div class="box">
+目标：从关系式凑出「（含 A 的式子）× A = 常数 E」。<br>
+例：\(A^2-3A+2E=O\) ⇒ \(A(A-3E)=-2E\) ⇒ \(A^{-1}=-\frac12(A-3E)\)；<br>
+求 \(A+kE\) 的逆：用多项式除法把式子凑成 \((A+kE)X=cE\)。
+</div>
+
+<h4>7.4 伴随矩阵题型清单</h4>
+<div class="box">
+① 已知 \(A\) 求 \(A^*\)（小阶直接算）；② \(|A^*|\)、\(r(A^*)\)；③ \(A^*\) 与 \(A^{-1}\)、\(|A|\) 互化；④ \((A+B)^*\) 无公式——勿乱套；⑤ 结合特征值：\(A^*\) 的特征值 \(= |A|/\lambda_i\)（第 17 章）。
+</div>
+
+<h4>7.5 分块矩阵的使用时机</h4>
+<div class="box">
+矩阵有大量零块、或结构明显（上三角+右下角块）时：分块后求逆、求行列式、求幂都大幅简化；准对角矩阵的题一律分块处理。
+</div>
+
+<h4>7.6 两个经典恒等式（可逆性互推）</h4>
+<div class="box">
+\[ |E-AB|=|E-BA|,\qquad E-AB\ \text{可逆}\iff E-BA\ \text{可逆} \]
+（证明思路：\((E-AB)A=A(E-BA)\) 之类恒等变形。）选择/证明题常考。
+</div>
+
+<h4>7.7 矩阵方程求解模板</h4>
+<div class="box">
+① 化简方程（移项、提公因子）；② 判断系数矩阵是否可逆；③ 可逆时左/右乘逆矩阵（注意方向）；④ 不可逆时转第 15 章（初等变换或解线性方程组思路）。
+</div>
+
+<h4>7.8 自查习惯</h4>
+<div class="box">
+① 用特殊矩阵（对角、二阶）验证抽象结论；② 检查「顺序」类公式（转置/逆/伴随）是否反了；③ 行列式与矩阵性质互换自测（哪个允许提公因子）。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 14 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
