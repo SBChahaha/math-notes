@@ -3966,6 +3966,100 @@ n 个独立同分布推广：\(F_{\max}(z)=[F(z)]^n\)，\(F_{\min}(z)=1-[1-F(z)]
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 22 章 完 ——</div>
 
+<h2 class="chap" id="ch23">第 23 章　大数定律与中心极限定理</h2>
+<div class="strip">本章速览：一 大数定律 · 二 中心极限定理 · 三 速查与易错 · 四 技巧库（全）</div>
+
+<h3>一、大数定律</h3>
+<div class="box"><span class="t">依概率收敛</span><br>
+若对任意 \(\varepsilon&gt;0\) 有 \(\lim\limits_{n\to\infty}P(|X_n-a|\ge\varepsilon)=0\)，称 \(X_n\) <b>依概率收敛</b>于 \(a\)，记 \(X_n\xrightarrow{P}a\)。<br>
+直观：n 充分大时，\(X_n\) 几乎总在 \(a\) 附近（允许偶尔偏差，但偏差概率趋于 0）。
+</div>
+<div class="box"><span class="t">切比雪夫大数定律</span><br>
+设 \(X_1,X_2,\dots\) 相互独立，且方差有共同上界（\(D(X_i)\le C\)），则
+\[ \frac1n\sum_{i=1}^{n}X_i-\frac1n\sum_{i=1}^{n}E(X_i)\xrightarrow{P}0 \]
+（证明工具：切比雪夫不等式。）
+</div>
+<div class="box"><span class="t">伯努利大数定律</span><br>
+n 重伯努利试验中，事件发生的频率 \(\dfrac{n_A}{n}\xrightarrow{P}p\)（\(n_A\) 为 A 发生次数，\(p=P(A)\)）。<br>
+意义：<b>频率稳定于概率</b>——「用频率估计概率」的理论依据。
+</div>
+<div class="box"><span class="t">辛钦大数定律</span><br>
+设 \(X_1,X_2,\dots\) <b>独立同分布</b>，且 \(E(X_i)=\mu\) 存在，则
+\[ \frac1n\sum_{i=1}^{n}X_i\xrightarrow{P}\mu \]
+（不需要方差存在——条件最弱、最常考。）
+</div>
+<table>
+<thead><tr><th>定律</th><th>条件</th><th>结论</th></tr></thead>
+<tbody>
+<tr><td>切比雪夫</td><td>独立，方差有界</td><td>均值 → 期望的均值</td></tr>
+<tr><td>伯努利</td><td>n 重伯努利</td><td>频率 → 概率 p</td></tr>
+<tr><td>辛钦</td><td>独立同分布，期望存在</td><td>样本均值 → μ</td></tr>
+</tbody>
+</table>
+<div class="mini">共同思想：<b>样本多了，平均值稳定</b>；大数定律的极限是一个常数（依概率收敛），而中心极限定理讲的是「偏差的分布形状」（依分布收敛）。</div>
+
+<h3>二、中心极限定理</h3>
+<div class="box"><span class="t">列维-林德伯格定理（独立同分布 CLT）</span><br>
+设 \(X_1,X_2,\dots\) 独立同分布，\(E(X_i)=\mu\)，\(D(X_i)=\sigma^2\in(0,+\infty)\)，则
+\[ \frac{\sum_{i=1}^{n}X_i-n\mu}{\sigma\sqrt n}\xrightarrow{\text{分布}}N(0,1) \]
+近似使用（n 充分大时）：
+\[ \sum_{i=1}^{n}X_i\ \text{近似}\ N(n\mu,\ n\sigma^2),\qquad \bar X\ \text{近似}\ N\!\left(\mu,\ \frac{\sigma^2}{n}\right) \]
+</div>
+<div class="box"><span class="t">棣莫弗-拉普拉斯定理（二项 CLT）</span><br>
+\(X\sim B(n,p)\) 时，当 n 充分大：
+\[ \frac{X-np}{\sqrt{np(1-p)}}\ \text{近似}\ N(0,1),\qquad X\ \text{近似}\ N\!\left(np,\ np(1-p)\right) \]
+概率计算：\(P(a&lt;X\le b)\approx\Phi\!\left(\dfrac{b-np}{\sqrt{npq}}\right)-\Phi\!\left(\dfrac{a-np}{\sqrt{npq}}\right)\)（\(q=1-p\)）。
+</div>
+<div class="box gray"><span class="t">两类应用题型</span><br>
+① <b>正算概率</b>：n 已知，把和/均值标准化后查表；<br>
+② <b>逆求 n</b>：给出概率要求（如 \(P(|\bar X-\mu|&lt;d)\ge0.95\)），列不等式解出 n 的下界。
+</div>
+<div class="mini">连续性修正（了解）：对离散的二项变量，端点改用 \(b+0.5,\ a-0.5\) 精度更高；数一答题按题目要求，通常不修正也可。（n 的经验门槛：≥30～50 可用。）</div>
+
+<h3>三、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>大数定律条件不验：辛钦要独立同分布 + 期望存在；切比雪夫要独立 + 方差有界。</li>
+<li>标准化写错：\(\dfrac{\sum X_i-n\mu}{\sigma\sqrt n}\)——分子是「和减期望的和」，分母是 \(\sigma\sqrt n\) 而不是 \(\sigma n\) 或 \(\sqrt n\sigma^2\)。</li>
+<li>把「依概率收敛」与「依分布收敛」混淆（大数定律 vs 中心极限定理的结论类型不同）。</li>
+<li>\(B(n,p)\) 的正态近似忘记方差是 \(npq\)（写成 \(np\)）。</li>
+<li>概率计算区间端点方向写反；不查对称性。</li>
+<li>n 太小时滥用正态近似（题型一般已给「n 充分大」提示，没给时谨慎）。</li>
+<li>逆求 n 时不取整（次数要向上取整）。</li>
+</ol>
+</div>
+
+<h3>四、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>4.1 标准化四步模板</h4>
+<div class="box">
+① 明确和式 \(S_n=\sum X_i\) 或均值 \(\bar X\)；② 算 \(E(S_n)=n\mu\)、\(D(S_n)=n\sigma^2\)（独立可加）；③ 标准化 \(\dfrac{S_n-n\mu}{\sigma\sqrt n}\)；④ 查 \(\Phi\) 表（正态近似）。
+</div>
+
+<h4>4.2 二项正态近似三件套</h4>
+<div class="box">
+\(X\sim B(n,p)\)：均值 \(np\)、方差 \(npq\)、标准化 \(\dfrac{X-np}{\sqrt{npq}}\)；把「至少/至多/介于」翻译成 \(\Phi\) 差值。
+</div>
+
+<h4>4.3 逆求 n / d 的套路</h4>
+<div class="box">
+由 \(P(|S_n-n\mu|\le d)\approx2\Phi\!\left(\frac{d}{\sigma\sqrt n}\right)-1\ge1-\alpha\) 反解：\(\frac{d}{\sigma\sqrt n}\ge z_{1-\alpha/2}\)，解出 \(n\) 并<b>向上取整</b>。
+</div>
+
+<h4>4.4 大数定律证明题套路</h4>
+<div class="box">
+证「样本均值依概率收敛于 μ」：先算 \(D(\bar X)=\frac{\sigma^2}{n}\)（独立时），再用切比雪夫不等式：
+\[ P(|\bar X-\mu|\ge\varepsilon)\le\frac{\sigma^2}{n\varepsilon^2}\to0 \]
+——「切比雪夫不等式 + 方差可控」是万用证明模板。
+</div>
+
+<h4>4.5 频率估计概率</h4>
+<div class="box">
+用伯努利大数定律把「频率 → 概率」写出结论；定量误差用二项 CLT 估计（\(\frac{n_A}{n}\) 的近似分布 \(N(p,\frac{pq}{n})\)）。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 23 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
