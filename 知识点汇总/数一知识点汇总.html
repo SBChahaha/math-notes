@@ -972,6 +972,187 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 4 章 完 ——</div>
 
+<h2 class="chap" id="ch5">第 5 章　定积分</h2>
+<div class="strip">本章速览：一 概念与性质 · 二 微积分基本定理 · 三 换元、分部与对称性 · 四 反常积分 · 五 速查与易错 · 六 技巧库（全）</div>
+
+<h3>一、定积分的概念与性质</h3>
+<div class="box"><span class="t">定义（分割 → 近似 → 求和 → 取极限）</span><br>
+\[ \int_a^b f(x)\,dx=\lim_{\lambda\to0}\sum_{i=1}^{n}f(\xi_i)\Delta x_i,\qquad \lambda=\max_i\Delta x_i \]
+定积分是一个<b>数</b>：只与 \(f\) 和区间 \([a,b]\) 有关，与积分变量记号（\(x\) 换成 \(t\)）无关。
+</div>
+<div class="box"><span class="t">可积性</span>
+<ul>
+<li>必要条件：可积 ⇒ 有界。</li>
+<li>充分条件：\([a,b]\) 上连续 ⇒ 可积；有界且只有有限个间断点 ⇒ 可积。</li>
+</ul>
+</div>
+<div class="box"><span class="t">几何意义</span><br>
+曲边梯形面积的<b>代数和</b>：\(x\) 轴上方部分取正、下方取负。
+</div>
+<div class="box"><span class="t">性质全表</span>
+<ol>
+<li>线性：\(\int_a^b(\alpha f+\beta g)=\alpha\int_a^b f+\beta\int_a^b g\)。</li>
+<li>区间可加：\(\int_a^b=\int_a^c+\int_c^b\)（\(c\) 任意）。</li>
+<li>方向：\(\int_a^b=-\int_b^a\)；\(\int_a^a=0\)。</li>
+<li>保号：\(f\ge0\Rightarrow\int_a^b f\ge0\)；\(f\le g\Rightarrow\int f\le\int g\)。</li>
+<li>绝对值：\(\left|\int_a^b f\right|\le\int_a^b|f|\)。</li>
+<li>估值：\(m(b-a)\le\int_a^b f\le M(b-a)\)（\(m,M\) 为 \(f\) 在 \([a,b]\) 上的最小、最大值）。</li>
+<li><b>积分中值定理</b>：\(f\) 在 \([a,b]\) 连续 ⇒ \(\exists\xi\in[a,b]\)，\(\int_a^b f(x)dx=f(\xi)(b-a)\)；\(f(\xi)\) 即函数在区间上的平均值。</li>
+</ol>
+</div>
+<div class="mini">证明题的常见起点：把积分写成 \(f(\xi)(b-a)\)，再配罗尔/拉格朗日中值定理；求极限时注意 \(\frac{1}{b-a}\int_a^b f=f(\xi)\) 的形式。</div>
+
+<h3>二、微积分基本定理</h3>
+<div class="box"><span class="t">变限积分与其导数</span><br>
+设 \(f\) 连续，\(\Phi(x)=\int_a^x f(t)\,dt\)，则 \(\Phi'(x)=f(x)\)——\(\Phi\) 是 \(f\) 的一个原函数。<br>
+推广（上下限都是函数）：
+\[ \frac{d}{dx}\int_{\varphi(x)}^{\psi(x)}f(t)\,dt=f(\psi(x))\,\psi'(x)-f(\varphi(x))\,\varphi'(x) \]
+如 \(\dfrac{d}{dx}\int_0^{x^2}f(t)dt=f(x^2)\cdot2x\)。
+</div>
+<div class="box"><span class="t">牛顿-莱布尼茨公式</span><br>
+设 \(f\) 在 \([a,b]\) 上连续，\(F\) 是 \(f\) 的任一原函数，则
+\[ \int_a^b f(x)\,dx=F(b)-F(a)=\Big[F(x)\Big]_a^b \]
+把「取极限的和」变成「原函数求值」，是整章乃至全书最重要的公式。
+</div>
+
+<h3>三、换元、分部与对称性</h3>
+<div class="box"><span class="t">定积分换元法</span><br>
+设 \(x=\varphi(t)\) 在 \([\alpha,\beta]\) 上单调、有连续导数，且 \(\varphi(\alpha)=a,\ \varphi(\beta)=b\)，则
+\[ \int_a^b f(x)\,dx=\int_\alpha^\beta f(\varphi(t))\,\varphi'(t)\,dt \]
+<b>换元必换限</b>；新限对应新变量后<b>不必回代</b>。
+</div>
+<div class="box"><span class="t">定积分分部积分</span><br>
+\[ \int_a^b u(x)v'(x)\,dx=\Big[u(x)v(x)\Big]_a^b-\int_a^b u'(x)v(x)\,dx \]
+</div>
+<div class="box"><span class="t">对称区间与周期性（先看再算）</span>
+<ul>
+<li>\(f\) 为奇函数：\(\displaystyle\int_{-a}^{a}f(x)\,dx=0\)；\(f\) 为偶函数：\(\displaystyle\int_{-a}^{a}f(x)\,dx=2\int_0^{a}f(x)\,dx\)。</li>
+<li>通用拆分式：\(\displaystyle\int_{-a}^{a}f(x)\,dx=\int_0^{a}\left[f(x)+f(-x)\right]dx\)（奇偶不明显时用它）。</li>
+<li>周期 \(T\)：\(\displaystyle\int_a^{a+T}f=\int_0^{T}f\)，且 \(\displaystyle\int_0^{nT}f=n\int_0^{T}f\)。</li>
+</ul>
+</div>
+<div class="box"><span class="t">区间再现公式（超级好用）</span><br>
+\[ \int_a^b f(x)\,dx=\int_a^b f(a+b-x)\,dx \]
+常用推论：\(\displaystyle\int_0^\pi x f(\sin x)\,dx=\frac{\pi}{2}\int_0^\pi f(\sin x)\,dx\)；\(\displaystyle\int_0^{\pi/2}f(\sin x)dx=\int_0^{\pi/2}f(\cos x)dx\)。
+</div>
+<table>
+<thead><tr><th colspan="2">华里士（点火）公式</th></tr></thead>
+<tbody>
+<tr><td colspan="2">\(\displaystyle\int_0^{\pi/2}\sin^n x\,dx=\int_0^{\pi/2}\cos^n x\,dx=\begin{cases}\dfrac{(n-1)!!}{n!!}\cdot\dfrac{\pi}{2}, & n \text{ 为偶数}\\[8pt]\dfrac{(n-1)!!}{n!!}, & n \text{ 为奇数}\end{cases}\)</td></tr>
+<tr><td>\(\int_0^{\pi/2}\sin^2x\,dx=\dfrac{\pi}{4}\)，\(\int_0^{\pi/2}\sin^3x\,dx=\dfrac23\)</td><td>\(\int_0^{\pi/2}\sin^4x\,dx=\dfrac{3\pi}{16}\)，\(\int_0^{\pi/2}\sin^5x\,dx=\dfrac{8}{15}\)</td></tr>
+</tbody>
+</table>
+<div class="mini">口诀：「偶带 \(\frac{\pi}{2}\)」。\(\int_0^{\pi}\sin^n x\,dx=2\int_0^{\pi/2}\sin^n x\,dx\)（关于 \(\frac{\pi}{2}\) 对称）。</div>
+<div class="box gray"><span class="t">常用定积分结论</span><br>
+\(\displaystyle\int_0^{\pi}\sin x\,dx=2\)；\(\displaystyle\int_0^{2\pi}\sin^2x\,dx=\pi\)；\(\displaystyle\int_{-\pi}^{\pi}\cos mx\cos nx\,dx=\pi\delta_{mn}\)（正交性）；\(\displaystyle\int_0^{1}x^m(1-x)^n dx=\frac{m!\,n!}{(m+n+1)!}\)（选学）。
+</div>
+
+<h3>四、反常积分</h3>
+<div class="box"><span class="t">无穷限反常积分</span><br>
+\[ \int_a^{+\infty}f(x)\,dx=\lim_{b\to+\infty}\int_a^b f(x)\,dx \]
+极限存在称<b>收敛</b>，否则<b>发散</b>；\((-\infty,b]\)、\((-\infty,+\infty)\) 同理，其中全直线须<b>拆成两段都收敛</b>才算收敛。<br>
+标准标尺：\(\displaystyle\int_1^{+\infty}\frac{dx}{x^p}\) 收敛 ⇔ \(p>1\)（<b>无穷限：大指数才收敛</b>）。<br>
+例：\(\int_0^{+\infty}e^{-x}dx=1\)；\(\int_1^{+\infty}\frac{dx}{x^2}=1\)；\(\int_1^{+\infty}\frac{dx}{x}\) 发散。
+</div>
+<div class="box"><span class="t">无界函数（瑕积分）</span><br>
+若 \(a\) 是瑕点：\(\displaystyle\int_a^b f(x)\,dx=\lim_{\varepsilon\to0^+}\int_{a+\varepsilon}^{b}f(x)\,dx\)（瑕点在内部或端点同理，须拆段）。<br>
+标准标尺：\(\displaystyle\int_a^b\frac{dx}{(x-a)^q}\) 收敛 ⇔ \(q&lt;1\)（<b>瑕点：小指数才收敛</b>，与无穷限方向相反）。
+</div>
+<div class="box"><span class="t">判别法（非负函数）</span>
+<ul>
+<li><b>比较判别法</b>：\(0\le f\le g\) 时，「大收 ⇒ 小收」「小散 ⇒ 大散」。</li>
+<li><b>极限形式</b>：\(\lim\frac{f(x)}{g(x)}=c\ (0&lt;c&lt;+\infty)\)，则 \(\int f\) 与 \(\int g\) 同敛散；\(c=0\) 时「\(g\) 收 ⇒ \(f\) 收」；\(c=+\infty\) 时「\(g\) 散 ⇒ \(f\) 散」。</li>
+<li>常用比较对象：\(\frac{1}{x^p}\)（无穷限）、\(\frac{1}{(x-a)^q}\)（瑕点）、\(e^{-x}\)。</li>
+</ul>
+</div>
+<div class="box warn"><span class="t">注意</span>
+<ul>
+<li>先<b>找全</b>无穷限与瑕点，逐一拆段判定；任一段发散 ⇒ 整体发散。</li>
+<li>换元、分部积分在收敛的前提下使用；先算原函数再取极限也可（但要验收敛性）。</li>
+<li>无穷限与瑕点可能同时出现（如 \(\int_0^{+\infty}\frac{dx}{\sqrt x(1+x)}\)），需拆分。</li>
+</ul>
+</div>
+
+<h3>五、速查与易错</h3>
+<div class="box"><span class="t">定积分计算总流程</span><br>
+① <b>先看结构</b>：对称区间？周期？→ 用奇偶/周期简化；<br>
+② 能直接 N-L 就 N-L（原函数必须正确）；<br>
+③ 换元（换限不回代）或分部；<br>
+④ 三角高次幂 → 华里士/区间再现；<br>
+⑤ 分段/含绝对值 → 分区间积分；<br>
+⑥ 反常积分 → 找瑕点/无穷限 → 拆段 → 判定或计算极限。
+</div>
+<div class="box gray"><span class="t">不定积分方法在定积分中的差异</span><br>
+方法通用，但三点不同：① 换元必须换限（不回代）；② 分部要带上下限代入 \(uv\)；③ 可以用对称性、周期性、中值定理这些「区间性质」。
+</div>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>换元后忘换限，或换限后又画三角形回代（定积分不需要）。</li>
+<li>奇偶性用在非对称区间上（必须关于原点对称）。</li>
+<li>周期平移写反：\(\int_a^{a+T}=\int_0^T\) 而不是 \(\int_T^{0}\)。</li>
+<li>反常积分不检查瑕点，直接 N-L 得错误答案。</li>
+<li>可积性判断忽略必要条件（有界）。</li>
+<li>分段函数、绝对值不拆区间，整体硬算。</li>
+<li>把定积分（数）与变限积分（函数）混为一谈；对变限积分求导时忘乘上下限的导数。</li>
+<li>积分中值定理求极限时忘记 \(\frac{1}{b-a}\int_a^b f=f(\xi)\) 的形式，直接说极限等于 \(f\) 的端点值。</li>
+</ol>
+</div>
+
+<h3>六、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>6.1 用定积分定义求 n 项和极限</h4>
+<div class="box">
+模板：\(\displaystyle\lim_{n\to\infty}\frac1n\sum_{i=1}^{n}f\!\left(\frac in\right)=\int_0^1 f(x)\,dx\)；一般区间 \(\frac{b-a}{n}\sum f\!\left(a+\frac{i(b-a)}{n}\right)\to\int_a^b f\)。<br>
+操作：把和式凑出「\(\frac1n\) × \(f(\frac in)\)」的形状（通分、提取 \(n\)），再翻译成积分。<br>
+例：\(\displaystyle\lim_{n\to\infty}\sum_{i=1}^{n}\frac{n}{n^2+i^2}=\int_0^1\frac{dx}{1+x^2}=\frac{\pi}{4}\)；\(\lim\frac1n\sum\sin\frac{i\pi}{n}=\int_0^1\sin\pi x\,dx=\frac2\pi\)。
+</div>
+
+<h4>6.2 区间再现的标准用法</h4>
+<div class="box">
+① 见到 \(x\) 与三角/对数混乘（如 \(\int_0^{\pi}x f(\sin x)dx\)）→ 用再现公式把 \(x\) 换成 \(\pi-x\)，两式相加消 \(x\)；<br>
+② 形如 \(\int_a^b \frac{f(x)}{f(x)+f(a+b-x)}dx\) 的配对题 → 再现后与原式相加，直接得 \(\frac{b-a}{2}\)；<br>
+③ 对称区间同理：\(g(x)+g(-x)\) 变简单时优先拆分式。
+</div>
+
+<h4>6.3 华里士 + 区间再现组合拳</h4>
+<div class="box">
+\[ \int_0^{\pi}x\sin^n x\,dx=\frac{\pi}{2}\int_0^{\pi}\sin^n x\,dx=\pi\int_0^{\pi/2}\sin^n x\,dx \]
+先再现消 \(x\)，再点火公式出数——两步解决一整类压轴小题。
+</div>
+
+<h4>6.4 变限积分求导全景</h4>
+<div class="box">
+① \(\Phi(x)=\int_a^{x}f(t)dt\) ⇒ \(\Phi'=f(x)\)；<br>
+② 上下限含 \(x\)：链式法则 \(f(\psi)\psi'-f(\varphi)\varphi'\)；<br>
+③ 被积函数含 \(x\)（如 \(\int_0^x(x-t)f(t)dt\)）：先拆成 \(x\int_0^x f(t)dt-\int_0^x t f(t)dt\) 再求导；<br>
+④ 也可换元把 \(x\) 移出被积函数（如 \(u=t-x\)）；<br>
+⑤ 求极限时先用积分中值定理或洛必达处理 \(\frac{\Phi(x)}{x^n}\) 型。
+</div>
+
+<h4>6.5 证「存在 ξ 使积分等式成立」套路</h4>
+<div class="box">
+构造 \(G(x)=\int_a^x f(t)\,dt-\text{（待证式中的线性项）}\)，对 \(G\) 用罗尔/拉格朗日；<br>
+证「存在 ξ 使 \(f''(\xi)=0\)」型：对 \(\int_a^b f\) 用中值定理再配合两次罗尔。
+</div>
+
+<h4>6.6 反常积分收敛判别流程</h4>
+<div class="box">
+① 找全瑕点与无穷限 → ② 拆段 → ③ 每段取<b>主导项</b>与标尺比较（\(\frac1{x^p}\)、\(\frac1{(x-a)^q}\)）→ ④ 极限形式比较定价态 → ⑤ 写结论（含「收敛/发散」字样）。<br>
+口诀：无穷限看 \(p>1\)，瑕点看 \(q&lt;1\)；主导项法就是「抓大头」。
+</div>
+
+<h4>6.7 反常积分计算技巧</h4>
+<div class="box">
+与普通积分相同（换元/分部），但先验敛散或最后取极限；常用结论：\(\int_0^{+\infty}x^ne^{-x}dx=n!\)；\(\int_0^{+\infty}e^{-x^2}dx=\frac{\sqrt\pi}{2}\)（选学，重要常数）；\(\int_0^{+\infty}\frac{dx}{x^2+a^2}=\frac{\pi}{2a}\)。
+</div>
+
+<h4>6.8 分段与绝对值的处理</h4>
+<div class="box">
+找出「零点/断点」把区间切开，逐段积分再相加；含 \(|f(x)|\) 先解 \(f\ge0/&lt;0\) 的区间；周期函数先算一个周期再乘倍数。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 5 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
