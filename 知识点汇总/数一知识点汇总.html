@@ -1329,6 +1329,203 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 6 章 完 ——</div>
 
+<h2 class="part" id="part2">第二部分　高等数学（下册）</h2>
+<div class="part-list">
+第 7 章　微分方程<br>
+第 8 章　向量代数与空间解析几何<br>
+第 9 章　多元函数微分法及其应用<br>
+第 10 章　重积分<br>
+第 11 章　曲线积分与曲面积分<br>
+第 12 章　无穷级数
+</div>
+
+<h2 class="chap" id="ch7">第 7 章　微分方程</h2>
+<div class="strip">本章速览：一 基本概念 · 二 一阶方程（可分离、齐次、线性、伯努利、全微分） · 三 可降阶的高阶方程 · 四 线性方程解的结构 · 五 常系数线性方程 · 六 欧拉方程 · 七 速查与易错 · 八 技巧库（全）</div>
+
+<h3>一、基本概念</h3>
+<div class="box"><span class="t">概念清单</span><br>
+含未知函数及其导数的方程叫<b>微分方程</b>；出现的最高阶导数的阶数称为<b>方程的阶</b>。<br>
+<b>通解</b>：含独立任意常数的解，常数个数 = 阶数；<b>特解</b>：常数被确定后的解；<b>初始条件</b>：确定常数的附加条件。<br>
+线性 vs 非线性：方程对 \(y,y',y''\) 是一次（无乘积、无复合）的为线性方程（如 \(y''+P(x)y'+Q(x)y=f(x)\)）。
+</div>
+<div class="mini">验证解的标准动作：把解代回原方程，检查恒成立；特解还要验证初值条件。</div>
+
+<h3>二、一阶微分方程</h3>
+<div class="box"><span class="t">① 可分离变量方程</span><br>
+\[ \frac{dy}{dx}=f(x)\,g(y)\ \Longrightarrow\ \frac{dy}{g(y)}=f(x)\,dx\ \Longrightarrow\ \int\frac{dy}{g(y)}=\int f(x)\,dx \]
+区分隐式/显式通解即可；<b>除以 \(g(y)\) 时可能丢掉 \(g(y)=0\) 的特解</b>（如 \(y\equiv0\)），最后要补验。
+</div>
+<div class="box"><span class="t">② 齐次方程</span><br>
+\[ \frac{dy}{dx}=\varphi\!\left(\frac yx\right) \]
+令 \(u=\dfrac yx\)（即 \(y=ux\)），则 \(y'=u+xu'\)，方程化为 \(u+x\dfrac{du}{dx}=\varphi(u)\)，即
+\[ \frac{du}{\varphi(u)-u}=\frac{dx}{x} \]
+——化为可分离方程，解完把 \(u=y/x\) 回代。
+</div>
+<div class="box"><span class="t">③ 可化为齐次的分式线性方程</span><br>
+\[ \frac{dy}{dx}=\frac{a_1x+b_1y+c_1}{a_2x+b_2y+c_2} \]
+若两直线有唯一交点 \((x_0,y_0)\)：平移 \(X=x-x_0,\ Y=y-y_0\) 化为齐次方程；<br>
+若两直线平行（系数成比例）：令 \(v=a_2x+b_2y\)，化为可分离方程。
+</div>
+
+<div class="box"><span class="t">④ 一阶线性微分方程</span><br>
+\[ y'+P(x)y=Q(x) \]
+通解公式（常数变易法）：
+\[ y=e^{-\int P(x)dx}\left[\int Q(x)\,e^{\int P(x)dx}\,dx+C\right] \]
+结构记忆：「\(e^{-\int P}\) ×（∫ 里面是同款 \(e^{+\int P}\) × Q + C）」；先化成标准形（\(y'\) 系数为 1）再代公式。当 \(Q\equiv0\) 时退化为可分离方程，通解 \(y=Ce^{-\int P dx}\)。
+</div>
+<div class="box"><span class="t">⑤ 伯努利方程</span><br>
+\[ y'+P(x)y=Q(x)\,y^{n}\quad(n\ne0,1) \]
+两边除以 \(y^n\)，令 \(z=y^{1-n}\)（\(z'=(1-n)y^{-n}y'\)），化为<b>一阶线性</b>：
+\[ z'+(1-n)P(x)\,z=(1-n)Q(x) \]
+先解出 \(z\) 再回代 \(z=y^{1-n}\)。
+</div>
+<div class="box"><span class="t">⑥ 全微分方程（恰当方程）</span><br>
+\[ M(x,y)\,dx+N(x,y)\,dy=0,\qquad \frac{\partial M}{\partial y}=\frac{\partial N}{\partial x} \]
+则存在 \(u(x,y)\) 使 \(du=Mdx+Ndy\)，通解为 \(u(x,y)=C\)；其中
+\[ u=\int M(x,y)\,dx+\int\left[N-\frac{\partial}{\partial y}\int M\,dx\right]dy \]
+实操更多用「凑微分」：\(ydx+xdy=d(xy)\)、\(\frac{xdy-ydx}{x^2}=d\!\left(\frac yx\right)\) 等（见技巧库）；不满足条件时可尝试积分因子（选学）。
+</div>
+
+<h3>三、可降阶的高阶方程</h3>
+<table>
+<thead><tr><th>类型</th><th>代换</th><th>步骤</th></tr></thead>
+<tbody>
+<tr><td>\(y^{(n)}=f(x)\)</td><td>无</td><td>连续积分 \(n\) 次</td></tr>
+<tr><td>\(y''=f(x,y')\)（不显含 \(y\)）</td><td>\(p=y'\)</td><td>化为一阶方程 \(p'=f(x,p)\)，解 \(p\) 后再积分</td></tr>
+<tr><td>\(y''=f(y,y')\)（不显含 \(x\)）</td><td>\(p=y'\)，视 \(p=p(y)\)</td><td>用 \(y''=p\dfrac{dp}{dy}\)，化为 \(p\dfrac{dp}{dy}=f(y,p)\)</td></tr>
+</tbody>
+</table>
+<div class="mini">识别诀窍：方程里「缺谁」就以谁为「缺失变量」选代换——缺 \(y\) 用 \(p(x)\)；缺 \(x\) 用 \(p(y)\)（注意 \(y''=p\,dp/dy\)）。</div>
+
+<h3>四、线性微分方程解的结构</h3>
+<div class="box"><span class="t">二阶齐次线性方程</span><br>
+\(y''+P(x)y'+Q(x)y=0\)：若 \(y_1,y_2\) 是它的两个<b>线性无关</b>解，则通解 \(y=C_1y_1+C_2y_2\)。
+</div>
+<div class="box"><span class="t">非齐次线性方程</span><br>
+\(y''+P(x)y'+Q(x)y=f(x)\)：通解 \(y=Y+y^*\)，其中 \(Y\) 是对应齐次方程的通解，\(y^*\) 是非齐次方程的<b>一个</b>特解。<br>
+推论：非齐次两解之差是齐次解；非齐次解 + 齐次解仍是非齐次解。
+</div>
+<div class="box"><span class="t">叠加原理</span><br>
+若 \(f(x)=f_1(x)+f_2(x)\)，而 \(y_1^*\) 与 \(y_2^*\) 分别是对应 \(f_1,f_2\) 的特解，则 \(y_1^*+y_2^*\) 是原方程的特解。
+</div>
+
+<h3>五、常系数线性微分方程</h3>
+<div class="box"><span class="t">齐次：y'' + py' + qy = 0（特征方程法）</span><br>
+特征方程 \(\lambda^2+p\lambda+q=0\)，按判别式分三种：
+</div>
+<table>
+<thead><tr><th>特征根情况</th><th>通解形式</th></tr></thead>
+<tbody>
+<tr><td>两个不同实根 \(\lambda_1\ne\lambda_2\)</td><td>\(y=C_1e^{\lambda_1x}+C_2e^{\lambda_2x}\)</td></tr>
+<tr><td>二重实根 \(\lambda\)</td><td>\(y=(C_1+C_2x)e^{\lambda x}\)</td></tr>
+<tr><td>共轭复根 \(\alpha\pm\beta i\)</td><td>\(y=e^{\alpha x}(C_1\cos\beta x+C_2\sin\beta x)\)</td></tr>
+</tbody>
+</table>
+<div class="mini">高阶推广：每个实根配 \(e^{\lambda x}\) 多项式（重数决定 x 的幂次）；复根成对出现，配 \(e^{\alpha x}(\cos,\sin)\)。</div>
+<div class="box"><span class="t">非齐次型一：f(x) = P_m(x)e^{\lambda x}</span><br>
+特解形式（待定系数）：
+\[ y^*=x^{k}Q_m(x)\,e^{\lambda x} \]
+\(Q_m\) 是与 \(P_m\) 同次的待定多项式；\(k=\) \(\lambda\) 作为特征根的重数（0、1 或 2）。<br>
+例：\(f=e^{2x}\) 且 2 不是特征根 ⇒ \(y^*=Ae^{2x}\)；2 是单根 ⇒ \(y^*=Axe^{2x}\)；2 是二重根 ⇒ \(y^*=Ax^2e^{2x}\)。
+</div>
+<div class="box"><span class="t">非齐次型二：f(x) = e^{\alpha x}\left[P_l(x)\cos\beta x+P_n(x)\sin\beta x\right]</span><br>
+特解形式：
+\[ y^*=x^{k}e^{\alpha x}\left[R_m(x)\cos\beta x+S_m(x)\sin\beta x\right],\qquad m=\max(l,n) \]
+\(k=\) \(\alpha+\beta i\) 作为特征根的重数（0 或 1）。<br>
+特例：\(f=A\cos\beta x+B\sin\beta x\)（无 \(e^{\alpha x}\)）时取 \(\alpha=0\)。
+</div>
+<div class="box gray"><span class="t">待定系数四步</span><br>
+① 认 \(f(x)\) 的型 → ② 写出 \(y^*\) 形式（判 \(k\)）→ ③ 代入原方程 → ④ 比较同类项系数解出待定系数（可用复数法简化三角函数型）。
+</div>
+
+<h3>六、欧拉方程</h3>
+<div class="box"><span class="t">形式与代换</span><br>
+\[ x^2y''+pxy'+qy=f(x) \]
+令 \(x=e^{t}\)（即 \(t=\ln x\)，\(x>0\)；\(x&lt;0\) 时用 \(t=\ln|x|\)），记 \(D=\dfrac{d}{dt}\)，则
+\[ xy'=Dy,\qquad x^2y''=D(D-1)y \]
+化为常系数线性方程，解完后回代 \(t=\ln x\)。<br>
+更高阶：\(x^ky^{(k)}=D(D-1)\cdots(D-k+1)y\)。
+</div>
+
+<h3>七、速查与易错</h3>
+<div class="box"><span class="t">一阶方程识别流程</span><br>
+① 能分离变量？→ 分离积分；② 是 \(\varphi(y/x)\) 型？→ 令 \(u=y/x\)；③ 标准线性？→ 公式；④ 伯努利？（\(y^n\) 因子）→ \(z=y^{1-n}\)；⑤ \(Mdx+Ndy=0\) 满足 \(\partial M/\partial y=\partial N/\partial x\)？→ 全微分/凑微分；⑥ 都不行 → 试试平移/根式/整体代换。
+</div>
+<div class="box"><span class="t">二阶方程总策略</span><br>
+常系数齐次 → 特征根三情况；常系数非齐次 → 特解形式表（判重数 k）；变系数 → 欧拉方程（\(x=e^t\)）/降阶（缺 x 或缺 y）/已知解的结构。
+</div>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>分离变量除以 \(g(y)\) 丢掉常值特解（如 \(y\equiv0\)）——最后补验。</li>
+<li>一阶线性公式指数符号搞反：通解是 \(e^{-\int P}\left[\int Qe^{\int P}dx+C\right]\)（先确保标准形）。</li>
+<li>伯努利代换指数记错：\(z=y^{1-n}\)（不是 \(y^{n-1}\)）。</li>
+<li>特解形式的 \(k\) 判重错误：只看 \(\lambda\)（或 \(\alpha+\beta i\)）是不是特征根、是几重根。</li>
+<li>复根通解漏 \(e^{\alpha x}\) 或漏 \(\sin\) 项常数。</li>
+<li>通解中常数个数 ≠ 阶数（不可能对）。</li>
+<li>先定常数还是先化简：初值问题可在通解化简前代入（更省力），但要保证形式等价。</li>
+<li>欧拉方程回代忘了 \(t=\ln|x|\)；也别忘了 x 的定义域讨论。</li>
+<li>\(y''=f(y,y')\) 用 \(p(y)\) 代换时漏乘 \(p\)（应为 \(y''=p\frac{dp}{dy}\)）。</li>
+</ol>
+</div>
+
+<h3>八、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>8.1 代换总表</h4>
+<table>
+<thead><tr><th>结构特征</th><th>代换</th></tr></thead>
+<tbody>
+<tr><td>\(\varphi(y/x)\) 型</td><td>\(u=y/x\)</td></tr>
+<tr><td>含 \(y^n\) 的线性方程</td><td>\(z=y^{1-n}\)（伯努利）</td></tr>
+<tr><td>\(y''=f(x,y')\)</td><td>\(p=y'\)（\(p\) 为 x 的函数）</td></tr>
+<tr><td>\(y''=f(y,y')\)</td><td>\(p=y'\)（\(p\) 为 y 的函数）</td></tr>
+<tr><td>\(\dfrac{dy}{dx}=f(ax+by)\)</td><td>\(u=ax+by\)</td></tr>
+<tr><td>分式线性（两直线相交）</td><td>平移 \(X=x-x_0,\ Y=y-y_0\)</td></tr>
+<tr><td>\(x^2y''+pxy'+qy=f(x)\)</td><td>\(x=e^t\)（欧拉）</td></tr>
+</tbody>
+</table>
+
+<h4>8.2 凑微分弹药库（全微分方程与化简必备）</h4>
+<div class="box">
+\(x\,dx+y\,dy=\frac12 d(x^2+y^2)\)；\(y\,dx+x\,dy=d(xy)\)；\(\dfrac{x\,dy-y\,dx}{x^2}=d\!\left(\dfrac yx\right)\)；\(\dfrac{x\,dy-y\,dx}{y^2}=d\!\left(\dfrac{x}{y}\right)\)（差个负号）；\(\dfrac{y\,dx-x\,dy}{x^2+y^2}=d\!\left(\arctan\dfrac xy\right)\)（方向注意）；\(\dfrac{dx}{x}=d\ln|x|\)；\(e^x(dx+dy)?\) 组合按乘积法则拆。
+</div>
+
+<h4>8.3 一阶线性「常数变易法」推导模板</h4>
+<div class="box">
+① 先解齐次 \(y'+Py=0\) 得 \(y=Ce^{-\int P}\)；② 设非齐次解为 \(y=C(x)e^{-\int P}\)；③ 代入原方程解出 \(C'(x)=Qe^{\int P}\)；④ 积分得通解公式——过程写一遍，公式永久不忘。
+</div>
+
+<h4>8.4 特解形式速查表（f(x) → y*）</h4>
+<table>
+<thead><tr><th>\(f(x)\)</th><th>特解形式（\(k\) 为根的重数）</th></tr></thead>
+<tbody>
+<tr><td>\(P_m(x)\)</td><td>\(x^kQ_m(x)\)（\(\lambda=0\)）</td></tr>
+<tr><td>\(P_m(x)e^{\lambda x}\)</td><td>\(x^kQ_m(x)e^{\lambda x}\)</td></tr>
+<tr><td>\(Ae^{\lambda x}\)</td><td>\(x^kAe^{\lambda x}\)</td></tr>
+<tr><td>\(A\cos\beta x+B\sin\beta x\)</td><td>\(x^k(C\cos\beta x+D\sin\beta x)\)（\(\pm\beta i\) 是否根）</td></tr>
+<tr><td>\(e^{\alpha x}(P_l\cos\beta x+P_n\sin\beta x)\)</td><td>\(x^ke^{\alpha x}(R_m\cos\beta x+S_m\sin\beta x),\ m=\max(l,n)\)</td></tr>
+</tbody>
+</table>
+
+<h4>8.5 由解反求方程（反问题）</h4>
+<div class="box">
+已知通解含 \(e^{\lambda x},e^{\mu x}\) ⇒ 特征方程 \((r-\lambda)(r-\mu)=0\) 展开对比系数；<br>
+含 \(xe^{\lambda x}\) ⇒ \(\lambda\) 是重根；含 \(e^{\alpha x}\cos\beta x\) ⇒ 特征根 \(\alpha\pm\beta i\)；<br>
+由特解/初值反求参数：把解代入方程或初值条件解方程组。
+</div>
+
+<h4>8.6 应用题建模（变化率问题）</h4>
+<div class="box">
+① 设变量（含量、温度、种群数）与时间 \(t\)；② 抓「变化率」语句列 \(dy/dt\) 与当前量/环境差的关系；③ 写初值 \(y(0)\)；④ 解方程并用初值定常数；⑤ 回读问题（求某时刻量或时间）。<br>
+常见模型：冷却 \(T'=k(T-T_0)\)；混合 \(y'=\text{流入}−\text{流出}\)；衰变/增长 \(y'=ky\)。
+</div>
+
+<h4>8.7 解的验算与提升</h4>
+<div class="box">
+通解代回方程验证恒等；特解再验初值；含参数题把「解满足方程」当条件列等式（联立求参数）。另：既有一阶又可行的多解法（公式 vs 变易 vs 凑全微分）可互相验算。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 7 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
