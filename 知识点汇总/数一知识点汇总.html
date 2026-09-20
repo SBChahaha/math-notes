@@ -3818,6 +3818,154 @@ n 个独立同分布推广：\(F_{\max}(z)=[F(z)]^n\)，\(F_{\min}(z)=1-[1-F(z)]
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 21 章 完 ——</div>
 
+<h2 class="chap" id="ch22">第 22 章　随机变量的数字特征</h2>
+<div class="strip">本章速览：一 数学期望 · 二 方差 · 三 协方差与相关系数 · 四 矩与协方差矩阵 · 五 常用分布数字特征总表 · 六 速查与易错 · 七 技巧库（全）</div>
+
+<h3>一、数学期望</h3>
+<div class="box"><span class="t">定义</span><br>
+离散：\(E(X)=\sum\limits_k x_kp_k\)；连续：\(E(X)=\int_{-\infty}^{+\infty}xf(x)dx\)（要求绝对收敛，否则期望不存在）。
+</div>
+<div class="box"><span class="t">随机变量函数的期望（不用求分布！）</span><br>
+\[ E[g(X)]=\sum_k g(x_k)p_k\quad\text{或}\quad \int_{-\infty}^{+\infty}g(x)f(x)\,dx \]
+二维：\(E[g(X,Y)]=\sum_i\sum_j g(x_i,y_j)p_{ij}\) 或 \(\iint g(x,y)f(x,y)\,dx\,dy\)。
+</div>
+<div class="box"><span class="t">性质</span><br>
+① \(E(C)=C\)；② \(E(CX)=CE(X)\)；③ <b>\(E(X+Y)=E(X)+E(Y)\)（恒成立，无需独立）</b>；<br>
+④ 独立（或仅不相关）⇒ \(E(XY)=E(X)E(Y)\)（<b>反推不成立</b>）；<br>
+⑤ \(E(aX+bY+c)=aE(X)+bE(Y)+c\)。
+</div>
+
+<h3>二、方差</h3>
+<div class="box"><span class="t">定义与计算式</span><br>
+\[ D(X)=E\left[(X-E(X))^2\right]=E(X^2)-\left[E(X)\right]^2 \]
+标准差 \(\sigma(X)=\sqrt{D(X)}\)（与 X 同量纲）。
+</div>
+<div class="box"><span class="t">性质</span><br>
+① \(D(C)=0\)；② \(D(CX)=C^2D(X)\)；③ \(D(X+C)=D(X)\)；<br>
+④ \(D(X\pm Y)=D(X)+D(Y)\pm2\,\mathrm{Cov}(X,Y)\)；<br>
+⑤ <b>独立（或不相关）⇒ \(D(X\pm Y)=D(X)+D(Y)\)</b>；<br>
+⑥ \(D(X)=0\iff P(X=E(X))=1\)（几乎处处常数）。
+</div>
+<div class="box gray"><span class="t">切比雪夫不等式</span><br>
+\[ P\bigl(|X-E(X)|\ge\varepsilon\bigr)\le\frac{D(X)}{\varepsilon^2},\qquad P\bigl(|X-E(X)|&lt;\varepsilon\bigr)\ge1-\frac{D(X)}{\varepsilon^2} \]
+用途：用期望方差估计概率（证明/选择题）。
+</div>
+
+<h3>三、协方差与相关系数</h3>
+<div class="box"><span class="t">协方差</span><br>
+\[ \mathrm{Cov}(X,Y)=E\bigl[(X-EX)(Y-EY)\bigr]=E(XY)-E(X)E(Y) \]
+性质：对称；\(\mathrm{Cov}(X,X)=D(X)\)；<b>双线性</b>：\(\mathrm{Cov}(aX+b,\ cY+d)=ac\,\mathrm{Cov}(X,Y)\)，\(\mathrm{Cov}(X_1+X_2,Y)=\mathrm{Cov}(X_1,Y)+\mathrm{Cov}(X_2,Y)\)。
+</div>
+<div class="box"><span class="t">相关系数</span><br>
+\[ \rho_{XY}=\frac{\mathrm{Cov}(X,Y)}{\sqrt{D(X)}\sqrt{D(Y)}}\in[-1,1] \]
+\(|\rho|=1\iff\) 存在 \(a\ne0,b\) 使 \(P(Y=aX+b)=1\)（线性关系）；\(|\rho|\) 越接近 1 线性关系越强。
+</div>
+<div class="box"><span class="t">不相关的等价说法（重要）</span><br>
+\[ \rho_{XY}=0\iff \mathrm{Cov}(X,Y)=0\iff E(XY)=E(X)E(Y)\iff D(X\pm Y)=D(X)+D(Y) \]
+<b>独立 ⇒ 不相关；不相关 ⇏ 独立</b>（反例：\(X\sim U(-1,1),\ Y=X^2\)，不相关但明显不独立）。<br>
+特例：二维正态分布中「独立 ⇔ 不相关」（正态专属结论）。<br>
+实质：不相关仅表示「无线性关系」，不代表无任何关系。
+</div>
+
+<h3>四、矩与协方差矩阵</h3>
+<div class="box"><span class="t">矩</span><br>
+\(k\) 阶原点矩：\(E(X^k)\)（一阶即期望）；<br>
+\(k\) 阶中心矩：\(E[(X-E(X))^k]\)（二阶即方差）；<br>
+混合矩：\(E(X^kY^l)\)；协方差即二阶混合中心矩。
+</div>
+<div class="box"><span class="t">协方差矩阵</span><br>
+对 \((X_1,\dots,X_n)\)，记 \(c_{ij}=\mathrm{Cov}(X_i,X_j)\)，则
+\[ C=\begin{pmatrix}c_{11}&c_{12}&\cdots\\ c_{21}&c_{22}&\cdots\\ \vdots&&\ddots\end{pmatrix} \]
+性质：对称；半正定（二维时即 \(D(X)D(Y)-\mathrm{Cov}^2\ge0\)，等价于 \(|\rho|\le1\)）；<br>
+线性组合的方差：\(D\!\left(\sum a_iX_i\right)=\sum_i\sum_j a_ia_j\,c_{ij}=a^{T}Ca\)。
+</div>
+<div class="box gray"><span class="t">二维正态分布参数回顾</span><br>
+二维正态由 5 个参数决定：\(\mu_1,\mu_2,\sigma_1^2,\sigma_2^2,\rho\)；边缘都是正态；<b>独立 ⇔ \(\rho=0\)</b>；线性组合仍正态（第 21 章结论）。
+</div>
+
+<h3>五、常用分布数字特征总表（必背）</h3>
+<table>
+<thead><tr><th>分布</th><th>\(E(X)\)</th><th>\(D(X)\)</th></tr></thead>
+<tbody>
+<tr><td>\(B(1,p)\)（0-1）</td><td>\(p\)</td><td>\(p(1-p)\)</td></tr>
+<tr><td>\(B(n,p)\)（二项）</td><td>\(np\)</td><td>\(np(1-p)\)</td></tr>
+<tr><td>\(P(\lambda)\)（泊松）</td><td>\(\lambda\)</td><td>\(\lambda\)</td></tr>
+<tr><td>\(G(p)\)（几何）</td><td>\(\dfrac1p\)</td><td>\(\dfrac{1-p}{p^2}\)</td></tr>
+<tr><td>\(H(N,M,n)\)（超几何）</td><td>\(\dfrac{nM}{N}\)</td><td>\(\dfrac{nM}{N}\left(1-\dfrac MN\right)\dfrac{N-n}{N-1}\)</td></tr>
+<tr><td>\(U(a,b)\)（均匀）</td><td>\(\dfrac{a+b}{2}\)</td><td>\(\dfrac{(b-a)^2}{12}\)</td></tr>
+<tr><td>\(E(\lambda)\)（指数）</td><td>\(\dfrac1\lambda\)</td><td>\(\dfrac{1}{\lambda^2}\)</td></tr>
+<tr><td>\(N(\mu,\sigma^2)\)（正态）</td><td>\(\mu\)</td><td>\(\sigma^2\)</td></tr>
+<tr><td>\(\chi^2(n)\)（卡方）</td><td>\(n\)</td><td>\(2n\)</td></tr>
+</tbody>
+</table>
+<div class="mini">记忆要点：二项的 E、D 靠「n 个 0-1 相加」推导；泊松 E=D=λ；指数 E 与 D 同源；卡方是 n 个标准正态平方和（第 24 章）。</div>
+
+<h3>六、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>\(E(XY)=E(X)E(Y)\) 乱用（只能独立/不相关时）；\(E(X+Y)\) 则无需条件。</li>
+<li>「不相关」与「独立」混为一谈（前者仅无线性关系；二维正态是特例）。</li>
+<li>方差公式写错：\(D(X)=E(X^2)-(EX)^2\)（别漏平方）；\(E(X^2)\ne(EX)^2\)。</li>
+<li>\(D(X\pm Y)\) 忘掉 \(\pm2\,\mathrm{Cov}(X,Y)\)；只有独立/不相关才合并成 \(D(X)+D(Y)\)。</li>
+<li>相关系数公式分母写成 \(D(X)D(Y)\)（应为标准差之积 \(\sqrt{D(X)}\sqrt{D(Y)}\)）。</li>
+<li>切比雪夫不等式方向记反（概率 ≤ 方差/ε²）。</li>
+<li>期望存在性（绝对收敛）不检验；存在性题要注意。</li>
+<li>由 E、D 反求参数时忘记联立（如正态的 μ、σ²；指数 λ=1/E）。</li>
+<li>协方差符号：\(\mathrm{Cov}(aX+b,cY+d)=ac\,\mathrm{Cov}(X,Y)\)，负系数别丢。</li>
+</ol>
+</div>
+
+<h3>七、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>7.1 求 \(E[g(X)]\) 的「懒惰法」</h4>
+<div class="box">
+不用先求 \(g(X)\) 的分布！直接套 \(E[g(X)]=\sum g(x_k)p_k\) 或 \(\int g(x)f(x)dx\)；二维同理用联合分布直接算。
+</div>
+
+<h4>7.2 对称性求期望</h4>
+<div class="box">
+分布关于 c 对称（如正态、均匀、对称区间上的偶密度）⇒ \(E(X)=c\) 或 \(E(X)=0\)；<br>
+被积函数为奇函数且密度为偶 ⇒ 积分为 0——省掉大量计算。
+</div>
+
+<h4>7.3 分解法求期望（杀手锏）</h4>
+<div class="box">
+把复杂随机变量分解为简单 0-1 变量之和：\(X=\sum X_i\)，用 \(E(X)=\sum E(X_i)\)（无需独立！）；<br>
+经典应用：<br>
+① 二项分布 \(X\sim B(n,p)\)：\(X=\sum\limits_{i=1}^n X_i\)（每次成功取 1）⇒ \(E=np\)，再由独立性得 \(D=np(1-p)\)；<br>
+② 配对问题（n 封信装错）：\(E(\text{配对})=\sum P(\text{第 i 对配})=n\cdot\frac1n=1\)。
+</div>
+
+<h4>7.4 方差计算三板斧</h4>
+<div class="box">
+① 定义直接算；② \(D=E(X^2)-(EX)^2\)（先算二阶矩）；③ 线性组合公式（配合期望、协方差表）。<br>
+常用招式：先把 X 拆成独立部分之和再算方差。
+</div>
+
+<h4>7.5 常用分布参数反求</h4>
+<div class="box">
+由「\(E(X)=a,\ D(X)=b\)」反解参数：正态直接 \(\mu=a,\sigma^2=b\)；指数 \(\lambda=1/a\)；二项联立 \(np=a,\ np(1-p)=b\)；均匀联立解 \(a,b\)。
+</div>
+
+<h4>7.6 切比雪夫不等式应用</h4>
+<div class="box">
+给期望方差估概率（如 «估计 P(|X−EX|≥3σ) ≤ 1/9»）；证明大数定律的工具（第 23 章）。
+</div>
+
+<h4>7.7 协方差计算攻略</h4>
+<div class="box">
+① 用定义 \(E(XY)-EX\cdot EY\)；② 独立时 \(E(XY)=EX\cdot EY\) 秒算；③ 联合密度已知时 \(E(XY)=\iint xy\,f\,dxdy\)；④ 线性拆分：\(\mathrm{Cov}(X+Y,Z)=\mathrm{Cov}(X,Z)+\mathrm{Cov}(Y,Z)\) 把复杂变量降维。
+</div>
+
+<h4>7.8 线性组合数字特征速查</h4>
+<div class="box">
+\[ E(aX+bY)=aE(X)+bE(Y) \]
+\[ D(aX+bY)=a^2D(X)+b^2D(Y)+2ab\,\mathrm{Cov}(X,Y) \]
+独立/不相关时最后一项为 0——「方差公式的万能骨架」。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 22 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
