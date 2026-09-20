@@ -3677,6 +3677,147 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 20 章 完 ——</div>
 
+<h2 class="chap" id="ch21">第 21 章　多维随机变量及其分布</h2>
+<div class="strip">本章速览：一 联合分布 · 二 边缘分布 · 三 条件分布 · 四 相互独立性 · 五 二维随机变量函数的分布 · 六 速查与易错 · 七 技巧库（全）</div>
+
+<h3>一、二维随机变量与联合分布</h3>
+<div class="box"><span class="t">联合分布函数</span><br>
+\[ F(x,y)=P(X\le x,\ Y\le y) \]
+性质：对 x、y 分别单调不减；\(0\le F\le1\)；对每个变量右连续；边界 \(\lim\limits_{x\to-\infty}F=0\)，\(F(+\infty,+\infty)=1\)。<br>
+矩形概率：\(P(a&lt;X\le b,\ c&lt;Y\le d)=F(b,d)-F(a,d)-F(b,c)+F(a,c)\)。
+</div>
+<div class="box"><span class="t">二维离散型</span><br>
+联合分布律 \(p_{ij}=P(X=x_i,\ Y=y_j)\)，满足 \(p_{ij}\ge0\)、\(\sum_i\sum_j p_{ij}=1\)；常写成表格（行 = X 取值，列 = Y 取值）。
+</div>
+<div class="box"><span class="t">二维连续型</span><br>
+存在联合密度 \(f(x,y)\ge0\) 使 \(F(x,y)=\int_{-\infty}^{x}\int_{-\infty}^{y}f(u,v)\,dv\,du\)；<br>
+\(\int_{-\infty}^{+\infty}\int_{-\infty}^{+\infty}f=1\)；\(P((X,Y)\in D)=\iint_D f\,dx\,dy\)；在连续点 \(\dfrac{\partial^2F}{\partial x\partial y}=f\)。
+</div>
+
+<h3>二、边缘分布</h3>
+<div class="box"><span class="t">公式</span><br>
+离散：\(p_{i\cdot}=P(X=x_i)=\sum\limits_j p_{ij}\)（对行求和）；\(p_{\cdot j}=\sum\limits_i p_{ij}\)（对列求和）。<br>
+连续：<b>「求谁边缘，对另一个变量积分掉」</b>
+\[ f_X(x)=\int_{-\infty}^{+\infty}f(x,y)\,dy,\qquad f_Y(y)=\int_{-\infty}^{+\infty}f(x,y)\,dx \]
+</div>
+<div class="box warn"><span class="t">核心注意</span><br>
+联合分布 ⇒ 边缘分布（唯一）；<b>边缘分布推不出联合分布</b>（信息丢失）；只有「独立」时才能由边缘相乘还原联合。
+</div>
+
+<h3>三、条件分布</h3>
+<div class="box"><span class="t">离散型</span><br>
+\[ P(X=x_i\mid Y=y_j)=\frac{p_{ij}}{p_{\cdot j}}\qquad(p_{\cdot j}&gt;0) \]
+固定 j 后对 i 归一（条件分布律）；反之 \(P(Y=y_j\mid X=x_i)=p_{ij}/p_{i\cdot}\)。
+</div>
+<div class="box"><span class="t">连续型</span><br>
+\[ f_{X\mid Y}(x\mid y)=\frac{f(x,y)}{f_Y(y)}\quad(f_Y(y)&gt;0) \]
+条件概率：\(P(X\le a\mid Y=y)=\int_{-\infty}^{a}f_{X\mid Y}(x\mid y)\,dx\)。<br>
+全概率思想（连续版）：\(f_X(x)=\int f_{X\mid Y}(x\mid y)\,f_Y(y)\,dy\)。
+</div>
+
+<h3>四、相互独立性</h3>
+<div class="box"><span class="t">判定（三者等价）</span><br>
+\(X,Y\) 相互独立 ⇔ 对一切 \(x,y\)：\(F(x,y)=F_X(x)F_Y(y)\)；<br>
+离散：\(p_{ij}=p_{i\cdot}\,p_{\cdot j}\)（一切 i,j）；<br>
+连续：\(f(x,y)=f_X(x)f_Y(y)\)（几乎处处）。
+</div>
+<div class="box"><span class="t">性质与常用结论</span>
+<ul>
+<li>独立时「边缘相乘 = 联合」；条件分布退化为边缘（\(f_{X\mid Y}=f_X\)）。</li>
+<li>\(X,Y\) 独立 ⇒ \(g(X)\) 与 \(h(Y)\) 也独立（对任意函数）。</li>
+<li>快速判定技巧：联合密度非零区域是<b>矩形</b>且密度可分离变量成 \(g(x)h(y)\) ⇒ 独立；区域不是矩形 ⇒ 不独立。</li>
+<li><b>二维正态分布</b>：\(X,Y\) 独立 ⇔ 相关系数 \(\rho=0\)（仅正态有此结论，一般分布不成立）。</li>
+</ul>
+</div>
+
+<h3>五、二维随机变量函数的分布</h3>
+<div class="box"><span class="t">离散型：表格合并</span><br>
+枚举 \((X,Y)\) 所有取值组合，计算 \(P(Z=g(X,Y)=z)\)（同一 z 的概率相加）。常用：Z=X+Y 的「对角线求和」。
+</div>
+<div class="box"><span class="t">连续型：分布函数法（万能）</span><br>
+① 写 \(F_Z(z)=P(g(X,Y)\le z)\)；② 在 \(xOy\) 面上画出区域 \(\{g(x,y)\le z\}\)；③ 化成二重积分 \(\iint_{D_z}f(x,y)\,dx\,dy\)；④ 对 z 求导得 \(f_Z(z)\)（记得分段）。
+</div>
+<div class="box"><span class="t">Z = X + Y 的卷积公式（独立时）</span><br>
+\[ f_Z(z)=\int_{-\infty}^{+\infty}f_X(x)\,f_Y(z-x)\,dx=\int_{-\infty}^{+\infty}f_X(z-y)\,f_Y(y)\,dy \]
+<b>正态可加性</b>：\(X\sim N(\mu_1,\sigma_1^2),\ Y\sim N(\mu_2,\sigma_2^2)\) 且独立 ⇒
+\[ X+Y\sim N\!\left(\mu_1+\mu_2,\ \sigma_1^2+\sigma_2^2\right) \]
+一般线性组合：\(aX+bY\sim N\!\left(a\mu_1+b\mu_2,\ a^2\sigma_1^2+b^2\sigma_2^2\right)\)（独立时）。
+</div>
+<div class="box"><span class="t">max 与 min 的分布（独立）</span><br>
+\[ F_{\max}(z)=F_X(z)\,F_Y(z),\qquad F_{\min}(z)=1-\left[1-F_X(z)\right]\left[1-F_Y(z)\right] \]
+n 个独立同分布推广：\(F_{\max}(z)=[F(z)]^n\)，\(F_{\min}(z)=1-[1-F(z)]^n\)。<br>
+应用：串联系统寿命 = min（一坏全坏）；并联系统寿命 = max（一好就好）。
+</div>
+<div class="box gray"><span class="t">其他函数</span><br>
+\(Z=X/Y\)、\(Z=XY\) 等：一律分布函数法；注意 \(X/Y\) 需分 \(y&gt;0\) 与 \(y&lt;0\) 讨论（除法变号）；求导时用变限积分求导法则。
+</div>
+
+<h3>六、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>矩形概率公式符号错（应是 \(F(b,d)-F(a,d)-F(b,c)+F(a,c)\)，两减两加）。</li>
+<li>求边缘密度时积分限照抄 \(-∞\to+∞\)，没按联合密度的非零区域定限（必须画区域图）。</li>
+<li>用边缘分布直接相乘当联合（只有独立时成立）。</li>
+<li>条件密度分母用错（\(f_{X|Y}\) 除以 \(f_Y(y)\)，不是 \(f_X\)）。</li>
+<li>判断独立性只看一个点或一个特例（必须一切 x,y / 一切 i,j）。</li>
+<li>卷积公式忘记先确认独立性（不独立不能用卷积）。</li>
+<li>max/min 公式只在独立时可用；别漏「独立同分布」与「独立不同分布」的区别。</li>
+<li>二维正态「\(\rho=0\iff\) 独立」是正态专有结论，套到一般分布会错。</li>
+<li>\(Z=X/Y\) 不分 \(y\) 的正负号（不等式方向变）。</li>
+<li>求 \(f_Z(z)\) 后忘写 z 的分段范围（或范围不覆盖全实轴）。</li>
+</ol>
+</div>
+
+<h3>七、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>7.1 联合密度题三步</h4>
+<div class="box">
+① 画非零区域（三角形/矩形/圆）；② 用归一化 \(\iint f=1\) 定参数；③ 所有概率/边缘/条件积分都按区域定限——<b>「画图定限」是本章第一生产力</b>。
+</div>
+
+<h4>7.2 边缘密度规范写法</h4>
+<div class="box">
+\(f_X(x)=\int f(x,y)dy\)：固定 x，看竖线与非零区域的交——下交点与上交点即积分限（分段写全）；\(f_Y(y)\) 同理用水平线看。
+</div>
+
+<h4>7.3 独立性判定三连</h4>
+<div class="box">
+① 区域矩形 + 密度可分离 \(f=g(x)h(y)\) ⇒ 独立；② 离散表格逐项验 \(p_{ij}=p_{i\cdot}p_{\cdot j}\)；③ 分布函数验证 \(F=F_XF_Y\)。反例常用「三角形区域」证明不独立。
+</div>
+
+<h4>7.4 Z = X + Y 的两条路</h4>
+<table>
+<thead><tr><th>情形</th><th>方法</th></tr></thead>
+<tbody>
+<tr><td>离散型</td><td>对角线枚举求和</td></tr>
+<tr><td>独立连续型</td><td>卷积公式（快）</td></tr>
+<tr><td>不独立或复杂函数</td><td>分布函数法（稳）</td></tr>
+<tr><td>正态（独立）</td><td>直接套正态可加性</td></tr>
+</tbody>
+</table>
+
+<h4>7.5 max / min 应用模板</h4>
+<div class="box">
+串联系统 \(T=\min(T_1,\dots,T_n)\)、并联系统 \(T=\max\)；用公式写出分布函数 → 求密度或概率；指数分布场合有漂亮的封闭结果。
+</div>
+
+<h4>7.6 条件分布两类题型</h4>
+<div class="box">
+① 由联合求条件密度（代入公式）；② 由条件密度反推联合/边缘（用 \(f=f_{X|Y}f_Y\) 乘法结构）；③ 「条件 + 全概率」综合题：先条件、再对边缘积分。
+</div>
+
+<h4>7.7 二维均匀分布 = 几何概率</h4>
+<div class="box">
+\((X,Y)\sim U(D)\)：\(f=1/|D|\)（区域内）；概率 = 面积比——用几何直观快速得答案。
+</div>
+
+<h4>7.8 综合题「三查」清单</h4>
+<div class="box">
+查区域（定限对不对）→ 查归一（总积分为 1 吗）→ 查分段（取值范围的完整性）。三查过关，本章大题基本满分。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 21 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
