@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>数一知识点汇总 · 高数上册 01 函数与极限</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#e9ebee;font-family:"SimSun","Songti SC","Noto Serif CJK SC",serif;color:#1a1a1a;font-size:11pt;line-height:1.6}
+.sheet{background:#fff;max-width:196mm;margin:18px auto;padding:16mm 14mm 12mm;box-shadow:0 2px 14px rgba(0,0,0,.18)}
+h1{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:17pt;text-align:center;margin:0 0 1.5mm;letter-spacing:1px}
+.sub{text-align:center;color:#666;font-size:10pt;margin-bottom:2.5mm}
+.strip{border:1px solid #c9c9c9;background:#f6f6f6;padding:1.5mm 3mm;font-size:9pt;color:#555;text-align:center;margin-bottom:4mm}
+h2{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:12.5pt;margin:5.5mm 0 2mm;padding:0 0 1mm;border-bottom:1.5pt solid #1f3a93;page-break-after:avoid}
+h3{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:11pt;margin:3.5mm 0 1.2mm;page-break-after:avoid}
+p{margin:1.2mm 0}
+ul,ol{margin:1.2mm 0;padding-left:6mm}
+li{margin:.5mm 0}
+.mini{font-size:9.5pt;color:#555}
+.box{border:1px solid #c9c9c9;border-left:3px solid #1f3a93;background:#fbfbfb;padding:2mm 3mm;margin:1.8mm 0;break-inside:avoid;page-break-inside:avoid}
+.box .t{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:10.5pt}
+.box.gray{border-left-color:#777}
+.box.warn{border-left-color:#b00;background:#fff7f7}
+table{border-collapse:collapse;width:100%;margin:1.8mm 0;break-inside:avoid;page-break-inside:avoid;font-size:10pt}
+th,td{border:.7pt solid #999;padding:1mm 1.6mm;vertical-align:top}
+th{background:#efefef;font-family:"SimHei","Microsoft YaHei",sans-serif;font-weight:normal;text-align:center}
+td.c{text-align:center}
+.foot{margin-top:6mm;border-top:1px dashed #bbb;padding-top:2mm;font-size:9pt;color:#666}
+.pbtn{position:fixed;right:18px;bottom:18px;z-index:9;font:600 13px/1.2 "Microsoft YaHei",sans-serif;background:#1f3a93;color:#fff;border:0;border-radius:8px;padding:12px 18px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+@media print{body{background:#fff}.sheet{box-shadow:none;margin:0;max-width:none;padding:0}.pbtn{display:none}@page{size:A4;margin:13mm 11mm}}
+</style>
+</head>
+<body>
+<button class="pbtn" onclick="window.print()">打印 / 存 PDF</button>
+<div class="sheet">
+
+<h1>考研数一 · 知识点汇总（打印版）</h1>
+<div class="sub">高等数学（同济版）上册 · 第 1 章　函数与极限</div>
+<div class="strip">本章速览：一 函数 · 二 数列极限 · 三 函数极限 · 四 极限运算法则 · 五 极限存在准则 · 六 无穷小与等价替换 · 七 连续与间断点 · 八 闭区间连续函数的性质 · 九 速查与易错</div>
+
+<h2>一、函数</h2>
+<div class="box"><span class="t">函数定义与三要素</span><br>
+设 \(D\subseteq\mathbb{R}\) 非空，法则 \(f\) 使每个 \(x\in D\) 对应唯一 \(y\)，记 \(y=f(x),\ x\in D\)：\(D\) 为定义域，\(f(D)=\{y\mid y=f(x),\,x\in D\}\) 为值域。<br>
+<b>三要素</b>：定义域、对应法则（二者决定函数）、值域（由前两者确定）；两函数相等 ⇔ 定义域相同且对应法则相同。
+</div>
+<div class="box"><span class="t">四大性态</span>
+<ul>
+<li><b>有界性</b>：\(\exists M>0\)，\(\forall x\in X\) 有 \(|f(x)|\le M\)；有界 ⇔ 既有上界又有下界。</li>
+<li><b>单调性</b>：\(x_1&lt;x_2\Rightarrow f(x_1)&lt;f(x_2)\) 为严格增；\(x_1&lt;x_2\Rightarrow f(x_1)\le f(x_2)\) 为不减（减、不增同理）。</li>
+<li><b>奇偶性</b>：定义域关于原点对称；偶 \(f(-x)=f(x)\)、奇 \(f(-x)=-f(x)\)；奇函数若在 \(0\) 有定义则 \(f(0)=0\)。</li>
+<li><b>周期性</b>：\(\exists T>0\)，\(\forall x\)：\(f(x+T)=f(x)\)。注意：并非所有周期函数都有最小正周期（如常数函数）。</li>
+</ul>
+</div>
+<div class="box gray"><span class="t">反函数与复合</span>
+<ul>
+<li>反函数：若 \(y=f(x)\) 一一对应，则 \(x=f^{-1}(y)\) 存在；\(y=f(x)\) 与 \(y=f^{-1}(x)\) 的图像关于直线 \(y=x\) 对称；<b>严格单调 ⇒ 存在反函数</b>（反之不然）。</li>
+<li>复合：\((f\circ g)(x)=f(g(x))\) 存在的条件：内函数值域 \(\subseteq\) 外函数定义域。</li>
+<li>常用关系：\(f^{-1}(f(x))=x\)；反函数的定义域 = 原函数的值域。</li>
+</ul>
+</div>
+<table>
+<thead><tr><th>基本初等函数</th><th>定义域</th><th>值域</th><th>性态要点</th></tr></thead>
+<tbody>
+<tr><td class="c">\(x^\mu\ (\mu\ne0)\)</td><td>随 \(\mu\) 而定</td><td>—</td><td>\(\mu\) 为整数时奇偶随幂次；图像过 \((1,1)\)</td></tr>
+<tr><td class="c">\(a^x\ (a>0,\,a\ne1)\)</td><td>\(\mathbb{R}\)</td><td>\((0,+\infty)\)</td><td>过 \((0,1)\)；\(a>1\) 增，\(0&lt;a&lt;1\) 减</td></tr>
+<tr><td class="c">\(\log_a x\ (a>0,\,a\ne1)\)</td><td>\((0,+\infty)\)</td><td>\(\mathbb{R}\)</td><td>过 \((1,0)\)；与 \(a^x\) 互为反函数</td></tr>
+<tr><td class="c">\(\sin x,\ \cos x\)</td><td>\(\mathbb{R}\)</td><td>\([-1,1]\)</td><td>周期 \(2\pi\)；\(\sin\) 奇、\(\cos\) 偶</td></tr>
+<tr><td class="c">\(\tan x,\ \cot x\)</td><td>分母非 0 处</td><td>\(\mathbb{R}\)</td><td>周期 \(\pi\)；奇函数；有垂直渐近线</td></tr>
+<tr><td class="c">\(\arcsin x\)</td><td>\([-1,1]\)</td><td>\([-\tfrac{\pi}{2},\tfrac{\pi}{2}]\)</td><td>奇、严格增</td></tr>
+<tr><td class="c">\(\arccos x\)</td><td>\([-1,1]\)</td><td>\([0,\pi]\)</td><td>严格减；\(\arccos(-x)=\pi-\arccos x\)</td></tr>
+<tr><td class="c">\(\arctan x\)</td><td>\(\mathbb{R}\)</td><td>\((-\tfrac{\pi}{2},\tfrac{\pi}{2})\)</td><td>奇、增；水平渐近线 \(y=\pm\tfrac{\pi}{2}\)</td></tr>
+</tbody>
+</table>
+<div class="mini">初等函数：由基本初等函数经有限次四则运算与复合、且能用一个解析式表示的函数；在其定义区间内连续。反三角函数取值主值：<b>arcsin 看 \([-\frac\pi2,\frac\pi2]\)、arccos 看 \([0,\pi]\)</b>，恒等式运用时先验范围。</div>
+
+<h2>二、数列极限</h2>
+<div class="box"><span class="t">ε-N 定义</span><br>
+\(\lim\limits_{n\to\infty}x_n=a\iff \forall\varepsilon>0,\ \exists N\in\mathbb{N}_+,\ \forall n>N:\ |x_n-a|&lt;\varepsilon\)。<br>
+几何意义：\(a\) 的任意 \(\varepsilon\) 邻域之外至多有有限项；收敛数列只有一个聚点。
+</div>
+<div class="box"><span class="t">收敛数列五大性质</span>
+<ol>
+<li><b>唯一性</b>：收敛数列的极限唯一。</li>
+<li><b>有界性</b>：收敛 ⇒ 有界；有界 ⇏ 收敛（如 \((-1)^n\)）。</li>
+<li><b>保号性</b>：若 \(\lim x_n=a>0\)，则 \(\exists N\)，当 \(n>N\) 时 \(x_n>0\)；反之若从某项起 \(x_n\ge0\) 且收敛，则 \(a\ge0\)。</li>
+<li><b>保序性</b>：若从某项起 \(x_n\le y_n\)，且两数列都收敛，则 \(\lim x_n\le\lim y_n\)。</li>
+<li><b>子列定理</b>：收敛数列的任一子列都收敛且极限相同；若存在两个子列极限不同（或某子列发散），则原数列发散。</li>
+</ol>
+</div>
+<div class="box gray"><span class="t">常用结论（数列）</span><br>
+\(\lim\limits_{n\to\infty}q^n=0\ (|q|&lt;1)\)；\(q=1\) 时趋于 1；\(q=-1\) 振荡发散；\(|q|>1\) 时发散。<br>
+\(\lim\limits_{n\to\infty}\sqrt[n]{a}=1\ (a>0)\)；\(\lim\limits_{n\to\infty}\sqrt[n]{n}=1\)；\(\lim\limits_{n\to\infty}\dfrac{\ln n}{n}=0\)。<br>
+\(\lim\limits_{n\to\infty}\left(1+\dfrac1n\right)^n=e\)；\(\lim\limits_{n\to\infty}\left(1+\dfrac an\right)^n=e^{a}\)。
+</div>
+
+<h2>三、函数极限</h2>
+<div class="box"><span class="t">定义</span>
+<ul>
+<li>\(x\to x_0\)：\(\lim\limits_{x\to x_0}f(x)=A\iff \forall\varepsilon>0,\ \exists\delta>0,\ 0&lt;|x-x_0|&lt;\delta \Rightarrow |f(x)-A|&lt;\varepsilon\)（去心邻域）。</li>
+<li>\(x\to\infty\)：\(\forall\varepsilon>0,\ \exists X>0,\ |x|>X \Rightarrow |f(x)-A|&lt;\varepsilon\)；\(x\to+\infty\) 与 \(x\to-\infty\) 各用单侧条件。</li>
+<li>单侧极限：\(f(x_0^-)=\lim\limits_{x\to x_0^-}f(x)\)，\(f(x_0^+)\) 同理。</li>
+</ul>
+</div>
+<div class="box"><span class="t">基本事实与性质</span>
+<ul>
+<li>\(\lim\limits_{x\to x_0}f(x)\) 存在 ⇔ 左、右极限存在且相等；\(\lim\limits_{x\to\infty}\) 存在 ⇔ \(+\infty\) 与 \(-\infty\) 两侧极限存在且相等。</li>
+<li>唯一性；局部有界性（极限存在 ⇒ 某去心邻域内有界）；局部保号性（\(A>0\) ⇒ 邻域内 \(f>0\)；反向 \(f\ge0\) ⇒ \(A\ge0\)）。</li>
+<li><b>归结原则（海涅定理）</b>：\(\lim\limits_{x\to x_0}f(x)=A\) ⇔ 对任何满足 \(x_n\to x_0\) 且 \(x_n\ne x_0\) 的数列 \(\{x_n\}\)，有 \(f(x_n)\to A\)。常用来证极限不存在：找两条趋近路径极限不同。</li>
+</ul>
+</div>
+<div class="box"><span class="t">无穷小与无穷大</span>
+<ul>
+<li>无穷小：\(\lim f(x)=0\) 的变量；无穷大：\(\lim|f(x)|=+\infty\)（可再分 \(+\infty/-\infty\)）。</li>
+<li>互倒关系：\(f\) 为无穷大且 \(f\ne0\) ⇒ \(\frac1f\) 为无穷小；\(f\) 为无穷小且 \(f\ne0\) ⇒ \(\frac1f\) 为无穷大。</li>
+<li>运算：有限个无穷小之和、之积仍是无穷小；<b>有界变量 × 无穷小 = 无穷小</b>（如 \(\lim\limits_{x\to0}x\sin\frac1x=0\)，因为 \(\sin\frac1x\) 有界）。</li>
+<li>与极限的关系：\(\lim f=A\iff f=A+o(1)\)（\(o(1)\) 表示无穷小量）。</li>
+<li>注意区分：无穷大 ⇒ 无界，但<b>无界 ⇏ 无穷大</b>（如 \(n(-1)^n\) 无界却非无穷大）。</li>
+</ul>
+</div>
+<div class="box"><span class="t">无穷小比较（同一极限过程，\(\alpha\to0,\beta\to0,\beta\ne0\)）</span><br>
+\(\lim\frac{\alpha}{\beta}=0\) ⇒ \(\alpha\) 是 \(\beta\) 的<b>高阶</b>无穷小，记 \(\alpha=o(\beta)\)；\(=\infty\) ⇒ 低阶；\(=c\ne0\) ⇒ 同阶；\(=1\) ⇒ <b>等价</b>，记 \(\alpha\sim\beta\)；\(\lim\frac{\alpha}{\beta^k}=c\ne0\) ⇒ \(\alpha\) 是 \(\beta\) 的 k 阶无穷小。<br>
+等价刻画：\(\alpha\sim\beta\iff \alpha=\beta+o(\beta)\iff \alpha-\beta=o(\beta)\)。
+</div>
+
+<h2>四、极限运算法则</h2>
+<div class="box"><span class="t">四则运算与代入</span>
+<ul>
+<li>设 \(\lim f=A,\ \lim g=B\)（同一过程）：\(\lim(f\pm g)=A\pm B\)，\(\lim(fg)=AB\)，\(\lim\frac fg=\frac AB\ (B\ne0)\)。</li>
+<li>前提：拆开前每个极限必须存在；「极限存在」不能想当然。</li>
+<li>多项式与有理分式（分母极限非 0）可直接代入求极限；复合函数：\(f\) 在 \(u_0\) 连续时 \(\lim f(g(x))=f\!\left(\lim g(x)\right)\)。</li>
+<li>幂指结构统一处理：\(u^v=e^{v\ln u}\)（\(u>0\)），专治 \(1^\infty,0^0,\infty^0\)。</li>
+</ul>
+</div>
+<div class="box gray"><span class="t">抓大头（\(x\to\infty\) 有理式）</span><br>
+\[
+\lim_{x\to\infty}\frac{a_nx^n+\cdots+a_0}{b_mx^m+\cdots+b_0}=
+\begin{cases}
+\infty\ (\text{方向由最高次系数符号定}), & n>m\\[2pt]
+\dfrac{a_n}{b_m}, & n=m\\[2pt]
+0, & n&lt;m
+\end{cases}
+\]
+分子分母同时除以最高次幂是最稳妥的写法。
+</div>
+
+<h2>五、极限存在准则与两个重要极限</h2>
+<div class="box"><span class="t">准则 I（夹逼准则）</span><br>
+数列：从某项起 \(y_n\le x_n\le z_n\)，且 \(\lim y_n=\lim z_n=a\) ⇒ \(\lim x_n=a\)。<br>
+函数：去心邻域内 \(g(x)\le f(x)\le h(x)\)，且 \(\lim g=\lim h=A\) ⇒ \(\lim f=A\)。常用于含 \(\sin\infty\)、\([\,]\)、\(n\) 项和式放缩。
+</div>
+<div class="box"><span class="t">准则 II（单调有界准则）</span><br>
+单调增且有上界（或单调减且有下界）的数列必收敛。<br>
+递推数列 \(x_{n+1}=f(x_n)\) 三步走：① 归纳证明有界；② 证明单调；③ 设 \(\lim x_n=a\)，代入得 \(a=f(a)\)，解出并按界取舍。
+</div>
+<div class="box"><span class="t">两个重要极限（必背）</span>
+<ul>
+<li>\(\lim\limits_{x\to0}\dfrac{\sin x}{x}=1\)（\(\frac00\) 型；方框公式 \(\lim\limits_{\square\to0}\dfrac{\sin\square}{\square}=1\)，\(\square\) 可为任意趋于 0 的式子）。</li>
+<li>\(\lim\limits_{x\to\infty}\left(1+\dfrac1x\right)^x=e\)；等价形式 \(\lim\limits_{x\to0}(1+x)^{\frac1x}=e\)；一般形 \(\lim\limits_{x\to\infty}\left(1+\dfrac ax\right)^{bx}=e^{ab}\)。</li>
+<li><b>\(1^\infty\) 通用公式</b>：当 \(u\to1,\ v\to\infty\) 时 \(\lim u^v=\exp\!\left(\lim v(u-1)\right)\)。</li>
+</ul>
+</div>
+<div class="box gray"><span class="t">由重要极限导出的常用结论</span><br>
+\(\lim\limits_{x\to0}\dfrac{\ln(1+x)}{x}=1\)；\(\lim\limits_{x\to0}\dfrac{e^x-1}{x}=1\)；\(\lim\limits_{x\to0}\dfrac{a^x-1}{x}=\ln a\)；\(\lim\limits_{x\to0}\dfrac{(1+x)^\alpha-1}{x}=\alpha\)；\(\lim\limits_{x\to0}\dfrac{\arcsin x}{x}=\lim\limits_{x\to0}\dfrac{\arctan x}{x}=1\)。
+</div>
+
+<h2>六、无穷小比较与等价替换</h2>
+<div class="box"><span class="t">等价替换定理</span><br>
+同一极限过程中 \(\alpha\sim\alpha',\ \beta\sim\beta'\)，则 \(\lim\dfrac{\alpha}{\beta}=\lim\dfrac{\alpha'}{\beta'}\)——<b>只允许对乘、除因子替换</b>；和、差中不能分别整体替换（需要更高阶信息，用泰勒展开，见第三章）。
+</div>
+<table>
+<thead><tr><th colspan="2">常用等价无穷小（\(x\to0\)）</th></tr></thead>
+<tbody>
+<tr><td>\(\sin x\sim x\)</td><td>\(\tan x\sim x\)</td></tr>
+<tr><td>\(\arcsin x\sim x\)</td><td>\(\arctan x\sim x\)</td></tr>
+<tr><td>\(\ln(1+x)\sim x\)</td><td>\(e^x-1\sim x\)</td></tr>
+<tr><td>\(a^x-1\sim x\ln a\)</td><td>\(1-\cos x\sim\dfrac{x^2}{2}\)</td></tr>
+<tr><td>\((1+x)^\alpha-1\sim\alpha x\)</td><td>\(\sqrt{1+x}-1\sim\dfrac{x}{2}\)</td></tr>
+<tr><td>\(x-\sin x\sim\dfrac{x^3}{6}\)</td><td>\(\arcsin x-x\sim\dfrac{x^3}{6}\)</td></tr>
+<tr><td>\(\tan x-x\sim\dfrac{x^3}{3}\)</td><td>\(x-\arctan x\sim\dfrac{x^3}{3}\)</td></tr>
+<tr><td>\(x-\ln(1+x)\sim\dfrac{x^2}{2}\)</td><td>\(\cos x=1-\dfrac{x^2}{2}+\dfrac{x^4}{24}+o(x^4)\)</td></tr>
+</tbody>
+</table>
+<div class="box gray"><span class="t">\(o(\cdot)\) 运算规则</span><br>
+\(o(x^m)\pm o(x^n)=o\!\left(x^{\min(m,n)}\right)\)；\(o(x^m)\cdot o(x^n)=o(x^{m+n})\)；\(x^m\,o(x^n)=o(x^{m+n})\)；\(C\cdot o(x^m)=o(x^m)\ (C\ne0)\)。
+</div>
+
+<h2>七、连续性与间断点</h2>
+<div class="box"><span class="t">连续的定义（三种等价说法）</span><br>
+\(f\) 在 \(x_0\) 连续 ⇔ \(\lim\limits_{x\to x_0}f(x)=f(x_0)\) ⇔ \(\lim\limits_{\Delta x\to0}\Delta y=0\) ⇔ 在 \(x_0\) 既左连续又右连续。<br>
+即三件事同时成立：\(f(x_0)\) 有定义、极限 \(\lim\limits_{x\to x_0}f(x)\) 存在、二者相等。
+</div>
+<table>
+<thead><tr><th>间断点类型</th><th>判断标准</th><th>典型例子</th></tr></thead>
+<tbody>
+<tr><td>第一类 · 可去</td><td>左、右极限存在且相等，但不等于 \(f(x_0)\)（或 \(x_0\) 无定义）</td><td>\(\dfrac{\sin x}{x}\) 在 \(x=0\)</td></tr>
+<tr><td>第一类 · 跳跃</td><td>左、右极限都存在但不相等</td><td>\([x]\) 在整数点；\(\dfrac{|x|}{x}\) 在 \(x=0\)</td></tr>
+<tr><td>第二类 · 无穷</td><td>至少一侧极限为无穷大</td><td>\(\dfrac1x\)、\(\tan x\) 在 \(x=0\)</td></tr>
+<tr><td>第二类 · 振荡</td><td>极限不存在且非无穷（振荡）</td><td>\(\sin\dfrac1x\) 在 \(x=0\)</td></tr>
+</tbody>
+</table>
+<div class="box"><span class="t">连续函数的运算（求极限利器）</span>
+<ul>
+<li>连续函数的和、差、积、商（分母非 0）仍连续；复合仍连续（内函数极限存在 + 外函数在对应点连续）。</li>
+<li>严格单调连续函数的反函数连续。</li>
+<li><b>初等函数在其定义区间内连续</b> ⇒ 初等函数求极限直接代入。</li>
+<li>分段函数在分段点的连续性：分别算左极限、右极限、函数值，三者相等才连续。</li>
+</ul>
+</div>
+
+<h2>八、闭区间上连续函数的性质</h2>
+<div class="box"><span class="t">四大定理（设 \(f\) 在 \([a,b]\) 上连续）</span>
+<ol>
+<li><b>有界性定理</b>：\(f\) 在 \([a,b]\) 上有界。</li>
+<li><b>最值定理</b>：\(\exists x_1,x_2\in[a,b]\)，使 \(m=f(x_1)\le f(x)\le f(x_2)=M\)（最小值、最大值都能取到）。</li>
+<li><b>零点定理</b>：若 \(f(a)f(b)&lt;0\)，则 \(\exists\xi\in(a,b)\)，使 \(f(\xi)=0\)。</li>
+<li><b>介值定理</b>：\(\forall\mu\in[m,M]\)，\(\exists\xi\in[a,b]\)，使 \(f(\xi)=\mu\)（值域恰为 \([m,M]\)）。</li>
+</ol>
+</div>
+<div class="box gray"><span class="t">应用套路</span>
+<ul>
+<li>证方程根的存在：构造 \(F(x)\)，用零点定理；证根唯一：再加单调性（或用罗尔定理反证，见第三章）。</li>
+<li>证存在 \(\xi\) 使 \(f(\xi)=C\)：把 \(C\) 移到一边构造辅助函数 \(F=f-C\)。</li>
+<li>一致连续（教材选读，数一不考）：\(\forall\varepsilon>0,\exists\delta>0\)，只要 \(|x_1-x_2|&lt;\delta\) 就有 \(|f(x_1)-f(x_2)|&lt;\varepsilon\)，\(\delta\) 与位置无关；<b>闭区间上连续 ⇒ 一致连续</b>。</li>
+</ul>
+</div>
+
+<h2>九、速查：求极限总流程与易错点</h2>
+<div class="box"><span class="t">求极限五步流程</span>
+<ol>
+<li><b>判类型</b>：代入看是否为七种未定式：\(\dfrac00,\ \dfrac{\infty}{\infty},\ 0\cdot\infty,\ \infty-\infty,\ 1^\infty,\ 0^0,\ \infty^0\)。</li>
+<li><b>能代入就代入</b>（连续处）；<b>能拆就拆</b>（每项极限都存在时）。</li>
+<li><b>乘除因子用等价替换</b>；低阶信息不够时用泰勒展开（洛必达见第三章，须先验条件）。</li>
+<li><b>数列题</b>：夹逼 / 单调有界 / 先求和（裂项、等比）再取极限。</li>
+<li><b>结构化简</b>：有理化、通分、换元（如 \(t=\frac1x\)）、抓大头、提取主导项；两个重要极限；\(1^\infty\) 套 \(e^{\lim v(u-1)}\)。</li>
+</ol>
+</div>
+<table>
+<thead><tr><th>常考小结论</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td>无穷小 × 有界</td><td>\(\lim\limits_{x\to0}x f(x)=0\)（\(f(x)\) 在 \(0\) 的去心邻域内有界）</td></tr>
+<tr><td>幂指型</td><td>\(\lim u^v=e^{\lim v\ln u}\)；\(1^\infty\) 用 \(e^{\lim v(u-1)}\)</td></tr>
+<tr><td>\(\infty-\infty\)</td><td>通分或有理化，化为 \(\frac00\) 或 \(\frac\infty\infty\)</td></tr>
+<tr><td>\(0\cdot\infty\)</td><td>把「简单」因子写成分母（倒过来），化为分式</td></tr>
+<tr><td>分段点连续性</td><td>左极限 = 右极限 = 函数值</td></tr>
+<tr><td>渐近线（了解）</td><td>水平：\(\lim\limits_{x\to\infty}f(x)=A\)；垂直：\(\lim\limits_{x\to x_0}|f(x)|=\infty\)</td></tr>
+</tbody>
+</table>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>等价替换乱用在和差中：如 \(\lim\limits_{x\to0}\frac{x-\sin x}{x^3}\)，若把 \(\sin x\sim x\) 代入得 0（错，正确为 \(\frac16\)）。</li>
+<li>拆项前提被忽略：\(\lim(f\pm g)=\lim f\pm\lim g\) 要求两个极限都存在；只知「和」的极限存在，不能推出分项的极限存在。</li>
+<li>\(1^\infty\) 不是 1；指数里含变量时先取对数或用公式。</li>
+<li>分段点用左右极限分别讨论；注意 \(f(x_0)\) 单独定义，不能只算极限。</li>
+<li>无穷大 ≠ 无界；无界未必趋于无穷大。</li>
+<li>数列极限中 \(n\) 取正整数：连续化到函数 \(f(x)\) 后可对 \(x\to+\infty\) 用洛必达，但推回时只对 \(n\in\mathbb{N}_+\) 成立。</li>
+<li>洛必达使用前必验三条：\(\frac00\) 或 \(\frac\infty\infty\)；去心邻域内可导且 \(g'\ne0\)；\(\frac{f'}{g'}\) 极限存在或为 \(\infty\)。</li>
+</ol>
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 1 章 完 ——</div>
+
+<div class="foot">
+本页为「数一知识点汇总 · 打印版」样章：高等数学上册 第 1 章。全系列规划：高数上册 6 章、高数下册 6 章、线性代数 6 章、概率论与数理统计 8 章，按此版式逐章生成。<br>
+打印：浏览器打开 → 点按钮或 Ctrl+P（⌘+P）→ A4、100%、关闭页眉页脚。
+</div>
+</div>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+})();
+</script>
+</body>
+</html>
