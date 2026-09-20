@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>考研数一 · 知识点汇总（全一册）</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#e9ebee;font-family:"SimSun","Songti SC","Noto Serif CJK SC",serif;color:#1a1a1a;font-size:11pt;line-height:1.6}
+.sheet{background:#fff;max-width:196mm;margin:18px auto;padding:16mm 14mm 12mm;box-shadow:0 2px 14px rgba(0,0,0,.18)}
+h1{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:20pt;text-align:center;margin:0 0 2mm;letter-spacing:1px}
+.cover{padding:22mm 0 6mm;page-break-after:always}
+.cover .sub{text-align:center;color:#555;font-size:11pt;margin-bottom:3mm}
+.cover .cover-note{text-align:center;color:#777;font-size:9.5pt;line-height:2}
+.cover hr{border:0;border-top:1pt solid #1f3a93;width:58%;margin:6mm auto}
+h2.toch{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:15pt;text-align:center;margin:2mm 0 4mm}
+h2.part{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:16pt;text-align:center;margin:0;padding:3mm 0;border-top:2.5pt solid #1f3a93;border-bottom:2.5pt solid #1f3a93;page-break-before:always}
+.part-list{text-align:center;line-height:2.4;color:#444;font-size:11pt;margin-top:12mm}
+h2.chap{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:14pt;text-align:center;margin:0 0 3mm;padding:0 0 2mm;border-bottom:2pt solid #1f3a93;page-break-before:always}
+h3{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:12.5pt;margin:5.5mm 0 2mm;padding:0 0 1mm;border-bottom:1.2pt solid #1f3a93;page-break-after:avoid}
+h4{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:11pt;margin:3.5mm 0 1.2mm;page-break-after:avoid}
+p{margin:1.2mm 0}
+ul,ol{margin:1.2mm 0;padding-left:6mm}
+li{margin:.5mm 0}
+.mini{font-size:9.5pt;color:#555}
+.strip{border:1px solid #c9c9c9;background:#f6f6f6;padding:1.5mm 3mm;font-size:9pt;color:#555;text-align:center;margin-bottom:4mm}
+.box{border:1px solid #c9c9c9;border-left:3px solid #1f3a93;background:#fbfbfb;padding:2mm 3mm;margin:1.8mm 0;break-inside:avoid;page-break-inside:avoid}
+.box .t{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:10.5pt}
+.box.gray{border-left-color:#777}
+.box.warn{border-left-color:#b00;background:#fff7f7}
+table{border-collapse:collapse;width:100%;margin:1.8mm 0;break-inside:avoid;page-break-inside:avoid;font-size:10pt}
+th,td{border:.7pt solid #999;padding:1mm 1.6mm;vertical-align:top}
+th{background:#efefef;font-family:"SimHei","Microsoft YaHei",sans-serif;font-weight:normal;text-align:center}
+td.c{text-align:center}
+.toc{border:1px solid #c9c9c9;background:#fbfbfb;padding:3mm 5mm;margin:2mm 0 6mm}
+.toc .g{font-family:"SimHei","Microsoft YaHei",sans-serif;font-size:10.5pt;margin:2.2mm 0 .8mm;border-bottom:1px dotted #999;padding-bottom:.6mm}
+.toc p{margin:1mm 0;font-size:10pt}
+.toc a{color:#1a1a1a;text-decoration:none;border-bottom:1px dotted #bbb}
+.foot{margin-top:6mm;border-top:1px dashed #bbb;padding-top:2mm;font-size:9pt;color:#666}
+.pbtn{position:fixed;right:18px;bottom:18px;z-index:9;font:600 13px/1.2 "Microsoft YaHei",sans-serif;background:#1f3a93;color:#fff;border:0;border-radius:8px;padding:12px 18px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+@media print{body{background:#fff}.sheet{box-shadow:none;margin:0;max-width:none;padding:0}.pbtn{display:none}@page{size:A4;margin:13mm 11mm}}
+</style>
+</head>
+<body>
+<button class="pbtn" onclick="window.print()">打印 / 存 PDF</button>
+<div class="sheet">
+
+<div class="cover">
+<h1>考研数一 · 知识点汇总</h1>
+<div class="sub">高等数学（上册 / 下册） · 线性代数 · 概率论与数理统计</div>
+<hr>
+<div class="cover-note">
+按章汇编 · 共 26 章<br>
+每章结构：知识点全表 → 速查 → 易错 → 技巧库（全）<br>
+公式由 MathJax 渲染（首次打开需联网）；打印：Ctrl+P / ⌘+P → A4、100%
+</div>
+</div>
+
+<h2 class="toch">目　录</h2>
+<div class="toc">
+<div class="g">第一部分　高等数学（上册）</div>
+<p><a href="#ch1">第 1 章　函数与极限</a></p>
+<p><a href="#ch2">第 2 章　导数与微分</a></p>
+<p><a href="#ch3">第 3 章　微分中值定理与导数的应用</a></p>
+<p><a href="#ch4">第 4 章　不定积分</a></p>
+<p><a href="#ch5">第 5 章　定积分</a></p>
+<p><a href="#ch6">第 6 章　定积分的应用</a></p>
+<div class="g">第二部分　高等数学（下册）</div>
+<p><a href="#ch7">第 7 章　微分方程</a></p>
+<p><a href="#ch8">第 8 章　向量代数与空间解析几何</a></p>
+<p><a href="#ch9">第 9 章　多元函数微分法及其应用</a></p>
+<p><a href="#ch10">第 10 章　重积分</a></p>
+<p><a href="#ch11">第 11 章　曲线积分与曲面积分</a></p>
+<p><a href="#ch12">第 12 章　无穷级数</a></p>
+<div class="g">第三部分　线性代数</div>
+<p><a href="#ch13">第 13 章　行列式</a></p>
+<p><a href="#ch14">第 14 章　矩阵及其运算</a></p>
+<p><a href="#ch15">第 15 章　矩阵的初等变换与线性方程组</a></p>
+<p><a href="#ch16">第 16 章　向量组的线性相关性</a></p>
+<p><a href="#ch17">第 17 章　相似矩阵及二次型</a></p>
+<p><a href="#ch18">第 18 章　线性空间与线性变换（选学）</a></p>
+<div class="g">第四部分　概率论与数理统计</div>
+<p><a href="#ch19">第 19 章　概率论的基本概念</a></p>
+<p><a href="#ch20">第 20 章　随机变量及其分布</a></p>
+<p><a href="#ch21">第 21 章　多维随机变量及其分布</a></p>
+<p><a href="#ch22">第 22 章　随机变量的数字特征</a></p>
+<p><a href="#ch23">第 23 章　大数定律与中心极限定理</a></p>
+<p><a href="#ch24">第 24 章　样本及抽样分布</a></p>
+<p><a href="#ch25">第 25 章　参数估计</a></p>
+<p><a href="#ch26">第 26 章　假设检验</a></p>
+</div>
+
+<h2 class="part" id="part1">第一部分　高等数学（上册）</h2>
+<div class="part-list">
+第 1 章　函数与极限<br>
+第 2 章　导数与微分<br>
+第 3 章　微分中值定理与导数的应用<br>
+第 4 章　不定积分<br>
+第 5 章　定积分<br>
+第 6 章　定积分的应用
+</div>
+
+<h2 class="chap" id="ch1">第 1 章　函数与极限</h2>
+<div class="strip">本章速览：一 函数 · 二 数列极限 · 三 函数极限 · 四 极限运算法则 · 五 极限存在准则 · 六 无穷小与等价替换 · 七 连续与间断点 · 八 闭区间连续函数的性质 · 九 速查与易错 · 十 技巧库（全）</div>
+
+<h3>一、函数</h3>
+<div class="box"><span class="t">函数定义与三要素</span><br>
+设 \(D\subseteq\mathbb{R}\) 非空，法则 \(f\) 使每个 \(x\in D\) 对应唯一 \(y\)，记 \(y=f(x),\ x\in D\)：\(D\) 为定义域，\(f(D)=\{y\mid y=f(x),\,x\in D\}\) 为值域。<br>
+<b>三要素</b>：定义域、对应法则（二者决定函数）、值域（由前两者确定）；两函数相等 ⇔ 定义域相同且对应法则相同。
+</div>
+<div class="box"><span class="t">四大性态</span>
+<ul>
+<li><b>有界性</b>：\(\exists M>0\)，\(\forall x\in X\) 有 \(|f(x)|\le M\)；有界 ⇔ 既有上界又有下界。</li>
+<li><b>单调性</b>：\(x_1&lt;x_2\Rightarrow f(x_1)&lt;f(x_2)\) 为严格增；\(x_1&lt;x_2\Rightarrow f(x_1)\le f(x_2)\) 为不减（减、不增同理）。</li>
+<li><b>奇偶性</b>：定义域关于原点对称；偶 \(f(-x)=f(x)\)、奇 \(f(-x)=-f(x)\)；奇函数若在 \(0\) 有定义则 \(f(0)=0\)。</li>
+<li><b>周期性</b>：\(\exists T>0\)，\(\forall x\)：\(f(x+T)=f(x)\)。注意：并非所有周期函数都有最小正周期（如常数函数）。</li>
+</ul>
+</div>
+<div class="box gray"><span class="t">反函数与复合</span>
+<ul>
+<li>反函数：若 \(y=f(x)\) 一一对应，则 \(x=f^{-1}(y)\) 存在；\(y=f(x)\) 与 \(y=f^{-1}(x)\) 的图像关于直线 \(y=x\) 对称；<b>严格单调 ⇒ 存在反函数</b>（反之不然）。</li>
+<li>复合：\((f\circ g)(x)=f(g(x))\) 存在的条件：内函数值域 \(\subseteq\) 外函数定义域。</li>
+<li>常用关系：\(f^{-1}(f(x))=x\)；反函数的定义域 = 原函数的值域。</li>
+</ul>
+</div>
+<table>
+<thead><tr><th>基本初等函数</th><th>定义域</th><th>值域</th><th>性态要点</th></tr></thead>
+<tbody>
+<tr><td class="c">\(x^\mu\ (\mu\ne0)\)</td><td>随 \(\mu\) 而定</td><td>—</td><td>\(\mu\) 为整数时奇偶随幂次；图像过 \((1,1)\)</td></tr>
+<tr><td class="c">\(a^x\ (a>0,\,a\ne1)\)</td><td>\(\mathbb{R}\)</td><td>\((0,+\infty)\)</td><td>过 \((0,1)\)；\(a>1\) 增，\(0&lt;a&lt;1\) 减</td></tr>
+<tr><td class="c">\(\log_a x\ (a>0,\,a\ne1)\)</td><td>\((0,+\infty)\)</td><td>\(\mathbb{R}\)</td><td>过 \((1,0)\)；与 \(a^x\) 互为反函数</td></tr>
+<tr><td class="c">\(\sin x,\ \cos x\)</td><td>\(\mathbb{R}\)</td><td>\([-1,1]\)</td><td>周期 \(2\pi\)；\(\sin\) 奇、\(\cos\) 偶</td></tr>
+<tr><td class="c">\(\tan x,\ \cot x\)</td><td>分母非 0 处</td><td>\(\mathbb{R}\)</td><td>周期 \(\pi\)；奇函数；有垂直渐近线</td></tr>
+<tr><td class="c">\(\arcsin x\)</td><td>\([-1,1]\)</td><td>\([-\tfrac{\pi}{2},\tfrac{\pi}{2}]\)</td><td>奇、严格增</td></tr>
+<tr><td class="c">\(\arccos x\)</td><td>\([-1,1]\)</td><td>\([0,\pi]\)</td><td>严格减；\(\arccos(-x)=\pi-\arccos x\)</td></tr>
+<tr><td class="c">\(\arctan x\)</td><td>\(\mathbb{R}\)</td><td>\((-\tfrac{\pi}{2},\tfrac{\pi}{2})\)</td><td>奇、增；水平渐近线 \(y=\pm\tfrac{\pi}{2}\)</td></tr>
+</tbody>
+</table>
+<div class="mini">初等函数：由基本初等函数经有限次四则运算与复合、且能用一个解析式表示的函数；在其定义区间内连续。反三角函数取值主值：<b>arcsin 看 \([-\frac\pi2,\frac\pi2]\)、arccos 看 \([0,\pi]\)</b>，恒等式运用时先验范围。</div>
+
+<h3>二、数列极限</h3>
+<div class="box"><span class="t">ε-N 定义</span><br>
+\(\lim\limits_{n\to\infty}x_n=a\iff \forall\varepsilon>0,\ \exists N\in\mathbb{N}_+,\ \forall n>N:\ |x_n-a|&lt;\varepsilon\)。<br>
+几何意义：\(a\) 的任意 \(\varepsilon\) 邻域之外至多有有限项；收敛数列只有一个聚点。
+</div>
+<div class="box"><span class="t">收敛数列五大性质</span>
+<ol>
+<li><b>唯一性</b>：收敛数列的极限唯一。</li>
+<li><b>有界性</b>：收敛 ⇒ 有界；有界 ⇏ 收敛（如 \((-1)^n\)）。</li>
+<li><b>保号性</b>：若 \(\lim x_n=a>0\)，则 \(\exists N\)，当 \(n>N\) 时 \(x_n>0\)；反之若从某项起 \(x_n\ge0\) 且收敛，则 \(a\ge0\)。</li>
+<li><b>保序性</b>：若从某项起 \(x_n\le y_n\)，且两数列都收敛，则 \(\lim x_n\le\lim y_n\)。</li>
+<li><b>子列定理</b>：收敛数列的任一子列都收敛且极限相同；若存在两个子列极限不同（或某子列发散），则原数列发散。</li>
+</ol>
+</div>
+<div class="box gray"><span class="t">常用结论（数列）</span><br>
+\(\lim\limits_{n\to\infty}q^n=0\ (|q|&lt;1)\)；\(q=1\) 时趋于 1；\(q=-1\) 振荡发散；\(|q|>1\) 时发散。<br>
+\(\lim\limits_{n\to\infty}\sqrt[n]{a}=1\ (a>0)\)；\(\lim\limits_{n\to\infty}\sqrt[n]{n}=1\)；\(\lim\limits_{n\to\infty}\dfrac{\ln n}{n}=0\)。<br>
+\(\lim\limits_{n\to\infty}\left(1+\dfrac1n\right)^n=e\)；\(\lim\limits_{n\to\infty}\left(1+\dfrac an\right)^n=e^{a}\)。
+</div>
+
+<h3>三、函数极限</h3>
+<div class="box"><span class="t">定义</span>
+<ul>
+<li>\(x\to x_0\)：\(\lim\limits_{x\to x_0}f(x)=A\iff \forall\varepsilon>0,\ \exists\delta>0,\ 0&lt;|x-x_0|&lt;\delta \Rightarrow |f(x)-A|&lt;\varepsilon\)（去心邻域）。</li>
+<li>\(x\to\infty\)：\(\forall\varepsilon>0,\ \exists X>0,\ |x|>X \Rightarrow |f(x)-A|&lt;\varepsilon\)；\(x\to+\infty\) 与 \(x\to-\infty\) 各用单侧条件。</li>
+<li>单侧极限：\(f(x_0^-)=\lim\limits_{x\to x_0^-}f(x)\)，\(f(x_0^+)\) 同理。</li>
+</ul>
+</div>
+<div class="box"><span class="t">基本事实与性质</span>
+<ul>
+<li>\(\lim\limits_{x\to x_0}f(x)\) 存在 ⇔ 左、右极限存在且相等；\(\lim\limits_{x\to\infty}\) 存在 ⇔ \(+\infty\) 与 \(-\infty\) 两侧极限存在且相等。</li>
+<li>唯一性；局部有界性（极限存在 ⇒ 某去心邻域内有界）；局部保号性（\(A>0\) ⇒ 邻域内 \(f>0\)；反向 \(f\ge0\) ⇒ \(A\ge0\)）。</li>
+<li><b>归结原则（海涅定理）</b>：\(\lim\limits_{x\to x_0}f(x)=A\) ⇔ 对任何满足 \(x_n\to x_0\) 且 \(x_n\ne x_0\) 的数列 \(\{x_n\}\)，有 \(f(x_n)\to A\)。常用来证极限不存在：找两条趋近路径极限不同。</li>
+</ul>
+</div>
+<div class="box"><span class="t">无穷小与无穷大</span>
+<ul>
+<li>无穷小：\(\lim f(x)=0\) 的变量；无穷大：\(\lim|f(x)|=+\infty\)（可再分 \(+\infty/-\infty\)）。</li>
+<li>互倒关系：\(f\) 为无穷大且 \(f\ne0\) ⇒ \(\frac1f\) 为无穷小；\(f\) 为无穷小且 \(f\ne0\) ⇒ \(\frac1f\) 为无穷大。</li>
+<li>运算：有限个无穷小之和、之积仍是无穷小；<b>有界变量 × 无穷小 = 无穷小</b>（如 \(\lim\limits_{x\to0}x\sin\frac1x=0\)，因为 \(\sin\frac1x\) 有界）。</li>
+<li>与极限的关系：\(\lim f=A\iff f=A+o(1)\)（\(o(1)\) 表示无穷小量）。</li>
+<li>注意区分：无穷大 ⇒ 无界，但<b>无界 ⇏ 无穷大</b>（如 \(n(-1)^n\) 无界却非无穷大）。</li>
+</ul>
+</div>
+<div class="box"><span class="t">无穷小比较（同一极限过程，\(\alpha\to0,\beta\to0,\beta\ne0\)）</span><br>
+\(\lim\frac{\alpha}{\beta}=0\) ⇒ \(\alpha\) 是 \(\beta\) 的<b>高阶</b>无穷小，记 \(\alpha=o(\beta)\)；\(=\infty\) ⇒ 低阶；\(=c\ne0\) ⇒ 同阶；\(=1\) ⇒ <b>等价</b>，记 \(\alpha\sim\beta\)；\(\lim\frac{\alpha}{\beta^k}=c\ne0\) ⇒ \(\alpha\) 是 \(\beta\) 的 k 阶无穷小。<br>
+等价刻画：\(\alpha\sim\beta\iff \alpha=\beta+o(\beta)\iff \alpha-\beta=o(\beta)\)。
+</div>
+
+<h3>四、极限运算法则</h3>
+<div class="box"><span class="t">四则运算与代入</span>
+<ul>
+<li>设 \(\lim f=A,\ \lim g=B\)（同一过程）：\(\lim(f\pm g)=A\pm B\)，\(\lim(fg)=AB\)，\(\lim\frac fg=\frac AB\ (B\ne0)\)。</li>
+<li>前提：拆开前每个极限必须存在；「极限存在」不能想当然。</li>
+<li>多项式与有理分式（分母极限非 0）可直接代入求极限；复合函数：\(f\) 在 \(u_0\) 连续时 \(\lim f(g(x))=f\!\left(\lim g(x)\right)\)。</li>
+<li>幂指结构统一处理：\(u^v=e^{v\ln u}\)（\(u>0\)），专治 \(1^\infty,0^0,\infty^0\)。</li>
+</ul>
+</div>
+<div class="box gray"><span class="t">抓大头（\(x\to\infty\) 有理式）</span><br>
+\[
+\lim_{x\to\infty}\frac{a_nx^n+\cdots+a_0}{b_mx^m+\cdots+b_0}=
+\begin{cases}
+\infty\ (\text{方向由最高次系数符号定}), & n>m\\[2pt]
+\dfrac{a_n}{b_m}, & n=m\\[2pt]
+0, & n&lt;m
+\end{cases}
+\]
+分子分母同时除以最高次幂是最稳妥的写法。
+</div>
+
+<h3>五、极限存在准则与两个重要极限</h3>
+<div class="box"><span class="t">准则 I（夹逼准则）</span><br>
+数列：从某项起 \(y_n\le x_n\le z_n\)，且 \(\lim y_n=\lim z_n=a\) ⇒ \(\lim x_n=a\)。<br>
+函数：去心邻域内 \(g(x)\le f(x)\le h(x)\)，且 \(\lim g=\lim h=A\) ⇒ \(\lim f=A\)。常用于含 \(\sin\infty\)、\([\,]\)、\(n\) 项和式放缩。
+</div>
+<div class="box"><span class="t">准则 II（单调有界准则）</span><br>
+单调增且有上界（或单调减且有下界）的数列必收敛。<br>
+递推数列 \(x_{n+1}=f(x_n)\) 三步走：① 归纳证明有界；② 证明单调；③ 设 \(\lim x_n=a\)，代入得 \(a=f(a)\)，解出并按界取舍。
+</div>
+<div class="box"><span class="t">两个重要极限（必背）</span>
+<ul>
+<li>\(\lim\limits_{x\to0}\dfrac{\sin x}{x}=1\)（\(\frac00\) 型；方框公式 \(\lim\limits_{\square\to0}\dfrac{\sin\square}{\square}=1\)，\(\square\) 可为任意趋于 0 的式子）。</li>
+<li>\(\lim\limits_{x\to\infty}\left(1+\dfrac1x\right)^x=e\)；等价形式 \(\lim\limits_{x\to0}(1+x)^{\frac1x}=e\)；一般形 \(\lim\limits_{x\to\infty}\left(1+\dfrac ax\right)^{bx}=e^{ab}\)。</li>
+<li><b>\(1^\infty\) 通用公式</b>：当 \(u\to1,\ v\to\infty\) 时 \(\lim u^v=\exp\!\left(\lim v(u-1)\right)\)。</li>
+</ul>
+</div>
+<div class="box gray"><span class="t">由重要极限导出的常用结论</span><br>
+\(\lim\limits_{x\to0}\dfrac{\ln(1+x)}{x}=1\)；\(\lim\limits_{x\to0}\dfrac{e^x-1}{x}=1\)；\(\lim\limits_{x\to0}\dfrac{a^x-1}{x}=\ln a\)；\(\lim\limits_{x\to0}\dfrac{(1+x)^\alpha-1}{x}=\alpha\)；\(\lim\limits_{x\to0}\dfrac{\arcsin x}{x}=\lim\limits_{x\to0}\dfrac{\arctan x}{x}=1\)。
+</div>
+
+<h3>六、无穷小比较与等价替换</h3>
+<div class="box"><span class="t">等价替换定理</span><br>
+同一极限过程中 \(\alpha\sim\alpha',\ \beta\sim\beta'\)，则 \(\lim\dfrac{\alpha}{\beta}=\lim\dfrac{\alpha'}{\beta'}\)——<b>只允许对乘、除因子替换</b>；和、差中不能分别整体替换（需要更高阶信息，用泰勒展开，见第三章）。
+</div>
+<table>
+<thead><tr><th colspan="2">常用等价无穷小（\(x\to0\)）</th></tr></thead>
+<tbody>
+<tr><td>\(\sin x\sim x\)</td><td>\(\tan x\sim x\)</td></tr>
+<tr><td>\(\arcsin x\sim x\)</td><td>\(\arctan x\sim x\)</td></tr>
+<tr><td>\(\ln(1+x)\sim x\)</td><td>\(e^x-1\sim x\)</td></tr>
+<tr><td>\(a^x-1\sim x\ln a\)</td><td>\(1-\cos x\sim\dfrac{x^2}{2}\)</td></tr>
+<tr><td>\((1+x)^\alpha-1\sim\alpha x\)</td><td>\(\sqrt{1+x}-1\sim\dfrac{x}{2}\)</td></tr>
+<tr><td>\(x-\sin x\sim\dfrac{x^3}{6}\)</td><td>\(\arcsin x-x\sim\dfrac{x^3}{6}\)</td></tr>
+<tr><td>\(\tan x-x\sim\dfrac{x^3}{3}\)</td><td>\(x-\arctan x\sim\dfrac{x^3}{3}\)</td></tr>
+<tr><td>\(x-\ln(1+x)\sim\dfrac{x^2}{2}\)</td><td>\(\cos x=1-\dfrac{x^2}{2}+\dfrac{x^4}{24}+o(x^4)\)</td></tr>
+</tbody>
+</table>
+<div class="box gray"><span class="t">\(o(\cdot)\) 运算规则</span><br>
+\(o(x^m)\pm o(x^n)=o\!\left(x^{\min(m,n)}\right)\)；\(o(x^m)\cdot o(x^n)=o(x^{m+n})\)；\(x^m\,o(x^n)=o(x^{m+n})\)；\(C\cdot o(x^m)=o(x^m)\ (C\ne0)\)。
+</div>
+
+<h3>七、连续性与间断点</h3>
+<div class="box"><span class="t">连续的定义（三种等价说法）</span><br>
+\(f\) 在 \(x_0\) 连续 ⇔ \(\lim\limits_{x\to x_0}f(x)=f(x_0)\) ⇔ \(\lim\limits_{\Delta x\to0}\Delta y=0\) ⇔ 在 \(x_0\) 既左连续又右连续。<br>
+即三件事同时成立：\(f(x_0)\) 有定义、极限 \(\lim\limits_{x\to x_0}f(x)\) 存在、二者相等。
+</div>
+<table>
+<thead><tr><th>间断点类型</th><th>判断标准</th><th>典型例子</th></tr></thead>
+<tbody>
+<tr><td>第一类 · 可去</td><td>左、右极限存在且相等，但不等于 \(f(x_0)\)（或 \(x_0\) 无定义）</td><td>\(\dfrac{\sin x}{x}\) 在 \(x=0\)</td></tr>
+<tr><td>第一类 · 跳跃</td><td>左、右极限都存在但不相等</td><td>\([x]\) 在整数点；\(\dfrac{|x|}{x}\) 在 \(x=0\)</td></tr>
+<tr><td>第二类 · 无穷</td><td>至少一侧极限为无穷大</td><td>\(\dfrac1x\)、\(\tan x\) 在 \(x=0\)</td></tr>
+<tr><td>第二类 · 振荡</td><td>极限不存在且非无穷（振荡）</td><td>\(\sin\dfrac1x\) 在 \(x=0\)</td></tr>
+</tbody>
+</table>
+<div class="box"><span class="t">连续函数的运算（求极限利器）</span>
+<ul>
+<li>连续函数的和、差、积、商（分母非 0）仍连续；复合仍连续（内函数极限存在 + 外函数在对应点连续）。</li>
+<li>严格单调连续函数的反函数连续。</li>
+<li><b>初等函数在其定义区间内连续</b> ⇒ 初等函数求极限直接代入。</li>
+<li>分段函数在分段点的连续性：分别算左极限、右极限、函数值，三者相等才连续。</li>
+</ul>
+</div>
+
+<h3>八、闭区间上连续函数的性质</h3>
+<div class="box"><span class="t">四大定理（设 \(f\) 在 \([a,b]\) 上连续）</span>
+<ol>
+<li><b>有界性定理</b>：\(f\) 在 \([a,b]\) 上有界。</li>
+<li><b>最值定理</b>：\(\exists x_1,x_2\in[a,b]\)，使 \(m=f(x_1)\le f(x)\le f(x_2)=M\)（最小值、最大值都能取到）。</li>
+<li><b>零点定理</b>：若 \(f(a)f(b)&lt;0\)，则 \(\exists\xi\in(a,b)\)，使 \(f(\xi)=0\)。</li>
+<li><b>介值定理</b>：\(\forall\mu\in[m,M]\)，\(\exists\xi\in[a,b]\)，使 \(f(\xi)=\mu\)（值域恰为 \([m,M]\)）。</li>
+</ol>
+</div>
+<div class="box gray"><span class="t">应用套路</span>
+<ul>
+<li>证方程根的存在：构造 \(F(x)\)，用零点定理；证根唯一：再加单调性（或用罗尔定理反证，见第三章）。</li>
+<li>证存在 \(\xi\) 使 \(f(\xi)=C\)：把 \(C\) 移到一边构造辅助函数 \(F=f-C\)。</li>
+<li>一致连续（教材选读，数一不考）：\(\forall\varepsilon>0,\exists\delta>0\)，只要 \(|x_1-x_2|&lt;\delta\) 就有 \(|f(x_1)-f(x_2)|&lt;\varepsilon\)，\(\delta\) 与位置无关；<b>闭区间上连续 ⇒ 一致连续</b>。</li>
+</ul>
+</div>
+
+<h3>九、速查：求极限总流程与易错点</h3>
+<div class="box"><span class="t">求极限五步流程</span>
+<ol>
+<li><b>判类型</b>：代入看是否为七种未定式：\(\dfrac00,\ \dfrac{\infty}{\infty},\ 0\cdot\infty,\ \infty-\infty,\ 1^\infty,\ 0^0,\ \infty^0\)。</li>
+<li><b>能代入就代入</b>（连续处）；<b>能拆就拆</b>（每项极限都存在时）。</li>
+<li><b>乘除因子用等价替换</b>；低阶信息不够时用泰勒展开（洛必达见第三章，须先验条件）。</li>
+<li><b>数列题</b>：夹逼 / 单调有界 / 先求和（裂项、等比）再取极限。</li>
+<li><b>结构化简</b>：有理化、通分、换元（如 \(t=\frac1x\)）、抓大头、提取主导项；两个重要极限；\(1^\infty\) 套 \(e^{\lim v(u-1)}\)。</li>
+</ol>
+</div>
+<table>
+<thead><tr><th>常考小结论</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td>无穷小 × 有界</td><td>\(\lim\limits_{x\to0}x f(x)=0\)（\(f(x)\) 在 \(0\) 的去心邻域内有界）</td></tr>
+<tr><td>幂指型</td><td>\(\lim u^v=e^{\lim v\ln u}\)；\(1^\infty\) 用 \(e^{\lim v(u-1)}\)</td></tr>
+<tr><td>\(\infty-\infty\)</td><td>通分或有理化，化为 \(\frac00\) 或 \(\frac\infty\infty\)</td></tr>
+<tr><td>\(0\cdot\infty\)</td><td>把「简单」因子写成分母（倒过来），化为分式</td></tr>
+<tr><td>分段点连续性</td><td>左极限 = 右极限 = 函数值</td></tr>
+<tr><td>渐近线（了解）</td><td>水平：\(\lim\limits_{x\to\infty}f(x)=A\)；垂直：\(\lim\limits_{x\to x_0}|f(x)|=\infty\)</td></tr>
+</tbody>
+</table>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>等价替换乱用在和差中：如 \(\lim\limits_{x\to0}\frac{x-\sin x}{x^3}\)，若把 \(\sin x\sim x\) 代入得 0（错，正确为 \(\frac16\)）。</li>
+<li>拆项前提被忽略：\(\lim(f\pm g)=\lim f\pm\lim g\) 要求两个极限都存在；只知「和」的极限存在，不能推出分项的极限存在。</li>
+<li>\(1^\infty\) 不是 1；指数里含变量时先取对数或用公式。</li>
+<li>分段点用左右极限分别讨论；注意 \(f(x_0)\) 单独定义，不能只算极限。</li>
+<li>无穷大 ≠ 无界；无界未必趋于无穷大。</li>
+<li>数列极限中 \(n\) 取正整数：连续化到函数 \(f(x)\) 后可对 \(x\to+\infty\) 用洛必达，但推回时只对 \(n\in\mathbb{N}_+\) 成立。</li>
+<li>洛必达使用前必验三条：\(\frac00\) 或 \(\frac\infty\infty\)；去心邻域内可导且 \(g'\ne0\)；\(\frac{f'}{g'}\) 极限存在或为 \(\infty\)。</li>
+</ol>
+</div>
+
+<h3>十、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>10.1 用定义证极限（ε-N / ε-δ 套路）</h4>
+<div class="box">
+<ol>
+<li>作差 \(|x_n-a|\)，用<b>放缩法</b>放大成只含 \(n\) 的简单式子；</li>
+<li>令放大后的式子 \(&lt;\varepsilon\)，解出 \(n>N(\varepsilon)\)；</li>
+<li>取 \(N\)（取整加 1），按格式书写。</li>
+</ol>
+常用放大：\(\dfrac{1}{n^2}&lt;\dfrac1n\)；\(\dfrac{n}{n^2+1}&lt;\dfrac1n\)；\(|\sin n|\le1\)；\(|q|^n\to0\) 用对数或归纳。ε-δ 同理：先写 \(|f(x)-A|\) 放大，解 \(\delta\)，必要时取 \(\delta=\min\{1,\cdots\}\)。
+</div>
+
+<h4>10.2 数列极限专项技巧</h4>
+<div class="box">
+<ol>
+<li><b>夹逼三板斧</b>：① 放大/缩小分母；② 舍去或补上若干项；③ 整体换成最大项、最小项（\(n\) 项和的标配）。</li>
+<li><b>单调有界三步</b>：归纳证界 → 作差 \(x_{n+1}-x_n\)（或作比）证单调 → 设 \(\lim x_n=a\) 代入解方程并取舍。</li>
+<li><b>压缩递推</b>：若 \(|x_{n+1}-a|\le q|x_n-a|\ (0&lt;q&lt;1)\)，则 \(x_n\to a\)（先解出不动点 \(a\)）。</li>
+<li><b>n 项和先化简</b>：裂项 \(\frac1{k(k+1)}=\frac1k-\frac1{k+1}\)、等比求和、提公因子；含 \(\frac ik\) 结构联想定积分定义（第五章）。</li>
+<li><b>连续化</b>：把 \(n\) 换成 \(x\) 先求函数极限，再归结回数列（如 \(\sqrt[n]{n}\)）。</li>
+<li><b>Stolz 定理（选学，探路神器）</b>：\(b_n\) 严格增且 \(b_n\to+\infty\) 时，若 \(\lim\frac{a_{n+1}-a_n}{b_{n+1}-b_n}=L\)，则 \(\lim\frac{a_n}{b_n}=L\)（数列版洛必达；答题建议用它找答案、用标准法书写）。</li>
+<li><b>母题结论直接引用</b>：\(\lim\sqrt[n]{n}=1\)，\(\lim\frac{\ln n}{n}=0\)，\(\lim q^n=0\ (|q|&lt;1)\)，\(\lim\frac{n^k}{a^n}=0\ (a>1)\)。</li>
+</ol>
+</div>
+
+<h4>10.3 函数极限专项技巧</h4>
+<div class="box">
+<ol>
+<li><b>代入优先</b>：初等函数在定义区间内直接代。</li>
+<li><b>乘除因子等价替换</b>；加减同阶相消 → 泰勒保阶（保留到首个非零项）。</li>
+<li><b>未定式分型处理</b>：0/0、∞/∞ 用洛必达（验条件）或泰勒；0·∞ 倒因子化分式；∞−∞ 通分或有理化；0^0、∞^0、1^∞ 一律 \(u^v=e^{v\ln u}\)。</li>
+<li><b>1^∞ 三招</b>：① 凑 \((1+\alpha)^{1/\alpha}\) 结构；② 公式 \(e^{\lim v(u-1)}\)；③ 取对数后等价替换。</li>
+<li><b>凑导数定义</b>：\(\lim\limits_{\square\to0}\dfrac{f(x_0+\square)-f(x_0)}{\square}=f'(x_0)\)——凡是形如「函数差 ÷ 自变量差」的极限先想它（第二章高频）。</li>
+<li><b>有理化/通分</b>：\(\sqrt A-\sqrt B=\dfrac{A-B}{\sqrt A+\sqrt B}\)；分式相减先通分。</li>
+<li><b>换元</b>：\(t=\dfrac1x\)、\(u=x-x_0\)、三角换元，把过程搬到 0 点，套等价无穷小。</li>
+<li><b>抓大头 + 量级比较</b>：\(x\to+\infty\) 时 \(a^x\gg x^\beta\gg\ln^\gamma x\ (a>1,\beta>0)\)；有理式比最高次。</li>
+<li><b>无穷小 × 有界 = 无穷小</b>；\(o(\cdot)\) 运算规则化简。</li>
+<li><b>准则放缩</b>：含 \([\,]\)、\(\sin\infty\)、\(n\) 项结构优先夹逼。</li>
+<li><b>证极限不存在</b>：海涅定理找两条路径（沿 \(y=x\) 与 \(y=2x\) 趋近不同值），或左右极限不等，或振荡。</li>
+<li><b>已知极限反求参数</b>：由式定型（如分母趋于 0 ⇒ 分子也趋于 0），列方程解参数。</li>
+</ol>
+</div>
+
+<h4>10.4 存在性证明与连续性应用</h4>
+<div class="box">
+<ul>
+<li>证根存在：待证结论移项构造 \(F(x)\) + 零点定理；证唯一：再加单调（或罗尔反证，第三章）。</li>
+<li>分段含参连续：分界点处「左极限 = 右极限 = 函数值」列方程组。</li>
+<li>利用奇偶/周期性简化：奇函数在对称区间积分等（第五章衔接）。</li>
+<li>连续 + 单调 ⇒ 反函数连续，可用于反三角函数极限。</li>
+</ul>
+</div>
+
+<h4>10.5 常用泰勒前几项（阶数速判，第三章细讲）</h4>
+<table>
+<thead><tr><th>函数</th><th>展开（\(x\to0\) 用）</th></tr></thead>
+<tbody>
+<tr><td class="c">\(e^x\)</td><td>\(1+x+\dfrac{x^2}{2}+\dfrac{x^3}{6}+o(x^3)\)</td></tr>
+<tr><td class="c">\(\ln(1+x)\)</td><td>\(x-\dfrac{x^2}{2}+\dfrac{x^3}{3}+o(x^3)\)</td></tr>
+<tr><td class="c">\(\sin x\)</td><td>\(x-\dfrac{x^3}{6}+o(x^3)\)</td></tr>
+<tr><td class="c">\(\cos x\)</td><td>\(1-\dfrac{x^2}{2}+\dfrac{x^4}{24}+o(x^4)\)</td></tr>
+<tr><td class="c">\(\tan x\)</td><td>\(x+\dfrac{x^3}{3}+o(x^3)\)</td></tr>
+<tr><td class="c">\(\arcsin x\)</td><td>\(x+\dfrac{x^3}{6}+o(x^3)\)</td></tr>
+<tr><td class="c">\((1+x)^\alpha\)</td><td>\(1+\alpha x+\dfrac{\alpha(\alpha-1)}{2}x^2+o(x^2)\)</td></tr>
+</tbody>
+</table>
+<div class="mini">判阶口诀：先看首项差几阶——差 1 阶用等价替换就够，差 2 阶以上必须泰勒/洛必达。</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 1 章 完 ——</div>
+
+<h2 class="chap" id="ch2">第 2 章　导数与微分</h2>
+<div class="strip">本章速览：一 导数概念 · 二 求导法则与基本公式 · 三 高阶导数 · 四 隐函数与参数方程求导 · 五 微分 · 六 速查与易错 · 七 技巧库（全）</div>
+
+<h3>一、导数概念</h3>
+<div class="box"><span class="t">导数定义</span><br>
+设 \(y=f(x)\) 在 \(x_0\) 的某邻域内有定义：
+\[ f'(x_0)=\lim_{\Delta x\to0}\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}=\lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0} \]
+记作 \(y'|_{x=x_0}\)、\(\left.\frac{dy}{dx}\right|_{x=x_0}\) 或 \(f'(x_0)\)；该极限存在则称 \(f\) 在 \(x_0\) 可导。区间内每点可导得到导函数 \(f'(x)\)。
+</div>
+<div class="box"><span class="t">左、右导数与可导的充要条件</span><br>
+\[ f'_-(x_0)=\lim_{\Delta x\to0^-}\frac{\Delta y}{\Delta x},\qquad f'_+(x_0)=\lim_{\Delta x\to0^+}\frac{\Delta y}{\Delta x} \]
+<b>可导 ⇔ 左、右导数存在且相等</b>——分段函数分界点可导性的标准判法。
+</div>
+<div class="box"><span class="t">几何意义与切线、法线</span><br>
+\(f'(x_0)\) 是曲线 \(y=f(x)\) 在点 \((x_0,f(x_0))\) 处切线的斜率。<br>
+切线：\(y-f(x_0)=f'(x_0)(x-x_0)\)；<br>
+法线：\(f'(x_0)\ne0\) 时 \(y-f(x_0)=-\dfrac{1}{f'(x_0)}(x-x_0)\)；\(f'(x_0)=0\) 时法线为 \(x=x_0\)；\(f'(x_0)=\infty\)（垂直切线）时切线为 \(x=x_0\)。<br>
+物理意义：瞬时速度 \(v=s'(t)\)；一般地，导数即「变化率」。
+</div>
+<div class="box"><span class="t">可导与连续的关系</span><br>
+<b>可导 ⇒ 连续</b>。证明：\(\Delta y=\dfrac{\Delta y}{\Delta x}\cdot\Delta x\to f'(x_0)\cdot0=0\)。<br>
+<b>连续 ⇏ 可导</b>。典型不可导点：<br>
+① \(|x|\) 在 \(x=0\)（尖点，左导数 \(-1\)、右导数 \(1\)）；<br>
+② \(\sqrt[3]{x}\) 在 \(x=0\)（垂直切线，导数为 \(\infty\)）；<br>
+③ \(x\sin\frac1x\) 在 \(x=0\)（振荡，差商无极限）。
+</div>
+<div class="box gray"><span class="t">用定义求导三步模板</span>
+<ol>
+<li>算增量：\(\Delta y=f(x_0+\Delta x)-f(x_0)\)；</li>
+<li>作差商 \(\dfrac{\Delta y}{\Delta x}\)，用有理化、通分、拆项、三角恒等变形；</li>
+<li>令 \(\Delta x\to0\) 取极限。</li>
+</ol>
+凡出现 \(f(x_0+\square)-f(x_0)\) 结构，一律优先「凑导数定义」。
+</div>
+
+<h3>二、求导法则与基本公式</h3>
+<div class="box"><span class="t">四则运算、复合与反函数</span>
+<ul>
+<li>\((u\pm v)'=u'\pm v'\)；\((uv)'=u'v+uv'\)；\(\left(\dfrac uv\right)'=\dfrac{u'v-uv'}{v^2}\ (v\ne0)\)。</li>
+<li><b>链式法则</b>：\(\dfrac{dy}{dx}=\dfrac{dy}{du}\cdot\dfrac{du}{dx}\)——从外到内层层剥，别漏内层导数。</li>
+<li>反函数：\([f^{-1}(y)]'=\dfrac{1}{f'(x)}\ (f'(x)\ne0)\)。</li>
+</ul>
+</div>
+<table>
+<thead><tr><th colspan="2">基本导数公式（必背 16 条）</th></tr></thead>
+<tbody>
+<tr><td>\((C)'=0\)</td><td>\((x^\mu)'=\mu x^{\mu-1}\)</td></tr>
+<tr><td>\((a^x)'=a^x\ln a\)</td><td>\((e^x)'=e^x\)</td></tr>
+<tr><td>\((\log_a x)'=\dfrac{1}{x\ln a}\)</td><td>\((\ln x)'=\dfrac1x\)</td></tr>
+<tr><td>\((\sin x)'=\cos x\)</td><td>\((\cos x)'=-\sin x\)</td></tr>
+<tr><td>\((\tan x)'=\sec^2x\)</td><td>\((\cot x)'=-\csc^2x\)</td></tr>
+<tr><td>\((\sec x)'=\sec x\tan x\)</td><td>\((\csc x)'=-\csc x\cot x\)</td></tr>
+<tr><td>\((\arcsin x)'=\dfrac{1}{\sqrt{1-x^2}}\)</td><td>\((\arccos x)'=-\dfrac{1}{\sqrt{1-x^2}}\)</td></tr>
+<tr><td>\((\arctan x)'=\dfrac{1}{1+x^2}\)</td><td>\((\operatorname{arccot}x)'=-\dfrac{1}{1+x^2}\)</td></tr>
+</tbody>
+</table>
+<div class="mini">记忆：反三角「根号管正弦余弦、平方和管理切」，符号跟着单调性走（arccos、arccot 带负号）。</div>
+<div class="box"><span class="t">分段函数求导</span><br>
+分界点一律用<b>定义</b>算左、右导数（先确认连续更好）；非分界点用公式。若分界点的函数值另行定义，注意结合连续性讨论。
+</div>
+
+<h3>三、高阶导数</h3>
+<div class="box"><span class="t">定义与常用 n 阶公式</span><br>
+\(y''=(y')'\)，记 \(y''\)、\(\dfrac{d^2y}{dx^2}\)；\(n\) 阶记 \(y^{(n)}=\left(y^{(n-1)}\right)'\)。
+\[ (e^x)^{(n)}=e^x,\qquad (\sin x)^{(n)}=\sin\!\left(x+\frac{n\pi}{2}\right),\qquad (\cos x)^{(n)}=\cos\!\left(x+\frac{n\pi}{2}\right) \]
+\[ (x^\mu)^{(n)}=\mu(\mu-1)\cdots(\mu-n+1)\,x^{\mu-n},\qquad (\ln x)^{(n)}=\frac{(-1)^{n-1}(n-1)!}{x^n} \]
+\[ \left(\frac{1}{x+a}\right)^{(n)}=\frac{(-1)^n\,n!}{(x+a)^{n+1}} \]
+</div>
+<div class="box"><span class="t">莱布尼茨公式</span><br>
+\[ (uv)^{(n)}=\sum_{k=0}^{n}\binom{n}{k}\,u^{(k)}\,v^{(n-k)} \]
+与二项式同构，适合「一个因子为多项式」的情形（多项式求导几次后归零），如 \(x^2e^x\)、\((x^2+1)\sin x\)。
+</div>
+
+<h3>四、隐函数与参数方程求导</h3>
+<div class="box"><span class="t">隐函数求导法</span><br>
+把 \(y\) 看作 \(y(x)\)：方程两边对 \(x\) 求导，凡含 \(y\) 的项求导后乘上 \(\dfrac{dy}{dx}\)，然后解出 \(y'\)。<br>
+求 \(y''\)：在一阶表达式基础上再对 \(x\) 求导（商法则 + 链式），保留 \(y'\) 或整体代入；<b>若只求某点的二阶导，先代点求一阶值可大幅化简</b>。
+</div>
+<div class="box"><span class="t">对数求导法</span><br>
+适用：幂指函数 \(u(x)^{v(x)}\)、多个因式连乘连除的式子。<br>
+步骤：① 两边取对数（把乘除变加减）；② 两边对 \(x\) 隐式求导；③ 乘回原函数得 \(y'\)。<br>
+幂指函数直接公式：\((u^v)'=u^v\left(v'\ln u+\dfrac{v\,u'}{u}\right)\)（\(u>0\)）。
+</div>
+<div class="box"><span class="t">参数方程求导</span><br>
+设 \(\begin{cases}x=x(t)\\ y=y(t)\end{cases}\)（\(x'(t)\ne0\)）：
+\[ \frac{dy}{dx}=\frac{y'(t)}{x'(t)},\qquad \frac{d^2y}{dx^2}=\frac{y''(t)\,x'(t)-y'(t)\,x''(t)}{\left[x'(t)\right]^3} \]
+二阶的来路：先求 \(\dfrac{dy}{dx}\)（作为 t 的函数），再对 t 求导、除以 \(x'(t)\)；展开即立方公式，考试用展开式最快。
+</div>
+
+<h3>五、微分</h3>
+<div class="box"><span class="t">定义与可微条件</span><br>
+设 \(\Delta y=f(x_0+\Delta x)-f(x_0)\)。若 \(\Delta y=A\Delta x+o(\Delta x)\)（\(A\) 与 \(\Delta x\) 无关），称 \(f\) 在 \(x_0\) 可微，\(A\Delta x\) 称为微分，记 \(dy=A\,dx\)。<br>
+<b>可微 ⇔ 可导</b>，且 \(dy=f'(x)\,dx\)；\(\Delta y=dy+o(\Delta x)\)。
+</div>
+<div class="box"><span class="t">几何意义与形式不变性</span><br>
+几何：\(dy\) 是切线的纵坐标增量（「以直代曲」）。<br>
+微分法则与导数法则一一对应：\(d(u\pm v)=du\pm dv\)；\(d(uv)=v\,du+u\,dv\)；\(d\!\left(\dfrac uv\right)=\dfrac{v\,du-u\,dv}{v^2}\)。<br>
+<b>一阶微分形式不变性</b>：无论 \(u\) 是自变量还是中间变量，均有 \(d[f(u)]=f'(u)\,du\)——复合函数微分与换元的基础。
+</div>
+<div class="box"><span class="t">近似计算</span><br>
+\[ f(x_0+\Delta x)\approx f(x_0)+f'(x_0)\,\Delta x,\qquad f(x)\approx f(0)+f'(0)\,x\ (x\to0) \]
+常用近似式（\(|x|\) 很小）：\(\sqrt[n]{1+x}\approx1+\dfrac xn\)；\((1+x)^\alpha\approx1+\alpha x\)；\(\sin x\approx x\)；\(\tan x\approx x\)；\(e^x\approx1+x\)；\(\ln(1+x)\approx x\)；\(\arcsin x\approx\arctan x\approx x\)。
+</div>
+
+<h3>六、速查与易错</h3>
+<div class="box"><span class="t">求导总流程</span><br>
+① 判结构：初等式直接套公式 + 链式；隐式两边求导；参数用参数公式；幂指/连乘用对数求导；分段在分界点用定义。<br>
+② 能化简先化简（拆项、三角恒等、代数变形）再求导，少出错。<br>
+③ 求切线三步：导数（斜率）→ 切点 → 点斜式；检查是否需要先找切点。
+</div>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>分段点直接套公式（错）——必须用定义算左、右导数并比较。</li>
+<li>参数方程二阶导写成 \(\dfrac{y''(t)}{x''(t)}\)（错），应为立方公式。</li>
+<li>\(f'(x_0)\) 是一个数，\([f(x_0)]'=0\)；「先求导再代点」与「先代点再求导」完全不同。</li>
+<li>「过点 \(P\) 的切线」≠「在点 \(P\) 处的切线」：前者切点可能不是 \(P\)，需设切点解方程。</li>
+<li>隐函数求导漏乘 \(y'\)：含 \(y\) 的项求导后必须乘 \(\dfrac{dy}{dx}\)。</li>
+<li>可导 ⇒ 连续；连续 + 左右导数存在仍不够，还要相等才可导。</li>
+<li>乘方开方、绝对值：先化分段再讨论，含参别漏端点和讨论点。</li>
+</ol>
+</div>
+
+<h3>七、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>7.1 用定义求导的常见题型</h4>
+<div class="box">
+<ul>
+<li><b>分段点可导性</b>：分别写 \(f'_-(x_0)=\lim\limits_{\Delta x\to0^-}\dfrac{f(x_0+\Delta x)-f(x_0)}{\Delta x}\)、\(f'_+(x_0)\)，先化简再取极限，两者相等才可导。</li>
+<li><b>抽象函数配凑</b>：\(\lim\limits_{h\to0}\dfrac{f(x_0+ah)-f(x_0+bh)}{h}=(a-b)f'(x_0)\)（前提 \(f'(x_0)\) 存在）；见到 \(f(\square)-f(\square)\) 型先往定义式上凑。</li>
+<li><b>利用等价无穷小凑定义</b>：如 \(\lim\limits_{x\to0}\dfrac{f(1-\cos x)}{x^2}=\dfrac12\lim\limits_{u\to0}\dfrac{f(u)}{u}=\dfrac12f'(0)\)（\(f(0)=0\) 时）。</li>
+<li><b>含绝对值</b>：若 \(g(x_0)=0\) 且 \(g\) 可导，用定义讨论 \(|g|'\) 的左右极限；\(g'(x_0)\ne0\) 时 \(|g|\) 在 \(x_0\) 不可导。</li>
+</ul>
+</div>
+
+<h4>7.2 幂指与连乘：对数求导法流程图</h4>
+<div class="box">
+① 认型（\(u^v\) 或 连乘连除）→ ② 两边取 \(\ln\) 并化简 → ③ 两边对 \(x\) 求导（左端 \(\frac{y'}{y}\)）→ ④ 解出 \(y'\) 并乘回 \(y\)（最后把 \(y\) 用原式替换）。<br>
+快速特例：\(y=x^x\) ⇒ \(y'=x^x(\ln x+1)\)；\(y=\frac{(x+1)^2\sqrt{x-1}}{(x+4)^3}\) 用对数求导最省力。
+</div>
+
+<h4>7.3 高阶导数三招</h4>
+<div class="box">
+<ol>
+<li><b>先化简</b>：裂项 \(\dfrac{1}{x(x+1)}=\dfrac1x-\dfrac1{x+1}\)；三角降幂 \(\sin^2x=\dfrac{1-\cos 2x}{2}\)；再套公式表。</li>
+<li><b>找规律</b>：逐阶求前 3–4 阶归纳通项（如 \(x^2\ln x\)、\(\arctan x\) 低阶试探）。</li>
+<li><b>莱布尼茨</b>：多项式因子优先（\(x^2\) 只留 3 项），三角函数型保留通项。</li>
+</ol>
+</div>
+
+<h4>7.4 隐函数二阶与切线五大题型</h4>
+<div class="box">
+<b>隐函数二阶</b>：对一阶式再求导 → 把一阶结果代入消 \(y'\)；只求某点值时，先代点把一阶值算成常数再求导。<br>
+<b>切线五型</b>：① 已知切点：直接斜率点斜式；② 过定点 \(P\)：设切点 \((t,f(t))\)，用「切线过 P」列方程解 t；③ 与已知直线平行/垂直：用斜率条件 \(f'(t)=k\) 或 \(f'(t)=-1/k\)；④ 与曲线相切：联立 + 判别式或斜率相等；⑤ 公切线：设两个切点，斜率相等 + 同一条线列方程组。
+</div>
+
+<h4>7.5 微分近似计算模板</h4>
+<div class="box">
+选三样：函数 \(f\)、基点 \(x_0\)（好算）、增量 \(\Delta x\)（小）→ 套 \(f(x_0+\Delta x)\approx f(x_0)+f'(x_0)\Delta x\)。<br>
+例：\(\sqrt{4.02}=\sqrt{4+0.02}\approx2+\dfrac{1}{2\sqrt4}\cdot0.02=2.005\)；\(\ln 1.01\approx0.01\)；\(\sin 29^\circ\approx\sin30^\circ-\cos30^\circ\cdot\dfrac{\pi}{180}\)。<br>
+（误差估计：\(\Delta y-dy=o(\Delta x)\)，工程近似足够。）
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 2 章 完 ——</div>
+
+<!-- NEXT-CHAPTER -->
+
+</div>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"
+  ];
+  function load(i){
+    if(i>=urls.length){return;}
+    var s=document.createElement("script");
+    s.src=urls[i];s.async=true;
+    s.onerror=function(){load(i+1);};
+    document.head.appendChild(s);
+  }
+  load(0);
+})();
+</script>
+</body>
+</html>
