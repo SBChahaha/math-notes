@@ -3531,6 +3531,152 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 19 章 完 ——</div>
 
+<h2 class="chap" id="ch20">第 20 章　随机变量及其分布</h2>
+<div class="strip">本章速览：一 随机变量与分布函数 · 二 离散型随机变量与常见分布 · 三 连续型随机变量与常见分布 · 四 随机变量函数的分布 · 五 速查与易错 · 六 技巧库（全）</div>
+
+<h3>一、随机变量与分布函数</h3>
+<div class="box"><span class="t">随机变量</span><br>
+把样本空间 \(S\) 映射到实数的函数 \(X=X(\omega)\)；分离散型、连续型等（按取值特点）。
+</div>
+<div class="box"><span class="t">分布函数</span><br>
+\[ F(x)=P(X\le x),\qquad -\infty&lt;x&lt;+\infty \]
+性质四条：① 单调不减；② \(0\le F(x)\le1\)；③ \(F(-\infty)=0,\ F(+\infty)=1\)；④ <b>右连续</b>。<br>
+用 F 求概率：\(P(a&lt;X\le b)=F(b)-F(a)\)；\(P(X=a)=F(a)-F(a-0)\)（跳跃高度）。
+</div>
+
+<h3>二、离散型随机变量与常见分布</h3>
+<div class="box"><span class="t">分布律</span><br>
+\(P(X=x_k)=p_k\)，满足 \(p_k\ge0\)、\(\sum\limits_k p_k=1\)；分布函数是阶梯函数（在 \(x_k\) 处跳跃 \(p_k\)）。
+</div>
+<table>
+<thead><tr><th>分布</th><th>记号</th><th>分布律</th><th>应用背景</th></tr></thead>
+<tbody>
+<tr><td>0-1 分布</td><td>\(B(1,p)\)</td><td>\(P(X=1)=p,\ P(X=0)=1-p\)</td><td>一次伯努利试验</td></tr>
+<tr><td>二项分布</td><td>\(B(n,p)\)</td><td>\(P(X=k)=\binom nk p^k(1-p)^{n-k}\)</td><td>n 重伯努利成功次数</td></tr>
+<tr><td>泊松分布</td><td>\(P(\lambda)\)</td><td>\(P(X=k)=\dfrac{\lambda^k e^{-\lambda}}{k!}\ (k=0,1,2,\dots)\)</td><td>稀有事件计数（到达数、缺陷数）</td></tr>
+<tr><td>几何分布</td><td>\(G(p)\)</td><td>\(P(X=k)=(1-p)^{k-1}p\ (k=1,2,\dots)\)</td><td>首次成功所需的试验次数</td></tr>
+<tr><td>超几何分布</td><td>\(H(N,M,n)\)</td><td>\(P(X=k)=\dfrac{\binom Mk\binom{N-M}{n-k}}{\binom Nn}\)</td><td>不放回抽样中的次品数</td></tr>
+</tbody>
+</table>
+<div class="box gray"><span class="t">泊松定理（二项 → 泊松）</span><br>
+当 \(n\) 很大、\(p\) 很小，令 \(\lambda=np\)：
+\[ \binom nk p^k(1-p)^{n-k}\approx\frac{\lambda^k e^{-\lambda}}{k!} \]
+（应用：n 大 p 小（一般 \(n\ge20\) 且 \(p\le0.05\) 量级）时用泊松近似算二项概率。）
+</div>
+
+<h3>三、连续型随机变量与常见分布</h3>
+<div class="box"><span class="t">概率密度</span><br>
+若 \(F(x)=\int_{-\infty}^{x}f(t)dt\)，称 \(f\) 为概率密度，满足：① \(f(x)\ge0\)；② \(\int_{-\infty}^{+\infty}f(x)dx=1\)；<br>
+③ \(P(a&lt;X\le b)=\int_a^b f(x)dx\)；④ 在 \(f\) 的连续点 \(F'(x)=f(x)\)。<br>
+连续型对单点：\(P(X=a)=0\)（但并非不可能事件）；密度值可大于 1（它不等于概率）。
+</div>
+<table>
+<thead><tr><th>分布</th><th>记号</th><th>密度 / 分布函数</th></tr></thead>
+<tbody>
+<tr><td>均匀分布</td><td>\(U(a,b)\)</td><td>\(f=\dfrac{1}{b-a}\ (a&lt;x&lt;b)\)；F 为线性函数</td></tr>
+<tr><td>指数分布</td><td>\(E(\lambda)\)</td><td>\(f=\lambda e^{-\lambda x}\ (x&gt;0)\)；\(F=1-e^{-\lambda x}\ (x&gt;0)\)</td></tr>
+<tr><td>正态分布</td><td>\(N(\mu,\sigma^2)\)</td><td>\(f=\dfrac{1}{\sqrt{2\pi}\,\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\)</td></tr>
+</tbody>
+</table>
+<div class="box"><span class="t">正态分布要点</span>
+<ul>
+<li>标准正态 \(N(0,1)\)：密度记 \(\varphi(x)\)、分布函数记 \(\Phi(x)\)；对称性 \(\Phi(-x)=1-\Phi(x)\)，\(\Phi(0)=\frac12\)。</li>
+<li>标准化：\(X\sim N(\mu,\sigma^2)\Rightarrow\dfrac{X-\mu}{\sigma}\sim N(0,1)\)；<br>
+\(P(a&lt;X\le b)=\Phi\!\left(\frac{b-\mu}{\sigma}\right)-\Phi\!\left(\frac{a-\mu}{\sigma}\right)\)。</li>
+<li>线性变换：\(aX+b\sim N(a\mu+b,\ a^2\sigma^2)\)（\(a\ne0\)）。</li>
+<li>\(3\sigma\) 原则：\(P(|X-\mu|&lt;\sigma)\approx0.6826\)；\(\approx0.9544\)（2σ）；\(\approx0.9974\)（3σ）。</li>
+</ul>
+</div>
+<div class="mini">三大抽样分布 \(\chi^2(n)、t(n)、F(n_1,n_2)\) 的构造与上侧分位点在第 24 章展开。</div>
+
+<h3>四、随机变量函数的分布</h3>
+<div class="box"><span class="t">离散型：列表法</span><br>
+把 \(X\) 的各取值代入 \(Y=g(X)\)，合并相同取值对应的概率（注意多个 x 映到同一 y 时概率相加）。
+</div>
+<div class="box"><span class="t">连续型方法一：分布函数法（万能）</span><br>
+① 写出 \(F_Y(y)=P(Y\le y)=P(g(X)\le y)\)；② 把事件 \(\{g(X)\le y\}\) 转化为关于 X 的区间（分段讨论）；③ 用 \(f_X\) 积分表示；④ 对 \(y\) 求导得 \(f_Y(y)\)。<br>
+此法对任何 \(g\)（含非单调、分段）都适用，是保底方法。
+</div>
+<div class="box"><span class="t">连续型方法二：公式法（单调可导时）</span><br>
+若 \(y=g(x)\) 严格单调、可导且 \(g'\ne0\)，反函数 \(x=h(y)\)：
+\[ f_Y(y)=f_X(h(y))\,\bigl|h'(y)\bigr| \]
+（绝对值不能丢；若 g 分段单调，把各段结果相加。）
+</div>
+<div class="box gray"><span class="t">两个必须背会的结论</span><br>
+① 线性变换：\(aX+b\sim N(a\mu+b,\ a^2\sigma^2)\)；<br>
+② 常见例题：\(X\sim U(0,1)\) 时 \(Y=-\ln X\sim E(1)\)；\(X\sim N(0,1)\) 时 \(Y=X^2\sim\chi^2(1)\)（第 24 章）；\(Y=|X|\) 的分段密度推导。
+</div>
+
+<h3>五、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>分布函数是<b>右连续</b>（易把跳跃点取值写错）；\(P(X=a)\) 要用跳跃高度算。</li>
+<li>连续型 \(P(X=a)=0\)，但不代表 \(\{X=a\}\) 是不可能事件（概念辨析题高频）。</li>
+<li>密度函数的值可以大于 1（不是概率）；只有积分才是概率。</li>
+<li>泊松定理条件（n 大、p 小、λ=np）不满足时乱用近似。</li>
+<li>几何分布的起始值（「首次成功所需次数」从 1 开始；「首次成功前的失败次数」从 0 开始）看题干定义。</li>
+<li>正态查表：先标准化，再用对称性（\(\Phi(-x)=1-\Phi(x)\)）；区间端点写反。</li>
+<li>公式法漏 \(|h'(y)|\)；非单调 \(g\) 忘记分段相加。</li>
+<li>由分布求参数时忘记用归一化条件（\(\sum p=1\)、\(\int f=1\)、\(F(+\infty)=1\)）。</li>
+<li>无记忆性只属于指数分布（连续）和几何分布（离散），别乱套其它分布。</li>
+<li>求 \(Y=g(X)\) 的分布时未写清 \(y\) 的取值范围（分段必须完整覆盖）。</li>
+</ol>
+</div>
+
+<h3>六、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>6.1 求参数的三种归一化</h4>
+<div class="box">
+① 分布律：\(\sum p_k=1\)；② 密度：\(\int_{-\infty}^{+\infty}f(x)dx=1\)；③ 分布函数：\(F(+\infty)=1,\ F(-\infty)=0\)（有时还要右连续拼接）。
+</div>
+
+<h4>6.2 分布函数与密度的互化规范</h4>
+<div class="box">
+\(f\to F\)：分区间积分（注意密度非零区间）；\(F\to f\)：分段求导（分段点处密度可任取，不影响积分）。<br>
+写 \(F(x)\) 必须用分段函数形式并注明各段范围。
+</div>
+
+<h4>6.3 函数分布方法选择表</h4>
+<table>
+<thead><tr><th>情形</th><th>推荐方法</th></tr></thead>
+<tbody>
+<tr><td>离散型</td><td>列表合并</td></tr>
+<tr><td>单调可导（如 \(e^X,\ aX+b\)）</td><td>公式法（快）</td></tr>
+<tr><td>非单调（如 \(X^2,\ |X|\)）</td><td>分布函数法（稳）</td></tr>
+<tr><td>分段函数</td><td>分布函数法 + 分区间讨论</td></tr>
+</tbody>
+</table>
+
+<h4>6.4 正态计算三板斧</h4>
+<div class="box">
+① 标准化：\((X-\mu)/\sigma\sim N(0,1)\)；② 对称性：\(\Phi(-x)=1-\Phi(x)\)，\(\Phi(0)=\frac12\)；③ 分段区间化：\(P(a&lt;X&lt;b)=\Phi(b^*)-\Phi(a^*)\)。整套动作 30 秒完成。
+</div>
+
+<h4>6.5 指数分布无记忆性应用</h4>
+<div class="box">
+\(P(X&gt;s+t\mid X&gt;s)=P(X&gt;t)\)——「已等了 s 小时不影响再等多久」。常见题型：设备寿命、等待时间；配合 \(P(X&gt;t)=e^{-\lambda t}\) 使用。
+</div>
+
+<h4>6.6 常见分布速查卡</h4>
+<table>
+<thead><tr><th>分布</th><th>取值/范围</th><th>关键特征</th></tr></thead>
+<tbody>
+<tr><td>\(B(n,p)\)</td><td>\(0,1,\dots,n\)</td><td>n 重独立试验成功次数</td></tr>
+<tr><td>\(P(\lambda)\)</td><td>\(0,1,2,\dots\)</td><td>稀有事件计数；二项近似</td></tr>
+<tr><td>\(G(p)\)</td><td>\(1,2,\dots\)</td><td>首次成功；无记忆</td></tr>
+<tr><td>\(U(a,b)\)</td><td>\((a,b)\)</td><td>等可能；线性 F</td></tr>
+<tr><td>\(E(\lambda)\)</td><td>\(x&gt;0\)</td><td>无记忆；等待时间</td></tr>
+<tr><td>\(N(\mu,\sigma^2)\)</td><td>\(\mathbb{R}\)</td><td>对称钟形；标准化</td></tr>
+</tbody>
+</table>
+
+<h4>6.7 反问题：由概率反求区间或参数</h4>
+<div class="box">
+题目给 \(P(X\le c)=\alpha\) 之类：用分布函数反解 \(c\)（正态用分位数 \(\Phi^{-1}\)、指数/均匀直接解方程）。含参数时联立归一化与已知概率两个方程。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 20 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
