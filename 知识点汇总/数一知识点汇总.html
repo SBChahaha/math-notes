@@ -2937,6 +2937,150 @@ td.c{text-align:center}
 
 <div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 15 章 完 ——</div>
 
+<h2 class="chap" id="ch16">第 16 章　向量组的线性相关性</h2>
+<div class="strip">本章速览：一 向量与线性组合 · 二 线性相关与线性无关 · 三 秩与极大无关组 · 四 重要定理与不等式 · 五 向量空间初步 · 六 速查与易错 · 七 技巧库（全）</div>
+
+<h3>一、n 维向量与线性组合</h3>
+<div class="box"><span class="t">向量与线性运算</span><br>
+\(n\) 维向量 \(\alpha=(a_1,a_2,\dots,a_n)^T\)；加法与数乘按分量进行。基本工具：把向量组排成矩阵。
+</div>
+<div class="box"><span class="t">线性表示</span><br>
+\(\beta\) 可由 \(\alpha_1,\dots,\alpha_m\) 线性表示 ⇔ 存在 \(k_i\) 使 \(\beta=k_1\alpha_1+\cdots+k_m\alpha_m\) ⇔ 方程组 \([\alpha_1\ \cdots\ \alpha_m]x=\beta\) 有解 ⇔
+\[ r(\alpha_1,\dots,\alpha_m)=r(\alpha_1,\dots,\alpha_m,\beta) \]
+（把「表示问题」变成「方程组/秩的问题」——本章一切结论的总开关。）
+</div>
+<div class="box gray"><span class="t">向量组等价</span><br>
+两个向量组能<b>互相</b>线性表示，称等价；等价 ⇒ 秩相等；秩相等 + 一组可由另一组表示 ⇒ 等价。
+</div>
+
+<h3>二、线性相关与线性无关</h3>
+<div class="box"><span class="t">定义</span><br>
+向量组 \(\alpha_1,\dots,\alpha_m\)：若存在<b>不全为零</b>的 \(k_1,\dots,k_m\) 使
+\[ k_1\alpha_1+\cdots+k_m\alpha_m=0 \]
+则称线性<b>相关</b>；若只有全零解，则称线性<b>无关</b>。
+</div>
+<div class="box"><span class="t">判定定理（核心）</span><br>
+\[ \alpha_1,\dots,\alpha_m\ \text{线性相关}\iff r(\alpha_1,\dots,\alpha_m)&lt;m \]
+\[ \alpha_1,\dots,\alpha_m\ \text{线性无关}\iff r(\alpha_1,\dots,\alpha_m)=m\ (\text{列满秩}) \]
+（\(m\) 是向量个数；等价说法：齐次方程组有非零解 ↔ 相关。）
+</div>
+<table>
+<thead><tr><th>情形</th><th>结论</th></tr></thead>
+<tbody>
+<tr><td>含零向量</td><td>必线性相关</td></tr>
+<tr><td>两个向量成比例（共线）</td><td>线性相关</td></tr>
+<tr><td>向量个数 \(m&gt;\) 维数 \(n\)</td><td>必线性相关（\(n+1\) 个 n 维向量必相关）</td></tr>
+<tr><td>部分相关</td><td>整体相关（整体无关 ⇒ 任何部分无关）</td></tr>
+<tr><td>无关组添加一个向量后相关</td><td>新向量可由原组<b>唯一</b>线性表示</td></tr>
+</tbody>
+</table>
+<div class="box gray"><span class="t">判定三件套</span><br>
+① <b>定义法</b>：设 \(k_1\alpha_1+\cdots+k_m\alpha_m=0\)，推 \(k_i\) 是否只能全为 0；<br>
+② <b>秩法</b>：矩阵行变换求秩与 \(m\) 比较（具体数字题首选）；<br>
+③ <b>结论法</b>：套上表与既有定理（抽象题主力）。
+</div>
+
+<h3>三、向量组的秩与极大无关组</h3>
+<div class="box"><span class="t">极大线性无关组</span><br>
+向量组的一个<b>部分组</b>，满足：① 本身线性无关；② 再添加组内任何向量都相关（等价于：组内每个向量都可由它线性表示）。<br>
+极大无关组不一定唯一，但<b>向量个数唯一</b>，这个个数就是向量组的<b>秩</b>。
+</div>
+<div class="box"><span class="t">求法（与矩阵联动）</span><br>
+① 把向量按列排成矩阵 \(A=(\alpha_1,\dots,\alpha_m)\)；② 对 \(A\) 作行变换化行阶梯/行最简形；③ <b>主元所在的列</b>对应原矩阵中的列向量即为极大无关组；④ 若要写出「其余向量用极大无关组表示」的系数，继续化行最简形直接读系数（行变换不改变列向量之间的线性关系）。
+</div>
+<div class="box"><span class="t">向量组的秩与矩阵的秩</span><br>
+\(r(\alpha_1,\dots,\alpha_m)\) = 以它们为列（或行）构成的矩阵的秩；矩阵的行秩 = 列秩 = 矩阵的秩。
+</div>
+
+<h3>四、重要定理与不等式</h3>
+<div class="box"><span class="t">表示与秩的核心定理</span>
+<ul>
+<li>组 I 可由组 II 线性表示 ⇒ \(r(\text{I})\le r(\text{II})\)（「被表示者秩不超」）。</li>
+<li>向量组与其极大无关组等价；等价向量组秩相等。</li>
+<li>\(r(\text{I})=r(\text{II})\) 且 I 可由 II 表示 ⇒ 两组等价。</li>
+<li>若 \(r(\alpha_1,\dots,\alpha_m)=t\)，则其中任意 \(t\) 个线性无关的向量都可作为极大无关组。</li>
+<li>\(\beta\) 可由 \(\alpha_1,\dots,\alpha_m\) 表示 ⇔ \(r(A)=r(A,\beta)\)（与一、中结论呼应）。</li>
+</ul>
+</div>
+<div class="box gray"><span class="t">常用秩不等式（与 15 章合体）</span><br>
+\(r(A+B)\le r(A)+r(B)\)；\(r(AB)\le\min\{r(A),r(B)\}\)；\(AB=O\Rightarrow r(A)+r(B)\le n\)；<br>
+若 \(\beta\) 可由组 \(\alpha\) 表示，则 \(r(\alpha_1,\dots,\alpha_m,\beta)=r(\alpha_1,\dots,\alpha_m)\)。
+</div>
+
+<h3>五、向量空间初步</h3>
+<div class="box"><span class="t">向量空间与子空间</span><br>
+\(V\) 是 \(n\) 维向量的集合，对加法与数乘封闭（\(x,y\in V\Rightarrow x+y\in V\)；\(k\in\mathbb{R},x\in V\Rightarrow kx\in V\)），称向量空间；\(V\) 的子集若自身也是向量空间则为子空间。<br>
+\(\mathbb{R}^n\) 是自然的 n 维向量空间；向量组张成的集合 \(L(\alpha_1,\dots,\alpha_m)=\{k_1\alpha_1+\cdots+k_m\alpha_m\}\) 是子空间。
+</div>
+<div class="box"><span class="t">基、维数与坐标</span><br>
+子空间的一组基 = 它的一个极大无关组；维数 = 秩。<br>
+若 \(\varepsilon_1,\dots,\varepsilon_r\) 是基，则每个向量有唯一坐标表示 \(x=x_1\varepsilon_1+\cdots+x_r\varepsilon_r\)；<b>过渡矩阵与坐标变换</b>（选学，第 18 章展开）：两组基的过渡矩阵 \(P\) 可逆，坐标按 \(x=Px'\) 变换。
+</div>
+
+<h3>六、速查与易错</h3>
+<div class="box warn"><span class="t">易错清单</span>
+<ol>
+<li>「部分无关 ⇒ 整体无关」（错，反例：\((1,0),(0,1),(1,1)\) 中任意两个无关，整体相关）。</li>
+<li>忘记「个数 &gt; 维数必相关」这条秒杀结论。</li>
+<li>用行变换求极大无关组时，把变换后矩阵的列当作答案（错——必须对应<b>原矩阵</b>的列）。</li>
+<li>把「秩相等」当「等价」的充分条件（错，需再加互相表示）。</li>
+<li>在相关组里谈「表示唯一」（错；只有无关组表示才唯一）。</li>
+<li>「相关」只说存在一个向量可由其余表示，不是每个都能（易说错）。</li>
+<li>\(r(\text{I})\le r(\text{II})\) 的方向弄反：被表示的组秩更小。</li>
+<li>抽象证明中用具体数字结论（如「零向量」），造成循环论证。</li>
+</ol>
+</div>
+
+<h3>七、技巧库（做题时能想到的全在这里）</h3>
+
+<h4>7.1 具体向量组判定模板</h4>
+<div class="box">
+① 按列排矩阵；② 行变换化阶梯形；③ 数非零行（秩 r）与向量个数 m 比较：\(r&lt;m\) 相关、\(r=m\) 无关；④ 含参数时先算 \(|A|\)（方阵）或按参数分类讨论阶梯形。
+</div>
+
+<h4>7.2 抽象无关性证明模板</h4>
+<div class="box">
+① 设 \(k_1\alpha_1+\cdots+k_m\alpha_m=0\)；② 用已知无关组「拆分/重组」：把式子整理成已知无关组的线性组合，由其无关性推出系数为零；③ 或写成矩阵形式 \(AK=0\)：若 \(A\) 列满秩（\(r(A)=m\)），则 \(K=0\) 推出系数全零；④ 只需证 \(k_i=0\) 即可。
+</div>
+
+<h4>7.3 「添加向量」情境结论包</h4>
+<div class="box">
+\(\alpha_1,\dots,\alpha_m\) 无关：<br>
+① 加上 \(\beta\) 后相关 ⇔ \(\beta\) 可由原组表示（且表示唯一）；<br>
+② 加上 \(\beta\) 后仍无关 ⇔ \(\beta\) 不能由原组表示。
+</div>
+
+<h4>7.4 极大无关组 + 表示系数实操</h4>
+<div class="box">
+化行最简形后：主元列 = 极大无关组；非主元列的「列内数字」就是该向量用极大无关组表示的系数（这是行变换不改变列线性关系的原因，务必理解）。
+</div>
+
+<h4>7.5 等价向量组的证明</h4>
+<div class="box">
+① 互相线性表示（定义法）；② 秩相等 + 一组可由另一组表示；③ 都等价于同一个极大无关组（传递性）。
+</div>
+
+<h4>7.6 「方程组语言」翻译表</h4>
+<table>
+<thead><tr><th>向量语言</th><th>方程组语言</th></tr></thead>
+<tbody>
+<tr><td>\(\beta\) 可由 \(\alpha_1,\dots,\alpha_m\) 表示</td><td>\([\alpha_1\cdots\alpha_m]x=\beta\) 有解</td></tr>
+<tr><td>\(\alpha_1,\dots,\alpha_m\) 线性相关</td><td>\([\alpha_1\cdots\alpha_m]x=0\) 有非零解</td></tr>
+<tr><td>组内秩为 r</td><td>系数矩阵秩为 r</td></tr>
+<tr><td>表示系数唯一</td><td>方程组有唯一解（列满秩）</td></tr>
+</tbody>
+</table>
+
+<h4>7.7 高频秒杀结论卡</h4>
+<div class="box">
+① 含零向量/成比例/个数超维数 ⇒ 相关；<br>
+② 无关组被表示唯一，相关组有「多余向量」；<br>
+③ 替换思想（Steinitz 替换）：若 \(\alpha_1,\dots,\alpha_r\) 可由 \(\beta_1,\dots,\beta_s\) 表示且 \(r&gt;s\)，则 \(\alpha\) 组线性相关——证「相关」的神器；<br>
+④ 秩的单调性：加向量秩不减、被表示秩不增。
+</div>
+
+<div class="mini" style="text-align:center;color:#888;margin-top:4mm">—— 第 16 章 完 ——</div>
+
 <!-- NEXT-CHAPTER -->
 
 </div>
